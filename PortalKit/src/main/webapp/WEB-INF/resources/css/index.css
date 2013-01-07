@@ -1,0 +1,152 @@
+@charset "utf-8";
+/* CSS Document */
+/*================================== CONFIG =====================================*/
+body{ margin:0px; padding:0px; font-size:12px; font-family:Arial;}
+.clear{clear:both;}
+.align-left{ float:left;}
+.align-right{ float:right;}
+ol, ul, li {list-style: none; margin:0px; padding:0px;}
+a{ color: #005dc4; text-decoration:none; border: 0;}
+a:hover{ text-decoration:none;}
+img{ border:none;}
+
+
+
+
+/*================================== WRAPPER ==================================*/
+.mainWrapper{
+    width:250px;
+    height:500px;
+    background:#333;
+    
+    }
+    
+    
+    
+/*=================================== HEADER ===================================*/
+.header{
+    height:50px;
+    }
+
+.toolsName{
+    padding:5px 15px;
+    color:#CCC;
+    font-size:14px;
+    font-weight:bolder;
+    }
+    
+/*=======================================  MAIN =======================================*/
+.maincontent{
+    padding:0px 5px;
+    }
+.tab-header ul{
+    margin:0px;
+    padding:0px;
+    }
+    
+.tab-header ul li{
+    float:left;
+    padding:5px 15px;
+    color:#999;
+    }
+    
+.tab-header ul li.active{
+    background:#999;
+    color:#FFF;
+    }
+    
+.tab-content{
+    padding:8px 3px;
+    background:#999;
+    }
+
+.bulid-content{
+
+    }
+    
+.bulid-feature-header li{
+    float:left;
+    width:117px;
+    line-height:24px;
+    text-align:center;
+    background:#999;
+    color:#CCC;
+    border-bottom:solid 1px #666;
+    }
+    
+.bulid-feature-header li.active{
+    background:#CCC;
+    color:#333;
+    }
+
+    
+
+
+.bulid-feature-content-folder{
+    float:left;
+    background:#fff;
+    width:234px;
+    height:250px;
+    overflow:auto;
+    }
+    
+.group span{
+    padding-left:10px;
+    font-size:12px;
+    line-height:24px;
+    }
+    
+.checkbox {
+    height:22px;
+    line-height:22px;
+    vertical-align: middle;
+}
+.group{
+    font-weight:bolder;
+    }
+
+.group li{
+    padding:3px 0px 3px 20px;
+    background:#333;
+    font-size:12px;
+    color:#CCC;
+    border-top: solid 1px #999;
+    }
+    
+input[type="checkbox"]{
+    float:left;
+
+    }
+.bulid-button-area{
+    float:left;
+    width:234px;
+    background:#666;
+    height:30px;
+    }
+.bulid-button-area li{
+    float:left;
+    margin:5px 0px;
+    width:50%;
+    text-align:center;
+    }
+.configbutton{
+    width:110px;
+    height:20px;
+    font-size:11px;
+    }
+    
+.button-bulid{
+    float:left;
+    margin-top:10px;
+    width:150px;
+    height:30px;
+    }
+    
+.main-button{
+    display:block;
+    margin-top:13px;
+    height:24px;
+    line-height:24px;
+    vertical-align:middle;
+    }
+

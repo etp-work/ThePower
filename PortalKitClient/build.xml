@@ -1,0 +1,50 @@
+<project default="build" basedir="." name="PortalKitClient builder">
+	<!--
+       *** Properties to be changed to reflect your build environment ***
+
+       These should be set in eclipse. Go to Window -> Preferences -> Ant -> Runtime
+       and select the tab Properties
+
+       Here you should add maven.home, deploy.local.dir,  portalkit.home, java.home.
+      -->
+
+	<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+	          -               Properties set in eclipse
+	          - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	<property name="deploy.local.dir" value="" />
+	<property name="maven.home" value="" />
+	<property name="java.home" value="" />
+
+	<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+	      -                          Properties
+	      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	<property name="portalkitclient.home" value="." />
+	<property name="mvn.build.cmd" value="clean install" />
+	<property name="mvn.install.cmd" value="install:install-file" />
+	<property name="mvn.install.args" value=" -Dfile=swt.jar -Dsources=src.zip -DgroupId=org.eclipse.swt -Dversion=4.2.1 -Dpackaging=jar" />
+	<property name="project.name" value="PortalKit" />
+	<property name="3pp.32bit" value="${portalkitclient.home}/3pp/x86_32" />
+	<property name="3pp.64bit" value="${portalkitclient.home}/3pp/x86_64" />
+
+	<target name="build">
+		<mvn dir="${portalkitclient.home}" args="${mvn.build.cmd}" />
+	</target>
+
+	<target name="install3pp">
+		<mvn dir="${3pp.32bit}" args="${mvn.install.cmd} ${mvn.install.args} -DartifactId=x86" />
+		<mvn dir="${3pp.64bit}" args="${mvn.install.cmd} ${mvn.install.args} -DartifactId=x86_64" />
+	</target>
+
+
+	<macrodef name="mvn">
+		<attribute name="dir" />
+		<attribute name="args" default="${mvn.build.cmd} ${mvn.skip.test}" />
+		<sequential>
+			<exec dir="@{dir}" failonerror="true" executable="${maven.home}/bin/mvn.bat">
+				<arg line="@{args}" />
+				<env key="MAVEN_TERMINATE_CMD" value="on" />
+				<env key="JAVA_HOME" value="${java.home}" />
+			</exec>
+		</sequential>
+	</macrodef>
+</project>

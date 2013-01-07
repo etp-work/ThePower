@@ -1,0 +1,63 @@
+<project default="build" basedir="." name="PortalKit builder">
+	<!--
+       *** Properties to be changed to reflect your build environment ***
+
+       These should be set in eclipse. Go to Window -> Preferences -> Ant -> Runtime
+       and select the tab Properties
+
+       Here you should add maven.home, deploy.local.dir,  portalkit.home, java.home.
+      -->
+
+	<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+	          -               Properties set in eclipse
+	          - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	<property name="deploy.local.dir" value="" />
+	<property name="maven.home" value="" />
+	<property name="java.home" value="" />
+
+	<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+	      -                          Properties
+	      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	<property name="portalkit.home" value="." />
+	<property name="mvn.build.cmd" value="clean install" />
+	<property name="mvn.skip.test" value="-Dmaven.test.skip=true" />
+	<property name="project.name" value="PortalKit" />
+
+
+	<target name="build">
+		<mvn dir="${portalkit.home}" />
+		<deploy dir="${portalkit.home}" />
+	</target>
+
+	<target name="build_test">
+		<mvn dir="${portalkit.home}" args="${mvn.build.cmd}" />
+		<deploy dir="${portalkit.home}" />
+	</target>
+
+
+	<macrodef name="mvn">
+		<attribute name="dir" />
+		<attribute name="args" default="${mvn.build.cmd} ${mvn.skip.test}" />
+		<sequential>
+			<exec dir="@{dir}" failonerror="true" executable="${maven.home}/bin/mvn.bat">
+				<arg line="@{args}" />
+				<env key="MAVEN_TERMINATE_CMD" value="on" />
+				<env key="JAVA_HOME" value="${java.home}" />
+			</exec>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="deploy">
+		<attribute name="dir" />
+		<element name="files" implicit="true" optional="true" />
+		<sequential>
+			<delete dir="${deploy.local.dir}/${project.name}" />
+			<copy todir="${deploy.local.dir}" overwrite="true" flatten="true" includeemptydirs="false">
+				<fileset dir="@{dir}">
+					<include name="**/*.war" />
+					<files />
+				</fileset>
+			</copy>
+		</sequential>
+	</macrodef>
+</project>
