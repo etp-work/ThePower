@@ -1,6 +1,3 @@
-The power
-===========
-
 Instruction
 ==============
 
