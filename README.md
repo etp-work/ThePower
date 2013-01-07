@@ -28,8 +28,6 @@ git config --local user.email "<email>"
 
 git config --local core.excludesfile $HOME/.gitignore
 
-git config --local http.proxy www-proxy.ericsson.se:8080
-
 git config --local core.autocrlf input
 
 git config --local color.ui true
