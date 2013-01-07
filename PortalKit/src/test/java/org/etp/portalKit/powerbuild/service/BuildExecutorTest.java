@@ -30,7 +30,6 @@ public class BuildExecutorTest {
         CommandResult compile = executor.compile("E:\\Study\\GitHub\\workstation\\PortalKit");
         assertTrue(compile.isSuccess());
         assertEquals(0, compile.getStateCode());
-        System.out.println(compile.getMessage());
     }
 
     /**

@@ -1,5 +1,8 @@
 package org.etp.portalKit.setting.controller;
 
+import java.util.Collections;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.etp.portalKit.common.service.PropertiesManager;
@@ -19,11 +22,13 @@ public class SettingController {
     private PropertiesManager prop;
 
     /**
-     * @return next page
+     * @param settings
+     * @return do nothing
      */
     @RequestMapping(value = "/settings/set.ajax", method = RequestMethod.POST)
     public @ResponseBody
-    String set(@RequestBody Settings settings) {
-        return "index";
+    Map<String, String> set(@RequestBody Settings settings) {
+        prop.fromBean(settings);
+        return Collections.emptyMap();
     }
 }

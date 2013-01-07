@@ -14,8 +14,21 @@ $(document).ready(function(){
 				}
 			);
 		
-	
-	
+		
+		$('#saveSettings').click(function(event) {
+		    var ptPath = $('#portalTeamPath').val();
+		    var twPath = $('#tomcatWebappsPath').val();
+		    var url = "/settings/set.ajax";
+		    var settings = {
+		            portalTeamPath: ptPath,
+		            tomcatWebappsPath: twPath
+		    };
+		    DynamicLoad.postJSON(url, settings, function(){alert("chenggong");}, function(error){
+		        alert("msg = " + error.message);
+		    });
+		});
+	    
+	    
 
 
 

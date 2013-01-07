@@ -102,18 +102,18 @@
                           </tr>
                         </thead>
                           <tr>
-                            <td>Design</td>
-                            <td><input type="text" placeholder="Type something…"></td>
+                            <td title="Path of portal-team repository">Design</td>
+                            <td><input id="portalTeamPath" type="text" placeholder="Type something…"></td>
                           </tr>
                           <tr>
-                            <td>Deploy</td>
-                            <td><input type="text" placeholder="Type something…"></td>
+                            <td title="Path of webapps under tomcat folder">Deploy</td>
+                            <td><input id="tomcatWebappsPath" type="text" placeholder="Type something…"></td>
                           </tr>
                     </table>
             </div>
                     
                     <div class="main-button-area">
-                        <input class="primary-button save" type="button" value="Save"/>
+                        <input id="saveSettings" class="primary-button save" type="button" value="Save"/>
                         <div class="clear"></div>
                     </div>
 
