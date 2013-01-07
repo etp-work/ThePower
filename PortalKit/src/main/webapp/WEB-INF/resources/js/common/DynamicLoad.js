@@ -21,44 +21,54 @@ function executeEventQueue() {
 }
 var DynamicLoad = {
     postJSON : function(url, data, success, failure) {
+	var tempData = data || {};
 	jQuery.ajax({
 	    "type" : "POST",
 	    "url" : "/PortalKit" + url,
 	    "contentType" : "application/json; charset=UTF-8",
-	    "data" : JSON.stringify(data),
+	    "data" : JSON.stringify(tempData),
 	    "dataType" : "json",
 	    "success" : function(data, textStatus, jqXHR) {
 		eventQueue.push(function() {
-		    success(data);
+		    if(success){
+			success(data);
+		    }
 		});
 		executeEventQueue();
 	    },
 	    "error" : function(jqXHR, textStatus, errorThrown) {
 		var obj = JSON.parse(jqXHR.responseText);
 		eventQueue.push(function() {
-		    failure(obj);
+		    if(failure){
+		       failure(obj);
+		    }
 		});
 		executeEventQueue();
 	    }
 	});
     },
-    getJSON : function(url, data, success, failure) {
+    loadJSON : function(url, data, success, failure) {
+	var tempData = data || {};
 	jQuery.ajax({
 	    "type" : "GET",
 	    "url" : "/PortalKit" + url,
 	    "contentType" : "application/json; charset=UTF-8",
-	    "data" : data,
+	    "data" : tempData,
 	    "dataType" : "json",
 	    "success" : function(data, textStatus, jqXHR) {
 		eventQueue.push(function() {
-		    success(data);
+		    if(success){
+		       success(data);
+		    }
 		});
 		executeEventQueue();
 	    },
 	    "error" : function(jqXHR, textStatus, errorThrown) {
 		var obj = JSON.parse(jqXHR.responseText);
 		eventQueue.push(function() {
-		    failure(obj);
+		    if(failure){
+		       failure(obj);
+		    }
 		});
 		executeEventQueue();
 	    }

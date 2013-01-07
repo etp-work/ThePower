@@ -5,14 +5,14 @@
 <%@ include file="/WEB-INF/views/common/header_head.jsp"%>
 <link href="${resources}/css/index.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="${resources}/js/index.js"></script>
-<title>PowerBuild</title>
+<title>The Power</title>
 </head>
 <body>
 
 <div class="mainWrapper">
 
     <div class="header">
-        <div class="toolsName">B.Tools</div>    
+        <div class="toolsName">The Power</div>    
     </div>
 
 

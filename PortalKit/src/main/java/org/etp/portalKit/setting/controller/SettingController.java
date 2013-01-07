@@ -31,4 +31,15 @@ public class SettingController {
         prop.fromBean(settings);
         return Collections.emptyMap();
     }
+
+    /**
+     * @return do nothing
+     */
+    @RequestMapping(value = "/settings/getAll.ajax", method = RequestMethod.GET)
+    public @ResponseBody
+    Settings get() {
+        Settings set = new Settings();
+        prop.toBean(set);
+        return set;
+    }
 }

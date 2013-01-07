@@ -11,7 +11,7 @@ $(document).ready(function() {
     });
 
     $("#tagetok").click(function(event) {
-	DynamicLoad.getJSON("/test/ajax/get/ok.ajax", {
+	DynamicLoad.loadJSON("/test/ajax/get/ok.ajax", {
 	    testId : 1,
 	    testName : "nanfeng"
 	}, function(data) {
@@ -33,7 +33,7 @@ $(document).ready(function() {
     });
 
     $("#tagetfail").click(function(event) {
-	DynamicLoad.getJSON("/test/ajax/get/error.ajax", {
+	DynamicLoad.loadJSON("/test/ajax/get/error.ajax", {
 	    testId : 1,
 	    testName : "nanfeng"
 	}, function(data) {
