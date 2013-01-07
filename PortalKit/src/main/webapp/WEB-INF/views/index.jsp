@@ -8,6 +8,7 @@
 <title>PowerBuild</title>
 </head>
 <body>
+
 <div class="mainWrapper">
 
     <div class="header">
@@ -20,66 +21,108 @@
     <div class="maincontent">
         <div class="tab-header">
             <ul>
-                <li class="active">Bulid</li>
-                <li>Deploy</li>
-                <li>Settings</li>
+                <li><a class="default-tab" href="#bulid-content">Bulid</a></li>
+                <li><a>Deploy</a></li>
+                <li><a href="#setting-content">Settings</a></li>
             </ul>
             <div class="clear"></div>
         </div>
         
-        <div class="tab-content">
-            <div class="bulid-content">
-                <div class="bulid-feature-header">
-                    <li class="active">Folder</li>
-                    <li>Path</li>
-                </div>
-                <div class="bulid-feature-content">
-                    <div class="bulid-feature-content-folder">
-                        <ul class="group"><label class="checkbox"><input name="" type="checkbox" value="" />Plug-in</label>
-                          <li><label class="checkbox"><input name="" type="checkbox">list 01</label></li>
-                          <li><label class="checkbox"><input name="" type="checkbox">list 02</label></li>
-                        </ul>
-                        
-                        <ul class="group"><label class="checkbox"><input name="" type="checkbox" value="" />Plug-in</label>
-                          <li><label class="checkbox"><input name="" type="checkbox">list 01</label></li>
-                          <li><label class="checkbox"><input name="" type="checkbox">list 02</label></li>
-                        </ul>
-
-                        <ul class="group"><label class="checkbox"><input name="" type="checkbox" value="" />Plug-in</label>
-                          <li><label class="checkbox"><input name="" type="checkbox">list 01</label></li>
-                          <li><label class="checkbox"><input name="" type="checkbox">list 02</label></li>
-                        </ul>
-
-                        <ul class="group"><label class="checkbox"><input name="" type="checkbox" value="" />Plug-in</label>
-                          <li><label class="checkbox"><input name="" type="checkbox">list 01</label></li>
-                          <li><label class="checkbox"><input name="" type="checkbox">list 02</label></li>
-                        </ul>
-
-                        <ul class="group"><label class="checkbox"><input name="" type="checkbox" value="" />Plug-in</label>
-                          <li><label class="checkbox"><input name="" type="checkbox">list 01</label></li>
-                          <li><label class="checkbox"><input name="" type="checkbox">list 02</label></li>
-                        </ul>
-
-                        <ul class="group"><label class="checkbox"><input name="" type="checkbox" value="" />Plug-in</label>
-                          <li><label class="checkbox"><input name="" type="checkbox">list 01</label></li>
-                          <li><label class="checkbox"><input name="" type="checkbox">list 02</label></li>
-                        </ul>
-
-                        
-
-                        
+        <div class="content-wrapper">
+              <div class="content-box default-tab" id="bulid-content">
+            
+                    <div class="bulid-feature-header">
+                        <li class="active">Folder</li>
+                        <li>Path</li>
                     </div>
-                    <div class="bulid-button-area">
-                        <li><input class="configbutton" type="button" value="configuration"/></li>
-                        <li><input class="configbutton" type="button" value="clean all"/></li>
+                    <div class="bulid-feature-content">
+                        <div class="bulid-feature-content-folder">
+                            <ul class="group"><label class="checkbox"><input name="" type="checkbox" value="" />Plug-in</label>
+                              <li><label class="checkbox"><input name="" type="checkbox">list 01</label></li>
+                              <li><label class="checkbox"><input name="" type="checkbox">list 02</label></li>
+                            </ul>
+                            
+                            <ul class="group"><label class="checkbox"><input name="" type="checkbox" value="" />Plug-in</label>
+                              <li><label class="checkbox"><input name="" type="checkbox">list 01</label></li>
+                              <li><label class="checkbox"><input name="" type="checkbox">list 02</label></li>
+                            </ul>
+    
+                            <ul class="group"><label class="checkbox"><input name="" type="checkbox" value="" />Plug-in</label>
+                              <li><label class="checkbox"><input name="" type="checkbox">list 01</label></li>
+                              <li><label class="checkbox"><input name="" type="checkbox">list 02</label></li>
+                            </ul>
+    
+                            <ul class="group"><label class="checkbox"><input name="" type="checkbox" value="" />Plug-in</label>
+                              <li><label class="checkbox"><input name="" type="checkbox">list 01</label></li>
+                              <li><label class="checkbox"><input name="" type="checkbox">list 02</label></li>
+                            </ul>
+    
+                            <ul class="group"><label class="checkbox"><input name="" type="checkbox" value="" />Plug-in</label>
+                              <li><label class="checkbox"><input name="" type="checkbox">list 01</label></li>
+                              <li><label class="checkbox"><input name="" type="checkbox">list 02</label></li>
+                            </ul>
+    
+                            <ul class="group"><label class="checkbox"><input name="" type="checkbox" value="" />Plug-in</label>
+                              <li><label class="checkbox"><input name="" type="checkbox">list 01</label></li>
+                              <li><label class="checkbox"><input name="" type="checkbox">list 02</label></li>
+                            </ul>
+    
+                            
+    
+                          
+                        </div>
+                        <div class="bulid-button-area">
+                            <li><input class="small-button config" type="button" value="configuration"/></li>
+                            <li><input class="small-button reset" type="button" value="clean all"/></li>
+                        <div class="clear"></div>    
+                        </div>
+                        
+                    <div class="clear"></div>
+                  </div>    
+            
+            
+                  
+                  <div class="main-button-area">
+                  <input class="primary-button bulid" type="button" value="Bulid"/> 
+                  <div class="check-deploy"><input name="" type="checkbox">Deploy</div>
+                  <div class="clear"></div>
+                  </div>
+                  <div class="clear"></div>
+              </div>
+          
+          
+              <div class="content-box" id="setting-content">
+                    <span class="tdName">Configuration</span>
+                    <div class="table-wrapper">
+                    <table  class="setting-table" border="0" cellspacing="0" cellpadding="0">
+                        <thead>
+                          <tr>
+                            <th>Key</th>
+                            <th>Value</th>
+                          </tr>
+                        </thead>
+                          <tr>
+                            <td>Design</td>
+                            <td><input type="text" placeholder="Type something…"></td>
+                          </tr>
+                          <tr>
+                            <td>Deploy</td>
+                            <td><input type="text" placeholder="Type something…"></td>
+                          </tr>
+                    </table>
+            </div>
+                    
+                    <div class="main-button-area">
+                        <input class="primary-button save" type="button" value="Save"/>
                         <div class="clear"></div>
                     </div>
-                    
+
+
+               
               </div>
-              <input class="button-bulid" type="button" value="Bulid"/> <label class="main-button"><input name="" type="checkbox">Deploy</label>
-              <div class="clear"></div>
-                
-          </div>
+          
+          
+          
         </div>
         <div class="clear"></div>
     </div>

@@ -46,33 +46,38 @@ img{ border:none;}
     
 .tab-header ul li{
     float:left;
+    }
+.tab-header ul li a{
+    display:block;
     padding:5px 15px;
-    color:#999;
+    color:#ccc;
     }
     
-.tab-header ul li.active{
+.tab-header ul li a.active{
     background:#999;
     color:#FFF;
     }
     
-.tab-content{
+.content-wrapper{
     padding:8px 3px;
     background:#999;
     }
-
-.bulid-content{
+/*============================================== BULID ==============================================*/
+#bulid-content{ display:none;
 
     }
     
-.bulid-feature-header li{
+.bulid-feature-header li {
     float:left;
     width:117px;
     line-height:24px;
     text-align:center;
-    background:#999;
-    color:#CCC;
     border-bottom:solid 1px #666;
     }
+.bulid-feature-header li a{
+    color:#ccc;
+    background:#999;
+    }   
     
 .bulid-feature-header li.active{
     background:#CCC;
@@ -97,8 +102,8 @@ img{ border:none;}
     }
     
 .checkbox {
-    height:22px;
-    line-height:22px;
+    height:20px;
+    line-height:20px;
     vertical-align: middle;
 }
 .group{
@@ -129,24 +134,102 @@ input[type="checkbox"]{
     width:50%;
     text-align:center;
     }
-.configbutton{
+
+    
+.check-deploy{
+    float:left;
+    margin:13px 0px 0px 10px;
+    height:22px;
+    line-height:22px;
+    vertical-align:middle;
+    }
+/*====================================== SETTINGS ===============================*/
+#setting-content{
+    }
+.tdName{
+    height:20px;
+    line-height:20px;
+    font-weight:bolder;
+    }   
+.table-wrapper{
+    height:304px;
+    }
+.setting-table{
+    width:234px;
+    }
+    
+.setting-table thead tr{
+    background-color:#333;
+    }
+.setting-table thead tr th{
+    padding: 5px 0px 0px 10px;
+    height:20px;
+    line-height:20px;
+    color:#fff;
+    }
+.setting-table thead tr th:first-child{
+    width:40px;
+    text-align:left;
+    }
+    
+.setting-table tr{
+    background:#ccc;
+
+    }
+.setting-table tr td{
+    padding: 3px 0px 3px 10px;
+    height:32px;
+    line-height:32px;
+    border-bottom: solid 1px #333;
+    color:#333;
+    text-align: left;
+    }
+    
+.setting-table tr td:first-child{
+    }
+    
+.setting-table tfoot tr td{
+    padding:3px;
+    height:26px;
+    line-height:26px;
+    background:#333;
+    }
+/*============================================ BUTTON =================================================*/
+
+
+
+.small-button{
     width:110px;
     height:20px;
     font-size:11px;
     }
+.config{
+
+    }
+.reset{
+
+    }
     
-.button-bulid{
+.primary-button{
+    height:30px;
+    }   
+.bulid{
     float:left;
     margin-top:10px;
     width:150px;
-    height:30px;
     }
-    
-.main-button{
+.save{
     display:block;
-    margin-top:13px;
-    height:24px;
-    line-height:24px;
-    vertical-align:middle;
+    margin:0 auto;
+    width:200px;
     }
-
+input[type="text"]{
+    padding: 2px 6px;
+    width:150px;
+    border: 1px solid #999;
+    border-radius: 4px 4px 4px 4px;
+    height:18px;
+    line-height:18px;
+    font-size:11px;
+    vertical-align: middle;
+    }
