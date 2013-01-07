@@ -7,12 +7,12 @@
 <script type="text/javascript" src="${resources}/js/test.js"></script>
 </head>
 <body>
-	<form action="/PortalKit/test/redirect/ok" method="post">
+	<form action="/PortalKit/test/redirect/ok.html" method="post">
 
 		<input type="submit" value="TEST_REDIRECT_OK" />
 	</form>
 
-	<form action="/PortalKit/test/redirect/error" method="post">
+	<form action="/PortalKit/test/redirect/error.html" method="post">
 
 		<input type="submit" value="TEST_REDIRECT_ERROR" />
 	</form>

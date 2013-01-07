@@ -1,4 +1,4 @@
-package org.etp.portalKit.common.service;
+package org.etp.portalKit.fw.service;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;

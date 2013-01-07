@@ -10,12 +10,6 @@ import org.etp.portalKit.powerbuild.bean.DirTree;
  */
 public interface DirProvider {
     /**
-     * <code>PORTAL_TEAM_PATH</code> absolute path of portal-team
-     * repository.
-     */
-    public static String PORTAL_TEAM_PATH = "portal-team-path";
-
-    /**
      * @return list of DirTree, retrieve specified directory
      *         information due to configured path.
      */

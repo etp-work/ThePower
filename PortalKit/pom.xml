@@ -13,6 +13,7 @@
 		<apache.lang.version>2.6</apache.lang.version>
 		<apache.io.version>2.4</apache.io.version>
 		<apache.compress.version>1.4.1</apache.compress.version>
+		<apache.beanutils.version>1.8.3</apache.beanutils.version>
 		<org.aspectj.version>1.6.12</org.aspectj.version>
 		<org.codehaus.jackson.version>1.8.7</org.codehaus.jackson.version>
 	</properties>
@@ -60,7 +61,11 @@
 			<artifactId>commons-compress</artifactId>
 			<version>${apache.compress.version}</version>
 		</dependency>
-
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+			<version>${apache.beanutils.version}</version>
+		</dependency>
 
 		<!-- jackson -->
 		<dependency>

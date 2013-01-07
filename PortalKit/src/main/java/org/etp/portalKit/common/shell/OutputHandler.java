@@ -1,8 +1,8 @@
-package org.etp.portalKit.common.util;
+package org.etp.portalKit.common.shell;
 
 /**
  * The purpose of this class is to provide a interface of command
- * output handle
+ * output handler. This should be used with
  */
 public interface OutputHandler {
     /**

@@ -26,13 +26,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class TestController {
     @Resource(name = "testservice")
     private TestService testservice;
+    
+    /**
+     * @return next page
+     */
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    public String index() {
+        return "test";
+    }
 
     /**
      * @param bean
      * @param request
      * @return next page
      */
-    @RequestMapping(value = "/test/redirect/ok", method = RequestMethod.POST)
+    @RequestMapping(value = "/test/redirect/ok.html", method = RequestMethod.POST)
     public String redirectOK(TestBean bean, HttpServletRequest request, Model model) {
         testservice.test(bean);
         model.addAttribute("msg", "you successful");
@@ -44,7 +52,7 @@ public class TestController {
      * @param request
      * @return next page
      */
-    @RequestMapping(value = "/test/redirect/error", method = RequestMethod.POST)
+    @RequestMapping(value = "/test/redirect/error.html", method = RequestMethod.POST)
     public String redirectError(TestBean bean, HttpServletRequest request) {
         testservice.test(bean);
         throw new RuntimeException("you failed.");
@@ -56,7 +64,7 @@ public class TestController {
      * @return map
      * @throws Exception
      */
-    @RequestMapping(value = "/test/ajax/post/ok", method = RequestMethod.POST)
+    @RequestMapping(value = "/test/ajax/post/ok.ajax", method = RequestMethod.POST)
     public @ResponseBody
     TestBean okHandlePost(@RequestBody TestBean tb, HttpServletResponse response) {
         System.out.println("testBean = " + tb.getTestId() + " " + tb.getTestName());
@@ -71,7 +79,7 @@ public class TestController {
      * @param response
      * @return map
      */
-    @RequestMapping(value = "/test/ajax/get/ok", method = RequestMethod.GET)
+    @RequestMapping(value = "/test/ajax/get/ok.ajax", method = RequestMethod.GET)
     public @ResponseBody
     TestBean okHandleGet(TestBean tb, HttpServletResponse response) {
         System.out.println("testBean = " + tb.getTestId() + " " + tb.getTestName());
@@ -87,7 +95,7 @@ public class TestController {
      * @return map
      * @throws Exception
      */
-    @RequestMapping(value = "/test/ajax/post/error", method = RequestMethod.POST)
+    @RequestMapping(value = "/test/ajax/post/error.ajax", method = RequestMethod.POST)
     public @ResponseBody
     TestBean errorHandlePost(TestBean tb, HttpServletResponse response) {
         System.out.println("testBean = " + tb.getTestId() + " " + tb.getTestName());
@@ -103,7 +111,7 @@ public class TestController {
      * @return map
      * @throws Exception
      */
-    @RequestMapping(value = "/test/ajax/get/error", method = RequestMethod.GET)
+    @RequestMapping(value = "/test/ajax/get/error.ajax", method = RequestMethod.GET)
     public @ResponseBody
     TestBean errorHandleGet(TestBean tb, HttpServletResponse response) {
         System.out.println("testBean = " + tb.getTestId() + " " + tb.getTestName());
@@ -116,7 +124,7 @@ public class TestController {
     /**
      * @return map
      */
-    @RequestMapping(value = "/test/ajax/post/ungzip", method = RequestMethod.POST)
+    @RequestMapping(value = "/test/ajax/post/ungzip.ajax", method = RequestMethod.POST)
     public @ResponseBody
     Map<String, String> unGzip() {
         Map<String, String> result = new HashMap<String, String>();
@@ -133,7 +141,7 @@ public class TestController {
     /**
      * @return map
      */
-    @RequestMapping(value = "/test/ajax/post/untar", method = RequestMethod.POST)
+    @RequestMapping(value = "/test/ajax/post/untar.ajax", method = RequestMethod.POST)
     public @ResponseBody
     Map<String, String> untar() {
         Map<String, String> result = new HashMap<String, String>();

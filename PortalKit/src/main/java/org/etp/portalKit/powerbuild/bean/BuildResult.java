@@ -1,6 +1,6 @@
 package org.etp.portalKit.powerbuild.bean;
 
-import org.etp.portalKit.common.util.CommandResult;
+import org.etp.portalKit.common.shell.CommandResult;
 
 /**
  * The purpose of this class is a subclass of CommandResult, it hold

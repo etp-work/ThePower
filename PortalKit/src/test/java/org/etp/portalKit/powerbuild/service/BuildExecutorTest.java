@@ -5,7 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import javax.annotation.Resource;
 
-import org.etp.portalKit.common.util.CommandResult;
+import org.etp.portalKit.common.shell.CommandResult;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;

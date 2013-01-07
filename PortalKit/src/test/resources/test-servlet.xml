@@ -25,13 +25,13 @@
 	<bean id="resolver"
 		class="org.springframework.core.io.support.PathMatchingResourcePatternResolver" />
 	<bean id="configSource" class="org.etp.portalKit.common.service.MockSourceOfConfig" />
-	<bean id="propertiesHandler" class="org.etp.portalKit.common.service.PropertiesHandler" />
+	<bean id="propertiesManager" class="org.etp.portalKit.common.service.PropertiesManager" />
 	<bean id="specProvider" class="org.etp.portalKit.powerbuild.service.SpecDirProvider" />
 	<bean id="designProvider" class="org.etp.portalKit.powerbuild.service.DesignDirProvider" />
-	<bean id="shellRunner" class="org.etp.portalKit.common.util.ShellRunner" />
+	<bean id="shellRunner" class="org.etp.portalKit.common.shell.ShellRunner" />
 	<bean id="buildExecutor" class="org.etp.portalKit.powerbuild.service.BuildExecutor" />
 	<bean id="exceptionResolver"
-		class="org.etp.portalKit.common.service.FailurecallbackExceptionResolver">
+		class="org.etp.portalKit.fw.service.FailurecallbackExceptionResolver">
 		<property name="defaultErrorView">
 			<value>common/error</value>
 		</property>

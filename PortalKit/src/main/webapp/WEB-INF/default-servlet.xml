@@ -34,7 +34,7 @@
 	<context:component-scan base-package="org.etp.portalKit" />
 
 	<bean id="exceptionResolver"
-		class="org.etp.portalKit.common.service.FailurecallbackExceptionResolver">
+		class="org.etp.portalKit.fw.service.FailurecallbackExceptionResolver">
 		<property name="defaultErrorView">
 			<value>common/error</value>
 		</property>

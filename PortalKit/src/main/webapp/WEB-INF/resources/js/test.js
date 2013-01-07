@@ -1,6 +1,6 @@
 $(document).ready(function() {
     $("#tapostok").click(function(event) {
-	    DynamicLoad.postJSON("/test/ajax/post/ok", {
+	    DynamicLoad.postJSON("/test/ajax/post/ok.ajax", {
 	               testId : 001,
 	               testName : "nanfeng"
 	       }, function(data) {
@@ -11,7 +11,7 @@ $(document).ready(function() {
     });
 
     $("#tagetok").click(function(event) {
-	DynamicLoad.getJSON("/test/ajax/get/ok", {
+	DynamicLoad.getJSON("/test/ajax/get/ok.ajax", {
 	    testId : 1,
 	    testName : "nanfeng"
 	}, function(data) {
@@ -22,7 +22,7 @@ $(document).ready(function() {
     });
 
     $("#tapostfail").click(function(event) {
-	DynamicLoad.postJSON("/test/ajax/post/error", {
+	DynamicLoad.postJSON("/test/ajax/post/error.ajax", {
 	    testId : 1,
 	    testName : "nanfeng"
 	}, function(data) {
@@ -33,7 +33,7 @@ $(document).ready(function() {
     });
 
     $("#tagetfail").click(function(event) {
-	DynamicLoad.getJSON("/test/ajax/get/error", {
+	DynamicLoad.getJSON("/test/ajax/get/error.ajax", {
 	    testId : 1,
 	    testName : "nanfeng"
 	}, function(data) {
@@ -48,7 +48,7 @@ $(document).ready(function() {
     });
     
     $("#tugzip").click(function(event) {
-        DynamicLoad.postJSON("/test/ajax/post/ungzip", {}, function(data) {
+        DynamicLoad.postJSON("/test/ajax/post/ungzip.ajax", {}, function(data) {
             alert("result = " + data.result);
         }, function(obj) {
             alert("shibai type = " + obj.type + "||msg = " + obj.message);
@@ -56,7 +56,7 @@ $(document).ready(function() {
     });
     
     $("#tutar").click(function(event) {
-        DynamicLoad.postJSON("/test/ajax/post/untar", {}, function(data) {
+        DynamicLoad.postJSON("/test/ajax/post/untar.ajax", {}, function(data) {
             alert("result = " + data.result);
         }, function(obj) {
             alert("shibai type = " + obj.type + "||msg = " + obj.message);

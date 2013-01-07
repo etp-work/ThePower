@@ -9,8 +9,9 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
-import org.etp.portalKit.common.service.PropertiesHandler;
+import org.etp.portalKit.common.service.PropertiesManager;
 import org.etp.portalKit.powerbuild.bean.DirTree;
+import org.etp.portalKit.setting.bean.Settings;
 import org.springframework.stereotype.Component;
 
 /**
@@ -20,16 +21,11 @@ import org.springframework.stereotype.Component;
 @Component(value = "designProvider")
 public class DesignDirProvider implements DirProvider {
 
-    /**
-     * <code>PT_DEFAULT</code> default options within
-     * portal-team-path.
-     */
-    public static String PT_DEFAULT = "pt-default";
     private FileFilter filter;
     private List<String> selected;
 
-    @Resource(name = "propertiesHandler")
-    private PropertiesHandler handler;
+    @Resource(name = "propertiesManager")
+    private PropertiesManager handler;
 
     /**
      * Creates a new instance of <code>DirectoryProvider</code>.
@@ -63,10 +59,10 @@ public class DesignDirProvider implements DirProvider {
     @Override
     public List<DirTree> retrieveDirInfo() {
         List<DirTree> list = new ArrayList<DirTree>();
-        String path = handler.get(PORTAL_TEAM_PATH);
+        String path = handler.get(Settings.PORTAL_TEAM_PATH);
         if (StringUtils.isBlank(path))
             return list;
-        String defs = handler.get(PT_DEFAULT);
+        String defs = handler.get(Settings.PT_DEFAULT);
         if (!StringUtils.isBlank(defs))
             selected = Arrays.asList(StringUtils.split(defs, ','));
         else
