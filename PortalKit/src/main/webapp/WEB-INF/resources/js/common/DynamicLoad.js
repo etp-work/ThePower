@@ -2,7 +2,11 @@ var DynamicLoad;
 if (!DynamicLoad) {
     DynamicLoad = {};
 }
-
+/**
+ * This module called DynamicLoad, it provide some APIs which have to do with network connectivity.
+ * Such as postJSON, loadJSON... 
+ *
+ */
 (function () {
 
    var eventQueue = [];
@@ -28,6 +32,9 @@ if (!DynamicLoad) {
 
    }
    
+   /**
+    *  Post JSON data to backend.
+    */
    DynamicLoad.postJSON = function(url, data, success, failure) {
 	   var tempData = data || {};
 	   
@@ -57,6 +64,9 @@ if (!DynamicLoad) {
 	   });
     };
     
+    /**
+     * Load JSON data from backend.
+     */
     DynamicLoad.loadJSON = function(url, data, success, failure) {
 	    var tempData = data || {};
 	
