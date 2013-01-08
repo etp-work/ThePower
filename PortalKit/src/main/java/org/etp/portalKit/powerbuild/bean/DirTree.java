@@ -10,6 +10,7 @@ import java.util.List;
 public class DirTree {
     private String name;
     private String absolutePath;
+    private String relativePath;
     private List<DirTree> subDirs;
     private boolean selected;
 
@@ -30,6 +31,20 @@ public class DirTree {
         this.name = n;
         this.absolutePath = ab;
         this.subDirs = new ArrayList<DirTree>();
+    }
+
+    /**
+     * @return Returns the relativePath.
+     */
+    public String getRelativePath() {
+        return relativePath;
+    }
+
+    /**
+     * @param relativePath The relativePath to set.
+     */
+    public void setRelativePath(String relativePath) {
+        this.relativePath = relativePath;
     }
 
     /**

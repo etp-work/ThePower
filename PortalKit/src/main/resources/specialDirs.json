@@ -1,149 +1,179 @@
 [{
 	"name": "Framework",
 	"absolutePath": "",
+	"relativePath": "",
 	"subDirs": [{
 		"name": "maven-plugins",
-		"absolutePath": "maven-plugins",
+		"absolutePath": "",
+		"relativePath": "maven-plugins",
 		"selected": false,
 		"subDirs": []
 	}, {
 		"name": "parent",
-		"absolutePath": "design\\parent",
+		"absolutePath": "",
+		"relativePath": "design\\parent",
 		"selected": false,
 		"subDirs": []
 	}, {
 		"name": "portal-root-war",
-		"absolutePath": "design\\FwRoot\\portal-root-war",
+		"absolutePath": "",
+		"relativePath": "design\\FwRoot\\portal-root-war",
 		"selected": false,
 		"subDirs": []
 	}, {
 		"name": "portal-fw-war",
-		"absolutePath": "design\\FW\\portal-fw-war",
+		"absolutePath": "",
+		"relativePath": "design\\FW\\portal-fw-war",
 		"selected": false,
 		"subDirs": []
 	}, {
 		"name": "portal-widgettool-war",
-		"absolutePath": "design\\FW\\portal-widgettool-war",
+		"absolutePath": "",
+		"relativePath": "design\\FW\\portal-widgettool-war",
 		"selected": false,
 		"subDirs": []
 	}, {
 		"name": "private",
-		"absolutePath": "design\\FW\\private",
+		"absolutePath": "",
+		"relativePath": "design\\FW\\private",
 		"selected": false,
 		"subDirs": []
 	}, {
 		"name": "public",
-		"absolutePath": "design\\FW\\public",
+		"absolutePath": "",
+		"relativePath": "design\\FW\\public",
 		"selected": false,
 		"subDirs": []
 	}]
 }, {
 	"name": "Reference Applications",
 	"absolutePath": "",
+	"relativePath": "",
 	"selected": false,
 	"subDirs": [{
 		"name": "portal-chmgrapp-war",
-		"absolutePath": "design\\CoreApps\\Application\\portal-chmgrapp-war",
+		"absolutePath": "",
+		"relativePath": "design\\CoreApps\\Application\\portal-chmgrapp-war",
 		"selected": false,
 		"subDirs": []
 	}, {
 		"name": "portal-coreapps-app-war",
-		"absolutePath": "design\\CoreApps\\Application\\portal-coreapps-app-war",
+		"absolutePath": "",
+		"relativePath": "design\\CoreApps\\Application\\portal-coreapps-app-war",
 		"selected": false,
 		"subDirs": []
 	}, {
 		"name": "portal-coreapps-service-war",
-		"absolutePath": "design\\CoreApps\\Application\\portal-coreapps-service-war",
+		"absolutePath": "",
+		"relativePath": "design\\CoreApps\\Application\\portal-coreapps-service-war",
 		"selected": false,
 		"subDirs": []
 	}, {
 		"name": "portal-coreapps-sessiontransfer-war",
-		"absolutePath": "design\\CoreApps\\Application\\portal-coreapps-sessiontransfer-war",
+		"absolutePath": "",
+		"relativePath": "design\\CoreApps\\Application\\portal-coreapps-sessiontransfer-war",
 		"selected": false,
 		"subDirs": []
 	}, {
 		"name": "portal-coreapps-war",
-		"absolutePath": "design\\CoreApps\\Application\\portal-coreapps-war",
+		"absolutePath": "",
+		"relativePath": "design\\CoreApps\\Application\\portal-coreapps-war",
 		"selected": false,
 		"subDirs": []
 	}, {
 		"name": "portal-scanapp-war",
-		"absolutePath": "design\\CoreApps\\Application\\portal-scanapp-war",
+		"absolutePath": "",
+		"relativePath": "design\\CoreApps\\Application\\portal-scanapp-war",
 		"selected": false,
 		"subDirs": []
 	}, {
 		"name": "portal-imageprocessor-war",
-		"absolutePath": "design\\CoreApps\\Application\\portal-imageprocessor-war",
+		"absolutePath": "",
+		"relativePath": "design\\CoreApps\\Application\\portal-imageprocessor-war",
 		"selected": false,
 		"subDirs": []
 	}]
 }, {
 	"name": "Reference Backend",
 	"absolutePath": "",
+	"relativePath": "",
 	"selected": false,
 	"subDirs": [{
 		"name": "portal-coreapps-backend-mock-war",
-		"absolutePath": "design\\CoreApps\\Backend\\portal-coreapps-backend-mock-war",
+		"absolutePath": "",
+		"relativePath": "design\\CoreApps\\Backend\\portal-coreapps-backend-mock-war",
 		"selected": false,
 		"subDirs": []
 	}]
 }, {
 	"name": "Reference Device",
 	"absolutePath": "",
+	"relativePath": "",
 	"selected": false,
 	"subDirs": [{
 		"name": "portal-coreapps-device-dev-war",
-		"absolutePath": "design\\CoreApps\\Device\\portal-coreapps-device-dev-war",
+		"absolutePath": "",
+		"relativePath": "design\\CoreApps\\Device\\portal-coreapps-device-dev-war",
 		"selected": false,
 		"subDirs": []
 	}]
 }, {
 	"name": "Reference Locale",
 	"absolutePath": "",
+	"relativePath": "",
 	"selected": false,
 	"subDirs": [{
 		"name": "portal-coreapps-enus-war",
-		"absolutePath": "design\\CoreApps\\Locale\\portal-coreapps-enus-war",
+		"absolutePath": "",
+		"relativePath": "design\\CoreApps\\Locale\\portal-coreapps-enus-war",
 		"selected": false,
 		"subDirs": []
 	}, {
 		"name": "portal-coreapps-svse-war",
-		"absolutePath": "design\\CoreApps\\Locale\\portal-coreapps-svse-war",
+		"absolutePath": "",
+		"relativePath": "design\\CoreApps\\Locale\\portal-coreapps-svse-war",
 		"selected": false,
 		"subDirs": []
 	}, {
 		"name": "portal-coreapps-sessiontransfer-enus-war",
-		"absolutePath": "design\\CoreApps\\Locale\\portal-coreapps-sessiontransfer-enus-war",
+		"absolutePath": "",
+		"relativePath": "design\\CoreApps\\Locale\\portal-coreapps-sessiontransfer-enus-war",
 		"selected": false,
 		"subDirs": []
 	}, {
 		"name": "portal-coreapps-sessiontransfer-svse-war",
-		"absolutePath": "design\\CoreApps\\Locale\\portal-coreapps-sessiontransfer-svse-war",
+		"absolutePath": "",
+		"relativePath": "design\\CoreApps\\Locale\\portal-coreapps-sessiontransfer-svse-war",
 		"selected": false,
 		"subDirs": []
 	}]
 }, {
 	"name": "Reference Skin",
 	"absolutePath": "",
+	"relativePath": "",
 	"selected": false,
 	"subDirs": [{
 		"name": "portal-coreapps-skin-next-war",
-		"absolutePath": "design\\CoreApps\\Skin\\portal-coreapps-skin-next-war",
+		"absolutePath": "",
+		"relativePath": "design\\CoreApps\\Skin\\portal-coreapps-skin-next-war",
 		"selected": false,
 		"subDirs": []
 	}, {
 		"name": "portal-coreapps-skin-svg-next-war",
-		"absolutePath": "design\\CoreApps\\Skin\\portal-coreapps-skin-svg-next-war",
+		"absolutePath": "",
+		"relativePath": "design\\CoreApps\\Skin\\portal-coreapps-skin-svg-next-war",
 		"selected": false,
 		"subDirs": []
 	}, {
 		"name": "portal-coreapps-sessiontransfer-skin-next-war",
-		"absolutePath": "design\\CoreApps\\Skin\\portal-coreapps-sessiontransfer-skin-next-war",
+		"absolutePath": "",
+		"relativePath": "design\\CoreApps\\Skin\\portal-coreapps-sessiontransfer-skin-next-war",
 		"selected": false,
 		"subDirs": []
 	}, {
 		"name": "portal-coreapps-sessiontransfer-skin-svg-next-war",
-		"absolutePath": "design\\CoreApps\\Skin\\portal-coreapps-sessiontransfer-skin-svg-next-war",
+		"absolutePath": "",
+		"relativePath": "design\\CoreApps\\Skin\\portal-coreapps-sessiontransfer-skin-svg-next-war",
 		"selected": false,
 		"subDirs": []
 	}]

@@ -69,7 +69,7 @@ public class SpecDirProvider implements DirProvider {
 
     private void iterateTrees(DirTree tree, String base) {
         tree.setSelected(selected.contains(tree.getName()));
-        if (StringUtils.isBlank(tree.getAbsolutePath())) {
+        if (StringUtils.isBlank(tree.getRelativePath())) {
             List<DirTree> subs = tree.getSubDirs();
             if (!CollectionUtils.isEmpty(subs)) {
                 for (DirTree subTree : subs) {
@@ -77,8 +77,10 @@ public class SpecDirProvider implements DirProvider {
                 }
             }
         } else {
-            String relativePath = tree.getAbsolutePath();
-            tree.setAbsolutePath(new File(base, relativePath).getAbsolutePath());
+            String relativePath = tree.getRelativePath();
+            File relative = new File(base, relativePath);
+            if (relative.isDirectory())
+                tree.setAbsolutePath(relative.getAbsolutePath());
         }
     }
 }

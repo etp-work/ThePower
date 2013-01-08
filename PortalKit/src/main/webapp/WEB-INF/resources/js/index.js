@@ -1,6 +1,17 @@
 
 function buildOnShow(){
-    //TODO
+    var url = "/power/getAllTrees.ajax";
+    DynamicLoad.loadJSON(url, undefined, function(dirTrees){
+            if(!dirTrees){
+                return;
+            }
+            
+            for(var i = 0; i < dirTrees.length; i++){
+                var dirTree = dirTrees[i];
+            }
+        }
+        
+    });
 }
 
 function deployOnShow(){
@@ -11,12 +22,12 @@ function settingsOnShow(){
 	var url = "/settings/getAll.ajax";
 	DynamicLoad.loadJSON(url, undefined, function(data){
 	    if(data){
-		if(data.portalTeamPath){
-		    $('#portalTeamPath').val(data.portalTeamPath);
-		}
-		if(data.tomcatWebappsPath){
-		    $('#tomcatWebappsPath').val(data.tomcatWebappsPath);
-		}
+		   if(data.portalTeamPath){
+		       $('#portalTeamPath').val(data.portalTeamPath);
+		   }
+		   if(data.tomcatWebappsPath){
+		       $('#tomcatWebappsPath').val(data.tomcatWebappsPath);
+		   }
 	    }
 	});
 }

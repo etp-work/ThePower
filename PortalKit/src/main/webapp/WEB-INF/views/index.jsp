@@ -37,39 +37,9 @@
                     </div>
                     <div class="bulid-feature-content">
                         <div class="bulid-feature-content-folder">
-                            <ul class="group"><label class="checkbox"><input name="" type="checkbox" value="" />Plug-in</label>
-                              <li><label class="checkbox"><input name="" type="checkbox">list 01</label></li>
-                              <li><label class="checkbox"><input name="" type="checkbox">list 02</label></li>
+                            <ul class="group"><label class="checkbox"><input name="" type="checkbox" value="" /><span>Plug-in</span></label>
+                              <li><label class="checkbox"><input name="" type="checkbox"><span>list 01</span></label></li>
                             </ul>
-                            
-                            <ul class="group"><label class="checkbox"><input name="" type="checkbox" value="" />Plug-in</label>
-                              <li><label class="checkbox"><input name="" type="checkbox">list 01</label></li>
-                              <li><label class="checkbox"><input name="" type="checkbox">list 02</label></li>
-                            </ul>
-    
-                            <ul class="group"><label class="checkbox"><input name="" type="checkbox" value="" />Plug-in</label>
-                              <li><label class="checkbox"><input name="" type="checkbox">list 01</label></li>
-                              <li><label class="checkbox"><input name="" type="checkbox">list 02</label></li>
-                            </ul>
-    
-                            <ul class="group"><label class="checkbox"><input name="" type="checkbox" value="" />Plug-in</label>
-                              <li><label class="checkbox"><input name="" type="checkbox">list 01</label></li>
-                              <li><label class="checkbox"><input name="" type="checkbox">list 02</label></li>
-                            </ul>
-    
-                            <ul class="group"><label class="checkbox"><input name="" type="checkbox" value="" />Plug-in</label>
-                              <li><label class="checkbox"><input name="" type="checkbox">list 01</label></li>
-                              <li><label class="checkbox"><input name="" type="checkbox">list 02</label></li>
-                            </ul>
-    
-                            <ul class="group"><label class="checkbox"><input name="" type="checkbox" value="" />Plug-in</label>
-                              <li><label class="checkbox"><input name="" type="checkbox">list 01</label></li>
-                              <li><label class="checkbox"><input name="" type="checkbox">list 02</label></li>
-                            </ul>
-    
-                            
-    
-                          
                         </div>
                         <div class="bulid-button-area">
                             <li><input class="small-button config" type="button" value="configuration"/></li>
