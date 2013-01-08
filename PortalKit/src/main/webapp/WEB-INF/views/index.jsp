@@ -8,6 +8,13 @@
 <title>The Power</title>
 </head>
 <body>
+<script id="commonBuildTemplate" type="text/x-jsrender">
+    <ul class="group"><label class="checkbox"><input name="" type="checkbox" value="" /><span>{{>name}}</span></label>
+        {{for subDirs}}
+             <li><label class="checkbox"><input name="" type="checkbox"><span>{{>name}}</span></label></li>
+    	{{/for}}
+    </ul>
+</script>
 
 <div class="mainWrapper">
 
@@ -36,11 +43,7 @@
                         <li>Path</li>
                     </div>
                     <div class="bulid-feature-content">
-                        <div class="bulid-feature-content-folder">
-                            <ul class="group"><label class="checkbox"><input name="" type="checkbox" value="" /><span>Plug-in</span></label>
-                              <li><label class="checkbox"><input name="" type="checkbox"><span>list 01</span></label></li>
-                            </ul>
-                        </div>
+                        <div class="bulid-feature-content-folder"></div>
                         <div class="bulid-button-area">
                             <li><input class="small-button config" type="button" value="configuration"/></li>
                             <li><input class="small-button reset" type="button" value="clean all"/></li>

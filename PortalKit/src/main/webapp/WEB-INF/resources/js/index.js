@@ -6,11 +6,9 @@ function buildOnShow(){
                 return;
             }
             
-            for(var i = 0; i < dirTrees.length; i++){
-                var dirTree = dirTrees[i];
-            }
-        }
-        
+            $('.bulid-feature-content-folder').html(
+    		$('#commonBuildTemplate').render(dirTrees)
+    	     );
     });
 }
 

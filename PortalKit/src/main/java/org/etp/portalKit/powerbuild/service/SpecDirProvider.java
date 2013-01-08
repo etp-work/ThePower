@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.io.Charsets;
@@ -61,19 +62,23 @@ public class SpecDirProvider implements DirProvider {
         list = JSONUtils.fromJSON(json, new TypeReference<List<DirTree>>() {
             //            
         });
-        for (DirTree tree : list) {
-            iterateTrees(tree, path);
+        Iterator<DirTree> itr = list.iterator();
+        while (itr.hasNext()) {
+            DirTree tree = itr.next();
+            iterateTrees(tree, path, itr);
         }
         return list;
     }
 
-    private void iterateTrees(DirTree tree, String base) {
+    private void iterateTrees(DirTree tree, String base, Iterator<DirTree> itr) {
         tree.setSelected(selected.contains(tree.getName()));
         if (StringUtils.isBlank(tree.getRelativePath())) {
             List<DirTree> subs = tree.getSubDirs();
             if (!CollectionUtils.isEmpty(subs)) {
-                for (DirTree subTree : subs) {
-                    iterateTrees(subTree, base);
+                Iterator<DirTree> subItr = subs.iterator();
+                while (subItr.hasNext()) {
+                    DirTree subTree = subItr.next();
+                    iterateTrees(subTree, base, subItr);
                 }
             }
         } else {
@@ -81,6 +86,8 @@ public class SpecDirProvider implements DirProvider {
             File relative = new File(base, relativePath);
             if (relative.isDirectory())
                 tree.setAbsolutePath(relative.getAbsolutePath());
+            else
+                itr.remove();
         }
     }
 }
