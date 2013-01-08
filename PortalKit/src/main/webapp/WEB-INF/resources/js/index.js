@@ -1,6 +1,6 @@
 
 function buildOnShow(){
-  //TODO
+    //TODO
 }
 
 function deployOnShow(){
@@ -28,7 +28,9 @@ $(document).ready(function(){
         ViewManager.addViewListener("onShow", "setting-content", settingsOnShow); //add listener to monitor what will happen when settings-content shown.
 		
 		$('.content-wrapper div.content-box').hide();
-		$('.content-wrapper div.default-tab').show(0, ViewManager.fireViewListener("onShow", $(this).attr("id")));
+		$('.content-wrapper div.default-tab').show(0, function () {
+		    ViewManager.fireViewListener("onShow", $(this).attr("id"));
+		    });
 		$('.tab-header ul li a.default-tab').addClass('active');
 		$('.tab-header ul li a').click( // When a tab is clicked...
 				function(event) { 
@@ -36,7 +38,9 @@ $(document).ready(function(){
 					$(this).addClass('active');
 					var currentTab = $(this).attr('href'); // Set variable "currentTab" to the value of href of clicked tab
 					$(currentTab).siblings().hide(); // Hide all content divs
-					$(currentTab).show(0, ViewManager.fireViewListener("onShow", currentTab.substring(1))); // Show the content div with the id equal to the id of clicked tab
+					$(currentTab).show(0, function () {
+					    ViewManager.fireViewListener("onShow", currentTab.substring(1)); // Show the content div with the id equal to the id of clicked tab
+					});
 					event.preventDefault();
 				}
 			);

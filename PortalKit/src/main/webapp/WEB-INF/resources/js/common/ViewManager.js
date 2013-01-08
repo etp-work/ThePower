@@ -74,19 +74,17 @@ if (!ViewManager) {
      * will be triggered at once.
      */
     ViewManager.fireViewListener = function (type, viewId){
-        return function (){
-                    if(!listeners[type]){
-                       return;
-                    }
+        if(!listeners[type]){
+              return;
+        }
         
-                    var list = listeners[type];
-                    for(var i = 0; i < list.length; i++){
-                          if(list[i].viewId === viewId){
-                               list[i].callback();
-                               break;
-                          }
-                    }
-               }
+        var list = listeners[type];
+        for(var i = 0; i < list.length; i++){
+             if(list[i].viewId === viewId){
+                  list[i].callback();
+                  break;
+             }
+        }
     };
     
     ViewManager.cleanAllViewListeners = function (){
