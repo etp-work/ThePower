@@ -29,7 +29,7 @@ img{ border:none;}
     }
 
 .toolsName{
-    padding:5px 15px;
+    padding:5px;
     color:#CCC;
     font-size:14px;
     font-weight:bolder;
@@ -165,6 +165,7 @@ input[type="checkbox"]{
     padding: 5px 0px 0px 10px;
     height:20px;
     line-height:20px;
+    font-size:12px;
     color:#fff;
     }
 .setting-table thead tr th:first-child{
@@ -181,11 +182,14 @@ input[type="checkbox"]{
     height:32px;
     line-height:32px;
     border-bottom: solid 1px #333;
+    font-size:12px;
     color:#333;
     text-align: left;
     }
     
 .setting-table tr td:first-child{
+	cursor:pointer;
+
     }
     
 .setting-table tfoot tr td{
@@ -225,11 +229,12 @@ input[type="checkbox"]{
     }
 input[type="text"]{
     padding: 2px 6px;
-    width:150px;
+    width:160px;
     border: 1px solid #999;
     border-radius: 4px 4px 4px 4px;
-    height:18px;
-    line-height:18px;
+    height:24px;
+    line-height:24px;
     font-size:11px;
+    color:#666;
     vertical-align: middle;
     }
