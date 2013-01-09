@@ -1,15 +1,18 @@
 
-function buildOnShow(){
+function specTreeController($scope) {
     var url = "/power/getAllTrees.ajax";
     DynamicLoad.loadJSON(url, undefined, function(dirTrees){
             if(!dirTrees){
                 return;
             }
-            
-            $('.bulid-feature-content-folder').html(
-    		$('#commonBuildTemplate').render(dirTrees)
-    	     );
+            $scope.dirTrees = dirTrees;
+            $scope.$apply();
     });
+ 
+}
+
+function buildOnShow(){
+    
 }
 
 function deployOnShow(){

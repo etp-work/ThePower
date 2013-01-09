@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html;charset=utf-8"%>
 <%@ include file="/WEB-INF/views/common/header_top.jsp"%>
-<html>
+<html ng-app>
 <head>
 <%@ include file="/WEB-INF/views/common/header_head.jsp"%>
 <link href="${resources}/css/index.css" rel="stylesheet" type="text/css">
@@ -8,14 +8,6 @@
 <title>The Power</title>
 </head>
 <body>
-<script id="commonBuildTemplate" type="text/x-jsrender">
-    <ul class="group"><label class="checkbox"><input name="" type="checkbox" value="" /><span>{{>name}}</span></label>
-        {{for subDirs}}
-             <li><input name="" type="checkbox"><span>{{>name}}</span></li>
-    	{{/for}}
-    </ul>
-</script>
-
 <div class="mainWrapper">
 
     <div class="header">
@@ -47,7 +39,11 @@
                         <li>Path</li>
                     </div>
                     <div class="bulid-feature-content">
-                        <div class="bulid-feature-content-folder"></div>
+                        <div class="bulid-feature-content-folder" ng-controller="specTreeController">
+                            <ul class="group" ng-repeat="dirTree in dirTrees"><label class="checkbox"><input name="" type="checkbox" value="" /><span>{{dirTree.name}}</span></label>
+                                <li ng-repeat="subTree in dirTree.subDirs"><label class="checkbox"><input name="" type="checkbox"><span>{{subTree.name}}</span></label></li>
+                            </ul>
+                        </div>
                         <div class="bulid-button-area">
                             <li><input class="small-button config" type="button" value="configuration"/></li>
                             <li><input class="small-button reset" type="button" value="clean all"/></li>
