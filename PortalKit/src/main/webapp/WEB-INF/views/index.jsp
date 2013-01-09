@@ -11,7 +11,7 @@
 <script id="commonBuildTemplate" type="text/x-jsrender">
     <ul class="group"><label class="checkbox"><input name="" type="checkbox" value="" /><span>{{>name}}</span></label>
         {{for subDirs}}
-             <li><label class="checkbox"><input name="" type="checkbox"><span>{{>name}}</span></label></li>
+             <li><input name="" type="checkbox"><span>{{>name}}</span></li>
     	{{/for}}
     </ul>
 </script>
@@ -29,13 +29,17 @@
         <div class="tab-header">
             <ul>
                 <li><a class="default-tab" href="#bulid-content">Bulid</a></li>
-                <li><a>Deploy</a></li>
+                <li><a href="#deploy-content">Deploy</a></li>
                 <li><a href="#setting-content">Settings</a></li>
             </ul>
             <div class="clear"></div>
         </div>
         
         <div class="content-wrapper">
+        
+        <!-- ========================================= Bulid ================================================-->
+        
+        
               <div class="content-box default-tab" id="bulid-content">
             
                     <div class="bulid-feature-header">
@@ -62,8 +66,45 @@
                   </div>
                   <div class="clear"></div>
               </div>
+              
+   <!-- ========================================= Deploy ================================================-->
+              
+              <div class="content-box" id="deploy-content">
+                <div class="table-wrapper">
+                    <span class="tdName">Sources Files</span>
+                    
+                    
+                    <div class="war-input">
+                    <input class="input-deploy"type="text" placeholder="Type something…">
+                    <input class="primary-button check" type="button" value="Check"/>
+                    <div class="clear"></div>
+                    </div>
+                    
+                    <div class="war-list-wrapper">
+                        <li><label class="checkbox"><input name="" type="checkbox">list 01</label></li>
+                        <li><label class="checkbox"><input name="" type="checkbox">list 02</label></li>
+                        <li><label class="checkbox"><input name="" type="checkbox">list 03</label></li>
+                        <li><label class="checkbox"><input name="" type="checkbox">list 04</label></li>
+                        <li><label class="checkbox"><input name="" type="checkbox">list 05</label></li>
+                        <li><label class="checkbox"><input name="" type="checkbox">list 06</label></li>
+                        <li><label class="checkbox"><input name="" type="checkbox">list 07</label></li>
+                        <li><label class="checkbox"><input name="" type="checkbox">list 08</label></li>
+                        <li><label class="checkbox"><input name="" type="checkbox">list 09</label></li>
+                        <li><label class="checkbox"><input name="" type="checkbox">list 10</label></li>
+                        <li><label class="checkbox"><input name="" type="checkbox">list 11</label></li>
+                        <li><label class="checkbox"><input name="" type="checkbox">list 12</label></li>
+                        
+                    </div>
+                </div>
+                <div class="main-button-area">
+                    <input class="primary-button save" type="button" value="Deploy"/>
+                    <div class="clear"></div>
+                </div>
+              </div>           
+              
           
-          
+   <!-- ========================================= Settings ================================================-->
+           
               <div class="content-box" id="setting-content">
                     <span class="tdName">Configuration</span>
                     <div class="table-wrapper">
@@ -76,11 +117,11 @@
                         </thead>
                           <tr>
                             <td title="Path of portal-team repository">Design</td>
-                            <td><input id="portalTeamPath" type="text" placeholder="Type something…"></td>
+                            <td><input class="input-setting" id="portalTeamPath" type="text" placeholder="Type something…"></td>
                           </tr>
                           <tr>
                             <td title="Path of webapps under tomcat folder">Deploy</td>
-                            <td><input id="tomcatWebappsPath" type="text" placeholder="Type something…"></td>
+                            <td><input class="input-setting" id="tomcatWebappsPath" type="text" placeholder="Type something…"></td>
                           </tr>
                     </table>
             </div>
