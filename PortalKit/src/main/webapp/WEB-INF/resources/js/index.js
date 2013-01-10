@@ -68,6 +68,16 @@ $(document).ready(function(){
 		    };
 		    DynamicLoad.postJSON(url, settings);
 		});
+		
+		//Close notification:
+        
+        $(".notification").click(
+            function () {
+                $(this).fadeTo(400, 0, function () { 
+                    $(this).slideUp(400);
+                });
+                return false;
+         });
 	    
 	    
 });

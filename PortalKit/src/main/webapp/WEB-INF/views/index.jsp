@@ -66,8 +66,8 @@
    <!-- ========================================= Deploy ================================================-->
               
               <div class="content-box" id="deploy-content">
-                <div class="table-wrapper">
-                    <span class="tdName">Sources Files</span>
+                <span class="tdName">Sources Files</span>
+                <div class="table-wrapper">                 
                     
                     
                     <div class="war-input">
@@ -77,7 +77,8 @@
                     </div>
                     
                     <div class="war-list-wrapper">
-                        <li><label class="checkbox"><input name="" type="checkbox">list 01</label></li>
+                        <li><label class="checkbox"><input name="" type
+                        ="checkbox">list 01</label></li>
                         <li><label class="checkbox"><input name="" type="checkbox">list 02</label></li>
                         <li><label class="checkbox"><input name="" type="checkbox">list 03</label></li>
                         <li><label class="checkbox"><input name="" type="checkbox">list 04</label></li>
@@ -141,8 +142,21 @@
 
 
 
+<!--========================= FOOT & NOTIFICATION ========================================================-->
+
     <div class="foot">
+            <div class="notification information">
+                <span>
+                    Lorem ipsum dolor sit amet.
+                </span>
+            </div>
+            <div class="notification success">
+                <span>
+                    Success notification. 
+                </span>
+            </div>
     </div>
+
 
 </div>
 </body>
