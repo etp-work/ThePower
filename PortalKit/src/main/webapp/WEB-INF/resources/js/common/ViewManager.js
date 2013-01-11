@@ -92,5 +92,11 @@ if (!ViewManager) {
             listeners[i] = [];
         }
     };
+    
+    
+    ViewManager.addNotification = function (type){
+        
+    };
+    
 
 }());

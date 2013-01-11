@@ -140,7 +140,7 @@ public class PropertiesManager {
                 if (annotation.annotationType() == MarkinFile.class) {
                     String nameInFile = ((MarkinFile) annotation).name();
                     try {
-                        this.set(nameInFile, (String) PropertyUtils.getSimpleProperty(obj, field.getName()));
+                        this.set(nameInFile, PropertyUtils.getSimpleProperty(obj, field.getName()).toString());
                     } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
                         e.printStackTrace();
                     }

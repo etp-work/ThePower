@@ -62,7 +62,7 @@ public class DesignDirProvider implements DirProvider {
         String path = handler.get(Settings.PORTAL_TEAM_PATH);
         if (StringUtils.isBlank(path))
             return list;
-        String defs = handler.get(Settings.PT_DEFAULT);
+        String defs = handler.get("pt-default");
         if (!StringUtils.isBlank(defs))
             selected = Arrays.asList(StringUtils.split(defs, ','));
         else

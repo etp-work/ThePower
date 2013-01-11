@@ -18,16 +18,6 @@ public class Settings {
      * webapps wich you have installed in your laptop.
      */
     public static final String TOMCAT_WEBAPPS_PATH = "tomcat-webapps-path";
-    /**
-     * <code>PT_DEFAULT</code> default options within
-     * portal-team-path.
-     */
-    public static final String PT_DEFAULT = "pt-default";
-
-    /**
-     * <code>SPEC_DEFAULT</code> default options within spec-default.
-     */
-    public static final String SPEC_DEFAULT = "spec-default";
 
     @MarkinFile(name = PORTAL_TEAM_PATH)
     private String portalTeamPath;

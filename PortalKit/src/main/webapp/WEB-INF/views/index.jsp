@@ -38,13 +38,13 @@
                     
                     <div class="bulid-feature-content">
 
-                        <div class="bulid-list" ng-controller="specTreeController">
+                        <div class="bulid-list">
                             <ul class="group" ng-repeat="dirTree in dirTrees"><label class="checkbox"><input name="" type="checkbox" value="" /><span>{{dirTree.name}}</span></label>
-                                <li ng-repeat="subTree in dirTree.subDirs"><label class="checkbox"><input name="" type="checkbox"><span>{{subTree.name}}</span></label></li>
+                                <li ng-repeat="subTree in dirTree.subDirs"><label class="checkbox"><input name="" type="checkbox" value="{{subTree.name}}"><span>{{subTree.name}}</span></label></li>
                             </ul>
                         </div>
                         <div class="bulid-button-area">
-                            <li><input class="small-button config" type="button" value="configuration"/></li>
+                            <li><input id="setDefaultSelection" class="small-button config" type="button" value="configuration"/></li>
                             <li><input class="small-button reset" type="button" value="clean all"/></li>
                         <div class="clear"></div>    
                         </div>
