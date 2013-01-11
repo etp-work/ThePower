@@ -69,15 +69,20 @@ $(document).ready(function(){
 		    DynamicLoad.postJSON(url, settings);
 		});
 		
-		//Close notification:
         
-        $(".notification").click(
+    //Close notification:
+        
+        $(".close").click(
             function () {
-                $(this).fadeTo(400, 0, function () { 
+                $(this).parent().fadeTo(400, 0, function () { 
                     $(this).slideUp(400);
                 });
                 return false;
-         });
+            }
+        );
+    
+    
+
 	    
 	    
 });

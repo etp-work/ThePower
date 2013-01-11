@@ -67,13 +67,33 @@ img{ border:none;}
     margin:8px 5px;
     }
 /*============================================== BULID ==============================================*/
-#bulid-content{ display:none;
+#bulid-content{ 
 
     }
     
+.bulid-feature-header li {
+    float:left;
+    width:117px;
+    line-height:24px;
+    text-align:center;
+    border-bottom:solid 1px #666;
+    }
+.bulid-feature-header li a{
+    color:#ccc;
+    background:#999;
+    }   
+    
+.bulid-feature-header li.active{
+    background:#CCC;
+    color:#333;
+    }
+
+    
+
 
 .bulid-list{
     float:left;
+    margin-top:5px;
     background:#fff;
     width:234px;
     height:250px;
@@ -103,7 +123,10 @@ img{ border:none;}
     border-top: solid 1px #999;
     }
     
-
+input[type="checkbox"]{
+    float:left;
+    margin:4px 5px 0px 5px;
+    }
 .bulid-button-area{
     float:left;
     width:234px;
@@ -127,8 +150,7 @@ img{ border:none;}
     }
 /*======================================== Deploy =======================================   */
 
-#deploy-content{}
-
+#deploy-content{display:none;}
 .war-input{
     margin:0 auto;
     padding:5px 2px;
@@ -166,7 +188,8 @@ img{ border:none;}
     font-weight:bolder;
     }   
 .table-wrapper{
-    height:290px;
+    margin-top:5px;
+    height:285px;
     }
 .setting-table{
     width:234px;
@@ -242,12 +265,6 @@ img{ border:none;}
     margin:0 auto;
     width:200px;
     }
-    
-input[type="checkbox"]{
-    float:left;
-    margin:4px 5px 0px 5px;
-    }
-    
 input[type="text"]{
     float:left;
     padding: 2px 6px;
@@ -277,7 +294,6 @@ input[type="text"]{
                 background-repeat: no-repeat !important;
                 font-size: 10px;
                 width: 238px;
-                cursor:pointer;
                 }
                 
 
@@ -312,7 +328,15 @@ input[type="text"]{
                 line-height: 15px;
                 }
 
-
+.notification .close {
+	            width:10px;
+	            height:10px;
+                color:#990000;
+                font-size:9px;
+                position:absolute;
+                right:5px;
+                top:7px;
+                }
 
 
 /*================================================== CSS 3.0 =================================================*/
