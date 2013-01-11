@@ -34,12 +34,11 @@
         
               <div class="content-box default-tab" id="bulid-content">
             
-                    <div class="bulid-feature-header">
-                        <li class="active">Folder</li>
-                        <li>Path</li>
-                    </div>
+                    <span class="tdName">Bulid List</span>
+                    
                     <div class="bulid-feature-content">
-                        <div class="bulid-feature-content-folder" ng-controller="specTreeController">
+
+                        <div class="bulid-list" ng-controller="specTreeController">
                             <ul class="group" ng-repeat="dirTree in dirTrees"><label class="checkbox"><input name="" type="checkbox" value="" /><span>{{dirTree.name}}</span></label>
                                 <li ng-repeat="subTree in dirTree.subDirs"><label class="checkbox"><input name="" type="checkbox"><span>{{subTree.name}}</span></label></li>
                             </ul>
