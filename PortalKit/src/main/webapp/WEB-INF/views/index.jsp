@@ -8,6 +8,7 @@
 <title>The Power</title>
 </head>
 <body>
+<input id="resources" type="hidden" value="${resources}"/>
 <div class="mainWrapper">
 
     <div class="header">
@@ -20,7 +21,7 @@
     <div class="maincontent">
         <div class="tab-header">
             <ul>
-                <li><a class="default-tab" href="#bulid-content">Bulid</a></li>
+                <li><a href="#bulid-content">Bulid</a></li>
                 <li><a href="#deploy-content">Deploy</a></li>
                 <li><a href="#setting-content">Settings</a></li>
             </ul>
@@ -32,7 +33,7 @@
         <!-- ========================================= Bulid ================================================-->
         
         
-              <div class="content-box default-tab" id="bulid-content">
+              <div class="content-box" id="bulid-content">
             
                     <span class="tdName">Bulid List</span>
                     
@@ -45,7 +46,7 @@
                         </div>
                         <div class="bulid-button-area">
                             <li><input id="setDefaultSelection" class="small-button config" type="button" value="configuration"/></li>
-                            <li><input class="small-button reset" type="button" value="clean all"/></li>
+                            <li><input id="resetDefaultSelection" class="small-button reset" type="button" value="clean all"/></li>
                         <div class="clear"></div>    
                         </div>
                         
