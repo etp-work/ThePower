@@ -168,34 +168,6 @@ if (!ViewManager) {
 	    );
     };
     
-    ViewManager.removeNotification = function(id){
-        var isRemoved = false;
-        for(var i = 0; i < notifications.length; i++){
-            if(notifications[i].id === id){
-                notifications.splice(i, 1);
-                isRemoved = true;
-            }
-        }
-        $("#"+id).fadeTo(400, 0, function(){
-                $(this).slideUp(400, function(){
-                        $(this).remove();
-                        var showNotification = notifications[notifications.length - 2];
-                        var showId;
-                        if(showNotification){
-                           showId = showNotification.id;
-                        }
-                        if(showId){
-                            $("#"+showId).fadeTo(400, 1, function(){
-                                $(this).slideDown(400);
-                            });
-                        }
-                    }
-                );
-            }
-        );
-        
-    };
-    
     function indexOfNotification(id){
         for(var i = 0; i < notifications.length; i++){
             if(notifications[i].id === id){
@@ -205,46 +177,127 @@ if (!ViewManager) {
         return -1;
     }
     
+    /**
+     * Remove specified notification from whole page.
+     * If the notification has been shown at the top 
+     * two positions, the next hidden notification 
+     * will be displayed to the top two position.
+     * 
+     * @param id identity of the notification.
+     */
+    ViewManager.removeNotification = function(id){
+        var index = indexOfNotification(id);
+        if(index < 0){
+            return;
+        }
+        var needShowNext = (index >= (notifications.length - 2)) ? true : false;
+        for(var i = 0; i < notifications.length; i++){
+            if(notifications[i].id === id){
+                notifications.splice(i, 1);
+            }
+        }
+        $("#"+id).fadeTo(400, 0, function(){
+                $(this).slideUp(400, function(){
+                        $(this).remove();
+                        if(needShowNext){
+                            var showNotification = notifications[notifications.length - 2];
+                            var showId;
+                            if(showNotification){
+                               showId = showNotification.id;
+                            }
+                            if(showId){
+                                $("#"+showId).fadeTo(400, 1, function(){
+                                    $(this).slideDown(400);
+                                });
+                            }
+                        }
+                });
+        });
+        
+    };
     
-    ViewManager.addNotification = function (type, message){
+    /**
+     * Add a notification with specified args at the bottom of the 
+     * whole page.
+     * 
+     * @param options.type mandatory. indicate what kind of this 
+     *        notification. Such as success/information....
+     *        options.message mandatory. indicate message notification.
+     *        options.callback optional. A function to call once the 
+     *        message clicked.
+     *        options.timeout optional. A millisecond determining how 
+     *        long the notification will stay.
+     * @returns id identity of the added notification. Can be used to 
+     *        remove it.
+     */
+    ViewManager.addNotification = function (options){
+        if(!options){
+            return undefined;
+        }
+        var type = options.type;
+        var message = options.message;
+        var callback = options.callback;
+        var timeout = options.timeout;
+        
+        if(!type){
+            return undefined;
+        }
         
         var resources = $('#resources').val();
         var id = new Date().getTime()+"-noti";
         var nodificationHtml = "<div id=\""+id+"\" class=\"notification "+type+"\" style=\"display: none;\">"+
                 "<a href=\"#\" class=\"close\"><img src=\""+resources+"/images/icons/cross_grey_small.png\" title=\"Close this notification\" alt=\"close\" /></a>"+
-                "<span>"+
+                "<span class=\"message\">"+
                        message+
                 "</span>"+
             "</div>";
+        if(callback){
+            nodificationHtml = "<div id=\""+id+"\" class=\"notification "+type+"\" style=\"display: none;\">"+
+            "<a href=\"#\" class=\"close\"><img src=\""+resources+"/images/icons/cross_grey_small.png\" title=\"Close this notification\" alt=\"close\" /></a>"+
+            "<span class=\"message\"><a href=\"#\">"+
+                   message+
+            "</a></span>"+
+            "</div>";
+        }
         var closeCallback = function(event){
             ViewManager.removeNotification(id);
             event.preventDefault();
         };
         
-        if(notifications.length >= 2){
-            $("#"+notifications[notifications.length-2].id).fadeTo(400, 0, function(){
-                $(this).slideUp(400, function(){
-                    $('.foot').prepend(nodificationHtml);
-                    $("#"+id).fadeTo(400, 1, function(){
-                        $(this).slideDown(400);
-                        }
-                    );
-                    $("#"+id).find('.close').on("click", closeCallback);
-                });
-            });
-        }else{
+        var addHtmlCallback = function(){
             $('.foot').prepend(nodificationHtml);
             $("#"+id).fadeTo(400, 1, function(){
                 $(this).slideDown(400);
                 }
             );
             $("#"+id).find('.close').on("click", closeCallback);
+            if(callback){
+                $("#"+id).find('.message').on("click", function(event){
+                    callback();
+                    ViewManager.removeNotification(id);
+                    event.preventDefault();
+                });
+            }
+            if(timeout){
+                setTimeout(function(){
+                    ViewManager.removeNotification(id);
+                }, timeout);
+            }
+        };
+        
+        if(notifications.length >= 2){
+            $("#"+notifications[notifications.length-2].id).fadeTo(400, 0, function(){
+                $(this).slideUp(400, addHtmlCallback);
+            });
+        }else{
+            addHtmlCallback();
         }
         
         notifications.push({
             id: id,
             callback: closeCallback
         });
+        return id;
     };
     
 

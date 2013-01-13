@@ -94,7 +94,16 @@ $(document).ready(function(){
 		            portalTeamPath: ptPath,
 		            tomcatWebappsPath: twPath
 		        };
-		    DynamicLoad.postJSON(url, settings);
+		    DynamicLoad.postJSON(url, settings, function(){
+		        ViewManager.addNotification({
+		            type: "success",
+		            message: "Successfully saved",
+		            timeout: 5000,
+		            callback: function(){
+		                alert("hello save");
+		            }
+		        });
+		    });
 		}
     );
 		

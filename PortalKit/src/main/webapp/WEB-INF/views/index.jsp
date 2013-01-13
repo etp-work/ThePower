@@ -147,7 +147,7 @@
     <div class="foot">
             <div class="notification information">
                 <a href="#" class="close"><img src="${resources}/images/icons/cross_grey_small.png" title="Close this notification" alt="close" /></a>
-                <span>
+                <span class="message">
                     Lorem ipsum dolor sit amet.
                 </span>
             </div>
