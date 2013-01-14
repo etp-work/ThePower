@@ -14,21 +14,20 @@ public class StringUtils {
 
     /**
      * @param arrayString
-     * @return List<String>
+     * @return object
      */
-    public static List<String> fromString(String arrayString) {
-        List<String> list = new ArrayList<String>();
+    public static Object fromString(String arrayString) {
         if (org.apache.commons.lang.StringUtils.isBlank(arrayString))
-            return list;
-        String arrayStringClone = null;
+            return "";
         if (arrayString.startsWith("[") && arrayString.endsWith("]")) {
+            List<String> list = new ArrayList<String>();
+            String arrayStringClone = null;
             arrayStringClone = org.apache.commons.lang.StringUtils.removeEnd(arrayString, "]");
             arrayStringClone = org.apache.commons.lang.StringUtils.removeStart(arrayStringClone, "[");
-        } else {
-            arrayStringClone = arrayString;
+            list = Arrays.asList(org.apache.commons.lang.StringUtils.split(arrayStringClone, ','));
+            return list;
         }
 
-        list = Arrays.asList(org.apache.commons.lang.StringUtils.split(arrayStringClone, ','));
-        return list;
+        return arrayString;
     }
 }

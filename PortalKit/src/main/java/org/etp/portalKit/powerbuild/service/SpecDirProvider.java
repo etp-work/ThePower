@@ -42,6 +42,7 @@ public class SpecDirProvider implements DirProvider {
     public SpecDirProvider() {
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<DirTree> retrieveDirInfo() {
         List<DirTree> list = new ArrayList<DirTree>();
@@ -50,7 +51,7 @@ public class SpecDirProvider implements DirProvider {
             return list;
         String defs = handler.get(DefaultSelection.SPEC_DEFAULT);
         if (!StringUtils.isBlank(defs))
-            selected = Arrays.asList(StringUtils.split(defs, ','));
+            selected = (List<String>) org.etp.portalKit.common.util.StringUtils.fromString(defs);
         else
             selected = new ArrayList<String>();
         Resource resource = resolver.getResource(SPECIAL_DIR);
@@ -72,7 +73,7 @@ public class SpecDirProvider implements DirProvider {
     }
 
     private void iterateTrees(DirTree tree, String base, Iterator<DirTree> itr) {
-        tree.setSelected(selected.contains(tree.getName()));
+        tree.setChecked(selected.contains(tree.getName()) ? "true" : "false");
         if (StringUtils.isBlank(tree.getRelativePath())) {
             List<DirTree> subs = tree.getSubDirs();
             if (!CollectionUtils.isEmpty(subs)) {
