@@ -45,8 +45,8 @@
                             </ul>
                         </div>
                         <div class="bulid-button-area">
-                            <li><input id="setDefaultSelection" class="small-button config" type="button" value="configuration"/></li>
-                            <li><input id="resetDefaultSelection" class="small-button reset" type="button" value="clean all"/></li>
+                            <li><input id="setDefaultSelection" class="small-button config" type="button" value="Set Default"/></li>
+                            <li><input id="resetDefaultSelection" class="small-button reset" type="button" value="Reset"/></li>
                         <div class="clear"></div>    
                         </div>
                         

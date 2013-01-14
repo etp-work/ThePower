@@ -65,6 +65,8 @@ img{ border:none;}
     }
 .foot{
     margin:8px 5px;
+    height:45px;
+    overflow:hidden;
     }
 /*============================================== BULID ==============================================*/
 #bulid-content{ 
