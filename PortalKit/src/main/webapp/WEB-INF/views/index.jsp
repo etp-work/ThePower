@@ -40,8 +40,8 @@
                     <div class="bulid-feature-content">
 
                         <div class="bulid-list">
-                            <ul class="group" ng-repeat="dirTree in dirTrees"><label class="checkbox"><input name="" type="checkbox" value="" {{dirTree.checked}} /><span>{{dirTree.name}}</span></label>
-                                <li ng-repeat="subTree in dirTree.subDirs"><label class="checkbox"><input name="" type="checkbox" {{subTree.checked}} value="{{subTree.name}}"><span>{{subTree.name}}</span></label></li>
+                            <ul class="group" ng-repeat="dirTree in dirTrees"><label class="checkbox"><input name="" type="checkbox" value=""  /><span>{{dirTree.name}}</span></label>
+                                <li ng-repeat="subTree in dirTree.subDirs"><label class="checkbox"><input name="" type="checkbox" ng-checked="subTree.checked" value="{{subTree.name}}"><span>{{subTree.name}}</span></label></li>
                             </ul>
                         </div>
                         <div class="bulid-button-area">

@@ -24,7 +24,8 @@ public class StringUtils {
             String arrayStringClone = null;
             arrayStringClone = org.apache.commons.lang.StringUtils.removeEnd(arrayString, "]");
             arrayStringClone = org.apache.commons.lang.StringUtils.removeStart(arrayStringClone, "[");
-            list = Arrays.asList(org.apache.commons.lang.StringUtils.split(arrayStringClone, ','));
+            list = Arrays.asList(org.apache.commons.lang.StringUtils.stripAll(org.apache.commons.lang.StringUtils
+                    .split(arrayStringClone, ',')));
             return list;
         }
 

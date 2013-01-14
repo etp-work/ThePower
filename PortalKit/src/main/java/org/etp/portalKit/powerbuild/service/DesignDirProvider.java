@@ -71,7 +71,7 @@ public class DesignDirProvider implements DirProvider {
         if (!root.isDirectory())
             return list;
         DirTree rootTree = new DirTree(root.getName(), root.getAbsolutePath());
-        rootTree.setChecked(selected.contains(root.getName()) ? "checked" : "");
+        rootTree.setChecked(selected.contains(root.getName()));
         iterateTrees(root, rootTree);
         list.add(rootTree);
         return list;
@@ -81,7 +81,7 @@ public class DesignDirProvider implements DirProvider {
         File[] files = parent.listFiles(filter);
         for (File file : files) {
             DirTree subDt = new DirTree(file.getName(), file.getAbsolutePath());
-            subDt.setChecked(selected.contains(file.getName()) ? "checked" : "");
+            subDt.setChecked(selected.contains(file.getName()));
             dt.addSub(subDt);
             if (hasSubElement(file)) {
                 iterateTrees(file, subDt);

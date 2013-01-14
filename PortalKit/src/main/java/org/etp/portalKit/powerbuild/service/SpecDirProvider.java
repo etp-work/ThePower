@@ -3,7 +3,6 @@ package org.etp.portalKit.powerbuild.service;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -73,7 +72,7 @@ public class SpecDirProvider implements DirProvider {
     }
 
     private void iterateTrees(DirTree tree, String base, Iterator<DirTree> itr) {
-        tree.setChecked(selected.contains(tree.getName()) ? "true" : "false");
+        tree.setChecked(selected.contains(tree.getName()));
         if (StringUtils.isBlank(tree.getRelativePath())) {
             List<DirTree> subs = tree.getSubDirs();
             if (!CollectionUtils.isEmpty(subs)) {

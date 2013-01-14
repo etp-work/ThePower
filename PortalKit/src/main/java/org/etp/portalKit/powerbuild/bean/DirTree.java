@@ -12,7 +12,7 @@ public class DirTree {
     private String absolutePath;
     private String relativePath;
     private List<DirTree> subDirs;
-    private String checked;
+    private boolean checked;
 
     /**
      * Creates a new instance of <code>DirTree</code>.
@@ -97,16 +97,16 @@ public class DirTree {
     }
 
     /**
-     * @return Returns the checked.
+     * @return checked
      */
-    public String getChecked() {
+    public boolean isChecked() {
         return checked;
     }
 
     /**
-     * @param checked The checked to set.
+     * @param checked
      */
-    public void setChecked(String checked) {
+    public void setChecked(boolean checked) {
         this.checked = checked;
     }
 }
