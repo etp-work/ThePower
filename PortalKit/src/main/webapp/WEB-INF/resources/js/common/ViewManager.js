@@ -31,6 +31,24 @@ if (!ViewManager) {
      *};
      */
     var listeners = {};
+    
+    /*
+     * var notifications = [
+     *            {
+     *                id: 
+     *            
+     *            
+     *            },
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * ];
+     * 
+     */
     var notifications = [];
     
     /**
@@ -170,7 +188,7 @@ if (!ViewManager) {
     
     function indexOfNotification(id){
         for(var i = 0; i < notifications.length; i++){
-            if(notifications[i].id === id){
+            if(notifications[i] === id){
                return i;
             }
         }
@@ -192,7 +210,7 @@ if (!ViewManager) {
         }
         var needShowNext = (index >= (notifications.length - 2)) ? true : false;
         for(var i = 0; i < notifications.length; i++){
-            if(notifications[i].id === id){
+            if(notifications[i] === id){
                 notifications.splice(i, 1);
             }
         }
@@ -201,12 +219,8 @@ if (!ViewManager) {
                         $(this).remove();
                         if(needShowNext){
                             var showNotification = notifications[notifications.length - 2];
-                            var showId;
                             if(showNotification){
-                               showId = showNotification.id;
-                            }
-                            if(showId){
-                                $("#"+showId).fadeTo(400, 1, function(){
+                                $("#"+showNotification).fadeTo(400, 1, function(){
                                     $(this).slideDown(400);
                                 });
                             }
@@ -226,7 +240,7 @@ if (!ViewManager) {
      *        options.callback optional. A function to call once the 
      *        message clicked.
      *        options.timeout optional. A millisecond determining how 
-     *        long the notification will stay.
+     *        long the notification will stay. Default value is 1800000ms.
      * @returns id identity of the added notification. Can be used to 
      *        remove it.
      */
@@ -278,25 +292,23 @@ if (!ViewManager) {
                     event.preventDefault();
                 });
             }
-            if(timeout){
-                setTimeout(function(){
-                    ViewManager.removeNotification(id);
-                }, timeout);
+            if(!timeout){
+                timeout = 1800000;
             }
+            setTimeout(function(){
+                ViewManager.removeNotification(id);
+            }, timeout);
         };
         
         if(notifications.length >= 2){
-            $("#"+notifications[notifications.length-2].id).fadeTo(400, 0, function(){
+            $("#"+notifications[notifications.length-2]).fadeTo(400, 0, function(){
                 $(this).slideUp(400, addHtmlCallback);
             });
         }else{
             addHtmlCallback();
         }
         
-        notifications.push({
-            id: id,
-            callback: closeCallback
-        });
+        notifications.push(id);
         return id;
     };
     

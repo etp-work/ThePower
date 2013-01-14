@@ -69,9 +69,19 @@ $(document).ready(function(){
 		    DynamicLoad.postJSON(url, {
 		        selection: defaultSelection
 		    }, function (){
-                //TODO success callback		        
-		    }, function (){
-		        //TODO error callback
+		        ViewManager.addNotification({
+                    type: "success",
+                    message: "Successfully saved default selection.",
+                    timeout: 5000,
+                    callback: function(){
+                        alert("hello save");
+                    }
+                });        
+		    }, function (error){
+		        ViewManager.addNotification({
+                    type: "error",
+                    message: error.message
+                });
 		    });
 		}
    );
@@ -97,12 +107,17 @@ $(document).ready(function(){
 		    DynamicLoad.postJSON(url, settings, function(){
 		        ViewManager.addNotification({
 		            type: "success",
-		            message: "Successfully saved",
+		            message: "Successfully saved settings",
 		            timeout: 5000,
 		            callback: function(){
 		                alert("hello save");
 		            }
 		        });
+		    }, function(error){
+		        ViewManager.addNotification({
+                    type: "error",
+                    message: error.message
+                });
 		    });
 		}
     );
