@@ -12,7 +12,7 @@
 <div class="mainWrapper">
 
     <div class="header">
-        <div class="toolsName">The Power</div>    
+        <div class="toolsName"><img class="logo" src="${resources}/images/logo_24.png"/>THE POWER</div>    
     </div>
 
 
