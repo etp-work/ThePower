@@ -8,10 +8,35 @@ $(document).ready(function(){
                 if(!dirTrees){
                     return;
                 }
+                $('.group label input').off("click");
                 var scope = angular.element($('.bulid-list')).scope();
                 scope.$apply(function(){
                     scope.dirTrees = dirTrees;
                 });
+                $('.group label input').on("click", 
+                        function(event){
+                            var isChecked = $(this).is(':checked');
+                            var isParent = $(this).parent().siblings().length > 0;
+                            if(isParent){
+                               $(this).parent().siblings().find('label input').attr("checked", isChecked);
+                            }else{
+                               if(isChecked){
+                                   $(this).parent().parent().parent().find('label').first().find('input').attr("checked", isChecked);
+                               }else{
+                                   var isAllFalse = true;
+                                   $(this).parent().parent().siblings().each(function(){
+                                       if($(this).find('label input').is(':checked')){
+                                           isAllFalse = false;
+                                       }
+                                   });
+                                   if(isAllFalse){
+                                       $(this).parent().parent().parent().find('label').first().find('input').attr("checked", isChecked);
+                                   }
+                               }
+                            }
+                            
+                        }
+                );
         });
     }
 
@@ -59,7 +84,7 @@ $(document).ready(function(){
     $('#setDefaultSelection').click(
         function(event){
 		    var defaultSelection = [];
-		    $('.bulid-list .group li label input').each(function (){
+		    $('.bulid-list .group label input').each(function (){
 		        if($(this).is(':checked')){
 		            defaultSelection.push($(this).val());
 		        }
@@ -90,6 +115,12 @@ $(document).ready(function(){
         function(event){
             ViewManager.addNotification("success", "You are right");
         }        
+    );
+    
+    $('.bulid-list .group label input').select(
+            function(event){
+                alert($(this).val());
+            }
     );
 		
 		
