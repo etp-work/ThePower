@@ -21,9 +21,10 @@
     <div class="maincontent">
         <div class="tab-header">
             <ul>
-                <li><a href="#bulid-content">Bulid</a></li>
+                <li><a class="default-tab" href="#bulid-content">Bulid</a></li>
                 <li><a href="#deploy-content">Deploy</a></li>
-                <li><a href="#setting-content">Settings</a></li>
+                <li><a href="#test-content">Test</a></li>
+                <li><a href="#setting-content">Set</a></li>
             </ul>
             <div class="clear"></div>
         </div>
@@ -44,7 +45,7 @@
                                 <li ng-repeat="subTree in dirTree.subDirs"><label class="checkbox"><input name="" type="checkbox" ng-checked="subTree.checked" value="{{subTree.name}}"><span>{{subTree.name}}</span></label></li>
                             </ul>
                         </div>
-                        <div class="bulid-button-area">
+                        <div class="config-button-area">
                             <li><input id="setDefaultSelection" class="small-button config" type="button" value="Set Default"/></li>
                             <li><input id="resetDefaultSelection" class="small-button reset" type="button" value="Reset"/></li>
                         <div class="clear"></div>    
@@ -95,9 +96,39 @@
                 </div>
                 <div class="main-button-area">
                     <input class="primary-button save" type="button" value="Deploy"/>
-                    <div class="clear"></div>
                 </div>
-              </div>           
+              </div>     
+              
+ <!-- ========================================= Test ================================================--> 
+             <div class="content-box" id="test-content">
+                    <span class="tdName">User Story List</span>
+                    
+                    <div class="test-feature-content">
+                        <div class="us-list">
+                        
+                            <ul class="group"><label class="checkbox"><input name="" type="checkbox" value="" />User story 01</label>
+                              <li><input name="" type="checkbox">list 01</li>
+                              <li><input name="" type="checkbox">list 02</li>
+                            </ul>
+                            
+                            <ul class="group"><label class="checkbox"><input name="" type="checkbox" value="" />User story 02</label>
+                              <li><input name="" type="checkbox">list 01</li>
+                              <li><input name="" type="checkbox">list 02</li>
+                            </ul>
+                        
+                        </div>
+                        <div class="config-button-area">
+                            <li><input class="small-button config" type="button" value="Set Default"/></li>
+                            <li><input class="small-button reset" type="button" value="Reset"/></li>
+                        <div class="clear"></div>    
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                    
+                    <div class="main-button-area">
+                        <input class="primary-button test" type="button" value="Test"/>
+                    </div>
+             </div>      
               
           
    <!-- ========================================= Settings ================================================-->
@@ -125,7 +156,6 @@
                     
                     <div class="main-button-area">
                         <input id="saveSettings" class="primary-button save" type="button" value="Save"/>
-                        <div class="clear"></div>
                     </div>
 
 
@@ -145,6 +175,12 @@
 <!--========================= FOOT & NOTIFICATION ========================================================-->
 
     <div class="foot">
+            <div class="notification error">
+                <a href="#" class="close"><img src="${resources}/images/icons/cross_grey_small.png" title="Close this notification" alt="close" /></a>
+                <span>
+                    Success notification. 
+                </span>
+            </div>
             <div class="notification information">
                 <a href="#" class="close"><img src="${resources}/images/icons/cross_grey_small.png" title="Close this notification" alt="close" /></a>
                 <span class="message">

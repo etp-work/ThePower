@@ -63,14 +63,34 @@ img{ border:none;}
     height:345px;
     background:#999;
     }
+    
+.config-button-area{
+    float:left;
+    width:234px;
+    background:#666;
+    height:30px;
+    }
+    
+.config-button-area li{
+    float:left;
+    margin:5px 0px;
+    width:50%;
+    text-align:center;
+    }
+        
+.main-button-area{
+    margin-top:5px;
+    }   
+    
+
 .foot{
     margin:8px 5px;
     height:45px;
     overflow:hidden;
     }
 /*============================================== BULID ==============================================*/
-#bulid-content{ 
-
+#bulid-content{
+    display:none; 
     }
     
 .bulid-feature-header li {
@@ -94,11 +114,10 @@ img{ border:none;}
 
 
 .bulid-list{
-    float:left;
     margin-top:5px;
     background:#fff;
     width:234px;
-    height:250px;
+    height:255px;
     overflow:auto;
     }
     
@@ -125,27 +144,12 @@ img{ border:none;}
     border-top: solid 1px #999;
     }
     
-input[type="checkbox"]{
-    float:left;
-    margin:4px 5px 0px 5px;
-    }
-.bulid-button-area{
-    float:left;
-    width:234px;
-    background:#666;
-    height:30px;
-    }
-.bulid-button-area li{
-    float:left;
-    margin:5px 0px;
-    width:50%;
-    text-align:center;
-    }
+
 
     
 .check-deploy{
     float:left;
-    margin:13px 0px 0px 10px;
+    margin:5px 0px 0px 10px;
     height:22px;
     line-height:22px;
     vertical-align:middle;
@@ -177,6 +181,16 @@ input[type="checkbox"]{
     color:#CCC;
     border-top: solid 1px #999;
     }
+/*====================================== TEST ===============================*/
+
+.us-list{
+    margin-top:5px;
+    background:#fff;
+    width:234px;
+    height:255px;
+    overflow:auto;
+    }
+
     
 
 /*====================================== SETTINGS ===============================*/
@@ -255,7 +269,6 @@ input[type="checkbox"]{
     }   
 .bulid{
     float:left;
-    margin-top:10px;
     width:150px;
     }
 .check{
@@ -267,6 +280,16 @@ input[type="checkbox"]{
     margin:0 auto;
     width:200px;
     }
+.test{
+    display:block;
+    margin:0 auto;
+    width:200px;
+    }
+input[type="checkbox"]{
+    float:left;
+    margin:4px 5px 0px 5px;
+    }
+    
 input[type="text"]{
     float:left;
     padding: 2px 6px;
@@ -281,7 +304,7 @@ input[type="text"]{
     }
 .input-deploy{
     margin-top:2px;
-    width:155px;
+    width:150px;
     border: 1px solid #666;
     }
 
@@ -331,8 +354,8 @@ input[type="text"]{
                 }
 
 .notification .close {
-	            width:10px;
-	            height:10px;
+                width:10px;
+                height:10px;
                 color:#990000;
                 font-size:9px;
                 position:absolute;
