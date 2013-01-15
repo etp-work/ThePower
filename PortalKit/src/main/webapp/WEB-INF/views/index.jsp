@@ -21,7 +21,7 @@
     <div class="maincontent">
         <div class="tab-header">
             <ul>
-                <li><a href="#bulid-content">Bulid</a></li>
+                <li><a class="active" href="#bulid-content">Bulid</a></li>
                 <li><a href="#deploy-content">Deploy</a></li>
                 <li><a href="#test-content">Test</a></li>
                 <li><a href="#setting-content">Set</a></li>
@@ -178,7 +178,7 @@
             <div class="notification error">
                 <a href="#" class="close"><img src="${resources}/images/icons/cross_grey_small.png" title="Close this notification" alt="close" /></a>
                 <span>
-                    Success notification. 
+                    Error notification. 
                 </span>
             </div>
             <div class="notification information">
