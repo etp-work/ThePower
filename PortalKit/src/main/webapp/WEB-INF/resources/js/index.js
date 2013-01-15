@@ -95,6 +95,7 @@ $(document).ready(function(){
 		    if(defaultSelection.length === 0){
 		        ViewManager.addNotification({
                     type: "attention",
+                    timeout: 30000,
                     message: "You can't set nothing to default."
                 });
 		        event.preventDefault();
