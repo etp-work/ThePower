@@ -6,10 +6,10 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.etp.portalKit.common.service.PropertiesManager;
-import org.etp.portalKit.powerbuild.bean.DefaultSelection;
+import org.etp.portalKit.common.shell.CommandResult;
 import org.etp.portalKit.powerbuild.bean.DirTree;
-import org.etp.portalKit.powerbuild.service.DirProvider;
+import org.etp.portalKit.powerbuild.bean.Selection;
+import org.etp.portalKit.powerbuild.logic.PowerBuildLogic;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,11 +22,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class PowerBuildController {
 
-    @Resource(name = "specProvider")
-    private DirProvider specProvider;
-
-    @Resource(name = "propertiesManager")
-    private PropertiesManager prop;
+    @Resource(name = "buildLogic")
+    private PowerBuildLogic logic;
 
     /**
      * @return next page
@@ -42,18 +39,30 @@ public class PowerBuildController {
     @RequestMapping(value = "/powerbuild/getAllTrees.ajax", method = RequestMethod.GET)
     public @ResponseBody
     List<DirTree> getBuildTrees() {
-        List<DirTree> retrieveDirInfo = specProvider.retrieveDirInfo();
-        return retrieveDirInfo;
+        return logic.getSpecBuildTrees();
     }
 
     /**
-     * @param selection 
+     * @param selection
      * @return next page
      */
     @RequestMapping(value = "/powerbuild/setDefault.ajax", method = RequestMethod.POST)
     public @ResponseBody
-    Map<String, String> setDefault(@RequestBody DefaultSelection selection) {
-        prop.fromBean(selection);
+    Map<String, String> setDefault(@RequestBody Selection selection) {
+        logic.setSelectionsToSettings(selection);
         return Collections.emptyMap();
+    }
+
+    /**
+     * Build one package.
+     * 
+     * @param selection
+     * @return build result
+     */
+    @RequestMapping(value = "/powerbuild/build.ajax", method = RequestMethod.POST)
+    public @ResponseBody
+    CommandResult build(@RequestBody String selection) {
+        CommandResult build = logic.build(selection);
+        return build;
     }
 }

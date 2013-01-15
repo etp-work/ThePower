@@ -12,8 +12,8 @@ import org.apache.commons.lang.StringUtils;
 import org.codehaus.jackson.type.TypeReference;
 import org.etp.portalKit.common.service.PropertiesManager;
 import org.etp.portalKit.common.util.JSONUtils;
-import org.etp.portalKit.powerbuild.bean.DefaultSelection;
 import org.etp.portalKit.powerbuild.bean.DirTree;
+import org.etp.portalKit.powerbuild.bean.Selection;
 import org.etp.portalKit.setting.bean.Settings;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
@@ -48,7 +48,7 @@ public class SpecDirProvider implements DirProvider {
         String path = handler.get(Settings.PORTAL_TEAM_PATH);
         if (path == null)
             return list;
-        String defs = handler.get(DefaultSelection.SPEC_DEFAULT);
+        String defs = handler.get(Selection.SPEC_DEFAULT);
         if (!StringUtils.isBlank(defs))
             selected = (List<String>) org.etp.portalKit.common.util.StringUtils.fromString(defs);
         else

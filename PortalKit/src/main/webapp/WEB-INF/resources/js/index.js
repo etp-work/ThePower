@@ -1,26 +1,30 @@
 $(document).ready(function(){
 
 //=======================initialization=================================
-//listeners
+    //variables
+    var shownViewId;
+    
+    //listeners
     function buildOnShowListener(){
         var url = "/powerbuild/getAllTrees.ajax";
         DynamicLoad.loadJSON(url, undefined, function(dirTrees){
                 if(!dirTrees){
                     return;
                 }
-                $('.group label .parent').off("click");
-                $('.group .child').off("click");
+                $('.group label .parent').off("click");//remove click binding to .parent first.
+                $('.group .child').off("click");//remove click binding to .child first.
                 var scope = angular.element($('.bulid-list')).scope();
                 scope.$apply(function(){
                     scope.dirTrees = dirTrees;
                 });
+                //rebinding click to .parent.
                 $('.group label .parent').on("click", 
                         function(event){
                             var isChecked = $(this).is(':checked');
                             var isParent = $(this).parent().siblings().find('.child').attr("checked", isChecked);
                         }
                 );
-                
+              //rebinding click to .child.
                 $('.group .child').on("click", 
                         function(event){
                             var isChecked = $(this).is(':checked');
@@ -68,8 +72,8 @@ $(document).ready(function(){
     ViewManager.hide('.content-wrapper div.content-box');
     //show the default content (build-content).
     ViewManager.show('#bulid-content');
-    //set tab of default content to active state.
-    $('#bulid-content').addClass('active');
+    //set shownViewId to default content.
+    shownViewId = "bulid-content";
     //set tab event to switch content views.
     $('.tab-header ul li a').click(
 	    function(event) { 
@@ -78,63 +82,149 @@ $(document).ready(function(){
                 var currentTab = $(this).attr('href'); // Set variable "currentTab" to the value of href of clicked tab
                 $(currentTab).siblings().hide(); // Hide all content divs
                 ViewManager.show(currentTab);
+                shownViewId = $(currentTab).attr("id");//set shownViewId to currently displayed viewId.
                 event.preventDefault();
         }
     );
 		
 //=======================build page===================================
+    
+    function setDef4Build(defaultSelection, message){
+        var url = "/powerbuild/setDefault.ajax";
+        
+        DynamicLoad.postJSON(url, {
+            selection: defaultSelection
+        }, function (){
+            ViewManager.addNotification({
+                type: "success",
+                message: message,
+                timeout: 5000
+            });        
+        }, function (error){
+            ViewManager.addNotification({
+                type: "error",
+                message: error.message
+            });
+        });
+    }
+    
+    function getBuildSelection(){
+        var defaultSelection = [];
+        $('.bulid-list .group input').each(function (){
+            if($(this).is(':checked')){
+                defaultSelection.push($(this).val());
+            }
+        });
+        return defaultSelection;
+    }
+    
+    function saveDefSel4Build(){
+        var defaultSelection = getBuildSelection();
+        
+        if(defaultSelection.length === 0){//if no anything checked, give a warning.
+            ViewManager.addNotification({
+                type: "attention",
+                timeout: 30000,
+                message: "You can't set nothing to default."
+            });
+            return;
+        }
+        setDef4Build(defaultSelection, "Successfully saved default selection.");
+    }
+    
+    function reset4Build(){
+        var defaultSelection = [];
+        $('.bulid-list .group input').each(function (){
+            if($(this).is(':checked')){
+                $(this).attr("checked", false);
+            }
+        });
+        setDef4Build(defaultSelection, "Successfully reset default selection.");
+    }
+    
     $('#setDefaultSelection').click(
         function(event){
-		    var defaultSelection = [];
-		    $('.bulid-list .group input').each(function (){
-		        if($(this).is(':checked')){
-		            defaultSelection.push($(this).val());
-		        }
-		    });
-		    
-		    if(defaultSelection.length === 0){
-		        ViewManager.addNotification({
-                    type: "attention",
-                    timeout: 30000,
-                    message: "You can't set nothing to default."
-                });
-		        event.preventDefault();
-		        return;
-		    }
-		    
-		    var url = "/powerbuild/setDefault.ajax";
-		    
-		    DynamicLoad.postJSON(url, {
-		        selection: defaultSelection
-		    }, function (){
-		        ViewManager.addNotification({
-                    type: "success",
-                    message: "Successfully saved default selection.",
-                    timeout: 5000,
-                    callback: function(){
-                        alert("hello save");
-                    }
-                });        
-		    }, function (error){
-		        ViewManager.addNotification({
-                    type: "error",
-                    message: error.message
-                });
-		    });
+            switch (shownViewId) {
+                case "bulid-content":
+                    saveDefSel4Build();
+                    break;
+                case "deploy-content":
+                
+                    break;
+                case "test-content":
+                
+                    break;
+                case "setting-content":
+    
+                    break;
+                default:
+                    break;
+            }
+            event.preventDefault();
 		}
    );
     
     $('#resetDefaultSelection').click(
         function(event){
-            ViewManager.addNotification("success", "You are right");
-        }        
+            switch (shownViewId) {
+                case "bulid-content":
+                    reset4Build();
+                    break;
+                case "deploy-content":
+            
+                    break;
+                case "test-content":
+            
+                    break;
+                case "setting-content":
+
+                    break;
+                default:
+                    break;
+            }
+            event.preventDefault();
+       }
     );
     
-    $('.bulid-list .group label input').select(
-            function(event){
-                alert($(this).val());
+    function build(selection){
+        var url = "/powerbuild/build.ajax";
+        if(selection.length === 0){
+            return;
+        }
+            
+        DynamicLoad.postJSON(url, selection.shift(), function(CommandResult){
+            if(!CommandResult.isSuccess){
+                ViewManager.addNotification({
+                    type: "error",
+                    message: "Build error",
+                    callback: function(){
+                        alert(CommandResult.message);
+                    }
+                });
+            }else{
+                build(selection);
             }
-    );
+        }, function(){
+            ViewManager.addNotification({
+                type: "error",
+                message: "Build error",
+                callback: function(){
+                    alert(CommandResult.message);
+                }
+            });
+        });
+    }
+    
+    $('#buildButton').click(function(event){
+        var defaultSelection = [];
+        $('.bulid-list .group .child').each(function (){
+            if($(this).is(':checked')){
+                defaultSelection.push($(this).val());
+            }
+        });
+        build(defaultSelection);
+        event.preventDefault();
+    });
 		
 		
 		

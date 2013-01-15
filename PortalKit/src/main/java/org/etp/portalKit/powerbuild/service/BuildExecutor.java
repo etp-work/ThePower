@@ -67,7 +67,10 @@ public class BuildExecutor {
             }
         });
         cr.setStateCode(runner.run());
-        cr.setMessage(sb.toString());
+        if (cr.isSuccess())
+            cr.setMessage("");
+        else
+            cr.setMessage(sb.toString());
         return cr;
     }
 
