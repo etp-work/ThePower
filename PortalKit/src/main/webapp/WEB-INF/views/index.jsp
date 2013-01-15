@@ -21,7 +21,7 @@
     <div class="maincontent">
         <div class="tab-header">
             <ul>
-                <li><a class="default-tab" href="#bulid-content">Bulid</a></li>
+                <li><a href="#bulid-content">Bulid</a></li>
                 <li><a href="#deploy-content">Deploy</a></li>
                 <li><a href="#test-content">Test</a></li>
                 <li><a href="#setting-content">Set</a></li>
