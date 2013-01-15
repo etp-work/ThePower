@@ -8,33 +8,35 @@ $(document).ready(function(){
                 if(!dirTrees){
                     return;
                 }
-                $('.group label input').off("click");
+                $('.group label .parent').off("click");
+                $('.group .child').off("click");
                 var scope = angular.element($('.bulid-list')).scope();
                 scope.$apply(function(){
                     scope.dirTrees = dirTrees;
                 });
-                $('.group label input').on("click", 
+                $('.group label .parent').on("click", 
                         function(event){
                             var isChecked = $(this).is(':checked');
-                            var isParent = $(this).parent().siblings().length > 0;
-                            if(isParent){
-                               $(this).parent().siblings().find('label input').attr("checked", isChecked);
+                            var isParent = $(this).parent().siblings().find('.child').attr("checked", isChecked);
+                        }
+                );
+                
+                $('.group .child').on("click", 
+                        function(event){
+                            var isChecked = $(this).is(':checked');
+                            if(isChecked){
+                                $(this).parent().parent().find('.parent').attr("checked", isChecked);
                             }else{
-                               if(isChecked){
-                                   $(this).parent().parent().parent().find('label').first().find('input').attr("checked", isChecked);
-                               }else{
-                                   var isAllFalse = true;
-                                   $(this).parent().parent().siblings().each(function(){
-                                       if($(this).find('label input').is(':checked')){
-                                           isAllFalse = false;
-                                       }
-                                   });
-                                   if(isAllFalse){
-                                       $(this).parent().parent().parent().find('label').first().find('input').attr("checked", isChecked);
-                                   }
-                               }
+                                var isAllFalse = true;
+                                $(this).parent().siblings().find('.child').each(function(){
+                                    if($(this).is(':checked')){
+                                        isAllFalse = false;
+                                    }
+                                });
+                                if(isAllFalse){
+                                    $(this).parent().parent().find('.parent').attr("checked", isChecked);
+                                }
                             }
-                            
                         }
                 );
         });
@@ -84,11 +86,21 @@ $(document).ready(function(){
     $('#setDefaultSelection').click(
         function(event){
 		    var defaultSelection = [];
-		    $('.bulid-list .group label input').each(function (){
+		    $('.bulid-list .group input').each(function (){
 		        if($(this).is(':checked')){
 		            defaultSelection.push($(this).val());
 		        }
 		    });
+		    
+		    if(defaultSelection.length === 0){
+		        ViewManager.addNotification({
+                    type: "attention",
+                    message: "You can't set nothing to default."
+                });
+		        event.preventDefault();
+		        return;
+		    }
+		    
 		    var url = "/powerbuild/setDefault.ajax";
 		    
 		    DynamicLoad.postJSON(url, {
