@@ -7,6 +7,8 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using Gecko;
+using Gecko.DOM;
+using System.Diagnostics;
 
 namespace GriffinsPortalKit
 {
@@ -14,6 +16,8 @@ namespace GriffinsPortalKit
     {
         static private string XULRUNNERPATH = "\\xulrunner\\";
         private GeckoWebBrowser browser;
+        private Action<String> message = new Action<String>(NativeContainer.onMessage);
+        private SplashForm frmSplash = new SplashForm();
 
         public NativeContainer()
         {
@@ -47,6 +51,66 @@ namespace GriffinsPortalKit
         {
             GeckoWebBrowser br = sender as GeckoWebBrowser;
             if (br.Url.ToString() == "about:blank") { return; }
+            browser.AddMessageEventListener("startPortal", message);
+
+            // Call JavaScript
+            /*
+            GeckoScriptElement script = (GeckoScriptElement)br.Document.CreateElement("script");
+            script.Type = "text/javascript";
+            script.Text = "alert('My alert');";
+            br.Document.Body.AppendChild(script);
+            */
+        }
+
+        static void onMessage(String message)
+        {
+            if (message.StartsWith("STARTPORTAL:"))
+            {
+                message = message.Replace("STARTPORTAL:", "");
+                Browser portal = new Browser(message, 720, 596);
+                portal.Visible = true;
+            }
+            else if (message.StartsWith("EXECMD:"))
+            {
+                message = message.Replace("EXECMD:", "");
+                ProcessStartInfo procStartInfo = new ProcessStartInfo("cmd.exe", "/c " + message);
+
+                //procStartInfo.FileName = "cmd.exe";
+                procStartInfo.WorkingDirectory = "c:\\";
+                //procStartInfo.Arguments = "/c " + message;
+
+                procStartInfo.RedirectStandardOutput = true;
+                procStartInfo.UseShellExecute = false;
+                procStartInfo.CreateNoWindow = true;
+
+                Process proc = new Process();
+                proc.StartInfo = procStartInfo;
+                proc.Start();
+                string result = proc.StandardOutput.ReadToEnd();
+                MessageBox.Show(result);
+            }
+            else if (message.StartsWith("BUILD:"))
+            {
+                message = message.Replace("BUILD:", "");
+                ProcessStartInfo procStartInfo = new ProcessStartInfo("mvn", "clean install");
+                procStartInfo.WorkingDirectory = message;
+                //procStartInfo.RedirectStandardOutput = true;
+                procStartInfo.UseShellExecute = true;
+                procStartInfo.CreateNoWindow = false;
+
+                Process proc = new Process();
+                proc.StartInfo = procStartInfo;
+                proc.Start();
+                //proc.WaitForExit();
+                //string result = proc.StandardOutput.ReadToEnd();
+                //MessageBox.Show(result);
+            }
+        }
+
+        private void SplashScreen_Load(object sender, EventArgs e)
+        {
+            frmSplash.ShowDialog();
+            this.Show();
         }
     }
 }

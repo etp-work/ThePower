@@ -1,6 +1,6 @@
 ﻿namespace GriffinsPortalKit
 {
-    partial class NativeContainer
+    partial class SplashForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,22 +28,33 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SplashForm));
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
-            // NativeContainer
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // SplashForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 262);
-            this.Name = "NativeContainer";
-            this.Text = "Griffins Portal Kit";
-            this.Load += new System.EventHandler(this.SplashScreen_Load);
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
+            this.ClientSize = new System.Drawing.Size(129, 125);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Name = "SplashForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "SplashForm";
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
+        public System.Windows.Forms.Timer timer1;
+
     }
 }
-
