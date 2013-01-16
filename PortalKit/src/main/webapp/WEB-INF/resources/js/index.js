@@ -1,16 +1,10 @@
 $(document).ready(function(){
     var resource = $('#resources').val();
-    DynamicLoad.loadStaticJS(resource+"/js/common/testJS.js");
+    DynamicLoad.loadStaticJS(resource+"/js/bulid-content.js");
 
 //=======================initialization=================================
     //variables
     var shownViewId;
-    var needDeploy;
-    
-    function setNeedDeploy(param){
-        needDeploy = param;
-        $('#needDeploy').attr("checked", needDeploy);
-    }
     
     //listeners
     function buildOnShowListener(){
@@ -31,8 +25,10 @@ $(document).ready(function(){
                             var isChecked = $(this).is(':checked');
                             $(this).parent().parent().siblings().find('.child').attr("checked", isChecked);
                             
+                            var needDeploy = $('#needDeploy').is(':checked');
+                            
                             if($(this).val() === "Others" && isChecked && needDeploy){//unselect deploy button if something in Others selected.
-                                setNeedDeploy(false);
+                                $('#needDeploy').attr("checked", false);
                                 ViewManager.addNotification({
                                     type: "attention",
                                     message: "Items in Others can't be deployed.",
@@ -47,9 +43,10 @@ $(document).ready(function(){
                             var isChecked = $(this).is(':checked');
                             var parent = $(this).parent().parent().parent().find('.parent');
                             if(isChecked){
+                                var needDeploy = $('#needDeploy').is(':checked');
                                 parent.attr("checked", isChecked);
                                 if(parent.val() === "Others" && needDeploy){//unselect deploy button if something in Others selected.
-                                    setNeedDeploy(false);
+                                    $('#needDeploy').attr("checked", false);
                                     ViewManager.addNotification({
                                         type: "attention",
                                         message: "Items in Others can't be deployed.",
@@ -115,137 +112,6 @@ $(document).ready(function(){
 		
 //=======================build page===================================
     
-    function setDef4Build(defaultSelection, message){
-        var url = "/powerbuild/setDefault.ajax";
-        
-        DynamicLoad.postJSON(url, {
-            selection: defaultSelection
-        }, function (){
-            ViewManager.addNotification({
-                type: "success",
-                message: message,
-                timeout: 5000
-            });        
-        }, function (error){
-            ViewManager.addNotification({
-                type: "error",
-                message: error.message
-            });
-        });
-    }
-    
-    function getBuildSelection(){
-        var defaultSelection = [];
-        $('.bulid-list .group input').each(function (){
-            if($(this).is(':checked')){
-                defaultSelection.push($(this).val());
-            }
-        });
-        return defaultSelection;
-    }
-    
-    $('#setDefault4Build').click(
-        function(event){
-            var defaultSelection = getBuildSelection();
-            
-            if(defaultSelection.length === 0){//if no anything checked, give a warning.
-                ViewManager.addNotification({
-                    type: "attention",
-                    timeout: 30000,
-                    message: "You can't set nothing to default."
-                });
-                return;
-            }
-            setDef4Build(defaultSelection, "Successfully saved default selection.");
-            event.preventDefault();
-		}
-   );
-    
-    $('#resetDefault4Build').click(
-        function(event){
-            
-            $('.bulid-list .group input').each(function (){
-                if($(this).is(':checked')){
-                    $(this).attr("checked", false);
-                }
-            });
-            setDef4Build([], "Successfully reset default selection.");
-        
-            event.preventDefault();
-       }
-    );
-    
-    function build(selection){
-        var url = "/powerbuild/build.ajax";
-        if(selection.length === 0){
-            return;
-        }
-            
-        DynamicLoad.postJSON(url, {
-            selection: selection.shift(),
-            needDeploy: needDeploy
-        }, function(BuildResult){
-            if(!BuildResult.success){
-                ViewManager.addNotification({
-                    type: "error",
-                    message: "Build error",
-                    callback: function(){
-                        //TODO show (BuildResult.message);
-                    }
-                });
-            }else if(!BuildResult.deployed && needDeploy){
-                ViewManager.addNotification({
-                    type: "error",
-                    message: "Deploy error"
-                });
-            }else{
-                build(selection);
-            }
-        }, function(error){
-            ViewManager.addNotification({
-                type: "error",
-                message: "Internal error:"+error.message,
-                timeout: 15000
-            });
-        });
-    }
-    
-    $('#buildButton').click(function(event){
-        var defaultSelection = [];
-        $('.bulid-list .group .child').each(function (){
-            if($(this).is(':checked')){
-                defaultSelection.push($(this).val());
-            }
-        });
-        var needDeploy = $('#needDeploy').is(':checked');
-        build(defaultSelection);
-        event.preventDefault();
-    });
-    
-    $('#needDeploy').click(function(event){
-        if($(this).is(':checked')){
-            var canDeploy = true;
-            $('.bulid-list .group .parent[value="Others"]').parent().parent().siblings().find('.child').each(function(){
-                if($(this).is(':checked')){
-                    canDeploy = false;
-                }
-            });
-            
-            if(!canDeploy){
-                ViewManager.addNotification({
-                    type: "attention",
-                    message: "Items in Others can't be deployed.",
-                    timeout: 10000
-                });
-                event.preventDefault();
-                setNeedDeploy(false);
-                return;
-            }
-        }
-        setNeedDeploy($(this).is(':checked'));
-    });
-		
-		
 		
 //=======================settings page=================================		
     $('#saveSettings').click(
