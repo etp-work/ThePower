@@ -149,6 +149,7 @@ img{ border:none; margin:0; padding:0;}
 .group{
     font-weight:bolder;
     }
+    
 
 .group li{
     padding:2px 0px 1px 20px;
@@ -156,6 +157,7 @@ img{ border:none; margin:0; padding:0;}
     line-height:20px;
     background:#333;
     font-size:12px;
+    font-weight:normal;
     color:#666;
     border-top: solid 1px #ccc;
     background:-moz-linear-gradient(top,rgba(225, 225, 225, 0.8),rgba(245, 245, 245, 0.8));
@@ -189,15 +191,17 @@ img{ border:none; margin:0; padding:0;}
     }
     
 .war-list-wrapper li{
-    padding:3px 0px 3px 5px;
+    padding:2px 0px 1px 10px;
     height:20px;
     line-height:20px;
     background:#333;
     font-size:12px;
-    font-weight:bolder;
-    color:#CCC;
-    border-top: solid 1px #999;
+    color:#666;
+    border-top: solid 1px #fff;
+    border-bottom: solid 1px #ccc;
+    background:-moz-linear-gradient(top,rgba(225, 225, 225, 0.8),rgba(245, 245, 245, 0.8));
     }
+    
 /*====================================== TEST ===============================*/
 
 .us-list{

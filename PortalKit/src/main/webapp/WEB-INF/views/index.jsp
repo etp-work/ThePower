@@ -78,19 +78,16 @@
                     </div>
                     
                     <div class="war-list-wrapper">
-                        <li><label class="checkbox"><input name="" type
-                        ="checkbox">list 01</label></li>
-                        <li><label class="checkbox"><input name="" type="checkbox">list 02</label></li>
-                        <li><label class="checkbox"><input name="" type="checkbox">list 03</label></li>
-                        <li><label class="checkbox"><input name="" type="checkbox">list 04</label></li>
-                        <li><label class="checkbox"><input name="" type="checkbox">list 05</label></li>
-                        <li><label class="checkbox"><input name="" type="checkbox">list 06</label></li>
-                        <li><label class="checkbox"><input name="" type="checkbox">list 07</label></li>
-                        <li><label class="checkbox"><input name="" type="checkbox">list 08</label></li>
-                        <li><label class="checkbox"><input name="" type="checkbox">list 09</label></li>
-                        <li><label class="checkbox"><input name="" type="checkbox">list 10</label></li>
-                        <li><label class="checkbox"><input name="" type="checkbox">list 11</label></li>
-                        <li><label class="checkbox"><input name="" type="checkbox">list 12</label></li>
+
+                        <li><div class="lightpoint"><input name="" type="checkbox"><label></label></div>list 01</li>
+                        <li><div class="lightpoint"><input name="" type="checkbox"><label></label></div>list 02</li>
+                        <li><div class="lightpoint"><input name="" type="checkbox"><label></label></div>list 03</li>
+                        <li><div class="lightpoint"><input name="" type="checkbox"><label></label></div>list 04</li>
+                        <li><div class="lightpoint"><input name="" type="checkbox"><label></label></div>list 05</li>
+                        <li><div class="lightpoint"><input name="" type="checkbox"><label></label></div>list 06</li>
+                        <li><div class="lightpoint"><input name="" type="checkbox"><label></label></div>list 07</li>
+                        <li><div class="lightpoint"><input name="" type="checkbox"><label></label></div>list 08</li>
+                        <li><div class="lightpoint"><input name="" type="checkbox"><label></label></div>list 09</li>
                         
                     </div>
                 </div>
