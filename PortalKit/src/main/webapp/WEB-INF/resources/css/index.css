@@ -37,24 +37,12 @@ img{ border:none; margin:0; padding:0;}
     margin:0px 10px;
     padding:5px;
     background-color:#fff;
-    color:#666;
+    color:#fff;
     font-size:10px;
     font-weight:bolder;
     border:solid 1px #fff;
     border-top:none;
-    background:-moz-linear-gradient(top,rgba(255, 255, 255, 0.8),rgba(205, 205, 205, 0.8));
-    text-shadow:1px 1px 1px rgba(14, 104, 254, 0.5);
-    box-shadow:0px 2px 10px rgba(151, 224, 252, 1);
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
-    border-radius: 4px;
-    -moz-border-radius-topleft: 0px;
-    -webkit-top-left-border: 0px;
-    border-top-left-radius: 0px;
-    -moz-border-radius-topright: 0px;
-    -webkit-top-right-border: 0px;
-    border-top-right-radius: 0px;
-    }
+}
     
 /*=======================================  MAIN =======================================*/
 .maincontent{
@@ -148,22 +136,29 @@ img{ border:none; margin:0; padding:0;}
     
 .checkbox {
     display:block;
-    height:20px;
-    line-height:20px;
+    padding-left:5px;
+    padding-top:2px;
+    height:24px;
+    line-height:24px;
+    color:#333;
+    border-top: solid 1px #fff;
     vertical-align: middle;
+    text-shadow:1px 1px 0px #fff;
+    background:-moz-linear-gradient(top,rgba(225, 225, 225, 0.8),rgba(165, 165, 165, 0.8));
 }
 .group{
     font-weight:bolder;
     }
 
 .group li{
-    padding:3px 0px 3px 20px;
+    padding:2px 0px 1px 20px;
     height:20px;
     line-height:20px;
     background:#333;
     font-size:12px;
-    color:#CCC;
-    border-top: solid 1px #999;
+    color:#666;
+    border-top: solid 1px #ccc;
+    background:-moz-linear-gradient(top,rgba(225, 225, 225, 0.8),rgba(245, 245, 245, 0.8));
     }
     
 
@@ -307,10 +302,10 @@ img{ border:none; margin:0; padding:0;}
     margin:0 auto;
     width:200px;
     }
-input[type="checkbox"]{
+/*input[type="checkbox"]{
     float:left;
     margin:4px 5px 0px 5px;
-    }
+    }*/
     
 input[type="text"]{
     float:left;
@@ -415,7 +410,6 @@ input[type="text"]:focus, textarea:focus {
 
 input[type="file"]:focus,
 input[type="radio"]:focus,
-input[type="checkbox"]:focus,
 select:focus {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
@@ -425,5 +419,80 @@ select:focus {
   outline-offset: -2px;
 }
 
+.lightpoint{
+    float:left;
+    margin-top:5px;
+    width:20px;
+    height:16px;
+    position:relative;
+    }
+.lightpoint input[type="checkbox"] {
+    opacity:0;
+    width:30px;
+    height:16px;
+    position:absolute;
+    z-index:100;
+    /* Then, we put it on top of everything else */
+    /* This one is just for ergonomy */
+    cursor: pointer;
+}
 
+.lightpoint label{
+    display:block;
+    width:14px;
+    height:8px;
+    position: relative;
+    border:solid 1px #ddd;
+    border-radius: 0px;
+    background: #eaeaea;
+    box-shadow: 
 
+        inset 0 1px 0 rgba(255,255,255,0.3),
+        inset 0 -5px 5px rgba(100,100,100,0.1),
+        inset 0 5px 5px rgba(255,255,255,0.3);
+    }
+    
+.lightpoint label:before {
+    content: "";
+    position: absolute;
+    width: 12px;
+    height: 6px; 
+    left: 1px;
+    top: 1px;
+    border-radius: 0px;
+    background: #969696;  /*Fallback */
+    background: radial-gradient(40% 35%, #ccc, #969696 60%);
+    box-shadow:
+        inset 0 2px 0px 1px rgba(0,0,0,0.3),
+        0 1px 0 rgba(255,255,255,1),
+        inset 0 1px 0 white;
+}
+
+.lightpoint input[type="checkbox"]:checked ~ label { /* Button */
+    background: #e5e5e5; /* Fallback */
+    background: linear-gradient(#dedede, #fdfdfd);
+}
+ 
+.lightpoint input[type="checkbox"]:checked ~ label:before { /* LED */
+    background: #25d025; /* Fallback */
+    background: radial-gradient(60% 35%, #73f0ff, #11aeff 60%);
+    box-shadow:
+        inset 0 3px 5px 1px rgba(0,0,0,0.1),
+        0 1px 0 rgba(255,255,255,0.5),
+        0 0 1px 1px rgba(149, 236, 252, 0.5);
+}
+
+.toolsName{
+    background:-moz-linear-gradient(top,rgba(255, 255, 255, 0.8),rgba(205, 205, 205, 0.8));
+    text-shadow:1px 1px 1px rgba(14, 104, 254, 0.5);
+    box-shadow:0px 2px 10px rgba(151, 224, 252, 1);
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    -moz-border-radius-topleft: 0px;
+    -webkit-top-left-border: 0px;
+    border-top-left-radius: 0px;
+    -moz-border-radius-topright: 0px;
+    -webkit-top-right-border: 0px;
+    border-top-right-radius: 0px;
+    }
