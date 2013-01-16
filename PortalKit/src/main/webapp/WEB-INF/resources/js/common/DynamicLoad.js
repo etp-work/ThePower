@@ -98,5 +98,36 @@ if (!DynamicLoad) {
 	       }
 	   });
     };
+    
+    DynamicLoad.loadStaticJS = function(url, failure){
+        jQuery.ajax({
+            "type" : "GET",
+            "url" : url,
+            "contentType" : "application/x-www-form-urlencoded; charset=UTF-8",
+            "dataType" : "text",
+            "success" : function(data, textStatus, jqXHR) {
+                              eventQueue.push(function() {
+                                  var json = null;
+                                  eval("json=" + data);
+                                  if(typeof(json) === "function"){
+                                      json();
+                                  }
+                              });
+                              executeEventQueue();
+            },
+            "error" : function(jqXHR, textStatus, errorThrown) {
+                              var obj = {
+                                      type: "Internal Error",
+                                      message: textStatus
+                              };
+                              eventQueue.push(function() {
+                                                if(failure){
+                                                   failure(obj);
+                                                }
+                              });
+                              executeEventQueue();
+            }
+        });
+    };
 
 }());

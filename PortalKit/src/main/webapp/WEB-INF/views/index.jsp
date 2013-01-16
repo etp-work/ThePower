@@ -46,8 +46,8 @@
                             </ul>
                         </div>
                         <div class="config-button-area">
-                            <li><input id="setDefaultSelection" class="small-button config" type="button" value="Set Default"/></li>
-                            <li><input id="resetDefaultSelection" class="small-button reset" type="button" value="Reset"/></li>
+                            <li><input id="setDefault4Build" class="small-button config" type="button" value="Set Default"/></li>
+                            <li><input id="resetDefault4Build" class="small-button reset" type="button" value="Reset"/></li>
                         <div class="clear"></div>    
                         </div>
                         
@@ -118,7 +118,7 @@
                         
                         </div>
                         <div class="config-button-area">
-                            <li><input class="small-button config" type="button" value="Set Default"/></li>
+                            <li><input id="setDefault4Test" class="small-button config" type="button" value="Set Default"/></li>
                             <li><input class="small-button reset" type="button" value="Reset"/></li>
                         <div class="clear"></div>    
                         </div>

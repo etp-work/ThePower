@@ -1,8 +1,16 @@
 $(document).ready(function(){
+    var resource = $('#resources').val();
+    DynamicLoad.loadStaticJS(resource+"/js/common/testJS.js");
 
 //=======================initialization=================================
     //variables
     var shownViewId;
+    var needDeploy;
+    
+    function setNeedDeploy(param){
+        needDeploy = param;
+        $('#needDeploy').attr("checked", needDeploy);
+    }
     
     //listeners
     function buildOnShowListener(){
@@ -21,11 +29,10 @@ $(document).ready(function(){
                 $('.group label .parent').on("click", 
                         function(event){
                             var isChecked = $(this).is(':checked');
-                            var needDeploy = $('#needDeploy').is(':checked');
-                            var isParent = $(this).parent().siblings().find('.child').attr("checked", isChecked);
+                            $(this).parent().parent().siblings().find('.child').attr("checked", isChecked);
                             
                             if($(this).val() === "Others" && isChecked && needDeploy){//unselect deploy button if something in Others selected.
-                                $('#needDeploy').attr("checked", false);
+                                setNeedDeploy(false);
                                 ViewManager.addNotification({
                                     type: "attention",
                                     message: "Items in Others can't be deployed.",
@@ -38,11 +45,11 @@ $(document).ready(function(){
                 $('.group .child').on("click", 
                         function(event){
                             var isChecked = $(this).is(':checked');
+                            var parent = $(this).parent().parent().parent().find('.parent');
                             if(isChecked){
-                                $(this).parent().parent().find('.parent').attr("checked", isChecked);
-                                var needDeploy = $('#needDeploy').is(':checked');
-                                if($(this).parent().parent().find('.parent').val() === "Others" && needDeploy){//unselect deploy button if something in Others selected.
-                                    $('#needDeploy').attr("checked", false);
+                                parent.attr("checked", isChecked);
+                                if(parent.val() === "Others" && needDeploy){//unselect deploy button if something in Others selected.
+                                    setNeedDeploy(false);
                                     ViewManager.addNotification({
                                         type: "attention",
                                         message: "Items in Others can't be deployed.",
@@ -51,13 +58,13 @@ $(document).ready(function(){
                                 }
                             }else{
                                 var isAllFalse = true;
-                                $(this).parent().siblings().find('.child').each(function(){
+                                $(this).parent().parent().siblings().find('.child').each(function(){
                                     if($(this).is(':checked')){
                                         isAllFalse = false;
                                     }
                                 });
                                 if(isAllFalse){
-                                    $(this).parent().parent().find('.parent').attr("checked", isChecked);
+                                    parent.attr("checked", isChecked);
                                 }
                             }
                         }
@@ -137,75 +144,38 @@ $(document).ready(function(){
         return defaultSelection;
     }
     
-    function saveDefSel4Build(){
-        var defaultSelection = getBuildSelection();
-        
-        if(defaultSelection.length === 0){//if no anything checked, give a warning.
-            ViewManager.addNotification({
-                type: "attention",
-                timeout: 30000,
-                message: "You can't set nothing to default."
-            });
-            return;
-        }
-        setDef4Build(defaultSelection, "Successfully saved default selection.");
-    }
-    
-    function reset4Build(){
-        var defaultSelection = [];
-        $('.bulid-list .group input').each(function (){
-            if($(this).is(':checked')){
-                $(this).attr("checked", false);
-            }
-        });
-        setDef4Build(defaultSelection, "Successfully reset default selection.");
-    }
-    
-    $('#setDefaultSelection').click(
+    $('#setDefault4Build').click(
         function(event){
-            switch (shownViewId) {
-                case "bulid-content":
-                    saveDefSel4Build();
-                    break;
-                case "deploy-content":
-                
-                    break;
-                case "test-content":
-                
-                    break;
-                case "setting-content":
-    
-                    break;
-                default:
-                    break;
+            var defaultSelection = getBuildSelection();
+            
+            if(defaultSelection.length === 0){//if no anything checked, give a warning.
+                ViewManager.addNotification({
+                    type: "attention",
+                    timeout: 30000,
+                    message: "You can't set nothing to default."
+                });
+                return;
             }
+            setDef4Build(defaultSelection, "Successfully saved default selection.");
             event.preventDefault();
 		}
    );
     
-    $('#resetDefaultSelection').click(
+    $('#resetDefault4Build').click(
         function(event){
-            switch (shownViewId) {
-                case "bulid-content":
-                    reset4Build();
-                    break;
-                case "deploy-content":
             
-                    break;
-                case "test-content":
-            
-                    break;
-                case "setting-content":
-
-                    break;
-                default:
-                    break;
-            }
+            $('.bulid-list .group input').each(function (){
+                if($(this).is(':checked')){
+                    $(this).attr("checked", false);
+                }
+            });
+            setDef4Build([], "Successfully reset default selection.");
+        
             event.preventDefault();
        }
     );
     
-    function build(selection, needDeploy){
+    function build(selection){
         var url = "/powerbuild/build.ajax";
         if(selection.length === 0){
             return;
@@ -229,7 +199,7 @@ $(document).ready(function(){
                     message: "Deploy error"
                 });
             }else{
-                build(selection, needDeploy);
+                build(selection);
             }
         }, function(error){
             ViewManager.addNotification({
@@ -248,14 +218,14 @@ $(document).ready(function(){
             }
         });
         var needDeploy = $('#needDeploy').is(':checked');
-        build(defaultSelection, needDeploy);
+        build(defaultSelection);
         event.preventDefault();
     });
     
     $('#needDeploy').click(function(event){
         if($(this).is(':checked')){
             var canDeploy = true;
-            $('.bulid-list .group .parent[value="Others"]').parent().siblings().find('.child').each(function(){
+            $('.bulid-list .group .parent[value="Others"]').parent().parent().siblings().find('.child').each(function(){
                 if($(this).is(':checked')){
                     canDeploy = false;
                 }
@@ -268,9 +238,11 @@ $(document).ready(function(){
                     timeout: 10000
                 });
                 event.preventDefault();
+                setNeedDeploy(false);
+                return;
             }
-           
         }
+        setNeedDeploy($(this).is(':checked'));
     });
 		
 		
@@ -303,7 +275,8 @@ $(document).ready(function(){
 		}
     );
 		
-        
+//=======================test page====================================
+    
 //=======================foot page=====================================
         
     $(".close").click(
