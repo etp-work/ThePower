@@ -7,10 +7,12 @@ import javax.annotation.Resource;
 import org.apache.commons.lang.StringUtils;
 import org.etp.portalKit.common.service.PropertiesManager;
 import org.etp.portalKit.common.shell.CommandResult;
+import org.etp.portalKit.powerbuild.bean.BuildResult;
 import org.etp.portalKit.powerbuild.bean.DirTree;
 import org.etp.portalKit.powerbuild.bean.Selection;
 import org.etp.portalKit.powerbuild.service.BuildExecutor;
 import org.etp.portalKit.powerbuild.service.DirProvider;
+import org.etp.portalKit.setting.bean.Settings;
 import org.springframework.stereotype.Component;
 
 /**
@@ -29,12 +31,12 @@ public class PowerBuildLogic {
     private BuildExecutor executor;
 
     /**
-     * Build one package.
+     * Get absolute path of specified project name.
      * 
-     * @param selection
-     * @return CommandResult
+     * @param selection specified project name.
+     * @return path
      */
-    public CommandResult build(String selection) {
+    private String getAbsPath(String selection) {
         List<DirTree> retrieveDirInfo = specProvider.retrieveDirInfo();
         String absPath = null;
         for (DirTree dirTree : retrieveDirInfo) {
@@ -45,10 +47,46 @@ public class PowerBuildLogic {
                 }
             }
         }
+        return absPath;
+    }
 
+    /**
+     * Build one package.
+     * 
+     * @param selection
+     * @param absPath
+     * @return CommandResult
+     */
+    public BuildResult build(String selection, String absPath) {
+        String path = null;
         if (StringUtils.isBlank(absPath))
+            path = getAbsPath(selection);
+        else
+            path = absPath;
+        if (StringUtils.isBlank(path))
             throw new RuntimeException("Incorrect path to build.");
-        return executor.compile(absPath);
+        CommandResult compile = executor.compile(path);
+        BuildResult br = new BuildResult(compile);
+        return br;
+    }
+
+    /**
+     * Build + deploy a package.
+     * 
+     * @param selection
+     * @return BuildResult
+     */
+    public BuildResult buildDeploy(String selection) {
+        String deployPath = prop.get(Settings.TOMCAT_WEBAPPS_PATH);
+        if (StringUtils.isBlank(deployPath))
+            throw new RuntimeException("You haven't deploy path setted.");
+        String absPath = getAbsPath(selection);
+        BuildResult result = build(selection, absPath);
+        if (!result.isSuccess())
+            return result;
+        boolean deployed = executor.deploy(absPath, deployPath);
+        result.setDeployed(deployed);
+        return result;
     }
 
     /**

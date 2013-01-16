@@ -6,7 +6,8 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.etp.portalKit.common.shell.CommandResult;
+import org.etp.portalKit.powerbuild.bean.BuildCommand;
+import org.etp.portalKit.powerbuild.bean.BuildResult;
 import org.etp.portalKit.powerbuild.bean.DirTree;
 import org.etp.portalKit.powerbuild.bean.Selection;
 import org.etp.portalKit.powerbuild.logic.PowerBuildLogic;
@@ -56,13 +57,17 @@ public class PowerBuildController {
     /**
      * Build one package.
      * 
-     * @param selection
+     * @param cmd
      * @return build result
      */
     @RequestMapping(value = "/powerbuild/build.ajax", method = RequestMethod.POST)
     public @ResponseBody
-    CommandResult build(@RequestBody String selection) {
-        CommandResult build = logic.build(selection);
-        return build;
+    BuildResult build(@RequestBody BuildCommand cmd) {
+        BuildResult br = null;
+        if (cmd.isNeedDeploy())
+            br = logic.buildDeploy(cmd.getSelection());
+        else
+            br = logic.build(cmd.getSelection(), null);
+        return br;
     }
 }

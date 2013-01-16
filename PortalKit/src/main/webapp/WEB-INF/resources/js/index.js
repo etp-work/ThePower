@@ -186,19 +186,30 @@ $(document).ready(function(){
        }
     );
     
-    function build(selection){
+    function build(selection, needDeploy){
         var url = "/powerbuild/build.ajax";
         if(selection.length === 0){
             return;
         }
             
-        DynamicLoad.postJSON(url, selection.shift(), function(CommandResult){
-            if(!CommandResult.isSuccess){
+        DynamicLoad.postJSON(url, {
+            selection: selection.shift(),
+            needDeploy: needDeploy
+        }, function(BuildResult){
+            if(!BuildResult.success){
                 ViewManager.addNotification({
                     type: "error",
                     message: "Build error",
                     callback: function(){
-                        alert(CommandResult.message);
+                        alert(BuildResult.message);
+                    }
+                });
+            }else if(!BuildResult.deployed){
+                ViewManager.addNotification({
+                    type: "error",
+                    message: "Deploy error",
+                    callback: function(){
+                        alert(BuildResult.message);
                     }
                 });
             }else{
@@ -222,7 +233,8 @@ $(document).ready(function(){
                 defaultSelection.push($(this).val());
             }
         });
-        build(defaultSelection);
+        var needDeploy = $('#needDeploy').is(':checked');
+        build(defaultSelection, needDeploy);
         event.preventDefault();
     });
 		

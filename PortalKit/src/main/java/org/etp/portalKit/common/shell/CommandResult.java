@@ -8,7 +8,21 @@ public class CommandResult {
     private int stateCode;
 
     private String message;
-    private boolean isSuccess;
+    private boolean success;
+
+    /**
+     * @return Returns the success.
+     */
+    public boolean isSuccess() {
+        return success;
+    }
+
+    /**
+     * @param success The success to set.
+     */
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
 
     /**
      * @return stateCode from execution.
@@ -38,18 +52,4 @@ public class CommandResult {
         this.message = message;
     }
 
-    /**
-     * @return indicate that the command is executed successful or
-     *         not.
-     */
-    public boolean isSuccess() {
-        return isSuccess;
-    }
-
-    /**
-     * @param isSuccess
-     */
-    public void setSuccess(boolean isSuccess) {
-        this.isSuccess = isSuccess;
-    }
 }

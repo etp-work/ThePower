@@ -8,19 +8,37 @@ import org.etp.portalKit.common.shell.CommandResult;
  * or not.
  */
 public class BuildResult extends CommandResult {
-    private boolean isDeployed;
+    private boolean deployed;
+
+    /**
+     * Creates a new instance of <code>BuildResult</code>.
+     */
+    public BuildResult() {
+        //        
+    }
+
+    /**
+     * Creates a new instance of <code>BuildResult</code>.
+     * 
+     * @param cmd wrap from a CommandResult
+     */
+    public BuildResult(CommandResult cmd) {
+        super.setMessage(cmd.getMessage());
+        super.setStateCode(cmd.getStateCode());
+        super.setSuccess(cmd.isSuccess());
+    }
 
     /**
      * @return Returns the isDeployed.
      */
     public boolean isDeployed() {
-        return isDeployed;
+        return deployed;
     }
 
     /**
      * @param isDeployed The isDeployed to set.
      */
     public void setDeployed(boolean isDeployed) {
-        this.isDeployed = isDeployed;
+        this.deployed = isDeployed;
     }
 }

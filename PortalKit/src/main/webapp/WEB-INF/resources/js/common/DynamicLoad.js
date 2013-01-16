@@ -37,12 +37,15 @@ if (!DynamicLoad) {
     */
    DynamicLoad.postJSON = function(url, data, success, failure) {
 	   var tempData = data || {};
+	   if(typeof(tempData) !== "string"){
+	       tempData = JSON.stringify(tempData);
+	   }
 	   
 	   jQuery.ajax({
 	       "type" : "POST",
 	       "url" : "/PortalKit" + url,
 	       "contentType" : "application/json; charset=UTF-8",
-	       "data" : JSON.stringify(tempData),
+	       "data" : tempData,
 	       "dataType" : "json",
 	       "success" : function(data, textStatus, jqXHR) {
 		                     eventQueue.push(function() {

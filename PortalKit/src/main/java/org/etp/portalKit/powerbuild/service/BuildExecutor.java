@@ -77,8 +77,10 @@ public class BuildExecutor {
     /**
      * Deploy the specified src to destination.
      * 
-     * @param src
-     * @param dest
+     * @param src a folder path indicate which project will be
+     *            deployed.
+     * @param dest a folder path indicate what place the war file
+     *            should be moved into.
      * @return deploy
      */
     public boolean deploy(String src, String dest) {

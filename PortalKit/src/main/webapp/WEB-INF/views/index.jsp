@@ -58,7 +58,7 @@
                   
                   <div class="main-button-area">
                   <input id="buildButton" class="primary-button bulid" type="button" value="Bulid"/> 
-                  <div class="check-deploy"><input name="" type="checkbox">Deploy</div>
+                  <div class="check-deploy"><input id="needDeploy" name="" type="checkbox">Deploy</div>
                   <div class="clear"></div>
                   </div>
                   <div class="clear"></div>
