@@ -10,7 +10,7 @@ import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
 import org.etp.portalKit.common.service.PropertiesManager;
-import org.etp.portalKit.powerbuild.bean.DirTree;
+import org.etp.portalKit.powerbuild.bean.response.DirTree;
 import org.etp.portalKit.setting.bean.Settings;
 import org.springframework.stereotype.Component;
 

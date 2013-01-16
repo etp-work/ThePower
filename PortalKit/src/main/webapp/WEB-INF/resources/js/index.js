@@ -21,7 +21,17 @@ $(document).ready(function(){
                 $('.group label .parent').on("click", 
                         function(event){
                             var isChecked = $(this).is(':checked');
+                            var needDeploy = $('#needDeploy').is(':checked');
                             var isParent = $(this).parent().siblings().find('.child').attr("checked", isChecked);
+                            
+                            if($(this).val() === "Others" && isChecked && needDeploy){//unselect deploy button if something in Others selected.
+                                $('#needDeploy').attr("checked", false);
+                                ViewManager.addNotification({
+                                    type: "attention",
+                                    message: "Items in Others can't be deployed.",
+                                    timeout: 10000
+                                });
+                            }
                         }
                 );
               //rebinding click to .child.
@@ -30,6 +40,15 @@ $(document).ready(function(){
                             var isChecked = $(this).is(':checked');
                             if(isChecked){
                                 $(this).parent().parent().find('.parent').attr("checked", isChecked);
+                                var needDeploy = $('#needDeploy').is(':checked');
+                                if($(this).parent().parent().find('.parent').val() === "Others" && needDeploy){//unselect deploy button if something in Others selected.
+                                    $('#needDeploy').attr("checked", false);
+                                    ViewManager.addNotification({
+                                        type: "attention",
+                                        message: "Items in Others can't be deployed.",
+                                        timeout: 10000
+                                    });
+                                }
                             }else{
                                 var isAllFalse = true;
                                 $(this).parent().siblings().find('.child').each(function(){
@@ -201,27 +220,22 @@ $(document).ready(function(){
                     type: "error",
                     message: "Build error",
                     callback: function(){
-                        alert(BuildResult.message);
+                        //TODO show (BuildResult.message);
                     }
                 });
-            }else if(!BuildResult.deployed){
+            }else if(!BuildResult.deployed && needDeploy){
                 ViewManager.addNotification({
                     type: "error",
-                    message: "Deploy error",
-                    callback: function(){
-                        alert(BuildResult.message);
-                    }
+                    message: "Deploy error"
                 });
             }else{
-                build(selection);
+                build(selection, needDeploy);
             }
-        }, function(){
+        }, function(error){
             ViewManager.addNotification({
                 type: "error",
-                message: "Build error",
-                callback: function(){
-                    alert(CommandResult.message);
-                }
+                message: "Internal error:"+error.message,
+                timeout: 15000
             });
         });
     }
@@ -236,6 +250,27 @@ $(document).ready(function(){
         var needDeploy = $('#needDeploy').is(':checked');
         build(defaultSelection, needDeploy);
         event.preventDefault();
+    });
+    
+    $('#needDeploy').click(function(event){
+        if($(this).is(':checked')){
+            var canDeploy = true;
+            $('.bulid-list .group .parent[value="Others"]').parent().siblings().find('.child').each(function(){
+                if($(this).is(':checked')){
+                    canDeploy = false;
+                }
+            });
+            
+            if(!canDeploy){
+                ViewManager.addNotification({
+                    type: "attention",
+                    message: "Items in Others can't be deployed.",
+                    timeout: 10000
+                });
+                event.preventDefault();
+            }
+           
+        }
     });
 		
 		

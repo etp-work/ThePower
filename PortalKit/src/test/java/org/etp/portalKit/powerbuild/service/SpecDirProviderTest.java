@@ -6,7 +6,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.etp.portalKit.powerbuild.bean.DirTree;
+import org.etp.portalKit.powerbuild.bean.response.DirTree;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;

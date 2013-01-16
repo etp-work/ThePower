@@ -2,7 +2,7 @@ package org.etp.portalKit.powerbuild.service;
 
 import java.util.List;
 
-import org.etp.portalKit.powerbuild.bean.DirTree;
+import org.etp.portalKit.powerbuild.bean.response.DirTree;
 
 /**
  * The purpose of this class is a interface indicates directory

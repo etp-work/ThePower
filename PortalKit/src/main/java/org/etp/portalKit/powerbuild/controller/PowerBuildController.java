@@ -6,10 +6,10 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.etp.portalKit.powerbuild.bean.BuildCommand;
-import org.etp.portalKit.powerbuild.bean.BuildResult;
-import org.etp.portalKit.powerbuild.bean.DirTree;
-import org.etp.portalKit.powerbuild.bean.Selection;
+import org.etp.portalKit.powerbuild.bean.request.BuildCommand;
+import org.etp.portalKit.powerbuild.bean.request.Selection;
+import org.etp.portalKit.powerbuild.bean.response.BuildResult;
+import org.etp.portalKit.powerbuild.bean.response.DirTree;
 import org.etp.portalKit.powerbuild.logic.PowerBuildLogic;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;

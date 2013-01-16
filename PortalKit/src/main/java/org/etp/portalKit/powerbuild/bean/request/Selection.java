@@ -1,4 +1,4 @@
-package org.etp.portalKit.powerbuild.bean;
+package org.etp.portalKit.powerbuild.bean.request;
 
 import java.util.List;
 

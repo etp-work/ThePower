@@ -4,33 +4,15 @@
 	"relativePath": "",
 	"checked": "",
 	"subDirs": [{
-		"name": "maven-plugins",
-		"absolutePath": "",
-		"relativePath": "maven-plugins",
-		"checked": "",
-		"subDirs": []
-	}, {
-		"name": "parent",
-		"absolutePath": "",
-		"relativePath": "design\\parent",
-		"checked": "",
-		"subDirs": []
-	}, {
-		"name": "root-war",
-		"absolutePath": "",
-		"relativePath": "design\\FwRoot\\portal-root-war",
-		"checked": "",
-		"subDirs": []
-	}, {
 		"name": "fw-war",
 		"absolutePath": "",
 		"relativePath": "design\\FW\\portal-fw-war",
 		"checked": "",
 		"subDirs": []
 	}, {
-		"name": "widgettool-war",
+		"name": "root-war",
 		"absolutePath": "",
-		"relativePath": "design\\FW\\portal-widgettool-war",
+		"relativePath": "design\\FwRoot\\portal-root-war",
 		"checked": "",
 		"subDirs": []
 	}, {
@@ -43,6 +25,18 @@
 		"name": "public",
 		"absolutePath": "",
 		"relativePath": "design\\FW\\public",
+		"checked": "",
+		"subDirs": []
+	}, {
+		"name": "coreapps-war",
+		"absolutePath": "",
+		"relativePath": "design\\CoreApps\\Application\\portal-coreapps-war",
+		"checked": "",
+		"subDirs": []
+	}, {
+		"name": "imageprocessor-war",
+		"absolutePath": "",
+		"relativePath": "design\\Common\\portal-imageprocessor-war",
 		"checked": "",
 		"subDirs": []
 	}]
@@ -76,21 +70,9 @@
 		"checked": "",
 		"subDirs": []
 	}, {
-		"name": "coreapps-war",
-		"absolutePath": "",
-		"relativePath": "design\\CoreApps\\Application\\portal-coreapps-war",
-		"checked": "",
-		"subDirs": []
-	}, {
 		"name": "scanapp-war",
 		"absolutePath": "",
 		"relativePath": "design\\CoreApps\\Application\\portal-scanapp-war",
-		"checked": "",
-		"subDirs": []
-	}, {
-		"name": "imageprocessor-war",
-		"absolutePath": "",
-		"relativePath": "design\\CoreApps\\Application\\portal-imageprocessor-war",
 		"checked": "",
 		"subDirs": []
 	}]
@@ -175,6 +157,36 @@
 		"name": "sessiontransfer-skin-svg",
 		"absolutePath": "",
 		"relativePath": "design\\CoreApps\\Skin\\portal-coreapps-sessiontransfer-skin-svg-next-war",
+		"checked": "",
+		"subDirs": []
+	}]
+}, {
+	"name": "Tools",
+	"absolutePath": "",
+	"relativePath": "",
+	"checked": "",
+	"subDirs": [{
+		"name": "widgettool-war",
+		"absolutePath": "",
+		"relativePath": "design\\FW\\portal-widgettool-war",
+		"checked": "",
+		"subDirs": []
+	}]
+}, {
+	"name": "Others",
+	"absolutePath": "",
+	"relativePath": "",
+	"checked": "",
+	"subDirs": [{
+		"name": "maven-plugins",
+		"absolutePath": "",
+		"relativePath": "maven-plugins",
+		"checked": "",
+		"subDirs": []
+	}, {
+		"name": "parent",
+		"absolutePath": "",
+		"relativePath": "design\\parent",
 		"checked": "",
 		"subDirs": []
 	}]

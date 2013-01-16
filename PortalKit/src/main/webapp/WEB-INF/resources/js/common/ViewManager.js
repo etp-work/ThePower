@@ -235,7 +235,7 @@ if (!ViewManager) {
      * whole page.
      * 
      * @param options.type mandatory. indicate what kind of this 
-     *        notification. Such as success/information....
+     *        notification. Such as success/information/error/attention.
      *        options.message mandatory. indicate message notification.
      *        options.callback optional. A function to call once the 
      *        message clicked.
