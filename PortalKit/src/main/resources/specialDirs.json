@@ -1,4 +1,28 @@
 [{
+    "name": "Others",
+    "absolutePath": "",
+    "relativePath": "",
+    "checked": "",
+    "subDirs": [{
+        "name": "maven-plugins",
+        "absolutePath": "",
+        "relativePath": "maven-plugins",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "parent",
+        "absolutePath": "",
+        "relativePath": "design\\parent",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "All",
+        "absolutePath": "",
+        "relativePath": "design",
+        "checked": "",
+        "subDirs": []
+    }]
+},{
 	"name": "Framework",
 	"absolutePath": "",
 	"relativePath": "",
@@ -169,24 +193,6 @@
 		"name": "widgettool-war",
 		"absolutePath": "",
 		"relativePath": "design\\FW\\portal-widgettool-war",
-		"checked": "",
-		"subDirs": []
-	}]
-}, {
-	"name": "Others",
-	"absolutePath": "",
-	"relativePath": "",
-	"checked": "",
-	"subDirs": [{
-		"name": "maven-plugins",
-		"absolutePath": "",
-		"relativePath": "maven-plugins",
-		"checked": "",
-		"subDirs": []
-	}, {
-		"name": "parent",
-		"absolutePath": "",
-		"relativePath": "design\\parent",
 		"checked": "",
 		"subDirs": []
 	}]
