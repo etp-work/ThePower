@@ -134,43 +134,74 @@ img{ border:none; margin:0; padding:0;}
     font-size:12px;
     }
     
-.checkbox {
+.catigory {
     display:block;
     padding-left:5px;
     padding-top:2px;
     height:24px;
     line-height:24px;
     color:#333;
-    border-top: solid 1px #fff;
+    border-top: solid 1px #aaa;
     vertical-align: middle;
     text-shadow:1px 1px 0px #fff;
-    background:-moz-linear-gradient(top,rgba(225, 225, 225, 0.8),rgba(165, 165, 165, 0.8));
+    box-shadow:inset 0px -1px 3px #ccc,inset 0px 1px 3px #ccc;
+    background:-moz-linear-gradient(top,rgba(255, 255, 255, 0.8),rgba(235, 235, 235, 0.8));
 }
 .group{
     font-weight:bolder;
     }
     
-
 .group li{
     padding:2px 0px 1px 20px;
+    position:relative;
     height:20px;
     line-height:20px;
+    overflow:hidden;
     background:#333;
     font-size:12px;
     font-weight:normal;
     color:#666;
     border-top: solid 1px #ccc;
-    background:-moz-linear-gradient(top,rgba(225, 225, 225, 0.8),rgba(245, 245, 245, 0.8));
+    background:-moz-linear-gradient(top,rgba(220, 220, 220, 0.8),rgba(240, 240, 240, 0.8));
     }
     
 
+.status{
+    float:right;
+    position: absolute;
+    top:2px;
+    left:180px;
+    width:20px;
+    height:20px;
+    -moz-animation-name:statusUp; /*动画名称*/
+    -moz-animation-duration: 2s;/*播放一次所持续时间*/
+    -moz-animation-timing-function: ease-in-out;/*动画播放频率*/
+    -moz-animation-iteration-count: 1;/*动画播放次涒为无限次*/
+    }
+@-moz-keyframes statusUp{
+    0%{ top:30px;}
+    100%{ top:2px;}
+    }   
+.statusanimation{
+    }
+.s-success{
+    background: url(../images/icons/tick_circle.png) no-repeat;
+    }
+.s-error{
+    background:url(../images/icons/cross_circle.png) no-repeat;
+    }
 
-    
+.status img{
+    visibility:hidden;
+    } 
+.s-working img{
+    visibility:visible;
+    }  
 .check-deploy{
     float:left;
     margin:5px 0px 0px 10px;
     height:22px;
-    line-height:22px;
+    line-height:22px; 
     vertical-align:middle;
     }
 /*======================================== Deploy =======================================   */

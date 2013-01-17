@@ -41,8 +41,8 @@
                     <div class="bulid-feature-content">
 
                         <div class="bulid-list">
-                            <ul class="group" ng-repeat="dirTree in dirTrees"><label class="checkbox"><div class="lightpoint"><input name="" class="parent" type="checkbox" value="{{dirTree.name}}" ng-checked="dirTree.checked" /><label></label></div><span>{{dirTree.name}}</span></label>
-                                <li ng-repeat="subTree in dirTree.subDirs"><div class="lightpoint"><input name="" class="child" type="checkbox" ng-checked="subTree.checked" value="{{subTree.name}}"><label></label></div><span>{{subTree.name}}</span></li>
+                            <ul class="group" ng-repeat="dirTree in dirTrees"><label class="category"><div class="lightpoint"><input name="" class="parent" type="checkbox" value="{{dirTree.name}}" ng-checked="dirTree.checked" /><label></label></div><span>{{dirTree.name}}</span></label>
+                                <li ng-repeat="subTree in dirTree.subDirs"><div class="lightpoint"><input name="" class="child" type="checkbox" ng-checked="subTree.checked" value="{{subTree.name}}"><label></label></div><span>{{subTree.name}}</span><div class="status"><img src="resources/images/loading.gif"/></div></li>
                             </ul>
                         </div>
                         <div class="config-button-area">
@@ -103,12 +103,12 @@
                     <div class="test-feature-content">
                         <div class="us-list">
                         
-                            <ul class="group"><label class="checkbox"><input name="" type="checkbox" value="" />User story 01</label>
+                            <ul class="group"><label class="category"><input name="" type="checkbox" value="" />User story 01</label>
                               <li><input name="" type="checkbox">list 01</li>
                               <li><input name="" type="checkbox">list 02</li>
                             </ul>
                             
-                            <ul class="group"><label class="checkbox"><input name="" type="checkbox" value="" />User story 02</label>
+                            <ul class="group"><label class="category"><input name="" type="checkbox" value="" />User story 02</label>
                               <li><input name="" type="checkbox">list 01</li>
                               <li><input name="" type="checkbox">list 02</li>
                             </ul>
