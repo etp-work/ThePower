@@ -3,9 +3,71 @@
  */
 (function () {
     
-    function setNeedDeploy(param){
-        $('#needDeploy').attr("checked", needDeploy);
+    //listeners
+    function buildOnShowListener(){
+        var url = "/powerbuild/getAllTrees.ajax";
+        DynamicLoad.loadJSON(url, undefined, function(dirTrees){
+                if(!dirTrees){
+                    return;
+                }
+                $('.group label .parent').off("click");//remove click binding to .parent first.
+                $('.group .child').off("click");//remove click binding to .child first.
+                var scope = angular.element($('.bulid-list')).scope();
+                scope.$apply(function(){
+                    scope.dirTrees = dirTrees;
+                });
+                //rebinding click to .parent.
+                $('.group label .parent').on("click", 
+                        function(event){
+                            var isChecked = $(this).is(':checked');
+                            $(this).parent().parent().siblings().find('.child').attr("checked", isChecked);
+                            
+                            var needDeploy = $('#needDeploy').is(':checked');
+                            
+                            if($(this).val() === "Others" && isChecked && needDeploy){//unselect deploy button if something in Others selected.
+                                $('#needDeploy').attr("checked", false);
+                                ViewManager.addNotification({
+                                    type: "attention",
+                                    message: "Items in Others can't be deployed.",
+                                    timeout: 10000
+                                });
+                            }
+                        }
+                );
+              //rebinding click to .child.
+                $('.group .child').on("click", 
+                        function(event){
+                            var isChecked = $(this).is(':checked');
+                            var parent = $(this).parent().parent().parent().find('.parent');
+                            if(isChecked){
+                                var needDeploy = $('#needDeploy').is(':checked');
+                                parent.attr("checked", isChecked);
+                                if(parent.val() === "Others" && needDeploy){//unselect deploy button if something in Others selected.
+                                    $('#needDeploy').attr("checked", false);
+                                    ViewManager.addNotification({
+                                        type: "attention",
+                                        message: "Items in Others can't be deployed.",
+                                        timeout: 10000
+                                    });
+                                }
+                            }else{
+                                var isAllFalse = true;
+                                $(this).parent().parent().siblings().find('.child').each(function(){
+                                    if($(this).is(':checked')){
+                                        isAllFalse = false;
+                                    }
+                                });
+                                if(isAllFalse){
+                                    parent.attr("checked", isChecked);
+                                }
+                            }
+                        }
+                );
+        });
     }
+    
+    //add listener on 'onShow' event to view 'build-content'
+    ViewManager.addViewListener("onShow", "#bulid-content", buildOnShowListener); //add listener to monitor what will happen when build-content shown.
     
     function setDef4Build(defaultSelection, message){
         var url = "/powerbuild/setDefault.ajax";
