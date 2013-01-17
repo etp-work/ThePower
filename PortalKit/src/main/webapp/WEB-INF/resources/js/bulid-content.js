@@ -135,6 +135,8 @@
             return;
         }
         var packagename = selection.shift();
+        var element = $(".bulid-list .group .child[value=\""+packagename+"\"]").parent().siblings('.status');
+        element.addClass("s-working");
         DynamicLoad.postJSON(url, {
             selection: packagename,
             needDeploy: needDeploy
@@ -147,11 +149,15 @@
                         //TODO show (BuildResult.message);
                     }
                 });
+                element.removeClass("s-working");
+                element.addClass("s-error");
             }else if(!BuildResult.deployed && needDeploy){
                 ViewManager.addNotification({
                     type: "error",
                     message: "Deploy error"
                 });
+                element.removeClass("s-working");
+                element.addClass("s-error");
             }else{
                 var sucMessage = packagename + " build "+(needDeploy ? "+ deploy" : "" )+" successfully.";
                 ViewManager.addNotification({
@@ -159,6 +165,8 @@
                     timeout: 5000,
                     message: sucMessage
                 });
+                element.removeClass("s-working");
+                element.addClass("s-success");
                 build(selection, needDeploy);
             }
         }, function(error){
@@ -178,6 +186,9 @@
             }
         });
         var needDeploy = $('#needDeploy').is(':checked');
+        
+        $('.bulid-list .group .status').attr('class', 'status');
+        
         build(defaultSelection, needDeploy);
         event.preventDefault();
     });
@@ -201,4 +212,6 @@
             }
         }
     });
+    
+    
 });
