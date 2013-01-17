@@ -173,10 +173,7 @@ img{ border:none; margin:0; padding:0;}
     left:180px;
     width:20px;
     height:20px;
-    -moz-animation-name:statusUp; /*动画名称*/
-    -moz-animation-duration: 2s;/*播放一次所持续时间*/
-    -moz-animation-timing-function: ease-in-out;/*动画播放频率*/
-    -moz-animation-iteration-count: 1;/*动画播放次涒为无限次*/
+
     }
 @-moz-keyframes statusUp{
     0%{ top:30px;}
@@ -185,9 +182,17 @@ img{ border:none; margin:0; padding:0;}
 .statusanimation{
     }
 .s-success{
+	-moz-animation-name:statusUp; /*动画名称*/
+    -moz-animation-duration: 2s;/*播放一次所持续时间*/
+    -moz-animation-timing-function: ease-in-out;/*动画播放频率*/
+    -moz-animation-iteration-count: 1;/*动画播放次涒为无限次*/
     background: url(../images/icons/tick_circle.png) no-repeat;
     }
 .s-error{
+	-moz-animation-name:statusUp; /*动画名称*/
+    -moz-animation-duration: 2s;/*播放一次所持续时间*/
+    -moz-animation-timing-function: ease-in-out;/*动画播放频率*/
+    -moz-animation-iteration-count: 1;/*动画播放次涒为无限次*/
     background:url(../images/icons/cross_circle.png) no-repeat;
     }
 
@@ -195,6 +200,10 @@ img{ border:none; margin:0; padding:0;}
     visibility:hidden;
     } 
 .s-working img{
+	-moz-animation-name:statusUp; /*动画名称*/
+    -moz-animation-duration: 2s;/*播放一次所持续时间*/
+    -moz-animation-timing-function: ease-in-out;/*动画播放频率*/
+    -moz-animation-iteration-count: 1;/*动画播放次涒为无限次*/
     visibility:visible;
     }  
 .check-deploy{
