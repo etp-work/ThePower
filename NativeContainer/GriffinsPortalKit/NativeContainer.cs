@@ -44,6 +44,7 @@ namespace GriffinsPortalKit
 
             this.Width = Convert.ToInt32(ConfigurationManager.AppSettings["WindowWidth"]);
             this.Height = Convert.ToInt32(ConfigurationManager.AppSettings["WindowHeight"]);
+            this.FormBorderStyle = FormBorderStyle.Fixed3D;
             browser.Navigate(serverFullUrl);
         }
 
@@ -111,6 +112,24 @@ namespace GriffinsPortalKit
         {
             frmSplash.ShowDialog();
             this.Show();
+        }
+
+        private void NativeContainer_Resize(object sender, EventArgs e)
+        {
+            if (WindowState == FormWindowState.Minimized)
+            {
+                Hide();
+
+                notifyIcon1.BalloonTipTitle = "Portal Kit Hidden";
+                notifyIcon1.BalloonTipText = "Your Portal Kit has been minimized to the taskbar.";
+                notifyIcon1.ShowBalloonTip(3000);
+            }
+        }
+
+        private void notifyIcon1_DoubleClick(object sender, EventArgs e)
+        {
+            Show();
+            WindowState = FormWindowState.Normal;
         }
     }
 }
