@@ -68,6 +68,13 @@ public class SpecDirProvider implements DirProvider {
             DirTree tree = itr.next();
             iterateTrees(tree, path, itr);
         }
+        itr = list.iterator();
+        while (itr.hasNext()) {
+            DirTree tree = itr.next();
+            if (CollectionUtils.isEmpty(tree.getSubDirs()))
+                itr.remove();
+        }
+
         return list;
     }
 

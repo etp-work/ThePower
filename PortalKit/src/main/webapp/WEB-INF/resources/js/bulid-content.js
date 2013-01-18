@@ -3,13 +3,22 @@
  */
 (function () {
     
+    var viewId = "bulid-content";
+    
     //listeners
     function buildOnShowListener(){
+        
+        //Data load only when status of portal is loaded or newconfig.
+        if(Lifecycle.getState(viewId) !== Lifecycle.LOADED && Lifecycle.getState(viewId) !== Lifecycle.NEWCONFIG){
+            return;
+        }
+        
         var url = "/powerbuild/getAllTrees.ajax";
         DynamicLoad.loadJSON(url, undefined, function(dirTrees){
-                if(!dirTrees){
+                if(!dirTrees || dirTrees.length === 0){
                     return;
                 }
+                
                 $('.group label .parent').off("click");//remove click binding to .parent first.
                 $('.group .child').off("click");//remove click binding to .child first.
                 var scope = angular.element($('.bulid-list')).scope();
@@ -63,11 +72,34 @@
                             }
                         }
                 );
+              
+                Lifecycle.setState(viewId, Lifecycle.NORMAL);
         });
     }
     
+    function setDisableElements(isDisable){
+        $('#setDefault4Build').attr("disabled", isDisable);
+        $('#resetDefault4Build').attr("disabled", isDisable);
+        $('#buildButton').attr("disabled", isDisable);
+        $('#needDeploy').attr("disabled", isDisable);
+    }
+    
+    Lifecycle.setCallback(viewId, function(status){
+        switch (status) {
+            case Lifecycle.NORMAL:
+                setDisableElements(false);
+                break;
+            case Lifecycle.BUILD_EXECUTING:
+                setDisableElements(true);
+                break;
+            default:
+                break;
+        }
+    });
+    
     //add listener on 'onShow' event to view 'build-content'
     ViewManager.addViewListener("onShow", "#bulid-content", buildOnShowListener); //add listener to monitor what will happen when build-content shown.
+    
     
     function setDef4Build(defaultSelection, message){
         var url = "/powerbuild/setDefault.ajax";
@@ -132,6 +164,7 @@
     function build(selection, needDeploy){
         var url = "/powerbuild/build.ajax";
         if(selection.length === 0){
+            Lifecycle.setState(viewId, Lifecycle.NORMAL);
             return;
         }
         var packagename = selection.shift();
@@ -151,6 +184,7 @@
                 });
                 element.removeClass("s-working");
                 element.addClass("s-error");
+                Lifecycle.setState(viewId, Lifecycle.NORMAL);
             }else if(!BuildResult.deployed && needDeploy){
                 ViewManager.addNotification({
                     type: "error",
@@ -158,6 +192,7 @@
                 });
                 element.removeClass("s-working");
                 element.addClass("s-error");
+                Lifecycle.setState(viewId, Lifecycle.NORMAL);
             }else{
                 var sucMessage = packagename + " build "+(needDeploy ? "+ deploy" : "" )+" successfully.";
                 ViewManager.addNotification({
@@ -175,6 +210,7 @@
                 message: "Internal error:"+error.message,
                 timeout: 15000
             });
+            Lifecycle.setState(viewId, Lifecycle.NORMAL);
         });
     }
     
@@ -189,6 +225,8 @@
         
         $('.bulid-list .group .status').attr('class', 'status');
         
+        Lifecycle.setState(viewId, Lifecycle.BUILD_EXECUTING);//set portal state to BUILD_EXECUTING
+        setDisableElements(true);
         build(defaultSelection, needDeploy);
         event.preventDefault();
     });

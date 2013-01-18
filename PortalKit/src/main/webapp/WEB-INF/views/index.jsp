@@ -50,8 +50,8 @@
                             </ul>
                         </div>
                         <div class="config-button-area">
-                            <li><input id="setDefault4Build" class="small-button config" type="button" value="Set Default"/></li>
-                            <li><input id="resetDefault4Build" class="small-button reset" type="button" value="Reset"/></li>
+                            <li><input id="setDefault4Build" class="small-button config" disabled="disabled" type="button" value="Set Default"/></li>
+                            <li><input id="resetDefault4Build" class="small-button reset" disabled="disabled" type="button" value="Reset"/></li>
                         <div class="clear"></div>    
                         </div>
                         
@@ -61,8 +61,8 @@
             
                   
                   <div class="main-button-area">
-                  <input id="buildButton" class="primary-button bulid" type="button" value="Bulid"/> 
-                  <div class="check-deploy"><input id="needDeploy" name="" type="checkbox">Deploy</div>
+                  <input id="buildButton" class="primary-button bulid" disabled="disabled" type="button" value="Bulid"/> 
+                  <div class="check-deploy"><input id="needDeploy" name="" disabled="disabled" type="checkbox">Deploy</div>
                   <div class="clear"></div>
                   </div>
                   <div class="clear"></div>
@@ -156,7 +156,7 @@
             </div>
                     
                     <div class="main-button-area">
-                        <input id="saveSettings" class="primary-button save" type="button" value="Save"/>
+                        <input id="saveSettings" class="primary-button save" type="button" disabled="disabled" value="Save"/>
                     </div>
 
 

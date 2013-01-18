@@ -4,3 +4,4 @@
 <script type="text/javascript" src="${resources}/js/common/angular.js"></script>
 <script type="text/javascript" src="${resources}/js/common/DynamicLoad.js"></script>
 <script type="text/javascript" src="${resources}/js/common/ViewManager.js"></script>
+<script type="text/javascript" src="${resources}/js/common/Lifecycle.js"></script>
