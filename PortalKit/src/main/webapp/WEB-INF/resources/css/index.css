@@ -1,7 +1,7 @@
 @charset "utf-8";
 /* CSS Document */
 /*================================== CONFIG =====================================*/
-body{ margin:0px; padding:0px; font-size:12px; font-family:Arial; background:#618cc2;
+body{ margin:0px; padding:0px; font-size:12px; font-family:Arial; background:#999;
 /*background:-moz-linear-gradient(top,rgba(185, 185, 185, 0.8),rgba(205, 205, 205, 0.8));*/}
 .clear{clear:both;}
 .align-left{ float:left;}
