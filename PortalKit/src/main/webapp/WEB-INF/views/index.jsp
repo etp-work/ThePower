@@ -36,7 +36,11 @@
         
               <div class="content-box" id="bulid-content">
             
-                    <span class="tdName">Bulid List</span>
+                    <div class="bulid-feature-header">
+                    <li ><a class="active" href="#common-use">common</a></li>
+                    <li><a href="#environment">environment</a></li>
+                    <div class="clear"></div>
+                    </div>
                     
                     <div class="bulid-feature-content">
 
