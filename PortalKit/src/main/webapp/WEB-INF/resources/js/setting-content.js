@@ -55,7 +55,7 @@
     
     
     
-    $('#portalTeamPath').change(function(event) {
+    $('#portalTeamPath').keyup(function(event) {
         if($(this).val() !== ptPath){
             setSaveDisable(false);
         }else if($('#tomcatWebappsPath').val() !== twPath){
@@ -65,7 +65,7 @@
         }
     });
     
-    $('#tomcatWebappsPath').change(function(event) {
+    $('#tomcatWebappsPath').keyup(function(event) {
         if($(this).val() !== twPath){
             setSaveDisable(false);
         }else if($('#portalTeamPath').val() !== ptPath){
