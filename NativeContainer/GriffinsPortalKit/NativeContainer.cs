@@ -28,6 +28,7 @@ namespace GriffinsPortalKit
             browser.Parent = this;
             browser.Dock = DockStyle.Fill;
             browser.DocumentCompleted += browser_DocumentCompleted;
+            browser.DomClick += browser_DomClick;
             browser.CreateControl();
 
             string serverFullUrl = "";
@@ -46,6 +47,11 @@ namespace GriffinsPortalKit
             this.Height = Convert.ToInt32(ConfigurationManager.AppSettings["WindowHeight"]);
             this.FormBorderStyle = FormBorderStyle.Fixed3D;
             browser.Navigate(serverFullUrl);
+        }
+
+        void browser_DomClick(object sender, DomEventArgs e)
+        {
+            browser.WebBrowserFocus.Activate();
         }
 
         void browser_DocumentCompleted(object sender, EventArgs e)
