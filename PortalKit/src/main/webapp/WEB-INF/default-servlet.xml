@@ -33,18 +33,6 @@
 		beans -->
 	<context:component-scan base-package="org.etp.portalKit" />
 
-	<bean id="exceptionResolver"
-		class="org.etp.portalKit.fw.service.FailurecallbackExceptionResolver">
-		<property name="defaultErrorView">
-			<value>common/error</value>
-		</property>
-		<property name="exceptionMappings">
-			<props>
-				<prop key="java.lang.Exception">common/error</prop>
-			</props>
-		</property>
-	</bean>
-	
 	<bean id="pathMatchingResourcePatternResolver" class="org.springframework.core.io.support.PathMatchingResourcePatternResolver"/>
 
 	<!-- Application Message Bundle -->

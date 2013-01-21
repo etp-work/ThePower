@@ -8,13 +8,24 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd ">
 
 	<!-- Configures the @Controller programming model -->
-	<mvc:annotation-driven/>
+	<mvc:annotation-driven />
 	<!-- Forwards requests to the "/" resource to the "welcome" view -->
 	<mvc:view-controller path="/" view-name="index" />
 
 	<!-- config resources location -->
-	<mvc:resources location="/WEB-INF/resources/"
-		mapping="/resources/**" />
+	<mvc:resources location="/WEB-INF/resources/" mapping="/resources/**" />
+
+	<bean id="exceptionResolver"
+		class="org.etp.portalKit.fw.service.FailurecallbackExceptionResolver">
+		<property name="defaultErrorView">
+			<value>common/error</value>
+		</property>
+		<property name="exceptionMappings">
+			<props>
+				<prop key="java.lang.Exception">common/error</prop>
+			</props>
+		</property>
+	</bean>
 
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
