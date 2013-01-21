@@ -35,14 +35,5 @@
 
 	<bean id="pathMatchingResourcePatternResolver" class="org.springframework.core.io.support.PathMatchingResourcePatternResolver"/>
 
-	<!-- Application Message Bundle -->
-	<bean id="messageSource"
-		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-		<property name="basename" value="/WEB-INF/resources/messages/messages" />
-		<property name="defaultEncoding" value="utf-8" />
-		<property name="cacheSeconds" value="0" />
-	</bean>
-
-
 	<import resource="web-related.xml" />
 </beans>
