@@ -3,7 +3,3 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<spring:eval expression="@profile['portalKit.version']" var="version"/>
-<spring:url value="/resources-{appversion}" var="resources">
-	<spring:param name="appversion" value="${version}"></spring:param>
-</spring:url>

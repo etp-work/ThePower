@@ -11,13 +11,10 @@
 	<mvc:annotation-driven/>
 	<!-- Forwards requests to the "/" resource to the "welcome" view -->
 	<mvc:view-controller path="/" view-name="index" />
-	<mvc:view-controller path="/test" view-name="test" />
-	<!-- config the dreamgo.properties -->
-	<util:properties id="profile"
-		location="/WEB-INF/profile/portalKit.properties" />
+
 	<!-- config resources location -->
 	<mvc:resources location="/WEB-INF/resources/"
-		mapping="/resources-#{profile['portalKit.version']}/**" />
+		mapping="/resources/**" />
 
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">

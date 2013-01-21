@@ -1,6 +1,5 @@
 
 $(document).ready(function(){
-    var resource = $('#resources').val();
     
     var jsFiles = ["bulid-content.js", "deploy-content.js", "test-content.js", "setting-content.js"];
     var jsFileNum = jsFiles.length;
@@ -31,7 +30,7 @@ $(document).ready(function(){
 
     //load all the other used js files.
     for(var i in jsFiles){
-        DynamicLoad.loadStaticJS(resource+"/js/"+jsFiles[i], initialization);    
+        DynamicLoad.loadStaticJS("resources/js/"+jsFiles[i], initialization);    
     }
     
 //=======================foot part=====================================

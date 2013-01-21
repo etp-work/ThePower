@@ -257,17 +257,16 @@ if (!ViewManager) {
             return undefined;
         }
         
-        var resources = $('#resources').val();
         var id = new Date().getTime()+"-noti";
         var nodificationHtml = "<div id=\""+id+"\" class=\"notification "+type+"\" style=\"display: none;\">"+
-                "<a href=\"#\" class=\"close\"><img src=\""+resources+"/images/icons/cross_grey_small.png\" title=\"Close this notification\" alt=\"close\" /></a>"+
+                "<a href=\"#\" class=\"close\"><img src=\"resources/images/icons/cross_grey_small.png\" title=\"Close this notification\" alt=\"close\" /></a>"+
                 "<span class=\"message\">"+
                        message+
                 "</span>"+
             "</div>";
         if(callback){
             nodificationHtml = "<div id=\""+id+"\" class=\"notification "+type+"\" style=\"display: none;\">"+
-            "<a href=\"#\" class=\"close\"><img src=\""+resources+"/images/icons/cross_grey_small.png\" title=\"Close this notification\" alt=\"close\" /></a>"+
+            "<a href=\"#\" class=\"close\"><img src=\"resources/images/icons/cross_grey_small.png\" title=\"Close this notification\" alt=\"close\" /></a>"+
             "<span class=\"message\"><a href=\"#\">"+
                    message+
             "</a></span>"+
