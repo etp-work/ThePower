@@ -4,7 +4,10 @@
 <head>
 <%@ include file="/WEB-INF/views/common/header_head.jsp"%>
 <link href="resources/css/index.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="resources/js/test.js"></script>
+<script type="text/javascript" src="resources/js/index.js"></script>
+<c:forEach var="view" items="${viewInfo}" varStatus="status">
+    <script type="text/javascript" src="<c:out value='${view.js}'/>"></script>
+</c:forEach>
 <title>The Power</title>
 </head>
 <body>
@@ -20,83 +23,15 @@
     <div class="maincontent">
         <div class="tab-header">
             <ul>
-                <li><a class="active" href="#bulid-content">Bulid</a></li>
-                <li><a href="#deploy-content">Deploy</a></li>
-                <li><a href="#test-content">Test</a></li>
-                <li><a href="#setting-content">Set</a></li>
+                <c:forEach var="view" items="${viewInfo}" varStatus="status">
+                   <li><a href="#<c:out value='${view.viewId}'/>"><c:out value="${view.viewName}"/></a></li>
+                </c:forEach>
             </ul>
             <div class="clear"></div>
         </div>
         
         <div class="content-wrapper">
-        <div ng-view></div>
-        <!-- ========================================= Bulid ================================================-->
-        
-        
-              
-   <!-- ========================================= Deploy ================================================-->
-              
-              <div class="content-box" id="deploy-content">
-                <span class="tdName">Sources Files</span>
-                <div class="table-wrapper">                 
-                    
-                    
-                    <div class="war-input">
-                    <input class="input-deploy"type="text" placeholder="Type something…">
-                    <input class="primary-button check" type="button" value="Check"/>
-                    <div class="clear"></div>
-                    </div>
-                    
-                    <div class="war-list-wrapper">
-
-                        <li><div class="lightpoint"><input name="" type="checkbox"><label></label></div>list 01</li>
-                        <li><div class="lightpoint"><input name="" type="checkbox"><label></label></div>list 02</li>
-                        <li><div class="lightpoint"><input name="" type="checkbox"><label></label></div>list 03</li>
-                        <li><div class="lightpoint"><input name="" type="checkbox"><label></label></div>list 04</li>
-                        <li><div class="lightpoint"><input name="" type="checkbox"><label></label></div>list 05</li>
-                        <li><div class="lightpoint"><input name="" type="checkbox"><label></label></div>list 06</li>
-                        <li><div class="lightpoint"><input name="" type="checkbox"><label></label></div>list 07</li>
-                        <li><div class="lightpoint"><input name="" type="checkbox"><label></label></div>list 08</li>
-                        <li><div class="lightpoint"><input name="" type="checkbox"><label></label></div>list 09</li>
-                        
-                    </div>
-                </div>
-                <div class="main-button-area">
-                    <input class="primary-button save" type="button" value="Deploy"/>
-                </div>
-              </div>     
-              
- <!-- ========================================= Test ================================================--> 
-             <div class="content-box" id="test-content">
-                    <span class="tdName">User Story List</span>
-                    
-                    <div class="test-feature-content">
-                        <div class="us-list">
-                        
-                            <ul class="group"><label class="category"><input name="" type="checkbox" value="" />User story 01</label>
-                              <li><input name="" type="checkbox">list 01</li>
-                              <li><input name="" type="checkbox">list 02</li>
-                            </ul>
-                            
-                            <ul class="group"><label class="category"><input name="" type="checkbox" value="" />User story 02</label>
-                              <li><input name="" type="checkbox">list 01</li>
-                              <li><input name="" type="checkbox">list 02</li>
-                            </ul>
-                        
-                        </div>
-                        <div class="config-button-area">
-                            <li><input id="setDefault4Test" class="small-button config" type="button" value="Set Default"/></li>
-                            <li><input class="small-button reset" type="button" value="Reset"/></li>
-                        <div class="clear"></div>    
-                        </div>
-                        <div class="clear"></div>
-                    </div>
-                    
-                    <div class="main-button-area">
-                        <input class="primary-button test" type="button" value="Test"/>
-                    </div>
-             </div>      
-              
+        <div class="ng-view"></div>
           
    <!-- ========================================= Settings ================================================-->
            

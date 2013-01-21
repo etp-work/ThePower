@@ -1,0 +1,19 @@
+[
+    {
+    	viewId: "build-content",
+    	viewName: "Build",
+    	js: "resources/js/index/build.js"
+    },{
+    	viewId: "deploy-content",
+    	viewName: "Deploy",
+    	js: "resources/js/index/deploy.js"
+    },{
+    	viewId: "test-content",
+    	viewName: "Test",
+    	js: "resources/js/index/test.js"
+    },{
+    	viewId: "setting-content",
+    	viewName: "Set",
+    	js: "resources/js/index/setting.js"
+    }
+]

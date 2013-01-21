@@ -1,9 +1,11 @@
 /**
- * This JS module is written for view build-content in index.jsp.
+ * This module is only worked for view build-content which included in
+ * index.jsp.
  */
-(function () {
+(function(window) {
+    'use strict';
     
-    function PhoneListCtrl($http, $scope){
+    function BuildInfoController($http, $scope){
         var url = "/PortalKit/powerbuild/getAllTrees.ajax";
         $http.get(url).success(function(data, status, headers, config) {
             $scope.dirTrees = data
@@ -15,8 +17,7 @@
     
     switchModule.config(['$routeProvider', function($routeProvider) {
         $routeProvider.
-        when('/', {templateUrl: 'resources/templates/build-content.html',   controller: PhoneListCtrl}).
-        otherwise({redirectTo: '/phones'});
-  }])
-    
-}());
+        when('/build-content', {templateUrl: 'resources/templates/index-views/build-content.html', controller: BuildInfoController});
+  }]);
+
+}(window));

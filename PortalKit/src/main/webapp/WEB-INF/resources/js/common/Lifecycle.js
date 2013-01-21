@@ -1,29 +1,28 @@
-var Lifecycle;
-if (!Lifecycle) {
-    Lifecycle = {};
-}
 
-(function () {
+(function (window) {
+    
+    var _lifecycle = {};
+    window.Lifecycle = _lifecycle;
     
     /**
      * This status means portal just loaded. When portal has been loaded completely, the status of portal is LOADED. But it should set to NORMAL after data initialized.
      */
-    Lifecycle.LOADED = "LOADED";
+    _lifecycle.LOADED = "LOADED";
     
     /**
      * This status means portal run fine.
      */
-    Lifecycle.NORMAL = "NORMAL";
+    _lifecycle.NORMAL = "NORMAL";
     
     /**
      * This status means there is a new setting saved, all the views that depends on the settings should refresh.
      */
-    Lifecycle.NEWCONFIG = "NEWCONFIG";
+    _lifecycle.NEWCONFIG = "NEWCONFIG";
     
     /**
      * This status means build-content view is doing package compiling.
      */
-    Lifecycle.BUILD_EXECUTING = "BUILD_EXECUTING";
+    _lifecycle.BUILD_EXECUTING = "BUILD_EXECUTING";
     
     /**
      * state = {
@@ -40,9 +39,39 @@ if (!Lifecycle) {
      */
     var state = {};
     
+    /**
+     * modules = [
+     *           {
+     *               moduleId: '',
+     *               module: object
+     *           }
+     * ];
+     */
+    var modules = [];
+    
+    _lifecycle.getModule = function (moduleId){
+        var module = undefined;
+        for ( var i = 0; i < modules.length; i++) {
+            if(modules[i].moduleId === moduleId){
+                module = modules[i].module;
+                break;
+            }
+        }
+        if(!module){
+            module = angular.module(moduleId, []);
+            var mo = {
+                    moduleId: moduleId,
+                    module: module
+            };
+            modules.push(mo);
+        }
+        return module;
+    };
     
     
-    Lifecycle.setState = function(viewId, status){
+    
+    
+    _lifecycle.setState = function(viewId, status){
         if(!state[viewId]){
             state[viewId] = {};
         }
@@ -60,7 +89,7 @@ if (!Lifecycle) {
     };
     
     
-    Lifecycle.getState = function(viewId){
+    _lifecycle.getState = function(viewId){
         if(!state[viewId]){
             state[viewId] = {};
             state[viewId].state = Lifecycle.LOADED;
@@ -72,7 +101,7 @@ if (!Lifecycle) {
     };
     
     
-    Lifecycle.setCallback = function(viewId, callback){
+    _lifecycle.setCallback = function(viewId, callback){
         if(!state[viewId]){
             state[viewId] = {};
             state[viewId].callback = [];
@@ -84,4 +113,6 @@ if (!Lifecycle) {
     };
     
     
-}());
+    
+    
+}(window));
