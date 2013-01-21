@@ -1,18 +1,17 @@
 <%@ page language="java" contentType="text/html;charset=utf-8"%>
 <%@ include file="/WEB-INF/views/common/header_top.jsp"%>
-<html ng-app>
+<html ng-app="switchModule">
 <head>
 <%@ include file="/WEB-INF/views/common/header_head.jsp"%>
-<link href="${resources}/css/index.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="${resources}/js/index.js"></script>
+<link href="resources/css/index.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="resources/js/test.js"></script>
 <title>The Power</title>
 </head>
 <body>
-<input id="resources" type="hidden" value="${resources}"/>
 <div class="mainWrapper">
 
     <div class="header">
-        <div class="toolsName"><img class="logo" src="${resources}/images/logo_24.png"/>THE POWER</div>    
+        <div class="toolsName"><img class="logo" src="resources/images/logo_24.png"/>THE POWER</div>    
     </div>
 
 
@@ -30,43 +29,10 @@
         </div>
         
         <div class="content-wrapper">
-        
+        <div ng-view></div>
         <!-- ========================================= Bulid ================================================-->
         
         
-              <div class="content-box" id="bulid-content">
-            
-                    <div class="bulid-feature-header">
-                    <li ><a class="active" href="#common-use">common</a></li>
-                    <li><a href="#environment">environment</a></li>
-                    <div class="clear"></div>
-                    </div>
-                    
-                    <div class="bulid-feature-content">
-
-                        <div class="bulid-list">
-                            <ul class="group" ng-repeat="dirTree in dirTrees"><label class="category"><div class="lightpoint"><input name="" class="parent" type="checkbox" value="{{dirTree.name}}" ng-checked="dirTree.checked" /><label></label></div><span>{{dirTree.name}}</span></label>
-                                <li ng-repeat="subTree in dirTree.subDirs"><div class="lightpoint"><input name="" class="child" type="checkbox" ng-checked="subTree.checked" value="{{subTree.name}}"><label></label></div><span>{{subTree.name}}</span><div class="status"><img src="${resources}/images/loading.gif"/></div></li>
-                            </ul>
-                        </div>
-                        <div class="config-button-area">
-                            <li><input id="setDefault4Build" class="small-button config" disabled="disabled" type="button" value="Set Default"/></li>
-                            <li><input id="resetDefault4Build" class="small-button reset" disabled="disabled" type="button" value="Reset"/></li>
-                        <div class="clear"></div>    
-                        </div>
-                        
-                    <div class="clear"></div>
-                  </div>    
-            
-            
-                  
-                  <div class="main-button-area">
-                  <input id="buildButton" class="primary-button bulid" disabled="disabled" type="button" value="Bulid"/> 
-                  <div class="check-deploy"><input id="needDeploy" name="" disabled="disabled" type="checkbox">Deploy</div>
-                  <div class="clear"></div>
-                  </div>
-                  <div class="clear"></div>
-              </div>
               
    <!-- ========================================= Deploy ================================================-->
               
@@ -177,19 +143,19 @@
 
     <div class="foot">
             <div class="notification error">
-                <a href="#" class="close"><img src="${resources}/images/icons/cross_grey_small.png" title="Close this notification" alt="close" /></a>
+                <a href="#" class="close"><img src="resources/images/icons/cross_grey_small.png" title="Close this notification" alt="close" /></a>
                 <span>
                     Error notification. 
                 </span>
             </div>
             <div class="notification information">
-                <a href="#" class="close"><img src="${resources}/images/icons/cross_grey_small.png" title="Close this notification" alt="close" /></a>
+                <a href="#" class="close"><img src="resources/images/icons/cross_grey_small.png" title="Close this notification" alt="close" /></a>
                 <span class="message">
                     Lorem ipsum dolor sit amet.
                 </span>
             </div>
             <div class="notification success">
-                <a href="#" class="close"><img src="${resources}/images/icons/cross_grey_small.png" title="Close this notification" alt="close" /></a>
+                <a href="#" class="close"><img src="resources/images/icons/cross_grey_small.png" title="Close this notification" alt="close" /></a>
                 <span>
                     Success notification. 
                 </span>
