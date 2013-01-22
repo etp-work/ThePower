@@ -114,7 +114,10 @@ img{ border:none; margin:0; padding:0;}
     }
 .bulid-feature-header{
     margin:0;
+    margin:5px 0px;
     padding:0;
+    border:solid 1px #ccc;
+    border-radius:4px;
     }
 
 .bulid-feature-header li {
@@ -126,8 +129,17 @@ img{ border:none; margin:0; padding:0;}
 .bulid-feature-header li a{
     display:block;
     font-size:10px;
+    padding:2px 0px;
     color:#333;
-    }   
+    }
+.bulid-feature-header li:first-child a {
+    border-top-left-radius:4px;
+    border-bottom-left-radius:4px;
+    } 
+.bulid-feature-header li:lastt-child a {
+    border-top-right-radius:4px;
+    border-bottom-right-radius:4px;
+    } 
 .bulid-feature-header li a.active{
     color:#fff;
     background:#666;
@@ -228,6 +240,13 @@ img{ border:none; margin:0; padding:0;}
 .s-working img{
     visibility:visible;
     }  
+    
+.bulid-message{
+    float:left;
+    width:218px;
+    padding:5px 8px;
+    background:#f4f4f4;
+    }
 .check-deploy{
     float:left;
     margin:5px 0px 0px 10px;
@@ -265,7 +284,7 @@ img{ border:none; margin:0; padding:0;}
     }
     
 /*====================================== TEST ===============================*/
-#test-content{ }
+#test-content{}
 .us-list{
     margin-top:5px;
     background:#fff;
@@ -277,9 +296,7 @@ img{ border:none; margin:0; padding:0;}
     
 
 /*====================================== SETTINGS ===============================*/
-#setting-content{
-    
-    }
+#setting-content{}
 .tdName{
     display:block;
     height:20px;
@@ -551,7 +568,7 @@ select:focus {
 .toolsName{
     background:-moz-linear-gradient(top,rgba(255, 255, 255, 0.8),rgba(235, 235, 235, 0.8));
     text-shadow:1px 1px 1px rgba(14, 104, 254, 0.5);
-    box-shadow:0px 2px 10px rgba(151, 224, 252, 1);
+    box-shadow:0px 1px 10px rgba(151, 224, 252, 1);
 /*    border-radius: 4px;*/
     -moz-border-radius-topleft: 0px;
     -webkit-top-left-border: 0px;
