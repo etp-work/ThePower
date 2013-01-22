@@ -53,7 +53,10 @@ img{ border:none; margin:0; padding:0;}
     margin-top:10px;
     padding:0;
     border:solid 1px #fff;
-    box-shadow:0px 2px 5px rgba(151, 224, 252, 1);
+    border-radius:4px;
+    box-shadow:0px 2px 5px rgba(151, 224, 252, 1),
+                inset 2px 2px 5px rgba(255,255,255,0.6),
+                inset -2px -2px 5px rgba(255,255,255,0.6);
 
     }   
     
@@ -64,14 +67,26 @@ img{ border:none; margin:0; padding:0;}
     
 .tab-header ul li{
     float:left;
+    width:25%;
     }
 .tab-header ul li a{
     display:block;
-    padding:5px 15px;
+    padding:5px 0px;
+    text-align:center;
     background:rgba(235,235,235,0.6);
     color:#333;
     }
     
+.tab-header ul li:first-child a{
+    border-top-left-radius:4px;
+    border-bottom-left-radius:4px;
+    }
+    
+.tab-header ul li:last-child a{
+    border-top-right-radius:4px;
+    border-bottom-right-radius:4px;
+    } 
+       
 .tab-header ul li a.active{
     background:#666;
     color:#FFF;
@@ -80,9 +95,12 @@ img{ border:none; margin:0; padding:0;}
 .content-wrapper{
     padding:2px;
     height:350px;
-    background:rgba(255,255,255,0.8);
+    background:rgba(255,255,255,0.6);
     border:solid 1px #fff;
-    box-shadow:0px 2px 5px rgba(151, 224, 252, 1);
+    border-radius:4px;
+    box-shadow:0px 2px 5px rgba(151, 224, 252, 1),
+               inset 2px 2px 5px rgba(255,255,255,0.6),
+               inset -2px -2px 5px rgba(255,255,255,0.6);
     }
     
 .config-button-area{
@@ -110,8 +128,7 @@ img{ border:none; margin:0; padding:0;}
     overflow:hidden;
     }
 /*============================================== BULID ==============================================*/
-#bulid-content{
-    }
+#bulid-content{}
 .bulid-feature-header{
     margin:0;
     margin:5px 0px;
@@ -246,6 +263,8 @@ img{ border:none; margin:0; padding:0;}
     width:218px;
     padding:5px 8px;
     background:#f4f4f4;
+    font-size:10px;
+    color:#666;
     }
 .check-deploy{
     float:left;
@@ -419,31 +438,45 @@ input[type="text"]{
                 background-repeat: no-repeat !important;
                 font-size: 10px;
                 width: 238px;
+                border-radius:3px;
+                text-shadow:1px 1px 1px #999;
                 }
                 
 
 .attention {
-                background: #fffbcc url('../images/icons/exclamation.png') 10px 11px no-repeat;
-                border-color: #e6db55;
-                color: #666452;
+                background:url('../images/icons/exclamation.png') 10px 11px no-repeat;
+                background-color:rgba(255,251,204,0.5);
+                border-color: #fff14c;
+                color: #4b4500;
+                box-shadow:inset 2px 2px 5px rgba(255,241,76,0.6),
+                           inset -2px -2px 5px rgba(255,241,76,0.6);
                 }
 
 .information {
-                background: #dbe3ff url('../images/icons/information.png');
-                border-color: #a2b4ee;
-                color: #585b66;
+                background: url('../images/icons/information.png');
+                background-color:rgba(219,227,255,0.5);
+                border-color: #84d1fd;
+                color: #034690;
+                box-shadow:inset 2px 2px 5px rgba(132,209,253,0.6),
+                           inset -2px -2px 5px rgba(132,209,253,0.6);
                 }
 
 .success {
-                background: #d5ffce url('../images/icons/tick_circle.png');
-                border-color: #9adf8f;
-                color: #556652;
+                background:url('../images/icons/tick_circle.png');
+                background-color:rgba(213,255,206,0.5);
+                border-color: #8dfe7b;
+                color: #0d6100;
+                box-shadow:inset 2px 2px 5px rgba(141,254,123,0.6),
+                inset -2px -2px 5px rgba(141,254,123,0.6);
                 }
 
 .error {
-                background: #ffcece url('../images/icons/cross_circle.png');
-                border-color: #df8f8f;
-                color: #665252;
+                background:url('../images/icons/cross_circle.png');
+                background-color:rgba(255,206,206,0.5);
+                border-color: #ff8888;
+                color: #7b0000;
+                box-shadow:inset 2px 2px 5px rgba(255,136,136,0.6),
+                inset -2px -2px 5px rgba(255,136,136,0.6);
                 }
 
 .notification span {
@@ -569,7 +602,7 @@ select:focus {
     background:-moz-linear-gradient(top,rgba(255, 255, 255, 0.8),rgba(235, 235, 235, 0.8));
     text-shadow:1px 1px 1px rgba(14, 104, 254, 0.5);
     box-shadow:0px 1px 10px rgba(151, 224, 252, 1);
-/*    border-radius: 4px;*/
+    border-radius: 4px;
     -moz-border-radius-topleft: 0px;
     -webkit-top-left-border: 0px;
     border-top-left-radius: 0px;
