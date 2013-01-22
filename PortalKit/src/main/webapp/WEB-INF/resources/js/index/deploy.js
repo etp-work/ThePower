@@ -1,16 +1,15 @@
 /**
  * This module is only worked for view deploy-content which included in
  * index.jsp.
-
+ */
 (function(window) {
     'use strict';
     
     function DeployController($http, $scope){
-        alert("deploy");
     }
     
  // Create a new module
-    var switchModule = angular.module('switchModule', []);
+    var switchModule = Lifecycle.getModule("switchModule");
     
     switchModule.config(['$routeProvider', function($routeProvider) {
         $routeProvider.
@@ -18,4 +17,3 @@
   }])
 
 }(window));
- */

@@ -237,7 +237,7 @@ img{ border:none; margin:0; padding:0;}
     }
 /*======================================== Deploy =======================================   */
 
-#deploy-content{display:none;}
+#deploy-content{}
 .war-input{
     margin:0 auto;
     padding:5px 2px;
@@ -265,7 +265,7 @@ img{ border:none; margin:0; padding:0;}
     }
     
 /*====================================== TEST ===============================*/
-#test-content{ display:none;}
+#test-content{ }
 .us-list{
     margin-top:5px;
     background:#fff;
@@ -278,7 +278,7 @@ img{ border:none; margin:0; padding:0;}
 
 /*====================================== SETTINGS ===============================*/
 #setting-content{
-    display:none;
+    
     }
 .tdName{
     display:block;

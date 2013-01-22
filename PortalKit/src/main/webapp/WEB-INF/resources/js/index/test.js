@@ -1,12 +1,11 @@
 /**
  * This module is only worked for view test-content which included in
  * index.jsp.
-
+ */
 (function(window) {
     'use strict';
     
     function TestController($http, $scope){
-        alert("test");
     }
     
  // Create a new module
@@ -18,4 +17,3 @@
   }])
 
 }(window));
- */

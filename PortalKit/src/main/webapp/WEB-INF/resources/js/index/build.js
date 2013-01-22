@@ -13,10 +13,11 @@
     }
     
  // Create a new module
-    var switchModule = angular.module('switchModule', []);
+    var switchModule = Lifecycle.getModule("switchModule");
     
     switchModule.config(['$routeProvider', function($routeProvider) {
         $routeProvider.
+        when('/', {templateUrl: 'resources/templates/index-views/build-content.html', controller: BuildInfoController}).
         when('/build-content', {templateUrl: 'resources/templates/index-views/build-content.html', controller: BuildInfoController});
   }]);
 
