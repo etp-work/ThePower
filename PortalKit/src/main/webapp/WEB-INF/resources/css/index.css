@@ -88,8 +88,9 @@ img{ border:none; margin:0; padding:0;}
     } 
        
 .tab-header ul li a.active{
-    background:#666;
-    color:#FFF;
+    color:#fff;
+    background:-moz-linear-gradient(top,rgba(63, 200, 251, 0.5),rgba(0, 168, 255, 0.6));
+    box-shadow: inset 0 0 5px rgba(2, 80, 125, 0.5);
     }
     
 .content-wrapper{
@@ -119,6 +120,7 @@ img{ border:none; margin:0; padding:0;}
         
 .main-button-area{
     margin-top:5px;
+    padding:0px 5px;
     }   
     
 
@@ -133,7 +135,7 @@ img{ border:none; margin:0; padding:0;}
     margin:0;
     margin:5px 0px;
     padding:0;
-    border:solid 1px #ccc;
+    border:solid 1px #f4f4f4;
     border-radius:4px;
     }
 
@@ -146,8 +148,9 @@ img{ border:none; margin:0; padding:0;}
 .bulid-feature-header li a{
     display:block;
     font-size:10px;
+    font-weight:bolder;
     padding:2px 0px;
-    color:#333;
+    color:#666;
     }
 .bulid-feature-header li:first-child a {
     border-top-left-radius:4px;
@@ -159,7 +162,8 @@ img{ border:none; margin:0; padding:0;}
     } 
 .bulid-feature-header li a.active{
     color:#fff;
-    background:#666;
+    background:-moz-linear-gradient(top,rgba(63, 200, 251, 0.5),rgba(0, 168, 255, 0.6));
+    box-shadow: inset 0 0 5px rgba(2, 80, 125, 0.5);
     }    
 
 
@@ -168,7 +172,6 @@ img{ border:none; margin:0; padding:0;}
 
 .bulid-list{
     float:left;
-    background:#fff;
     width:234px;
     height:255px;
     overflow:auto;
@@ -262,7 +265,8 @@ img{ border:none; margin:0; padding:0;}
     float:left;
     width:218px;
     padding:5px 8px;
-    background:#f4f4f4;
+    border-bottom:solid 1px #fff;
+    background:-moz-linear-gradient(bottom,rgba(225, 225, 225, 0.5),rgba(255, 255, 255, 0.5));
     font-size:10px;
     color:#666;
     }
