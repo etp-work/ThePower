@@ -10,10 +10,8 @@ import org.etp.portalKit.powerbuild.bean.request.BuildCommand;
 import org.etp.portalKit.powerbuild.bean.request.Selection;
 import org.etp.portalKit.powerbuild.bean.response.BuildResult;
 import org.etp.portalKit.powerbuild.bean.response.DirTree;
-import org.etp.portalKit.powerbuild.bean.response.ViewInfo;
 import org.etp.portalKit.powerbuild.logic.PowerBuildLogic;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,17 +25,6 @@ public class PowerBuildController {
 
     @Resource(name = "buildLogic")
     private PowerBuildLogic logic;
-
-    /**
-     * @param model 
-     * @return next page
-     */
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String index(Model model) {
-        List<ViewInfo> retrieveViewInfo = logic.retrieveViewInfo();
-        model.addAttribute("viewInfo", retrieveViewInfo);
-        return "index";
-    }
 
     /**
      * @return next page

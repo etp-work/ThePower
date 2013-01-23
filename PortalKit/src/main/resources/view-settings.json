@@ -2,18 +2,26 @@
     {
     	viewId: "build-content",
     	viewName: "Build",
-    	js: "resources/js/index/build.js"
+    	js: "resources/js/index/build.js",
+    	templateUrl: "resources/templates/index-views/build-content.html",
+    	defaultView: true
     },{
     	viewId: "deploy-content",
     	viewName: "Deploy",
-    	js: "resources/js/index/deploy.js"
+    	js: "resources/js/index/deploy.js",
+        templateUrl: "resources/templates/index-views/deploy-content.html",
+        defaultView: false
     },{
     	viewId: "test-content",
     	viewName: "Test",
-    	js: "resources/js/index/test.js"
+    	js: "resources/js/index/test.js",
+        templateUrl: "resources/templates/index-views/test-content.html",
+        defaultView: false
     },{
     	viewId: "setting-content",
     	viewName: "Set",
-    	js: "resources/js/index/setting.js"
+    	js: "resources/js/index/setting.js",
+        templateUrl: "resources/templates/index-views/setting-content.html",
+        defaultView: false
     }
 ]

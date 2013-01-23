@@ -99,7 +99,7 @@ if (!DynamicLoad) {
 	   });
     };
     
-    DynamicLoad.loadStaticJS = function(url, success, failure){
+    DynamicLoad.loadStaticJs = function(url, success, failure){
         jQuery.ajax({
             "type" : "GET",
             "url" : url,
@@ -112,7 +112,34 @@ if (!DynamicLoad) {
                                       json();
                                   }
                                   if(success){
-                                      success();
+                                     success();
+                                  }
+            },
+            "error" : function(jqXHR, textStatus, errorThrown) {
+                              var obj = {
+                                      type: "Internal Error",
+                                      message: textStatus
+                              };
+                                                if(failure){
+                                                   failure(obj);
+                                                }
+            }
+        });
+    };
+    
+    DynamicLoad.loadStaticHtml = function(url, success, failure){
+        jQuery.ajax({
+            "type" : "GET",
+            "url" : url,
+            "contentType" : "application/x-www-form-urlencoded; charset=UTF-8",
+            "dataType" : "text",
+            "success" : function(data, textStatus, jqXHR) {
+                                  if(success){
+                                      if(data){
+                                          success(data);
+                                      }else{
+                                          success();
+                                      }
                                   }
             },
             "error" : function(jqXHR, textStatus, errorThrown) {

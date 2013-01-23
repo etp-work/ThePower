@@ -1,4 +1,4 @@
-<div class="content-box" id="build-content">
+<div class="content-box" id="build-content"  ng-app>
 
 	<div class="bulid-feature-header">
             <li><a href="#/common">common</a></li>
@@ -12,13 +12,13 @@
 			<ul class="group" ng-repeat="dirTree in dirTrees">
 				<label class="category">
 				    <div class="lightpoint">
-						<input type="checkbox" ng-click="checkParent($event)" value="{{dirTree.name}}" ng-checked="dirTree.checked" /><label></label>
+						<input type="checkbox" value="{{dirTree.name}}" ng-checked="dirTree.checked" /><label></label>
 					</div>
 					<span>{{dirTree.name}}</span>
 				</label>
 				<li ng-repeat="subTree in dirTree.subDirs">
 				    <div class="lightpoint">
-						<input type="checkbox" ng-click="checkChild($event, dirTree.name)" ng-checked="subTree.checked" value="{{subTree.name}}"><label></label>
+						<input type="checkbox" ng-checked="subTree.checked" value="{{subTree.name}}"><label></label>
 					</div>
 					<span>{{subTree.name}}</span>
 				<div class="status">
@@ -27,8 +27,8 @@
 			</ul>
 		</div>
 		<div class="config-button-area">
-			<li><input id="setDefault4Build" class="small-button config" ng-click="setDefaultSelection($event)" disabled="disabled" type="button" value="Set Default" /></li>
-			<li><input id="resetDefault4Build" class="small-button reset" ng-click="resetDefaultSelection($event)" disabled="disabled" type="button" value="Reset" /></li>
+			<li><input id="setDefault4Build" class="small-button config" disabled="disabled" type="button" value="Set Default" /></li>
+			<li><input id="resetDefault4Build" class="small-button reset" disabled="disabled" type="button" value="Reset" /></li>
 			<div class="clear"></div>
 		</div>
 
@@ -54,7 +54,7 @@
 	<div class="main-button-area">
 		<input id="buildButton" class="primary-button bulid" disabled="disabled" type="button" value="Bulid" />
 		<div class="check-deploy">
-			<div class="lightpoint"><input id="needDeploy" ng-click="needDeploy($event)" disabled="disabled" type="checkbox"><label></label></div>
+			<div class="lightpoint"><input id="needDeploy" disabled="disabled" type="checkbox"><label></label></div>
 			Deploy
 		</div>
 		<div class="clear"></div>

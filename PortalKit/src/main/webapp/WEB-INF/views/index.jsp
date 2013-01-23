@@ -1,13 +1,10 @@
 <%@ page language="java" contentType="text/html;charset=utf-8"%>
 <%@ include file="/WEB-INF/views/common/header_top.jsp"%>
-<html ng-app="switchModule">
+<html ng-app="myModule">
 <head>
 <%@ include file="/WEB-INF/views/common/header_head.jsp"%>
 <link href="resources/css/index.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="resources/js/index.js"></script>
-<c:forEach var="view" items="${viewInfo}" varStatus="status">
-    <script type="text/javascript" src="<c:out value='${view.js}'/>"></script>
-</c:forEach>
 <title>The Power</title>
 </head>
 <body>
@@ -24,14 +21,18 @@
         <div class="tab-header">
             <ul>
                 <c:forEach var="view" items="${viewInfo}" varStatus="status">
-                   <li><a href="#/<c:out value='${view.viewId}'/>"><c:out value="${view.viewName}"/></a></li>
+                   <c:if test="${view.defaultView == true}">
+                       <li><a class="active" href="#/<c:out value='${view.viewId}'/>"><c:out value="${view.viewName}"/></a></li>
+                   </c:if>
+                   <c:if test="${view.defaultView == false}">
+                       <li><a href="#/<c:out value='${view.viewId}'/>"><c:out value="${view.viewName}"/></a></li>
+                   </c:if>
                 </c:forEach>
             </ul>
             <div class="clear"></div>
         </div>
         
         <div class="content-wrapper">
-        <div class="ng-view"></div>
         </div>
         <div class="clear"></div>
     </div>

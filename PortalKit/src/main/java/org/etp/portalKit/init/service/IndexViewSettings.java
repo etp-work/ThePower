@@ -1,4 +1,4 @@
-package org.etp.portalKit.powerbuild.service;
+package org.etp.portalKit.init.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -40,7 +40,6 @@ public class IndexViewSettings {
         list = JSONUtils.fromJSON(json, new TypeReference<List<ViewInfo>>() {
             //            
         });
-
         return list;
     }
 }

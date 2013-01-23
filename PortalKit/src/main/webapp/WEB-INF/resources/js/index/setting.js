@@ -4,28 +4,61 @@
  */
 (function(window) {
     'use strict';
-    var isInit = false;
+
+    //variables
+    var ptPath = undefined;
+    var twPath = undefined;
     
-    function initJQueryBinding(){
-        $('#saveSettings').click(function(event){
-            alert("hello settings");
+    //listeners
+    function settingsOnShowListener(){
+        if(ptPath && twPath){
+            return;
+        }
+        
+        var url = "/settings/getAll.ajax";
+        DynamicLoad.loadJSON(url, undefined, function(data){
+            if(data){
+                var scope = angular.element($('#setting-content')).scope();
+                
+               if(data.portalTeamPath){
+                   scope.$apply(function(){
+                       scope.portalTeamPath = data.portalTeamPath;
+                   });
+                   ptPath = data.portalTeamPath;
+               }
+               if(data.tomcatWebappsPath){
+                   scope.$apply(function(){
+                       scope.tomcatWebappsPath = data.tomcatWebappsPath;
+                   });
+                   twPath = data.tomcatWebappsPath;
+               }
+            }
         });
     }
     
-    function SettingController($http, $scope){
-        if(!isInit){
-            initJQueryBinding();
-        }
+    ViewManager.addViewListener("onShow", "#setting-content", settingsOnShowListener); //add listener to monitor what will happen when settings-content shown.
+    
+    function setSaveDisable(isDisable){
+        $('#saveSettings').attr("disabled", isDisable);
     }
     
- // Create a new module
-    var switchModule = Lifecycle.getModule("switchModule");
+    function setInputDisable(isDisable){
+        $('#portalTeamPath').attr("disabled", isDisable);
+        $('#tomcatWebappsPath').attr("disabled", isDisable);
+    }
     
-    switchModule.config(['$routeProvider', function($routeProvider) {
-        $routeProvider.
-        when('/setting-content', {templateUrl: 'resources/templates/index-views/setting-content.html', controller: SettingController});
-  }]);
-
     
+    Lifecycle.setCallback("bulid-content" ,function(status){
+        switch (status) {
+        case Lifecycle.NORMAL:
+            setInputDisable(false);
+            break;
+        case Lifecycle.BUILD_EXECUTING:
+            setInputDisable(true);
+            break;
+        default:
+            break;
+        }
+    });
     
 }(window));

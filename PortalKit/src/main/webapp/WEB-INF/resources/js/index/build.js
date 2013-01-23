@@ -4,8 +4,90 @@
  */
 (function(window) {
     'use strict';
-    var isInit = false;
     var viewId = "build-content";
+    
+    function viewOnShow(){
+        ViewManager.show("#common");
+        ViewManager.hide("#environment");
+        $('#build-content .bulid-feature-header a').first().addClass("active");
+        
+        var url = "/powerbuild/getAllTrees.ajax";
+        
+        DynamicLoad.loadJSON(url, undefined, function(dirTrees){
+            if(!dirTrees || dirTrees.length === 0){
+                return;
+            }
+            
+            $('.group label .parent').off("click");//remove click binding to .parent first.
+            $('.group .child').off("click");//remove click binding to .child first.
+            var scope = angular.element($('.bulid-list')).scope();
+            scope.$apply(function(){
+                scope.dirTrees = dirTrees;
+            });
+            //rebinding click to .parent.
+            $('.group label .parent').on("click", 
+                    function(event){
+                        var isChecked = $(this).is(':checked');
+                        $(this).parent().parent().siblings().find('.child').attr("checked", isChecked);
+                        
+                        var needDeploy = $('#needDeploy').is(':checked');
+                        
+                        if($(this).val() === "Others" && isChecked && needDeploy){//unselect deploy button if something in Others selected.
+                            $('#needDeploy').attr("checked", false);
+                            ViewManager.addNotification({
+                                type: "attention",
+                                message: "Items in Others can't be deployed.",
+                                timeout: 10000
+                            });
+                        }
+                    }
+            );
+          //rebinding click to .child.
+            $('.group .child').on("click", 
+                    function(event){
+                        var isChecked = $(this).is(':checked');
+                        var parent = $(this).parent().parent().parent().find('.parent');
+                        if(isChecked){
+                            var needDeploy = $('#needDeploy').is(':checked');
+                            parent.attr("checked", isChecked);
+                            if(parent.val() === "Others" && needDeploy){//unselect deploy button if something in Others selected.
+                                $('#needDeploy').attr("checked", false);
+                                ViewManager.addNotification({
+                                    type: "attention",
+                                    message: "Items in Others can't be deployed.",
+                                    timeout: 10000
+                                });
+                            }
+                        }else{
+                            var isAllFalse = true;
+                            $(this).parent().parent().siblings().find('.child').each(function(){
+                                if($(this).is(':checked')){
+                                    isAllFalse = false;
+                                }
+                            });
+                            if(isAllFalse){
+                                parent.attr("checked", isChecked);
+                            }
+                        }
+                    }
+            );
+          
+            Lifecycle.setState(viewId, Lifecycle.NORMAL);
+    });
+    }
+    
+    ViewManager.addViewListener("onShow", "#"+viewId, viewOnShow);
+    
+    //bind tab click event within build-content.
+    $('#build-content .bulid-feature-header a').click(function(event){
+        $(this).parent().siblings().find('a').removeClass("active");
+        $(this).addClass("active");
+        var id = $(this).attr("href").substring(2);
+        ViewManager.hide('.bulid-feature-content');
+        ViewManager.show("#"+id);
+        return false;
+    });
+    
     
     function setDisableElements(isDisable){
         $('#setDefault4Build').attr("disabled", isDisable);
@@ -15,14 +97,6 @@
     }
     
     function initJQueryBinding(){
-        $('#build-content .bulid-feature-header a').click(function(event){
-            $(this).parent().siblings().find('a').removeClass("active");
-            $(this).addClass("active");
-            var id = $(this).attr("href").substring(2);
-            ViewManager.hide('.bulid-feature-content');
-            ViewManager.show("#"+id);
-            return false;
-        });
         
         Lifecycle.setCallback(viewId, function(status){
             switch (status) {
@@ -171,59 +245,4 @@
         });
     }
     
-    function BuildInfoController($http, $scope){
-        if(!isInit){
-            initJQueryBinding();
-            isInit = true;
-        }
-        $('#build-content .bulid-feature-header a').first().addClass("active");
-        ViewManager.hide("#environment");
-        
-        //Data load only when status of portal is loaded or newconfig.
-        if(Lifecycle.getState(viewId) !== Lifecycle.LOADED && Lifecycle.getState(viewId) !== Lifecycle.NEWCONFIG){
-            return;
-        }
-        
-        var url = "/PortalKit/powerbuild/getAllTrees.ajax";
-        $http.get(url).success(function(data, status, headers, config) {
-            $scope.dirTrees = data;
-            $scope.checkParent = function($event){
-                var checkbox = $event.target;
-                var value = checkbox.value;
-                updateChildren($scope.dirTrees, value, checkbox.checked);
-            };
-            $scope.checkChild = function($event, parent){
-                var checkbox = $event.target;
-                var value = checkbox.value;
-                updateParent($scope.dirTrees, parent, value, checkbox.checked);
-            };
-            $scope.needDeploy = function($event){
-                canDeploy($event.target, $scope.dirTrees);
-            };
-            $scope.setDefaultSelection = function($event){
-               var selection = [];
-               getAllSelection($scope.dirTrees, selection);
-               setDefaultSelection($http, selection);
-            };
-            $scope.resetDefaultSelection = function($event){
-                setDefaultSelection($http, []);
-            };
-            
-            Lifecycle.setState(viewId, Lifecycle.NORMAL);
-          }).error(function(data, status, headers, config){
-              errorNotification(data.message);
-          });
-        
-
-    }
-    
- // Create a new module
-    var switchModule = Lifecycle.getModule("switchModule");
-    
-    switchModule.config(['$routeProvider', function($routeProvider) {
-        $routeProvider.
-        when('/', {templateUrl: 'resources/templates/index-views/build-content.html', controller: BuildInfoController}).
-        when('/build-content', {templateUrl: 'resources/templates/index-views/build-content.html', controller: BuildInfoController});
-  }]);
-
 }(window));

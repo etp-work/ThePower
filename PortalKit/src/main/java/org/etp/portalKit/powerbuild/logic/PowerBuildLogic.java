@@ -10,10 +10,8 @@ import org.etp.portalKit.common.shell.CommandResult;
 import org.etp.portalKit.powerbuild.bean.request.Selection;
 import org.etp.portalKit.powerbuild.bean.response.BuildResult;
 import org.etp.portalKit.powerbuild.bean.response.DirTree;
-import org.etp.portalKit.powerbuild.bean.response.ViewInfo;
 import org.etp.portalKit.powerbuild.service.BuildExecutor;
 import org.etp.portalKit.powerbuild.service.DirProvider;
-import org.etp.portalKit.powerbuild.service.IndexViewSettings;
 import org.etp.portalKit.setting.bean.Settings;
 import org.springframework.stereotype.Component;
 
@@ -31,9 +29,6 @@ public class PowerBuildLogic {
 
     @Resource(name = "buildExecutor")
     private BuildExecutor executor;
-
-    @Resource(name = "indexViewSettings")
-    private IndexViewSettings viewSettings;
 
     /**
      * Get absolute path of specified project name.
@@ -111,12 +106,5 @@ public class PowerBuildLogic {
      */
     public void setSelectionsToSettings(Selection selection) {
         prop.fromBean(selection);
-    }
-
-    /**
-     * @return list of viewInfo.
-     */
-    public List<ViewInfo> retrieveViewInfo() {
-        return viewSettings.retrieveViewInfo();
     }
 }

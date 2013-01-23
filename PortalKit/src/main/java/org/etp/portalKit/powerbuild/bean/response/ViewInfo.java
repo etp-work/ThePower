@@ -8,6 +8,36 @@ public class ViewInfo {
     private String viewId;
     private String viewName;
     private String js;
+    private String templateUrl;
+    private boolean defaultView;
+
+    /**
+     * @return Returns the defaultView.
+     */
+    public boolean isDefaultView() {
+        return defaultView;
+    }
+
+    /**
+     * @param defaultView The defaultView to set.
+     */
+    public void setDefaultView(boolean defaultView) {
+        this.defaultView = defaultView;
+    }
+
+    /**
+     * @return Returns the templateUrl.
+     */
+    public String getTemplateUrl() {
+        return templateUrl;
+    }
+
+    /**
+     * @param templateUrl The templateUrl to set.
+     */
+    public void setTemplateUrl(String templateUrl) {
+        this.templateUrl = templateUrl;
+    }
 
     /**
      * @return Returns the viewId.
