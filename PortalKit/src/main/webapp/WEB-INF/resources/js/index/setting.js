@@ -18,14 +18,12 @@
         var url = "/settings/getAll.ajax";
         DynamicLoad.loadJSON(url, undefined, function(data){
             if(data){
-                var scope = angular.element($('#setting-content')).scope();
-                   scope.$apply(function(){
-                       scope.portalTeamPath = data.portalTeamPath;
-                       scope.tomcatWebappsPath = data.tomcatWebappsPath;
-                   });
-                   ptPath = data.portalTeamPath;
-                   twPath = data.tomcatWebappsPath;
+                $('#portalTeamPath').val(data.portalTeamPath);
+                ptPath = data.portalTeamPath;
+                $('#tomcatWebappsPath').val(data.tomcatWebappsPath);
+                twPath = data.tomcatWebappsPath;
             }
+            
         });
     }
     
