@@ -1,4 +1,34 @@
-<div class="content-box" id="build-content"  ng-app>
+<script id="DirTreeTemplate" type="text/x-jsrender">
+    <ul class="group">
+        <label class="category">
+		    <div class="lightpoint">
+                {{if checked}}
+			        <input type="checkbox" class="parentB" value="{{>name}}" checked="checked"/><label></label>
+                {{else}}
+                    <input type="checkbox" class="parentB" value="{{>name}}" /><label></label>
+                {{/if}}
+			</div>
+			<span>{{>name}}</span>
+		</label>
+        {{for subDirs}}
+		<li>
+		    <div class="lightpoint">
+                {{if checked}}
+			        <input type="checkbox" class="childB" value="{{>name}}" checked="checked"><label></label>
+                {{else}}
+                    <input type="checkbox" class="childB" value="{{>name}}" ><label></label>
+                {{/if}}
+			</div>
+			<span>{{>name}}</span>
+			<div class="status">
+				<img src="resources/images/loading.gif" />
+			</div>
+		</li>
+        {{/for}}
+	</ul>
+</script>
+<!-- ================================================================================ -->
+<div class="content-box" id="build-content">
 
 	<div class="bulid-feature-header">
             <li><a href="#/common">common</a></li>
@@ -9,22 +39,6 @@
 	<div class="bulid-feature-content" id="common">
 
 		<div class="bulid-list">
-			<ul class="group" ng-repeat="dirTree in dirTrees">
-				<label class="category">
-				    <div class="lightpoint">
-						<input type="checkbox" value="{{dirTree.name}}" ng-checked="dirTree.checked" /><label></label>
-					</div>
-					<span>{{dirTree.name}}</span>
-				</label>
-				<li ng-repeat="subTree in dirTree.subDirs">
-				    <div class="lightpoint">
-						<input type="checkbox" ng-checked="subTree.checked" value="{{subTree.name}}"><label></label>
-					</div>
-					<span>{{subTree.name}}</span>
-				<div class="status">
-						<img src="resources/images/loading.gif" />
-				</div></li>
-			</ul>
 		</div>
 		<div class="config-button-area">
 			<li><input id="setDefault4Build" class="small-button config" disabled="disabled" type="button" value="Set Default" /></li>

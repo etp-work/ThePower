@@ -1,4 +1,4 @@
-package org.etp.portalKit.powerbuild.bean.response;
+package org.etp.portalKit.init.bean.response;
 
 /**
  * The purpose of this class is a model that contains information of

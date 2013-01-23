@@ -1,9 +1,7 @@
-var ViewManager;
-if (!ViewManager) {
-    ViewManager = {};
-}
 
 (function () {
+    var _viewManager = {};
+    window.ViewManager = _viewManager;
     
     /*
      *var listener = {
@@ -59,7 +57,7 @@ if (!ViewManager) {
      * @param selector a string indicate which view element 
      *        will be triggered by specified event.
      */
-    ViewManager.removeViewListener = function (type, selector){
+    _viewManager.removeViewListener = function (type, selector){
         if(!listeners[type]){
             return;
         }
@@ -87,7 +85,7 @@ if (!ViewManager) {
      * @param callback A function to call once the specified 
      *        event executed.
      */
-    ViewManager.addViewListener = function (type, selector, callback) {
+    _viewManager.addViewListener = function (type, selector, callback) {
         if(!listeners[type]){
             listeners[type] = [];
         }
@@ -112,7 +110,7 @@ if (!ViewManager) {
      * @param selector a string indicate which view element 
      *        will be triggered by specified event.
      */
-    ViewManager.fireViewListener = function (type, selector){
+    _viewManager.fireViewListener = function (type, selector){
         if(!listeners[type]){
               return;
         }
@@ -129,7 +127,7 @@ if (!ViewManager) {
     /**
      * Clean all the view listeners.
      */
-    ViewManager.cleanAllViewListeners = function (){
+    _viewManager.cleanAllViewListeners = function (){
         for(var i in listeners){
             listeners[i] = [];
         }
@@ -147,7 +145,7 @@ if (!ViewManager) {
      * @param callback A function to call once the 
      *        animation is complete.
      */
-    ViewManager.show = function (selector, speed, callback){
+    _viewManager.show = function (selector, speed, callback){
 	var transparencySpeed = 0;
 	if(speed){
 	    transparencySpeed = speed;
@@ -172,7 +170,7 @@ if (!ViewManager) {
      * @param callback A function to call once the 
      *        animation is complete.
      */
-    ViewManager.hide = function (selector, speed, callback){
+    _viewManager.hide = function (selector, speed, callback){
 	    var transparencySpeed = 0;
 	    if(speed){
 	        transparencySpeed = speed;
@@ -203,7 +201,7 @@ if (!ViewManager) {
      * 
      * @param id identity of the notification.
      */
-    ViewManager.removeNotification = function(id){
+    _viewManager.removeNotification = function(id){
         var index = indexOfNotification(id);
         if(index < 0){
             return;
@@ -244,7 +242,7 @@ if (!ViewManager) {
      * @returns id identity of the added notification. Can be used to 
      *        remove it.
      */
-    ViewManager.addNotification = function (options){
+    _viewManager.addNotification = function (options){
         if(!options){
             return undefined;
         }
@@ -311,5 +309,28 @@ if (!ViewManager) {
         return id;
     };
     
+    _viewManager.simpleSuccess = function(msg){
+        ViewManager.addNotification({
+            type: "success",
+            message: msg,
+            timeout: 5000
+        });
+    };
+    
+    _viewManager.simpleWarning = function(msg){
+        ViewManager.addNotification({
+            type: "attention",
+            message: msg,
+            timeout: 10000
+        });
+    };
+    
+    _viewManager.simpleError = function(msg, callback){
+        ViewManager.addNotification({
+            type: "error",
+            message: msg,
+            callback: callback
+        });
+    };
 
 }());
