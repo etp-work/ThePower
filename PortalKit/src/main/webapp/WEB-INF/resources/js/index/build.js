@@ -160,11 +160,14 @@
     }
     
     function setDefaultSelection($http, selection){
+        Lifecycle.setState(viewId, Lifecycle.BUILD_EXECUTING);
         var url = "/PortalKit/powerbuild/setDefault.ajax";
         $http.post(url, {selection:selection}).success(function(data, status, headers, config) {
-            successNotification("Successfully saved default selection.");
+            successNotification("Successfully "+(selection.length === 0) ? "reset" : "saved" +" default selection.");
+            Lifecycle.setState(viewId, Lifecycle.NORMAL);
         }).error(function(data, status, headers, config){
             errorNotification(data.message);
+            Lifecycle.setState(viewId, Lifecycle.NORMAL);
         });
     }
     
@@ -201,6 +204,9 @@
                var selection = [];
                getAllSelection($scope.dirTrees, selection);
                setDefaultSelection($http, selection);
+            };
+            $scope.resetDefaultSelection = function($event){
+                setDefaultSelection($http, []);
             };
             
             Lifecycle.setState(viewId, Lifecycle.NORMAL);
