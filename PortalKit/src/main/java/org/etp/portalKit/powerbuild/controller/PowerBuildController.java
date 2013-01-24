@@ -62,4 +62,17 @@ public class PowerBuildController {
             br = logic.build(cmd.getSelection(), null);
         return br;
     }
+
+    /**
+     * Build a set of packages. Such as reference portal, multiscreen.
+     * 
+     * @param cmd
+     * @return build result
+     */
+    @RequestMapping(value = "/powerbuild/buildset.ajax", method = RequestMethod.POST)
+    public @ResponseBody
+    BuildResult buildSet(@RequestBody BuildCommand cmd) {
+        BuildResult br = logic.buildDeploySet(cmd.getSelection());
+        return br;
+    }
 }

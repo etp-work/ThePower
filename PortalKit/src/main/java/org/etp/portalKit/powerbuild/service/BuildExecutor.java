@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -94,6 +95,24 @@ public class BuildExecutor {
         } catch (IOException e) {
             return false;
         }
+    }
+
+    /**
+     * Deploy the specified set of packages to destination.
+     * 
+     * @param srcs a set of folder paths indicate which project will be
+     *            deployed.
+     * @param dest a folder path indicate what place the war file
+     *            should be moved into.
+     * @return deploy
+     */
+    public boolean deploy(List<String> srcs, String dest) {
+        boolean isAllTrue = true;
+        for (String src : srcs) {
+            if (!deploy(src, dest))
+                isAllTrue = false;
+        }
+        return isAllTrue;
     }
 
     private File getWarFile(String src) {

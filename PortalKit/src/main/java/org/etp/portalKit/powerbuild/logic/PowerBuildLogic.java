@@ -1,10 +1,15 @@
 package org.etp.portalKit.powerbuild.logic;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
+import org.etp.portalKit.common.bean.DeployInfo;
+import org.etp.portalKit.common.bean.PackageInfo;
+import org.etp.portalKit.common.service.DeployInfoReader;
 import org.etp.portalKit.common.service.PropertiesManager;
 import org.etp.portalKit.common.shell.CommandResult;
 import org.etp.portalKit.powerbuild.bean.request.Selection;
@@ -29,6 +34,9 @@ public class PowerBuildLogic {
 
     @Resource(name = "buildExecutor")
     private BuildExecutor executor;
+
+    @Resource(name = "deployInfoReader")
+    private DeployInfoReader deployInfoReader;
 
     /**
      * Get absolute path of specified project name.
@@ -85,6 +93,47 @@ public class PowerBuildLogic {
         if (!result.isSuccess())
             return result;
         boolean deployed = executor.deploy(absPath, deployPath);
+        result.setDeployed(deployed);
+        return result;
+    }
+
+    /**
+     * Build + deploy a set of packages.
+     * 
+     * @param selection
+     * @return BuildResult
+     */
+    public BuildResult buildDeploySet(String selection) {
+        String deployPath = prop.get(Settings.TOMCAT_WEBAPPS_PATH);
+        if (StringUtils.isBlank(deployPath))
+            throw new RuntimeException("You haven't deploy path setted.");
+        String path = prop.get(Settings.PORTAL_TEAM_PATH);
+        if (StringUtils.isBlank(path))
+            throw new RuntimeException("You haven't design path setted.");
+        BuildResult result = build("design", new File(path, "design").getAbsolutePath());
+        if (!result.isSuccess())
+            return result;
+        DeployInfo deployInfo = deployInfoReader.retrieve();
+        if (deployInfo == null)
+            return result;
+        List<String> deploySet = new ArrayList<String>();
+        boolean deployed = true;
+        if ("referencePortal".equals(selection)) {
+            for (PackageInfo packageInfo : deployInfo.getFramework()) {
+                deploySet.add(new File(path, packageInfo.getPackagePathInDesignHome()).getAbsolutePath());
+            }
+            for (PackageInfo packageInfo : deployInfo.getReferencePortal()) {
+                deploySet.add(new File(path, packageInfo.getPackagePathInDesignHome()).getAbsolutePath());
+            }
+        } else if ("multiscreen".equals(selection)) {
+            for (PackageInfo packageInfo : deployInfo.getFramework()) {
+                deploySet.add(new File(path, packageInfo.getPackagePathInDesignHome()).getAbsolutePath());
+            }
+            for (PackageInfo packageInfo : deployInfo.getMultiscreen()) {
+                deploySet.add(new File(path, packageInfo.getPackagePathInDesignHome()).getAbsolutePath());
+            }
+        }
+        deployed = executor.deploy(deploySet, deployPath);
         result.setDeployed(deployed);
         return result;
     }

@@ -46,7 +46,7 @@ public class SpecDirProvider implements DirProvider {
     public List<DirTree> retrieveDirInfo() {
         List<DirTree> list = new ArrayList<DirTree>();
         String path = handler.get(Settings.PORTAL_TEAM_PATH);
-        if (path == null)
+        if (StringUtils.isBlank(path))
             return list;
         String defs = handler.get(Selection.SPEC_DEFAULT);
         if (!StringUtils.isBlank(defs))

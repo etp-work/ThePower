@@ -10,6 +10,8 @@
     var getTreesUrl = "/powerbuild/getAllTrees.ajax";
     var setDefaultUrl = "/powerbuild/setDefault.ajax";
     var buildUrl = "/powerbuild/build.ajax";
+    var buildSetUrl = "/powerbuild/buildset.ajax";
+    
     
 //=========================================functions=====================================
     
@@ -175,6 +177,46 @@
         Lifecycle.setState(viewId, Lifecycle.BUILD_EXECUTING);
         build(subSelection);
     }
+    //build all the desing packages, and deploy the specified set of them.
+    function environmentBuild(){
+        var chooseId = undefined;
+        var choosedElement = undefined;
+        $('#build-content #environment input').each(function(){
+            if($(this).is(':checked')){
+                chooseId = $(this).val();
+                choosedElement = $(this);
+            }
+        });
+        $('#build-content #environment .status').attr("class", "status");
+        Lifecycle.setState(viewId, Lifecycle.BUILD_EXECUTING);
+        var element = choosedElement.parent().next('.status');
+        element.addClass("s-working");
+        DynamicLoad.postJSON(buildSetUrl, {
+                                 selection: chooseId,
+                                 needDeploy: true
+                            }, function(BuildResult){
+                                   if(!BuildResult.success){
+                                        ViewManager.simpleError("Build error");
+                                        element.removeClass("s-working");
+                                        element.addClass("s-error");
+                                        Lifecycle.setState(viewId, Lifecycle.NORMAL);
+                                   }else if(!BuildResult.deployed){
+                                        ViewManager.simpleError("There might be some of packages failed to deploy.");
+                                        element.removeClass("s-working");
+                                        element.addClass("s-error");
+                                        Lifecycle.setState(viewId, Lifecycle.NORMAL);
+                                   }else{
+                                        var sucMessage = "All packages build + deploy successfully.";
+                                        ViewManager.simpleSuccess(sucMessage);
+                                        element.removeClass("s-working");
+                                        element.addClass("s-success");
+                                   }
+                            }, function(error){
+                                   ViewManager.simpleError("Internal error:"+error.message);
+                                        Lifecycle.setState(viewId, Lifecycle.NORMAL);
+                            }
+        );        
+    }
     
     
 //========================================init listener=====================================
@@ -229,7 +271,7 @@
             commonBuild();
             break;
         case "environment":
-            
+            environmentBuild();
             break;
         default:
             break;
