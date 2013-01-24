@@ -67,16 +67,27 @@ img{ border:none; margin:0; padding:0;}
     
 .tab-header ul li{
     float:left;
-    width:25%;
+    width:25%
     }
 .tab-header ul li a{
     display:block;
     padding:5px 0px;
     text-align:center;
-    background:rgba(235,235,235,0.6);
-    color:#333;
+    background:rgba(235,235,235,0.3);
+    font-weight:bolder;
+    font-size:11px;
+    color:#ccc;
     }
     
+.tab-header ul li a:hover{
+    color:#0FF;
+    text-shadow:4px 4px 12px #09F;
+    box-shadow:inset 0 -3px 2px #0FF;
+    -moz-transition:color ease-in 0.4s,
+                    box-shadow ease-in 0.4s,
+                    text-shadow ease-in 0.4s;
+    }
+        
 .tab-header ul li:first-child a{
     border-top-left-radius:4px;
     border-bottom-left-radius:4px;
@@ -90,8 +101,19 @@ img{ border:none; margin:0; padding:0;}
 .tab-header ul li a.active{
     color:#fff;
     background:-moz-linear-gradient(top,rgba(63, 200, 251, 0.5),rgba(0, 168, 255, 0.6));
-    box-shadow: inset 0 0 5px rgba(2, 80, 125, 0.5);
+    box-shadow: inset 0 0 10px rgba(2, 80, 125, 0.6);
+    border-radius:4px;
+    -moz-animation-name:tabHeader;
+    -moz-animation-duration: 0.5s;
+    -moz-animation-timing-function: ease-out-in;
+    -moz-animation-iteration-count: 1;
     }
+    
+@-moz-keyframes tabHeader{
+    0%{-moz-transform:rotateY(-90deg); opacity:0;}
+    100%{-moz-transform:rotateY(0deg); opacity:1;}
+    }   
+    
     
 .content-wrapper{
     padding:2px;
@@ -102,12 +124,23 @@ img{ border:none; margin:0; padding:0;}
     box-shadow:0px 2px 5px rgba(151, 224, 252, 1),
                inset 2px 2px 5px rgba(255,255,255,0.6),
                inset -2px -2px 5px rgba(255,255,255,0.6);
+    -moz-animation-name:loadContent;
+    -moz-animation-duration: 2s;
+    -moz-animation-timing-function: ease-out-in;
+    -moz-animation-iteration-count: 1;
     }
+
+@-moz-keyframes loadContent{
+    0%{ opacity:0; -moz-transform:rotateY(-90deg);}
+    100%{ opacity:1; -moz-transform:rotateY(0deg);}
+    } 
+
     
 .config-button-area{
     float:left;
     width:234px;
-    background:#666;
+    border-bottom:solid 1px #fff;
+    background:-moz-linear-gradient(bottom,rgba(225, 225, 225, 0.5),rgba(255, 255, 255, 0.5));
     height:30px;
     }
     
@@ -235,15 +268,15 @@ img{ border:none; margin:0; padding:0;}
     }
 .s-success{
     -moz-animation-name:statusResult; /*动画名称*/
-    -moz-animation-duration: 2s;/*播放一次所持续时间*/
-    -moz-animation-timing-function: ease-in-out;/*动画播放频率*/
+    -moz-animation-duration: 1.5s;/*播放一次所持续时间*/
+    -moz-animation-timing-function: ease-out-in;/*动画播放频率*/
     -moz-animation-iteration-count: 1;/*动画播放次涒为无限次*/
     background: url(../images/icons/tick_circle.png) no-repeat;
     }
 .s-error{
     -moz-animation-name:statusResult; /*动画名称*/
-    -moz-animation-duration: 2s;/*播放一次所持续时间*/
-    -moz-animation-timing-function: ease-in-out;/*动画播放频率*/
+    -moz-animation-duration: 1.5s;/*播放一次所持续时间*/
+    -moz-animation-timing-function: ease-out-in;/*动画播放频率*/
     -moz-animation-iteration-count: 1;/*动画播放次涒为无限次*/
     background:url(../images/icons/cross_circle.png) no-repeat;
     }
@@ -253,8 +286,8 @@ img{ border:none; margin:0; padding:0;}
     } 
 .s-working{
     -moz-animation-name:statusUp; /*动画名称*/
-    -moz-animation-duration: 2s;/*播放一次所持续时间*/
-    -moz-animation-timing-function: ease-in-out;/*动画播放频率*/
+    -moz-animation-duration: 1.5s;/*播放一次所持续时间*/
+    -moz-animation-timing-function: ease-out-in;/*动画播放频率*/
     -moz-animation-iteration-count: 1;/*动画播放次涒为无限次*/
     } 
 .s-working img{
@@ -325,9 +358,12 @@ img{ border:none; margin:0; padding:0;}
     height:20px;
     line-height:20px;
     font-weight:bolder;
+    padding-left:10px;
+    color:#666;
+    font-size:11px;
     }   
 .table-wrapper{
-    margin-top:5px;
+    margin-top:3px;
     height:285px;
     }
 .setting-table{
@@ -335,7 +371,8 @@ img{ border:none; margin:0; padding:0;}
     }
     
 .setting-table thead tr{
-    background-color:#333;
+    background:-moz-linear-gradient(top,rgba(63, 200, 251, 0.5),rgba(0, 168, 255, 0.6));
+    box-shadow: inset 0 0 5px rgba(2, 80, 125, 0.5);
     }
 .setting-table thead tr th{
     padding: 5px 0px 0px 10px;
@@ -350,14 +387,14 @@ img{ border:none; margin:0; padding:0;}
     }
     
 .setting-table tr{
-    background:#ccc;
+    background:-moz-linear-gradient(top,rgba(220, 220, 220, 0.8),rgba(240, 240, 240, 0.8));
 
     }
 .setting-table tr td{
     padding: 3px 0px 3px 10px;
     height:32px;
     line-height:32px;
-    border-bottom: solid 1px #333;
+    border-bottom: solid 1px #fff;
     font-size:12px;
     color:#333;
     text-align: left;
