@@ -5,30 +5,10 @@
 (function(window) {
     'use strict';
 
-    //variables
+//=========================================variable=====================================
     var ptPath = undefined;
     var twPath = undefined;
-    
-    //listeners
-    function settingsOnShowListener(){
-        if(ptPath && twPath){
-            return;
-        }
-        
-        var url = "/settings/getAll.ajax";
-        DynamicLoad.loadJSON(url, undefined, function(data){
-            if(data){
-                $('#portalTeamPath').val(data.portalTeamPath);
-                ptPath = data.portalTeamPath;
-                $('#tomcatWebappsPath').val(data.tomcatWebappsPath);
-                twPath = data.tomcatWebappsPath;
-            }
-            
-        });
-    }
-    
-    ViewManager.addViewListener("onShow", "#setting-content", settingsOnShowListener); //add listener to monitor what will happen when settings-content shown.
-    
+//=========================================functions=====================================
     function setSaveDisable(isDisable){
         $('#saveSettings').attr("disabled", isDisable);
     }
@@ -38,43 +18,57 @@
         $('#tomcatWebappsPath').attr("disabled", isDisable);
     }
     
-    function successNotification(message){
-        ViewManager.addNotification({
-            type: "success",
-            message: message,
-            timeout: 5000
-        });
-    }
-    
-    function errorNotification(message){
-        ViewManager.addNotification({
-            type: "error",
-            message: message
-        });
-    }
-    
     function valueDirty(){
-        if($('#portalTeamPath').val() === ptPath && $('#tomcatWebappsPath').val() === twPath){
+        if(!ptPath && !twPath){
+            setSaveDisable(true);
+        }else if($('#portalTeamPath').val() === ptPath && $('#tomcatWebappsPath').val() === twPath){
             setSaveDisable(true);
         }else{
             setSaveDisable(false);
         }
     }
+
+//========================================init listener=====================================
+
+    function settingsOnShowListener(){
+        if(ptPath && twPath){
+            return;
+        }
+        
+        var url = "/settings/getAll.ajax";
+        DynamicLoad.loadJSON(url, undefined, function(data){
+            if(data){
+                var scope = angular.element($('#setting-content')).scope();
+                scope.$apply(function(){
+                    scope.portalTeamPath = data.portalTeamPath;
+                    scope.tomcatWebappsPath = data.tomcatWebappsPath;
+                });
+                ptPath = data.portalTeamPath;
+                twPath = data.tomcatWebappsPath;
+            }
+            
+        });
+    }
     
-    Lifecycle.setCallback("bulid-content" ,function(status){
+    ViewManager.addViewListener("onShow", "#setting-content", settingsOnShowListener); //add listener to monitor what will happen when settings-content shown.
+    
+    
+    Lifecycle.setCallback("build-content" ,function(status){
         switch (status) {
-        case Lifecycle.NORMAL:
-            setInputDisable(false);
-            valueDirty();
-            break;
-        case Lifecycle.BUILD_EXECUTING:
-            setInputDisable(true);
-            setSaveDisable(true);
-            break;
-        default:
-            break;
+            case Lifecycle.NORMAL:
+                setInputDisable(false);
+                valueDirty();
+                break;
+            case Lifecycle.BUILD_EXECUTING:
+                setInputDisable(true);
+                setSaveDisable(true);
+                break;
+            default:
+                break;
         }
     });
+    
+//================================================event bind==================================
     
     $('#portalTeamPath').keyup(function(event) {
         valueDirty();

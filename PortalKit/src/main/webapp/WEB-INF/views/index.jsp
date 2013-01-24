@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html;charset=utf-8"%>
 <%@ include file="/WEB-INF/views/common/header_top.jsp"%>
-<html>
+<html ng-app="myModule">
 <head>
 <%@ include file="/WEB-INF/views/common/header_head.jsp"%>
 <link href="resources/css/index.css" rel="stylesheet" type="text/css">

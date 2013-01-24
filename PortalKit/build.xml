@@ -51,7 +51,7 @@
 		<attribute name="dir" />
 		<element name="files" implicit="true" optional="true" />
 		<sequential>
-			<delete dir="${deploy.local.dir}/${project.name}" />
+			<!--<delete dir="${deploy.local.dir}/${project.name}" />-->
 			<copy todir="${deploy.local.dir}" overwrite="true" flatten="true" includeemptydirs="false">
 				<fileset dir="@{dir}">
 					<include name="**/*.war" />

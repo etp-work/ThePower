@@ -1,19 +1,19 @@
 /**
  * This JS module is written for view index.jsp. It provider all the common functionalities.
  */
-//(function(angular){
-//    angular.module('myModule', []).
-//    factory('compiler', function($compile) {
-//      return {
-//        compile: function(html){
-//            var scope = angular.element($('.content-wrapper')).scope();
-//            return $compile(html)(scope);
-//        }
-//      };
-//    });
-//   
-//  angular.injector(['myModule', 'ng']);
-//}(angular))
+(function(angular){
+    angular.module('myModule', []).
+    factory('compiler', function($compile) {
+      return {
+        compile: function(html){
+            var scope = angular.element($('.content-wrapper')).scope();
+            return $compile(html)(scope);
+        }
+      };
+    });
+   
+  angular.injector(['myModule', 'ng']);
+}(angular))
 
 $(document).ready(function(){
     
@@ -46,10 +46,9 @@ $(document).ready(function(){
         
         var loadView = function(view){
             count--;
-//            var injector = angular.injector(['myModule', 'ng']);
-//            var compiler = injector.get('compiler');
-//            $('.maincontent .content-wrapper').append(compiler.compile(view));
-            $('.maincontent .content-wrapper').append(view);
+            var injector = angular.injector(['myModule', 'ng']);
+            var compiler = injector.get('compiler');
+            $('.maincontent .content-wrapper').append(compiler.compile(view));
             ViewManager.hide(".maincontent .content-wrapper .content-box");
             if(count === 0){
                 count = ViewsInfo.length;
