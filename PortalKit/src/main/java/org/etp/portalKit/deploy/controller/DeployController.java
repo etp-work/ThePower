@@ -1,11 +1,10 @@
 package org.etp.portalKit.deploy.controller;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
 import org.etp.portalKit.deploy.bean.request.CheckPackageCommand;
 import org.etp.portalKit.deploy.bean.response.DownloadedPath;
+import org.etp.portalKit.deploy.bean.response.PackageCheckedResult;
 import org.etp.portalKit.deploy.logic.DeployLogic;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,7 +36,7 @@ public class DeployController {
      */
     @RequestMapping(value = "/deploy/setCheckPackages.ajax", method = RequestMethod.POST)
     public @ResponseBody
-    List<String> setDownloadPathAndCheck(@RequestBody CheckPackageCommand cmd) {
+    PackageCheckedResult setDownloadPathAndCheck(@RequestBody CheckPackageCommand cmd) {
         return logic.setPathAndRetrieveincludedPkgs(cmd);
     }
 }

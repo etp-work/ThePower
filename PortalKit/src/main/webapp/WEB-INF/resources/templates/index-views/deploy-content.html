@@ -14,13 +14,10 @@
                         <li><div class="lightpoint"><input value="multiscreenPortal" type="checkbox"><label></label></div>Multiscreen Portal</li>
                     </div>
                     <div class="deployList">
-                        <li>Deploy list 01</li>
-                        <li>Deploy list 02</li>
-                        <li class="grayed">Deploy list 03</li>
-                        <li>Deploy list 04</li>
+                        <li ng-repeat="file in allGzFiles" >{{file}}</li>
                     </div>
                 </div>
                 <div class="main-button-area">
-                    <input class="primary-button save" type="button" value="Deploy"/>
+                    <input id="deploy4CI" class="primary-button save" type="button" value="Deploy"/>
                 </div>
-</div>   
+</div>

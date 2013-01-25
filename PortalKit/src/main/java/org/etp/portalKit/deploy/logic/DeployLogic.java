@@ -8,9 +8,12 @@ import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
 import org.etp.portalKit.common.service.PropertiesManager;
+import org.etp.portalKit.deploy.bean.DeployInfo4CI;
+import org.etp.portalKit.deploy.bean.PackageInfo4CI;
 import org.etp.portalKit.deploy.bean.request.CheckPackageCommand;
 import org.etp.portalKit.deploy.bean.response.DownloadedPath;
-import org.etp.portalKit.deploy.service.PackagesCheck;
+import org.etp.portalKit.deploy.bean.response.PackageCheckedResult;
+import org.etp.portalKit.deploy.service.PackagesCheckService;
 import org.springframework.stereotype.Component;
 
 /**
@@ -20,8 +23,8 @@ import org.springframework.stereotype.Component;
 @Component(value = "deployLogic")
 public class DeployLogic {
 
-    @Resource(name = "packagesCheck")
-    private PackagesCheck packageCheck;
+    @Resource(name = "packagesCheckService")
+    private PackagesCheckService packageCheck;
 
     @Resource(name = "propertiesManager")
     private PropertiesManager prop;
@@ -36,20 +39,33 @@ public class DeployLogic {
      *            from CI. cmd.typeToDeploy typeToDeploy
      *            referencePortal/multiscreenPortal, those two types
      *            are supported.
-     * @return array of file name that can be used to deploy.
+     * @return array of PackageChoose that can be used to deploy.
      */
-    public List<String> setPathAndRetrieveincludedPkgs(CheckPackageCommand cmd) {
+    public PackageCheckedResult setPathAndRetrieveincludedPkgs(CheckPackageCommand cmd) {
         if (StringUtils.isBlank(cmd.getDownloadPath()))
             throw new RuntimeException("downloadPath could not be null.");
         DownloadedPath path = new DownloadedPath();
         path.setDownloadedPath(cmd.getDownloadPath());
         prop.fromBean(path);
-        File[] retrieveDeployedPkgs = packageCheck.retrieveDeployedPkgs(cmd.getDownloadPath(), cmd.getTypeToDeploy());
+        PackageCheckedResult pcr = new PackageCheckedResult();
+        File[] allDeployedPkgs = packageCheck.retrieveDeployedPkgs(cmd.getDownloadPath());
         List<String> list = new ArrayList<String>();
-        for (File file : retrieveDeployedPkgs) {
+        for (File file : allDeployedPkgs) {
             list.add(file.getName());
         }
-        return list;
+        pcr.setAllGzFiles(list);
+        DeployInfo4CI deployInfo4Ci = packageCheck.retrieveRelationShip();
+        List<String> refs = new ArrayList<String>();
+        for (PackageInfo4CI packageInfo : deployInfo4Ci.getReferencePortal()) {
+            refs.add(packageInfo.getPackageName());
+        }
+        List<String> multis = new ArrayList<String>();
+        for (PackageInfo4CI packageInfo : deployInfo4Ci.getMultiscreenPortal()) {
+            multis.add(packageInfo.getPackageName());
+        }
+        pcr.setMultiscreenPortal(multis);
+        pcr.setReferencePortal(refs);
+        return pcr;
     }
 
     /**

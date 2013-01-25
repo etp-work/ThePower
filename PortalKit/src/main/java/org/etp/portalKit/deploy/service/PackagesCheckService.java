@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.commons.io.Charsets;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
@@ -21,11 +23,29 @@ import org.springframework.stereotype.Component;
  * The purpose of this class is to provide a simple API to check if
  * packages want to be deployed are downloaded.
  */
-@Component(value = "packagesCheck")
-public class PackagesCheck {
+@Component(value = "packagesCheckService")
+public class PackagesCheckService {
     @javax.annotation.Resource(name = "pathMatchingResourcePatternResolver")
     private PathMatchingResourcePatternResolver resolver;
     private String DEPLOY_INFO_FOR_CI_JSON = "deploy/deployInfo4CI.json";
+    private DeployInfo4CI deployInfo;
+
+    /**
+     * initial read deployinfo4Ci
+     */
+    @PostConstruct
+    public void init() {
+        Resource resource = resolver.getResource(DEPLOY_INFO_FOR_CI_JSON);
+        String json = null;
+        try {
+            json = FileUtils.readFileToString(resource.getFile(), Charsets.UTF_8);
+        } catch (IOException e) {
+            throw new RuntimeException("failed to retrieve deployed package information.");
+        }
+        deployInfo = JSONUtils.fromJSON(json, new TypeReference<DeployInfo4CI>() {
+            //            
+        });
+    }
 
     /**
      * Scan the specified downloaded path for all the .gz packages.
@@ -53,24 +73,14 @@ public class PackagesCheck {
         File file = new File(downloadedPath);
         if (!file.isDirectory())
             throw new RuntimeException("downloadedPath is invalid.");
-        Resource resource = resolver.getResource(DEPLOY_INFO_FOR_CI_JSON);
-        String json = null;
-        DeployInfo4CI info = null;
-        try {
-            json = FileUtils.readFileToString(resource.getFile(), Charsets.UTF_8);
-        } catch (IOException e) {
-            throw new RuntimeException("failed to retrieve deployed package information.");
-        }
-        info = JSONUtils.fromJSON(json, new TypeReference<DeployInfo4CI>() {
-            //            
-        });
+
         final Set<String> pkgs = new LinkedHashSet<String>();
         if (typeWantoDeploy == null || typeWantoDeploy.equals("referencePortal"))
-            for (PackageInfo4CI pkg : info.getReferencePortal()) {
+            for (PackageInfo4CI pkg : deployInfo.getReferencePortal()) {
                 pkgs.add(pkg.getPackageName());
             }
         if (typeWantoDeploy == null || typeWantoDeploy.equals("multiscreenPortal"))
-            for (PackageInfo4CI pkg : info.getMultiscreenPortal()) {
+            for (PackageInfo4CI pkg : deployInfo.getMultiscreenPortal()) {
                 pkgs.add(pkg.getPackageName());
             }
         File[] files = file.listFiles(new FileFilter() {
@@ -88,7 +98,13 @@ public class PackagesCheck {
             }
         });
         return files;
+    }
 
+    /**
+     * @return DeployInfo4CI
+     */
+    public DeployInfo4CI retrieveRelationShip() {
+        return deployInfo;
     }
 
 }
