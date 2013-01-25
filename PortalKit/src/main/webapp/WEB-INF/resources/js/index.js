@@ -18,7 +18,7 @@
 $(document).ready(function(){
     
     var initUrl = "/init/getViewsInfo.ajax";
-
+    var shownViewId = undefined;
   
     function viewsInfoLoading(ViewsInfo){
         if(!ViewsInfo|| !ViewsInfo.length){
@@ -34,6 +34,7 @@ $(document).ready(function(){
                      break;
                  }
              }
+             $('.content-wrapper').addClass("contentAnimation");
              ViewManager.show("#"+showId);
         };
         
@@ -69,10 +70,17 @@ $(document).ready(function(){
     
     $('.tab-header ul li a').click(
             function(event) {
+                    var newId = $(this).attr("href").substring(2);
+                    if(newId === shownViewId){
+                        return false;
+                    }
                     $(this).parent().siblings().find("a").removeClass('active'); // Remove active class from all the other tabs
                     $(this).addClass('active');
+                    $('.content-wrapper').removeClass("contentAnimation");
                     ViewManager.hide(".maincontent .content-wrapper .content-box");
-                    ViewManager.show("#"+$(this).attr("href").substring(2));
+                    shownViewId = newId
+                    ViewManager.show("#" + shownViewId);
+                    $('.content-wrapper').addClass("contentAnimation");
                     return false;
     });
 
