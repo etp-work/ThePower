@@ -154,6 +154,8 @@ img{ border:none; margin:0; padding:0;}
 .main-button-area{
     margin-top:5px;
     padding:0px 5px;
+    float:left;
+    width:224px;
     }   
     
 
@@ -199,14 +201,13 @@ img{ border:none; margin:0; padding:0;}
     box-shadow: inset 0 0 5px rgba(2, 80, 125, 0.5);
     }    
 
-
     
 
 
 .bulid-list{
     float:left;
     width:234px;
-    height:255px;
+    height:250px;
     overflow:auto;
     }
     
@@ -297,7 +298,9 @@ img{ border:none; margin:0; padding:0;}
 .bulid-message{
     float:left;
     width:218px;
-    padding:5px 8px;
+    height:30px;
+    line-height:30px;
+    padding:0px 8px;
     border-bottom:solid 1px #fff;
     background:-moz-linear-gradient(bottom,rgba(225, 225, 225, 0.5),rgba(255, 255, 255, 0.5));
     font-size:10px;
