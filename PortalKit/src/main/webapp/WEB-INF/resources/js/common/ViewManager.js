@@ -8,21 +8,21 @@
      *        onShow: [
      *             {
      *               selector: 'build-content', 
-     *               callback: function () {...}
+     *               callback: [function () {...}]
      *             },
      *             {
      *               selector: 'deploy-content', 
-     *               callback: function () {...}
+     *               callback: [function () {...}]
      *             }
      *        ],
      *        onHide:[
      *             {
      *               selector: 'build-content', 
-     *               callback: function () {...}
+     *               callback: [function () {...}]
      *             },
      *             {
      *               selector: 'deploy-content', 
-     *               callback: function () {...}
+     *               callback: [function () {...}]
      *             }
      *        ]
      *
@@ -56,24 +56,40 @@
      *        will trigger the specified view element.
      * @param selector a string indicate which view element 
      *        will be triggered by specified event.
+     * @param callback a function which will be removed from listeners
      */
-    _viewManager.removeViewListener = function (type, selector){
+    _viewManager.removeViewListener = function (type, selector, callback){
         if(!listeners[type]){
             return;
         }
         
         var list = listeners[type];
-        for(var i = 0; i < list.length; i++){
-            if(list[i].selector === selector){
-                list.splice(i, 1);
+        if(!callback){
+            for(var i = 0; i < list.length; i++){
+                if(list[i].selector === selector){
+                    list.splice(i, 1);
+                }
+            }
+        }else{
+            for(var i = 0; i < list.length; i++){
+                if(list[i].selector === selector){
+                    var callbacks = list[i].callback;
+                    if(!callbacks){
+                        return;
+                    }
+                    for(var j = 0; j < callbacks.length; j++){
+                        if(callbacks[j] === callback){
+                            callbacks.splice(j, 1);
+                        }
+                    }
+                }
             }
         }
+        
     };
 
     /**
      * Add a viewListener with specified type and selector.
-     * If it already exists, remove the original one first,
-     * then add the new one.
      * The listener will be fired only when specified type 
      * event executed.
      * Note: selector should be string.
@@ -91,13 +107,24 @@
         }
 
         var list = listeners[type];
-        
-        ViewManager.removeViewListener(type, selector);
-        
-        list.push({
-            selector: selector,
-            callback: callback
-        });
+        var listener = undefined;
+        for(var i in list){
+            if(list[i].selector === selector){
+                listener = list[i];
+                break;
+            }
+        }
+        if(!listener){
+            listener = {
+                    selector : selector,
+                    callback : []
+            };
+            list.push(listener);
+        }
+        if(!listener.callback){
+            listener.callback = [];
+        }
+        listener.callback.push(callback);
     };
     
 
@@ -118,7 +145,10 @@
         var list = listeners[type];
         for(var i = 0; i < list.length; i++){
              if(list[i].selector === selector){
-                  list[i].callback();
+                  var callbacks = list[i].callback;
+                  for(var j in callbacks){
+                      callbacks[j]();
+                  }
                   break;
              }
         }
@@ -146,16 +176,16 @@
      *        animation is complete.
      */
     _viewManager.show = function (selector, speed, callback){
-	var transparencySpeed = 0;
-	if(speed){
-	    transparencySpeed = speed;
+	    var transparencySpeed = 0;
+	    if(speed){
+	        transparencySpeed = speed;
         }
-	$(selector).show(transparencySpeed, function (){
-	    if(callback){
-		callback();
-	    }
-	    ViewManager.fireViewListener("onShow", selector);
-	});
+	    $(selector).show(transparencySpeed, function (){
+	        if(callback){
+		        callback();
+	        }
+	        ViewManager.fireViewListener("onShow", selector);
+	    });
     };
     
     /**
