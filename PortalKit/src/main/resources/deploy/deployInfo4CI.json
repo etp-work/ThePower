@@ -1,0 +1,40 @@
+{
+    "referencePortal": [{
+        "packageName": "portal-base-cxp",
+        "relativePath": "",
+        "warfiles": ["portal-coreapps-war", "portal-fw-war", "portal-imageprocessor-war"]
+
+    }, {
+        "packageName": "portal-sdk-cxp",
+        "relativePath": "deployables/mock/",
+        "warfiles": ["portal-coreapps-backend-mock-war", "portal-coreapps-device-dev-war"]
+    }, {
+        "packageName": "portal-root-cxp",
+        "relativePath": "",
+        "warfiles": ["portal-root-war", "private", "public"]
+    }, {
+        "packageName": "stb-apps-bin-cxp",
+        "relativePath": "deployables/refApps/",
+        "warfiles": ["portal-chmgrapp-war", "portal-coreapps-app-war", "portal-coreapps-enus-war", "portal-coreapps-service-war", "portal-coreapps-sessiontransfer-enus-war", "portal-coreapps-sessiontransfer-skin-next-war", "portal-coreapps-sessiontransfer-skin-svg-next-war", "portal-coreapps-sessiontransfer-svse-war", "portal-coreapps-sessiontransfer-war", "portal-coreapps-skin-next-war", "portal-coreapps-skin-svg-next-war", "portal-coreapps-svse-war", "portal-load-indicator-war", "portal-scanapp-war"]
+    }],
+    "multiscreenPortal": [{
+        "packageName": "portal-base-cxp",
+        "relativePath": "",
+        "warfiles": ["portal-coreapps-war", "portal-fw-war", "portal-imageprocessor-war"]
+
+    }, {
+        "packageName": "portal-sdk-cxp",
+        "relativePath": "deployables/mock/",
+        "warfiles": ["portal-coreapps-backend-mock-war", "portal-coreapps-device-dev-war"]
+
+    }, {
+        "packageName": "portal-root-cxp",
+        "relativePath": "",
+        "warfiles": ["portal-root-war", "private", "public"]
+
+    }, {
+        "packageName": "portable-apps-bin",
+        "relativePath": "deployables/refApps/",
+        "warfiles": ["portal-multiscreen-apps-war", "portal-multiscreen-backend-metadata-war", "portal-multiscreen-device-web-viewright-war", "portal-multiscreen-enus-war", "portal-multiscreen-service-war", "portal-multiscreen-sessiontransfer-enus-war", "portal-multiscreen-sessiontransfer-skin-ipad-next-war", "portal-multiscreen-sessiontransfer-skin-iphone-next-war", "portal-multiscreen-sessiontransfer-skin-web-next-war", "portal-multiscreen-sessiontransfer-svse-war", "portal-multiscreen-sessiontransfer-war", "portal-multiscreen-skin-common-war", "portal-multiscreen-skin-ipad-next-war", "portal-multiscreen-skin-iphone-next-war", "portal-multiscreen-skin-web-next-war", "portal-multiscreen-svse-war"]
+    }]
+}

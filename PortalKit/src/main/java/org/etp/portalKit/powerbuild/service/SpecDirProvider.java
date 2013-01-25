@@ -33,7 +33,7 @@ public class SpecDirProvider implements DirProvider {
     private PropertiesManager handler;
     private List<String> selected;
 
-    private String SPECIAL_DIR = "specialDirs.json";
+    private String SPECIAL_DIR = "powerbuild/specialDirs.json";
 
     /**
      * Creates a new instance of <code>SpecDirProvider</code>.

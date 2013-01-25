@@ -35,8 +35,8 @@ public class PowerBuildLogic {
     @Resource(name = "buildExecutor")
     private BuildExecutor executor;
 
-    @Resource(name = "deployInfoReader")
-    private DeployInfoReader deployInfoReader;
+    @Resource(name = "deployInfoDesignReader")
+    private DeployInfoReader deployInfoDesignReader;
 
     /**
      * Get absolute path of specified project name.
@@ -113,7 +113,7 @@ public class PowerBuildLogic {
         BuildResult result = build("design", new File(path, "design").getAbsolutePath());
         if (!result.isSuccess())
             return result;
-        DeployInfo deployInfo = deployInfoReader.retrieve();
+        DeployInfo deployInfo = deployInfoDesignReader.retrieve();
         if (deployInfo == null)
             return result;
         List<String> deploySet = new ArrayList<String>();
@@ -125,11 +125,11 @@ public class PowerBuildLogic {
             for (PackageInfo packageInfo : deployInfo.getReferencePortal()) {
                 deploySet.add(new File(path, packageInfo.getPackagePathInDesignHome()).getAbsolutePath());
             }
-        } else if ("multiscreen".equals(selection)) {
+        } else if ("multiscreenPortal".equals(selection)) {
             for (PackageInfo packageInfo : deployInfo.getFramework()) {
                 deploySet.add(new File(path, packageInfo.getPackagePathInDesignHome()).getAbsolutePath());
             }
-            for (PackageInfo packageInfo : deployInfo.getMultiscreen()) {
+            for (PackageInfo packageInfo : deployInfo.getMultiscreenPortal()) {
                 deploySet.add(new File(path, packageInfo.getPackagePathInDesignHome()).getAbsolutePath());
             }
         }

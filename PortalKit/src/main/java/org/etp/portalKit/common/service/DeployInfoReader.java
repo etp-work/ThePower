@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
  * The purpose of this class is to provide a reader that can be used
  * to retrieve Deploy Information.
  */
-@Component(value = "deployInfoReader")
+@Component(value = "deployInfoDesignReader")
 public class DeployInfoReader {
     @javax.annotation.Resource(name = "pathMatchingResourcePatternResolver")
     private PathMatchingResourcePatternResolver resolver;
@@ -25,7 +25,7 @@ public class DeployInfoReader {
      * @return deploy information
      */
     public DeployInfo retrieve() {
-        org.springframework.core.io.Resource resource = resolver.getResource("deploy.json");
+        org.springframework.core.io.Resource resource = resolver.getResource("powerbuild/deployInfo4Design.json");
         String json = null;
         DeployInfo info = null;
         try {

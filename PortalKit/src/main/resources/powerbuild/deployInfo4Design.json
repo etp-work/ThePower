@@ -48,7 +48,7 @@
         "packageName": "portal-coreapps-sessiontransfer-skin-svg-next-war",
         "packagePathInDesignHome": "design\\CoreApps\\Skin\\portal-coreapps-sessiontransfer-skin-svg-next-war"
     }],
-    "multiscreen": [{
+    "multiscreenPortal": [{
         "packageName": "portal-multiscreen-apps-war",
         "packagePathInDesignHome": "design\\Multiscreen\\Application\\portal-multiscreen-apps-war"
     }, {

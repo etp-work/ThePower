@@ -7,7 +7,7 @@ import java.util.List;
  */
 public class DeployInfo {
     private List<PackageInfo> referencePortal;
-    private List<PackageInfo> multiscreen;
+    private List<PackageInfo> multiscreenPortal;
     private List<PackageInfo> framework;
 
     /**
@@ -25,17 +25,17 @@ public class DeployInfo {
     }
 
     /**
-     * @return Returns the multiscreen.
+     * @return Returns the multiscreenPortal.
      */
-    public List<PackageInfo> getMultiscreen() {
-        return multiscreen;
+    public List<PackageInfo> getMultiscreenPortal() {
+        return multiscreenPortal;
     }
 
     /**
-     * @param multiscreen The multiscreen to set.
+     * @param multiscreenPortal The multiscreenPortal to set.
      */
-    public void setMultiscreen(List<PackageInfo> multiscreen) {
-        this.multiscreen = multiscreen;
+    public void setMultiscreenPortal(List<PackageInfo> multiscreenPortal) {
+        this.multiscreenPortal = multiscreenPortal;
     }
 
     /**
