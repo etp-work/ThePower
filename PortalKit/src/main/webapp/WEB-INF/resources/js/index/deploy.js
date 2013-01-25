@@ -43,4 +43,10 @@
     });
     
     
+    $('#deploy-content .table-wrapper .war-list-wrapper input').click(function(event){
+        if($(this).is(':checked')){
+            $(this).parent().parent().siblings('li').find('input').attr("checked", false);
+        }
+    });
+    
 }(window));

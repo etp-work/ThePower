@@ -1,13 +1,12 @@
-var DynamicLoad;
-if (!DynamicLoad) {
-    DynamicLoad = {};
-}
 /**
  * This module called DynamicLoad, it provide some APIs which have to do with network connectivity.
  * Such as postJSON, loadJSON... 
  *
  */
-(function () {
+(function (window) {
+    'use strict';
+   var _DynamicLoad = {};
+   window.DynamicLoad = _DynamicLoad;
 
    var eventQueue = [];
    var queueTimer;
@@ -32,10 +31,37 @@ if (!DynamicLoad) {
 
    }
    
+   function successHandler(success, data){
+       eventQueue.push(function() {
+                         if(success){
+                            success(data);
+                         }
+       });
+       executeEventQueue();
+   }
+   
+   function errorHandler(jqXHR, failure){
+       var obj = undefined;
+       try
+       {
+           obj = JSON.parse(jqXHR.responseText);
+       }
+       catch(err)
+       {
+          obj = jqXHR.responseText;
+       }
+       eventQueue.push(function() {
+                         if(failure){
+                            failure(obj);
+                         }
+       });
+       executeEventQueue();
+   }
+   
    /**
     *  Post JSON data to backend.
     */
-   DynamicLoad.postJSON = function(url, data, success, failure) {
+   _DynamicLoad.postJSON = function(url, data, success, failure) {
 	   var tempData = data || {};
 	   if(typeof(tempData) !== "string"){
 	       tempData = JSON.stringify(tempData);
@@ -47,59 +73,36 @@ if (!DynamicLoad) {
 	       "contentType" : "application/json; charset=UTF-8",
 	       "data" : tempData,
 	       "dataType" : "json",
-	       "success" : function(data, textStatus, jqXHR) {
-		                     eventQueue.push(function() {
-		                                       if(success){
-			                                      success(data);
-		                                       }
-		                     });
-		                     executeEventQueue();
-	       },
+	       "success" : function(dataFromServer, textStatus, jqXHR) {
+	           successHandler(success, dataFromServer);
+	        },
 	       "error" : function(jqXHR, textStatus, errorThrown) {
-		                     var obj = JSON.parse(jqXHR.responseText);
-		                     eventQueue.push(function() {
-		                                       if(failure){
-		                                          failure(obj);
-		                                       }
-		                     });
-		                     executeEventQueue();
-	        }
+	           errorHandler(jqXHR, failure);
+	       }
 	   });
     };
     
     /**
      * Load JSON data from backend.
      */
-    DynamicLoad.loadJSON = function(url, data, success, failure) {
+    _DynamicLoad.loadJSON = function(url, data, success, failure) {
 	    var tempData = data || {};
-	
 	    jQuery.ajax({
 	       "type" : "GET",
 	       "url" : "/PortalKit" + url,
 	       "contentType" : "application/json; charset=UTF-8",
 	       "data" : tempData,
 	       "dataType" : "json",
-	       "success" : function(data, textStatus, jqXHR) {
-		                     eventQueue.push(function() {
-		                                       if(success){
-		                                          success(data);
-		                                       }
-		                     });
-		                     executeEventQueue();
-	       },
+	       "success" : function(dataFromServer, textStatus, jqXHR) {
+               successHandler(success, dataFromServer);
+           },
 	       "error" : function(jqXHR, textStatus, errorThrown) {
-		                     var obj = JSON.parse(jqXHR.responseText);
-		                     eventQueue.push(function() {
-		                                       if(failure){
-		                                          failure(obj);
-		                                       }
-		                     });
-		                     executeEventQueue();
-	       }
+               errorHandler(jqXHR, failure);
+           }
 	   });
     };
     
-    DynamicLoad.loadStaticJs = function(url, success, failure){
+    _DynamicLoad.loadStaticJs = function(url, success, failure){
         jQuery.ajax({
             "type" : "GET",
             "url" : url,
@@ -127,7 +130,7 @@ if (!DynamicLoad) {
         });
     };
     
-    DynamicLoad.loadStaticHtml = function(url, success, failure){
+    _DynamicLoad.loadStaticHtml = function(url, success, failure){
         jQuery.ajax({
             "type" : "GET",
             "url" : url,
@@ -154,4 +157,4 @@ if (!DynamicLoad) {
         });
     };
 
-}());
+}(window));
