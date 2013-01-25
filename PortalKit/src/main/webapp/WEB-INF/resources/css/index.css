@@ -345,6 +345,24 @@ img{ border:none; margin:0; padding:0;}
     background:-moz-linear-gradient(top,rgba(225, 225, 225, 0.8),rgba(245, 245, 245, 0.8));
     }
     
+.deployList{
+    float:left;
+    width:234px;
+    } 
+    
+.deployList li{
+    font-size:11px;
+    color:#369;
+    padding:0px 30px;
+    height:24px;
+    line-height:24px;
+    border-bottom: dashed 1px #369;
+    background:#fff;
+    } 
+.deployList li.grayed{
+    color:#999;
+    background:rgba(230,230,230,1);
+    } 
 /*====================================== TEST ===============================*/
 #test-content{}
 .us-list{
