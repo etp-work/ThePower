@@ -5,12 +5,9 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * <p>
- * Operations on {@link java.lang.String} that are <code>null</code>
- * safe.
- * </p>
+ * This class provide APIs to handler propertiesManager related stuff.
  */
-public class StringUtils {
+public class PropManagerUtils {
 
     /**
      * @param arrayString

@@ -10,17 +10,12 @@
     var getDownloadedPathUrl = "/deploy/getDownLoadedPath.ajax";
     var setDownloadedPathUrl = "/deploy/setCheckPackages.ajax";
     var downloadedPath = undefined;
+    var checkedList = [];
     var portals = {};
     
 //=========================================functions========================================
-    function setDisableElements(isDisable){
-        $('#deploy-content #deploy4CI').attr("disabled", isDisable);
-        $('#deploy-content #downloadedPath').attr("disabled", isDisable);
-        $('#deploy-content #checkDeployPathButton').attr("disabled", isDisable);
-        $('#deploy-content .table-wrapper .war-list-wrapper input').attr("disabled", isDisable);
-    }
-    
     function checkChoose(){
+        checkedList = [];
         $('#deploy-content .table-wrapper .deployList li').removeClass("grayed");
         if(!downloadedPath){
             return;
@@ -40,14 +35,16 @@
             return;
         }
         $('#deploy-content .table-wrapper .deployList li').each(function(){
-            var isFalsy = false;
+            var isChosen = false;
             for(var i in choose){
-                if($(this).text().indexOf(choose[i]) > -1){
-                    isFalsy = true;
+                var fileName = $(this).text();
+                if(fileName.indexOf(choose[i]) > -1){
+                    checkedList.push(fileName);
+                    isChosen = true;
                     break;
                 }
             }
-            if(isFalsy){
+            if(isChosen){
                 $(this).addClass("grayed");
             }
         });
@@ -63,6 +60,7 @@
                 return;
             }
             if(!PackageCheckedResult.allGzFiles || PackageCheckedResult.allGzFiles.length === 0){
+                ViewManager.simpleWarning("Download path is invalid.");
                 return;
             }
             var scope = angular.element($('#deploy-content .deployList')).scope();
@@ -81,7 +79,6 @@
                 if(data && data.downloadedPath){
                     downloadedPath = data.downloadedPath;
                     $('#deploy-content #downloadedPath').val(downloadedPath);
-                    doCheck();
                 }
             });
         }
@@ -90,18 +87,7 @@
     
 //========================================init listener=====================================
     ViewManager.addViewListener("onShow", "#"+viewId, deployViewOnShow);
-    Lifecycle.setCallback("build-content", function(status){
-        switch (status) {
-            case Lifecycle.NORMAL:
-                setDisableElements(false);
-                break;
-            case Lifecycle.BUILD_EXECUTING:
-                setDisableElements(true);
-                break;
-            default:
-                break;
-        }
-    });
+    
 //================================================event bind================================
     $('#deploy-content #checkDeployPathButton').click(function(event){
         var path = $('#deploy-content #downloadedPath').val();
@@ -122,6 +108,24 @@
     });
     
     $('#deploy-content #deploy4CI').click(function(event){
+        if(!$('#deploy-content #downloadedPath').val()){
+            ViewManager.simpleWarning("Please set download path first.");
+            return false;
+        }
+        if(checkedList.length === 0){
+            ViewManager.simpleWarning("Please check the download path first.");
+            return false;
+        }
+        var choosedElement = undefined;
+        $('#deploy-content .war-list-wrapper input').each(function(){
+            if($(this).is(':checked')){
+                choosedElement = $(this);
+            }
+        });
+        if(!choosedElement){
+            ViewManager.simpleWarning("Please choose one type for deploy.");
+            return false;
+        }
         //TODO
     });
     

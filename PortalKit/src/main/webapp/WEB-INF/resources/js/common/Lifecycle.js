@@ -24,7 +24,7 @@
      */
     _lifecycle.BUILD_EXECUTING = "BUILD_EXECUTING";
     /**
-     * This status mean there is no configuration setted yet. much of functionalites should not be used.
+     * This status means there is no configuration setted yet. much of functionalites should not be used.
      */
     _lifecycle.NO_CONFIGURATION = "NO_CONFIGURATION";
     

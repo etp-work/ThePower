@@ -100,8 +100,8 @@ public class BuildExecutor {
     /**
      * Deploy the specified set of packages to destination.
      * 
-     * @param srcs a set of folder paths indicate which project will be
-     *            deployed.
+     * @param srcs a set of folder paths indicate which project will
+     *            be deployed.
      * @param dest a folder path indicate what place the war file
      *            should be moved into.
      * @return deploy
@@ -115,6 +115,14 @@ public class BuildExecutor {
         return isAllTrue;
     }
 
+    /**
+     * Given a compile folder, automatically scan the child target
+     * folder, find the .war file.
+     * 
+     * @param src compile folder, should contains a pom.xml and a
+     *            target child folder.
+     * @return the compiled .war file.
+     */
     private File getWarFile(String src) {
         File parent = new File(src);
         if (!parent.isDirectory())
@@ -126,6 +134,11 @@ public class BuildExecutor {
         return null;
     }
 
+    /**
+     * convert the pom.xml format to a real absolute path of pom.xml
+     * @param path a folder path which should contains a pom.xml
+     * @return converted result
+     */
     private String convertPath(String path) {
         String absPath = MessageFormat.format(path_format, path);
         File file = new File(absPath);

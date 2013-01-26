@@ -32,7 +32,7 @@ public class PowerBuildController {
     @RequestMapping(value = "/powerbuild/getAllTrees.ajax", method = RequestMethod.GET)
     public @ResponseBody
     List<DirTree> getBuildTrees() {
-        return logic.getSpecBuildTrees();
+        return logic.getCommonBuildListDirTrees();
     }
 
     /**
@@ -57,7 +57,7 @@ public class PowerBuildController {
     BuildResult build(@RequestBody BuildCommand cmd) {
         BuildResult br = null;
         if (cmd.isNeedDeploy())
-            br = logic.buildDeploy(cmd.getSelection());
+            br = logic.buildDeploy(cmd.getSelection(), null);
         else
             br = logic.build(cmd.getSelection(), null);
         return br;

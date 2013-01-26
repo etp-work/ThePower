@@ -283,7 +283,7 @@
             }
         });
         if(!choosedElement){
-            ViewManager.simpleWarning("Please choose one package.");
+            ViewManager.simpleWarning("Please choose one type for build + deploy.");
             return false;
         }
         environmentBuild(choosedElement);

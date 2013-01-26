@@ -20,7 +20,7 @@ import javax.annotation.Resource;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.io.Charsets;
 import org.apache.commons.io.IOUtils;
-import org.etp.portalKit.common.util.StringUtils;
+import org.etp.portalKit.common.util.PropManagerUtils;
 import org.etp.portalKit.fw.annotation.MarkinFile;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -163,7 +163,8 @@ public class PropertiesManager {
                 if (annotation.annotationType() == MarkinFile.class) {
                     String nameInFile = ((MarkinFile) annotation).name();
                     try {
-                        PropertyUtils.setProperty(t, field.getName(), StringUtils.fromString(this.get(nameInFile)));
+                        PropertyUtils
+                                .setProperty(t, field.getName(), PropManagerUtils.fromString(this.get(nameInFile)));
                     } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
                         e.printStackTrace();
                     }
