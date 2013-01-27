@@ -1,0 +1,413 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Data;
+using System.Text;
+using System.Threading.Tasks;
+using System.Configuration;
+using System.Diagnostics;
+using System.Reflection;
+using System.IO;
+using System.Net;
+using MySql.Data.MySqlClient;
+using log4net;
+using System.Timers;
+using Newtonsoft.Json.Linq;
+
+[assembly: log4net.Config.XmlConfigurator(Watch = true)]
+namespace TestNodeMonitor.Entities
+{
+    public class TestNode
+    {
+        public int NodeID { get; set; }
+        public string NodeName { get; set; }
+        public string NodeStatus { get; set; }
+        public string Location { get; set; }
+        public string NodeIPAddress { get; set; }
+        public int NodeHttpPort1 { get; set; }
+        public int NodeHttpPort2 { get; set; }
+        public int NodeHttpPort3 { get; set; }
+        public Dictionary<string, string> Configurations { get; set; }
+        public Dictionary<string, string> ForClose { get; set; }
+
+        private Process proc;
+        private Timer timer;
+        //private FileSystemWatcher watcher;
+
+        private static Dictionary<int, TestNode> nodes = new Dictionary<int, TestNode>();
+        private static ILog logger = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private static string JolokiaVersion = "jolokia/version";
+        private static string BaseDir = "C:\\testnodes";
+        private static string BaseNodeDir = "C:\\testnodes\\tomcat_base";
+        private static string TargetWebDir = "C:\\Program Files (x86)\\Apache Software Foundation\\Apache2.2\\htdocs\\portaltest\\logs";
+
+        public void startTimer() 
+        {
+            timer = new Timer();
+            timer.Elapsed += timer_Elapsed;
+            timer.Interval = 30000;
+            timer.Enabled = true;
+        }
+
+        /*
+        public void startWatcher()
+        {
+            watcher = new FileSystemWatcher();
+            watcher.Path = String.Format("{0}\\{1}\\logs", BaseDir, Location);
+            watcher.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite
+               | NotifyFilters.FileName | NotifyFilters.DirectoryName;
+            watcher.Filter = "*.log";
+            watcher.Changed += new FileSystemEventHandler(OnChanged);
+            watcher.EnableRaisingEvents = true;
+        }
+        */
+
+        public void start()
+        {
+            closeTimer();
+            startTimer();
+            //startWatcher();
+
+            ProcessStartInfo procStartInfo = new ProcessStartInfo("startup.bat");
+            procStartInfo.WorkingDirectory = String.Format("{0}\\{1}\\bin", BaseDir, Location);
+            procStartInfo.UseShellExecute = true;
+
+            proc = new Process();
+            proc.StartInfo = procStartInfo;
+            proc.Start();
+            updateNodeStatus("STARTING");
+        }
+
+        void timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            bool isrunning = false;
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(String.Format("http://{0}:{1}/{2}", NodeIPAddress, NodeHttpPort1, JolokiaVersion));
+                request.Method = WebRequestMethods.Http.Get;
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                StreamReader reader = new StreamReader(response.GetResponseStream());
+                string responseString = reader.ReadToEnd();
+                response.Close();
+
+                JObject json = JObject.Parse(responseString);
+                int retCode = (int)json["status"];
+                if (retCode == 200)
+                {
+                    isrunning = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message, ex);
+            }
+
+            if (isrunning)
+            {
+                if (NodeStatus != "RUNNING")
+                {
+                    updateNodeStatus("RUNNING");
+                }
+
+                try
+                {
+                    string logfile = String.Format("{0}\\{1}\\logs\\catalina.{2:yyyy-MM-dd}.log", BaseDir, Location, DateTime.Today);
+                    File.Copy(logfile, String.Format("{0}\\{1}.log", TargetWebDir, Location), true);
+                }
+                catch (Exception ex)
+                {
+                    logger.Error(ex.Message, ex);
+                }
+            } else if (NodeStatus == "RUNNING")
+            {
+                // The actual node is stopped, need to restart
+                updateNodeStatus("RESTART");
+            }
+        }
+
+        private void closeTimer()
+        {
+            if (null != timer)
+            {
+                timer.Enabled = false;
+                timer.Dispose();
+                timer = null;
+            }
+        }
+
+        /*
+        public void stopWatcher()
+        {
+            if (null != watcher)
+            {
+                watcher.EnableRaisingEvents = false;
+                watcher.Dispose();
+                watcher = null;
+            }
+        }
+        */
+
+        public void stop()
+        {
+            closeTimer();
+            //stopWatcher();
+
+            ProcessStartInfo procStartInfo = new ProcessStartInfo("shutdown.bat");
+            procStartInfo.WorkingDirectory = String.Format("{0}\\{1}\\bin", BaseDir, Location);
+            procStartInfo.UseShellExecute = true;
+
+            proc = new Process();
+            proc.StartInfo = procStartInfo;
+            proc.Start();
+            proc.WaitForExit();
+            proc = null;
+
+            updateNodeStatus("STOPPED");
+        }
+
+        public void updateNodeStatus(string status)
+        {
+            if (NodeStatus != status)
+            {
+                NodeStatus = status;
+                logger.Info(String.Format("TestNode ID:{0} Name:{1} Status:{2}", NodeID, NodeName, NodeStatus));
+                MySqlConnection connection = getDBConnection();
+                if (connection.State != ConnectionState.Open)
+                {
+                    try
+                    {
+                        connection.Open();
+                        string sql = String.Format("UPDATE testnode SET NodeStatus='{0}' WHERE NodeID={1}", NodeStatus, NodeID);
+                        MySqlCommand query = new MySqlCommand(sql, connection);
+                        query.ExecuteNonQuery();
+                    }
+                    catch (MySqlException ex)
+                    {
+                        logger.Error(ex.Message, ex);
+                    }
+                    finally
+                    {
+                        if (connection.State != ConnectionState.Closed)
+                        {
+                            connection.Close();
+                        }
+                    }
+                }
+            }
+        }
+
+        private static MySqlConnection getDBConnection()
+        {
+            string server = ConfigurationManager.AppSettings["DBAddress"];
+            string uid = ConfigurationManager.AppSettings["DBUser"];
+            string password = ConfigurationManager.AppSettings["DBPassword"];
+            string database = ConfigurationManager.AppSettings["DBDataBase"];
+            string connectionString = String.Format("SERVER={0};DATABASE={1};UID={2};PASSWORD={3};", server, database, uid, password);
+            return new MySqlConnection(connectionString);
+        }
+
+        private static Dictionary<int, TestNode> getNodesFromDB()
+        {
+            Dictionary<int, TestNode> _nodes = new Dictionary<int, TestNode>();
+            MySqlConnection connection = getDBConnection();
+            if (connection.State != ConnectionState.Open)
+            {
+                try
+                {
+                    connection.Open();
+                    string sql1 = "SELECT * FROM testnode";
+                    MySqlCommand query1 = new MySqlCommand(sql1, connection);
+                    using (MySqlDataReader queryResults = query1.ExecuteReader())
+                    {
+                        while (queryResults.Read())
+                        {
+                            TestNode _node = new TestNode();
+
+                            try { _node.NodeID = queryResults.GetInt32("NodeID"); }
+                            catch (InvalidCastException) { }
+
+                            try { _node.NodeName = queryResults.GetString("NodeName"); }
+                            catch (InvalidCastException) { }
+
+                            try { _node.NodeStatus = queryResults.GetString("NodeStatus"); }
+                            catch (InvalidCastException) { }
+
+                            try { _node.Location = queryResults.GetString("Location"); }
+                            catch (InvalidCastException) { }
+
+                            try { _node.NodeIPAddress = queryResults.GetString("NodeIPAddress"); }
+                            catch (InvalidCastException) { }
+
+                            try { _node.NodeHttpPort1 = queryResults.GetInt32("NodeHttpPort1"); }
+                            catch (InvalidCastException) { }
+
+                            try { _node.NodeHttpPort2 = queryResults.GetInt32("NodeHttpPort2"); }
+                            catch (InvalidCastException) { }
+
+                            try { _node.NodeHttpPort3 = queryResults.GetInt32("NodeHttpPort3"); }
+                            catch (InvalidCastException) { }
+
+                            _node.Configurations = new Dictionary<string, string>();
+                            _nodes.Add(_node.NodeID, _node);
+                        }
+                    }
+
+                    var enumerator1 = _nodes.GetEnumerator();
+                    while (enumerator1.MoveNext())
+                    {
+                        TestNode testnode = enumerator1.Current.Value;
+                        string sql2 = String.Format("SELECT * FROM testnodecfg where NodeID={0}", testnode.NodeID);
+                        MySqlCommand query2 = new MySqlCommand(sql2, connection);
+                        using (MySqlDataReader queryResults = query2.ExecuteReader())
+                        {
+                            while (queryResults.Read())
+                            {
+                                String propertyName = "";
+                                String propertyValue = "";
+
+                                try { propertyName = queryResults.GetString("PropertyName"); }
+                                catch (InvalidCastException) { }
+
+                                try { propertyValue = queryResults.GetString("PropertyValue"); }
+                                catch (InvalidCastException) { }
+
+                                if (!String.IsNullOrEmpty(propertyName))
+                                {
+                                    testnode.Configurations.Add(propertyName, propertyValue);
+                                }
+                            }
+                        }
+                    }
+                }
+                catch (MySqlException ex)
+                {
+                    logger.Error(ex.Message, ex);
+                }
+                finally
+                {
+                    if (connection.State != ConnectionState.Closed)
+                    {
+                        connection.Close();
+                    }
+                }
+            }
+
+            return _nodes;
+        }
+
+        public static void check()
+        {
+            Dictionary<int, TestNode> _nodes = getNodesFromDB();     
+            var enumerator = _nodes.GetEnumerator();
+            while (enumerator.MoveNext())
+            {
+                TestNode testnode = enumerator.Current.Value;
+                switch(testnode.NodeStatus){
+                    case "START":
+                        if (!nodes.ContainsKey(testnode.NodeID))
+                        {
+                            logger.Info(String.Format("{0} TestNode ID:{1}, Name:{2}", testnode.NodeStatus, testnode.NodeID, testnode.NodeName));
+                            testnode.start();
+                            nodes.Add(testnode.NodeID, testnode);
+                        }
+                        break;
+                    case "RESTART":
+                        logger.Info(String.Format("{0} TestNode ID:{1}, Name:{2}", testnode.NodeStatus, testnode.NodeID, testnode.NodeName));
+                        testnode.stop();
+                        nodes.Remove(testnode.NodeID);
+                        testnode.updateNodeStatus("START");
+                        break;
+                    case "STOP":
+                        logger.Info(String.Format("{0} TestNode ID:{1}, Name:{2}", testnode.NodeStatus, testnode.NodeID, testnode.NodeName));
+                        testnode.stop();
+                        break;
+                    case "UPDATE":
+                        logger.Info(String.Format("{0} TestNode ID:{1}, Name:{2}", testnode.NodeStatus, testnode.NodeID, testnode.NodeName));
+                        testnode.stop();
+                        testnode.updateNodeStatus("UPDATING");
+                        nodes.Remove(testnode.NodeID);
+                        break;
+                    case "UPDATING":
+                        logger.Info(String.Format("{0} TestNode ID:{1}, Name:{2}", testnode.NodeStatus, testnode.NodeID, testnode.NodeName));
+                        string dirApps = String.Format("{0}\\{1}\\webapps", BaseDir, testnode.Location);
+                        if (Directory.Exists(dirApps))
+                        {
+                            Directory.Delete(dirApps, true);
+                        }
+                        DirectoryCopy(BaseNodeDir + "\\webapps", dirApps, true);
+                        string dirWork = String.Format("{0}\\{1}\\work", BaseDir, testnode.Location);
+                        if (Directory.Exists(dirWork))
+                        {
+                            Directory.Delete(dirWork, true);
+                        }
+                        DirectoryCopy(BaseNodeDir + "\\work", dirWork, true);
+                        testnode.updateNodeStatus("START");
+                        break;
+                    default:
+                        if (!nodes.ContainsKey(testnode.NodeID) && testnode.NodeStatus == "RUNNING")
+                        {
+                            testnode.startTimer();
+                            //testnode.startWatcher();
+                            nodes.Add(testnode.NodeID, testnode);
+                        }
+                        break;
+                }
+            }
+        }
+
+        public static void startup()
+        {
+            Dictionary<int, TestNode> _nodes = getNodesFromDB();
+            var enumerator = _nodes.GetEnumerator();
+            while (enumerator.MoveNext())
+            {
+                TestNode testnode = enumerator.Current.Value;
+                testnode.updateNodeStatus("RUNNING");
+            }
+        }
+
+        public static void shutdown()
+        {
+            var enumerator = nodes.GetEnumerator();
+            while (enumerator.MoveNext())
+            {
+                TestNode testnode = enumerator.Current.Value;
+                testnode.stop();
+            }
+        }
+
+        private static void DirectoryCopy(string sourceDirName, string destDirName, bool copySubDirs)
+        {
+            DirectoryInfo dir = new DirectoryInfo(sourceDirName);
+            DirectoryInfo[] dirs = dir.GetDirectories();
+
+            if (!dir.Exists)
+            {
+                throw new DirectoryNotFoundException(
+                    "Source directory does not exist or could not be found: "
+                    + sourceDirName);
+            }
+
+            if (!Directory.Exists(destDirName))
+            {
+                Directory.CreateDirectory(destDirName);
+            }
+
+            FileInfo[] files = dir.GetFiles();
+            foreach (FileInfo file in files)
+            {
+                string temppath = Path.Combine(destDirName, file.Name);
+                file.CopyTo(temppath, false);
+            }
+
+            if (copySubDirs)
+            {
+                foreach (DirectoryInfo subdir in dirs)
+                {
+                    string temppath = Path.Combine(destDirName, subdir.Name);
+                    DirectoryCopy(subdir.FullName, temppath, copySubDirs);
+                }
+            }
+        }
+    }
+}

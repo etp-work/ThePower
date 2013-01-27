@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Security.Permissions;
 
 namespace TestNodeMonitor
 {
@@ -16,7 +17,13 @@ namespace TestNodeMonitor
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new Monitor());
+        }
+
+        [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
+        public static void Run()
+        {
+
         }
     }
 }

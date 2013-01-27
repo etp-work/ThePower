@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using Gecko;
 using Gecko.DOM;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace GriffinsPortalKit
 {
@@ -18,6 +19,13 @@ namespace GriffinsPortalKit
         private GeckoWebBrowser browser;
         private Action<String> message = new Action<String>(NativeContainer.onMessage);
         private SplashForm frmSplash = new SplashForm();
+
+        [DllImport("USER32.DLL", CharSet = CharSet.Unicode)]
+        public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+
+        // Activate an application window.
+        [DllImport("USER32.DLL")]
+        public static extern bool SetForegroundWindow(IntPtr hWnd);
 
         public NativeContainer()
         {
@@ -111,6 +119,11 @@ namespace GriffinsPortalKit
                 //proc.WaitForExit();
                 //string result = proc.StandardOutput.ReadToEnd();
                 //MessageBox.Show(result);
+            }
+            else if (message.StartsWith("KEY:"))
+            {
+                message = message.Replace("KEY:", "");
+                SendKeys.SendWait(message);
             }
         }
 
