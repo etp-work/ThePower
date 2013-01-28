@@ -12,10 +12,10 @@
         templateUrl: "resources/templates/index-views/deploy-content.html",
         defaultView: false
     },{
-    	viewId: "test-content",
-    	viewName: "Test",
-    	js: "resources/js/index/test.js",
-        templateUrl: "resources/templates/index-views/test-content.html",
+    	viewId: "clean-content",
+    	viewName: "Clean",
+    	js: "resources/js/index/clean.js",
+        templateUrl: "resources/templates/index-views/clean-content.html",
         defaultView: false
     },{
     	viewId: "setting-content",
