@@ -100,6 +100,7 @@ img{ border:none; margin:0; padding:0;}
        
 .tab-header ul li a.active{
     color:#fff;
+    text-shadow: 1px 1px 1px #666;
     background:-moz-linear-gradient(top,rgba(63, 200, 251, 0.5),rgba(0, 168, 255, 0.6));
     box-shadow: inset 0 0 10px rgba(2, 80, 125, 0.6);
     border-radius:4px;
@@ -327,10 +328,7 @@ img{ border:none; margin:0; padding:0;}
     
 .war-list-wrapper{
     float:left;
-    background:#fff;
     width:234px;
-    height:240px;
-    overflow:auto;
     }
     
 .war-list-wrapper li{
@@ -344,7 +342,7 @@ img{ border:none; margin:0; padding:0;}
     border-bottom: solid 1px #ccc;
     background:-moz-linear-gradient(top,rgba(225, 225, 225, 0.8),rgba(245, 245, 245, 0.8));
     }
-    
+ 
 .deployList{
     float:left;
     width:234px;
@@ -365,9 +363,9 @@ img{ border:none; margin:0; padding:0;}
     } 
 /*====================================== TEST ===============================*/
 #test-content{}
+
 .us-list{
     margin-top:5px;
-    background:#fff;
     width:234px;
     height:255px;
     overflow:auto;
@@ -385,10 +383,11 @@ img{ border:none; margin:0; padding:0;}
     padding-left:10px;
     color:#666;
     font-size:11px;
-    }   
+    } 
+.clean-list,  
 .table-wrapper{
     margin-top:3px;
-    height:285px;
+    height:288px;
     }
 .setting-table{
     width:234px;
@@ -464,6 +463,7 @@ img{ border:none; margin:0; padding:0;}
     margin:0 auto;
     width:200px;
     }
+.clean,
 .test{
     display:block;
     margin:0 auto;
