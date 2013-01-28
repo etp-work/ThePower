@@ -13,6 +13,7 @@ import org.apache.commons.io.Charsets;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.codehaus.jackson.type.TypeReference;
+import org.etp.portalKit.common.service.DeployService;
 import org.etp.portalKit.common.service.PropertiesManager;
 import org.etp.portalKit.common.shell.CommandResult;
 import org.etp.portalKit.common.util.JSONUtils;
@@ -44,6 +45,9 @@ public class PowerBuildLogic {
 
     @Resource(name = "buildExecutor")
     private BuildExecutor executor;
+
+    @Resource(name = "deployService")
+    private DeployService deployService;
 
     private String COMMON_BUILD_LIST_BASE_JSON = "powerbuild/commonBuildList.json";
     private String ENVIRONMENT_DEPLOY_JSON = "powerbuild/deployInformation.json";
@@ -165,7 +169,7 @@ public class PowerBuildLogic {
         BuildResult result = build(null, path);
         if (!result.isSuccess())
             return result;
-        boolean deployed = executor.deploy(absPath, deployPath);
+        boolean deployed = deployService.deployFromFolder(absPath, deployPath);
         result.setDeployed(deployed);
         return result;
     }
@@ -201,7 +205,7 @@ public class PowerBuildLogic {
                 deploySet.add(new File(basePath, fw.get("relativePath")).getAbsolutePath());
             }
         }
-        deployed = executor.deploy(deploySet, deployPath);
+        deployed = deployService.deployListFromFolder(deploySet, deployPath);
         result.setDeployed(deployed);
         return result;
     }

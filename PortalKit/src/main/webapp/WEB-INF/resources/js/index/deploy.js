@@ -59,7 +59,7 @@
             if(!PackageCheckedResult){
                 return;
             }
-            if(!PackageCheckedResult.allGzFiles || PackageCheckedResult.allGzFiles.length === 0){
+            if(!PackageCheckedResult.allGzFiles){
                 ViewManager.simpleWarning("Download path is invalid.");
                 return;
             }
@@ -70,7 +70,13 @@
             portals["referencePortal"] = PackageCheckedResult.referencePortal;
             portals["multiscreenPortal"] = PackageCheckedResult.multiscreenPortal;
             checkChoose();
-        },function(error){ViewManager.simpleError(error.message);});
+        },function(error){
+            var scope = angular.element($('#deploy-content .deployList')).scope();
+            scope.$apply(function(){
+                scope.allGzFiles = [];
+            });
+            ViewManager.simpleError(error.message);
+         });
     }
     
     function deployViewOnShow(){

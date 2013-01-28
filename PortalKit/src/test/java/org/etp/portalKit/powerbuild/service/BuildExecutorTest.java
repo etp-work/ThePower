@@ -31,14 +31,4 @@ public class BuildExecutorTest {
         assertTrue(compile.isSuccess());
         assertEquals(0, compile.getStateCode());
     }
-
-    /**
-     * test deploy
-     */
-    @Test
-    public void testDeploy() {
-        boolean isSucc = executor.deploy("E:\\Study\\GitHub\\workstation\\PortalKit",
-                "E:\\Study\\apache-tomcat-7.0.33\\webapps");
-        assertTrue(isSucc);
-    }
 }

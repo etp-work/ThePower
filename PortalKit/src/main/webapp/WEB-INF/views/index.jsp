@@ -44,24 +44,6 @@
 <!--========================= FOOT & NOTIFICATION ========================================================-->
 
     <div class="foot">
-            <div class="notification error">
-                <a href="#" class="close"><img src="resources/images/icons/cross_grey_small.png" title="Close this notification" alt="close" /></a>
-                <span>
-                    Error notification. 
-                </span>
-            </div>
-            <div class="notification information">
-                <a href="#" class="close"><img src="resources/images/icons/cross_grey_small.png" title="Close this notification" alt="close" /></a>
-                <span class="message">
-                    Lorem ipsum dolor sit amet.
-                </span>
-            </div>
-            <div class="notification success">
-                <a href="#" class="close"><img src="resources/images/icons/cross_grey_small.png" title="Close this notification" alt="close" /></a>
-                <span>
-                    Success notification. 
-                </span>
-            </div>
     </div>
 
 

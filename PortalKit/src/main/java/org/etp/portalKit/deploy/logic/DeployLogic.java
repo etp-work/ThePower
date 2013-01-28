@@ -46,7 +46,6 @@ public class DeployLogic {
             throw new RuntimeException("downloadPath could not be null.");
         DownloadedPath path = new DownloadedPath();
         path.setDownloadedPath(cmd.getDownloadPath());
-        prop.fromBean(path);
         PackageCheckedResult pcr = new PackageCheckedResult();
         File[] allDeployedPkgs = packageCheck.retrieveDeployedPkgs(cmd.getDownloadPath());
         List<String> list = new ArrayList<String>();
@@ -65,6 +64,7 @@ public class DeployLogic {
         }
         pcr.setMultiscreenPortal(multis);
         pcr.setReferencePortal(refs);
+        prop.fromBean(path);
         return pcr;
     }
 
