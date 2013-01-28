@@ -31,9 +31,10 @@ public class CompressUtil {
      * 
      * @param filePath
      * @param destPath
+     * @return unGziped file
      * @throws IOException
      */
-    public static void unGzip(String filePath, String destPath) throws IOException {
+    public static File unGzip(String filePath, String destPath) throws IOException {
         if (StringUtils.isBlank(filePath))
             throw new NullPointerException("The file you want to ungzip should not be null or empty.");
         File file = new File(filePath);
@@ -44,7 +45,8 @@ public class CompressUtil {
         File dest = new File(destPath);
         if (!dest.isDirectory())
             throw new FileNotFoundException("The destination you want to ungzip should be a exist directory.");
-        File destFile = new File(dest, new File(GzipUtils.getUncompressedFilename(filePath)).getName());
+        File ungzipedFile = new File(GzipUtils.getUncompressedFilename(filePath));
+        File destFile = new File(dest, ungzipedFile.getName());
         InputStream is = null;
         OutputStream os = null;
         try {
@@ -55,7 +57,7 @@ public class CompressUtil {
             IOUtils.closeQuietly(is);
             IOUtils.closeQuietly(os);
         }
-
+        return ungzipedFile;
     }
 
     /**
@@ -63,15 +65,16 @@ public class CompressUtil {
      * Note: the original gzip file won't be deleted.
      * 
      * @param filePath absolute path of gzip file.
+     * @return unGziped file.
      * @throws IOException
      */
-    public static void unGzip(String filePath) throws IOException {
+    public static File unGzip(String filePath) throws IOException {
         if (StringUtils.isBlank(filePath))
             throw new NullPointerException("The file you want to ungzip should not be null or empty.");
         File file = new File(filePath);
         if (!file.isFile())
             throw new FileNotFoundException("The file you want to ungzip should be a real file.");
-        unGzip(filePath, file.getParent());
+        return unGzip(filePath, file.getParent());
     }
 
     /**
@@ -79,15 +82,16 @@ public class CompressUtil {
      * Note: the original tar file won't be deleted.
      * 
      * @param filePath
+     * @return unTared file.
      * @throws IOException
      */
-    public static void unTar(String filePath) throws IOException {
+    public static File unTar(String filePath) throws IOException {
         if (StringUtils.isBlank(filePath))
             throw new NullPointerException("The file you want to untar should not be null or empty.");
         File file = new File(filePath);
         if (!file.isFile())
             throw new FileNotFoundException("The file you want to untar should be a real file.");
-        unTar(filePath, file.getParent());
+        return unTar(filePath, file.getParent());
     }
 
     /**
@@ -96,14 +100,17 @@ public class CompressUtil {
      * 
      * @param filePath
      * @param destDir
+     * @return unTared file.
      * @throws IOException
      */
-    public static void unTar(String filePath, String destDir) throws IOException {
+    public static File unTar(String filePath, String destDir) throws IOException {
         if (StringUtils.isBlank(filePath))
             throw new NullPointerException("The file you want to untar should not be null or empty.");
         File file = new File(filePath);
         if (!file.isFile())
             throw new FileNotFoundException("The file you want to untar should be a real file.");
+        File unTaredFile = new File(destDir, file.getAbsolutePath()
+                .substring(0, file.getAbsolutePath().indexOf("-bin")));
         TarArchiveInputStream is = null;
         try {
             is = new TarArchiveInputStream(new BufferedInputStream(new FileInputStream(filePath), BUFFER_SIZE));
@@ -140,6 +147,7 @@ public class CompressUtil {
         } finally {
             IOUtils.closeQuietly(is);
         }
+        return unTaredFile;
     }
 
     /**
@@ -147,12 +155,11 @@ public class CompressUtil {
      */
     public static void main(String[] args) {
         try {
-            long start = System.currentTimeMillis();
-            unGzip("C:\\Users\\ehaozuo\\Downloads\\testing\\portal-root-cxp-R4B02-bin.tar.gz","C:\\Users\\ehaozuo\\Downloads\\");
-            long end = System.currentTimeMillis();
-            System.out.println((end - start));
+            File file = unTar("C:\\Users\\ehaozuo\\Downloads\\deployedpackages\\portal-root-cxp-NO-VERSION-bin.tar");
+            System.out.println(file.getAbsolutePath());
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
     }
 }

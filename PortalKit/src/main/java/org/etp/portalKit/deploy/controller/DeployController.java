@@ -1,5 +1,8 @@
 package org.etp.portalKit.deploy.controller;
 
+import java.util.Collections;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.etp.portalKit.deploy.bean.request.CheckPackageCommand;
@@ -31,12 +34,22 @@ public class DeployController {
     }
 
     /**
-     * @param cmd { downloadPath: xxx, typeToDeploy: xxx }
+     * @param cmd { downloadPath: xxx }
      * @return next page
      */
     @RequestMapping(value = "/deploy/setCheckPackages.ajax", method = RequestMethod.POST)
     public @ResponseBody
     PackageCheckedResult setDownloadPathAndCheck(@RequestBody CheckPackageCommand cmd) {
         return logic.setPathAndRetrieveincludedPkgs(cmd);
+    }
+
+    /**
+     * @param cmd { downloadPath: xxx, typeToDeploy: xxx }
+     * @return next page
+     */
+    @RequestMapping(value = "/deploy/deploy.ajax", method = RequestMethod.POST)
+    public @ResponseBody
+    Map<String, String> deploy(@RequestBody CheckPackageCommand cmd) {
+        return Collections.emptyMap();
     }
 }

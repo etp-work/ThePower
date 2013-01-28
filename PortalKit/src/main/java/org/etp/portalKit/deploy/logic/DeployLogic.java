@@ -1,13 +1,17 @@
 package org.etp.portalKit.deploy.logic;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
+import org.etp.portalKit.common.service.DeployService;
 import org.etp.portalKit.common.service.PropertiesManager;
+import org.etp.portalKit.common.util.CompressUtil;
 import org.etp.portalKit.deploy.bean.DeployInfo4CI;
 import org.etp.portalKit.deploy.bean.PackageInfo4CI;
 import org.etp.portalKit.deploy.bean.request.CheckPackageCommand;
@@ -28,6 +32,9 @@ public class DeployLogic {
 
     @Resource(name = "propertiesManager")
     private PropertiesManager prop;
+
+    @Resource(name = "deployService")
+    private DeployService deployService;
 
     /**
      * Firstly, set the cmd.downloadPath to store file. And scan the
@@ -77,4 +84,44 @@ public class DeployLogic {
         return path;
     }
 
+    public boolean deployInType(CheckPackageCommand cmd) {
+        boolean isAllSuccess = true;
+        String downLoadPath = cmd.getDownloadPath();
+        String type2Deploy = cmd.getTypeToDeploy();
+        if (StringUtils.isBlank(downLoadPath))
+            throw new RuntimeException("downloadPath could not be empty or null.");
+        if (StringUtils.isBlank(type2Deploy))
+            throw new RuntimeException("typeToDeploy could not be empty or null.");
+
+        File[] allDeployedPkgs = packageCheck.retrieveDeployedPkgs(downLoadPath);
+
+        for (File file : allDeployedPkgs) {
+            try {
+                File unGziped = CompressUtil.unGzip(file.getAbsolutePath());
+                if (!unGziped.isFile())
+                    throw new RuntimeException("UnGzip " + file.getName() + " error.");
+                File unTared = CompressUtil.unTar(unGziped.getAbsolutePath());
+                if (!unTared.isDirectory())
+                    throw new RuntimeException("UnTar " + unGziped.getName() + " error.");
+
+            } catch (IOException e) {
+                throw new RuntimeException("UnPack " + file.getName() + " error.");
+            }
+        }
+        DeployInfo4CI relation = packageCheck.retrieveRelationShip();
+        List<PackageInfo4CI> portals = null;
+        if ("referencePortal".equals(type2Deploy)) {
+            portals = relation.getReferencePortal();
+        } else if ("multiscreenPortal".equals(type2Deploy)) {
+            portals = relation.getMultiscreenPortal();
+        }
+        if (portals == null)
+            throw new RuntimeException("Read relationship from deployInfo4CI.json error.");
+        
+        for (PackageInfo4CI packageInfo4CI : portals) {
+            packageInfo4CI.getPackageName();
+        }
+
+        return isAllSuccess;
+    }
 }
