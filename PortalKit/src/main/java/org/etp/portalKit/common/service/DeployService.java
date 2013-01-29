@@ -63,7 +63,7 @@ public class DeployService {
         if (StringUtils.isBlank(dest))
             throw new NullPointerException("Specified dest path could not be empty or null.");
         File war = new File(warFile);
-        if (!war.isFile() || !war.exists())
+        if (!war.isFile())
             throw new RuntimeException("Specified warFile is invalid.");
         File destDir = new File(dest);
         try {

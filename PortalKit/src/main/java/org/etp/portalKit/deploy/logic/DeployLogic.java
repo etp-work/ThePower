@@ -145,8 +145,9 @@ public class DeployLogic {
                 continue;
             File folder = CIFileUtils.FolderFinder(downLoadPath, packageInfo4CI.getPackageName());
             for (String warFile : packageInfo4CI.getWarfiles()) {
-                File war = new File(folder, packageInfo4CI.getRelativePath() + warFile);
-                isAllSuccess = deployService.deployFromFile(war.getAbsolutePath(), deployPath);
+                File base = new File(folder, packageInfo4CI.getRelativePath());
+                File foundFile = CIFileUtils.FileFinder(base.getAbsolutePath(), warFile,".war");
+                isAllSuccess = deployService.deployFromFile(foundFile.getAbsolutePath(), deployPath);
             }
         }
 

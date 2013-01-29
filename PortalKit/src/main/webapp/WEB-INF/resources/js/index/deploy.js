@@ -134,12 +134,12 @@
             return false;
         }
         
-        DynamicLoad.loadJSON(deployUrl, {
+        DynamicLoad.postJSON(deployUrl, {
             downloadPath: downloadedPath,
             typeToDeploy: choosedElement.val(),
             deployPackages: checkedList
         }, function(data){
-            
+            ViewManager.simpleSuccess("Please choose one type for deploy.");
         });
     });
     

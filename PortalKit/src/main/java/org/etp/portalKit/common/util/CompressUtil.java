@@ -109,8 +109,7 @@ public class CompressUtil {
         File file = new File(filePath);
         if (!file.isFile())
             throw new FileNotFoundException("The file you want to untar should be a real file.");
-        File unTaredFile = new File(destDir, file.getAbsolutePath()
-                .substring(0, file.getAbsolutePath().indexOf("-bin")));
+        File unTaredFile = new File(destDir, file.getName().substring(0, file.getName().indexOf("-bin.tar")));
         TarArchiveInputStream is = null;
         try {
             is = new TarArchiveInputStream(new BufferedInputStream(new FileInputStream(filePath), BUFFER_SIZE));
@@ -160,6 +159,6 @@ public class CompressUtil {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
+
     }
 }
