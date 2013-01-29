@@ -1,5 +1,7 @@
 package org.etp.portalKit.deploy.bean.request;
 
+import java.util.List;
+
 /**
  * The class hold the data convertion from http request for checking
  * package.
@@ -7,6 +9,21 @@ package org.etp.portalKit.deploy.bean.request;
 public class CheckPackageCommand {
     private String downloadPath;
     private String typeToDeploy;
+    private List<String> deployPackages;
+
+    /**
+     * @return Returns the deployPackages.
+     */
+    public List<String> getDeployPackages() {
+        return deployPackages;
+    }
+
+    /**
+     * @param deployPackages The deployPackages to set.
+     */
+    public void setDeployPackages(List<String> deployPackages) {
+        this.deployPackages = deployPackages;
+    }
 
     /**
      * @return Returns the downloadPath.

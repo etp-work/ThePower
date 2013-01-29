@@ -9,6 +9,7 @@
     var viewId = "deploy-content";
     var getDownloadedPathUrl = "/deploy/getDownLoadedPath.ajax";
     var setDownloadedPathUrl = "/deploy/setCheckPackages.ajax";
+    var deployUrl = "/deploy/deploy.ajax";
     var downloadedPath = undefined;
     var checkedList = [];
     var portals = {};
@@ -132,7 +133,14 @@
             ViewManager.simpleWarning("Please choose one type for deploy.");
             return false;
         }
-        //TODO
+        
+        DynamicLoad.loadJSON(deployUrl, {
+            downloadPath: downloadedPath,
+            typeToDeploy: choosedElement.val(),
+            deployPackages: checkedList
+        }, function(data){
+            
+        });
     });
     
 }(window));

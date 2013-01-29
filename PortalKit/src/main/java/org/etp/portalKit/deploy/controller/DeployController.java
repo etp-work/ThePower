@@ -1,6 +1,6 @@
 package org.etp.portalKit.deploy.controller;
 
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -50,6 +50,9 @@ public class DeployController {
     @RequestMapping(value = "/deploy/deploy.ajax", method = RequestMethod.POST)
     public @ResponseBody
     Map<String, String> deploy(@RequestBody CheckPackageCommand cmd) {
-        return Collections.emptyMap();
+        boolean isAllDeployed = logic.deployInType(cmd);
+        Map<String, String> result = new HashMap<String, String>();
+        result.put("isAllDeployed", isAllDeployed + "");
+        return result;
     }
 }

@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.etp.portalKit.common.service.DeployService;
 import org.etp.portalKit.common.service.PropertiesManager;
@@ -17,8 +16,11 @@ import org.etp.portalKit.deploy.bean.PackageInfo4CI;
 import org.etp.portalKit.deploy.bean.request.CheckPackageCommand;
 import org.etp.portalKit.deploy.bean.response.DownloadedPath;
 import org.etp.portalKit.deploy.bean.response.PackageCheckedResult;
+import org.etp.portalKit.deploy.service.CIFileUtils;
 import org.etp.portalKit.deploy.service.PackagesCheckService;
+import org.etp.portalKit.setting.bean.Settings;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 /**
  * The purpose of this class is to provide a bussiness logic adapter
@@ -75,6 +77,13 @@ public class DeployLogic {
         return pcr;
     }
 
+    private String checkDeployPath() {
+        String deployPath = prop.get(Settings.TOMCAT_WEBAPPS_PATH);
+        if (StringUtils.isBlank(deployPath))
+            throw new RuntimeException("You haven't deploy path setted.");
+        return deployPath;
+    }
+
     /**
      * @return downloadPath from store file or cache.
      */
@@ -84,18 +93,32 @@ public class DeployLogic {
         return path;
     }
 
+    private boolean containsPackage(String packageName, List<String> packages) {
+        for (String string : packages) {
+            if (string.indexOf(packageName) > -1)
+                return true;
+        }
+        return false;
+    }
+
     public boolean deployInType(CheckPackageCommand cmd) {
         boolean isAllSuccess = true;
         String downLoadPath = cmd.getDownloadPath();
         String type2Deploy = cmd.getTypeToDeploy();
+        List<String> packages = cmd.getDeployPackages();
+        String deployPath = checkDeployPath();
         if (StringUtils.isBlank(downLoadPath))
             throw new RuntimeException("downloadPath could not be empty or null.");
         if (StringUtils.isBlank(type2Deploy))
             throw new RuntimeException("typeToDeploy could not be empty or null.");
+        if (CollectionUtils.isEmpty(packages))
+            throw new RuntimeException("packages could not be empty or null.");
 
         File[] allDeployedPkgs = packageCheck.retrieveDeployedPkgs(downLoadPath);
 
         for (File file : allDeployedPkgs) {
+            if (!containsPackage(file.getName(), packages))
+                continue;
             try {
                 File unGziped = CompressUtil.unGzip(file.getAbsolutePath());
                 if (!unGziped.isFile())
@@ -117,9 +140,14 @@ public class DeployLogic {
         }
         if (portals == null)
             throw new RuntimeException("Read relationship from deployInfo4CI.json error.");
-        
         for (PackageInfo4CI packageInfo4CI : portals) {
-            packageInfo4CI.getPackageName();
+            if (!containsPackage(packageInfo4CI.getPackageName(), packages))
+                continue;
+            File folder = CIFileUtils.FolderFinder(downLoadPath, packageInfo4CI.getPackageName());
+            for (String warFile : packageInfo4CI.getWarfiles()) {
+                File war = new File(folder, packageInfo4CI.getRelativePath() + warFile);
+                isAllSuccess = deployService.deployFromFile(war.getAbsolutePath(), deployPath);
+            }
         }
 
         return isAllSuccess;

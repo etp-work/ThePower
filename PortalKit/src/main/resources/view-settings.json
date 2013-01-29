@@ -18,6 +18,12 @@
         templateUrl: "resources/templates/index-views/clean-content.html",
         defaultView: false
     },{
+        viewId: "test-content",
+        viewName: "Test",
+        js: "resources/js/index/test.js",
+        templateUrl: "resources/templates/index-views/test-content.html",
+        defaultView: false
+    },{
     	viewId: "setting-content",
     	viewName: "Set",
     	js: "resources/js/index/setting.js",
