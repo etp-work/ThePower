@@ -101,6 +101,17 @@ public class DeployLogic {
         return false;
     }
 
+    /**
+     * Find specified .gz files under specified downloaded path,
+     * firstly, unpack them. And scan the unpacked folders, find all
+     * the needed war files and deploy them to tomcat.
+     * 
+     * @param cmd
+     *        cmd.downloadPath folder path that .gz files located.
+     *        cmd.typeToDeploy type that you want to deploy the set of.
+     *        cmd.deployPackages .gz file names that used to unpack and deploy.
+     * @return is all war files deployed successful.
+     */
     public boolean deployInType(CheckPackageCommand cmd) {
         boolean isAllSuccess = true;
         String downLoadPath = cmd.getDownloadPath();
@@ -146,7 +157,7 @@ public class DeployLogic {
             File folder = CIFileUtils.FolderFinder(downLoadPath, packageInfo4CI.getPackageName());
             for (String warFile : packageInfo4CI.getWarfiles()) {
                 File base = new File(folder, packageInfo4CI.getRelativePath());
-                File foundFile = CIFileUtils.FileFinder(base.getAbsolutePath(), warFile,".war");
+                File foundFile = CIFileUtils.FileFinder(base.getAbsolutePath(), warFile, ".war");
                 isAllSuccess = deployService.deployFromFile(foundFile.getAbsolutePath(), deployPath);
             }
         }

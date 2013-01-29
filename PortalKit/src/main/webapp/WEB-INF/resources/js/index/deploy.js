@@ -139,7 +139,9 @@
             typeToDeploy: choosedElement.val(),
             deployPackages: checkedList
         }, function(data){
-            ViewManager.simpleSuccess("Please choose one type for deploy.");
+            ViewManager.simpleSuccess("Deployed successfully.");
+        },function(error){
+            ViewManager.simpleError("Deployed error : "+error.message);
         });
     });
     
