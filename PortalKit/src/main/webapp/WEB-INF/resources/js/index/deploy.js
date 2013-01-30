@@ -12,6 +12,7 @@
     var deployUrl = "/deploy/deploy.ajax";
     var downloadedPath = undefined;
     var checkedList = [];
+    var allfiles = [];
     var portals = {};
     
 //=========================================functions========================================
@@ -68,8 +69,13 @@
             scope.$apply(function(){
                 scope.allGzFiles = PackageCheckedResult.allGzFiles;
             });
+            allfiles = PackageCheckedResult.allGzFiles;
             portals["referencePortal"] = PackageCheckedResult.referencePortal;
             portals["multiscreenPortal"] = PackageCheckedResult.multiscreenPortal;
+            if(PackageCheckedResult.allGzFiles.length > 0){
+                $('#deploy-content #deploy4CI').attr("disabled", false);
+                $('#deploy-content .table-wrapper .war-list-wrapper input').attr("disabled", false);
+            }
             checkChoose();
         },function(error){
             var scope = angular.element($('#deploy-content .deployList')).scope();
@@ -86,7 +92,12 @@
                 if(data && data.downloadedPath){
                     downloadedPath = data.downloadedPath;
                     $('#deploy-content #downloadedPath').val(downloadedPath);
+                    $('#deploy-content #checkDeployPathButton').attr("disabled", false);
+                }else{
+                    $('#deploy-content #checkDeployPathButton').attr("disabled", true);
                 }
+                $('#deploy-content #deploy4CI').attr("disabled", true);
+                $('#deploy-content .table-wrapper .war-list-wrapper input').attr("disabled", true);
             });
         }
     }
@@ -103,6 +114,7 @@
             return false;
         }
         downloadedPath = path;
+        $('#deploy-content #checkDeployPathButton').attr("disabled", true);
         doCheck();
     });
     
@@ -120,7 +132,7 @@
             return false;
         }
         if(checkedList.length === 0){
-            ViewManager.simpleWarning("Please check the download path first.");
+            ViewManager.simpleWarning("Please choose one type to deploy.");
             return false;
         }
         var choosedElement = undefined;
@@ -130,7 +142,7 @@
             }
         });
         if(!choosedElement){
-            ViewManager.simpleWarning("Please choose one type for deploy.");
+            ViewManager.simpleWarning("Invalid type.");
             return false;
         }
         
@@ -140,9 +152,40 @@
             deployPackages: checkedList
         }, function(data){
             ViewManager.simpleSuccess("Deployed successfully.");
+            $('#deploy-content #deploy4CI').attr("disabled", true);
         },function(error){
             ViewManager.simpleError("Deployed error : "+error.message);
         });
+    });
+    
+    $('#deploy-content #downloadedPath').keyup(function(event){
+        console.log("value = "+$(this).val()+"||downloadedPath = "+downloadedPath+ "||allfiles = "+allfiles.length);
+        if(!$(this).val()){
+            $('#deploy-content #checkDeployPathButton').attr("disabled", true);
+            $('#deploy-content #deploy4CI').attr("disabled", true);
+            $('#deploy-content .table-wrapper .war-list-wrapper input').attr("disabled", true);
+        }else if($(this).val() === downloadedPath && allfiles.length > 0){
+            $('#deploy-content #checkDeployPathButton').attr("disabled", true);
+            $('#deploy-content #deploy4CI').attr("disabled", false);
+            $('#deploy-content .table-wrapper .war-list-wrapper input').attr("disabled", false);
+        }else if($(this).val() === downloadedPath && allfiles.length === 0){
+            $('#deploy-content #checkDeployPathButton').attr("disabled", false);
+            $('#deploy-content #deploy4CI').attr("disabled", true);
+            $('#deploy-content .table-wrapper .war-list-wrapper input').attr("disabled", true);
+        }else if($(this).val() !== downloadedPath && allfiles.length > 0){
+            var scope = angular.element($('#deploy-content .deployList')).scope();
+            scope.$apply(function(){
+                scope.allGzFiles = [];
+            });
+            allfiles = [];
+            $('#deploy-content #checkDeployPathButton').attr("disabled", false);
+            $('#deploy-content #deploy4CI').attr("disabled", true);
+            $('#deploy-content .table-wrapper .war-list-wrapper input').attr("disabled", true);
+        }else if($(this).val() !== downloadedPath && allfiles.length === 0){
+            $('#deploy-content #checkDeployPathButton').attr("disabled", false);
+            $('#deploy-content #deploy4CI').attr("disabled", true);
+            $('#deploy-content .table-wrapper .war-list-wrapper input').attr("disabled", true);
+        }
     });
     
 }(window));
