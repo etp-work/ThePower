@@ -112,6 +112,19 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="images\ipad.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\iphone.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\TV-HTML.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\TV-HTML_small.png" />
+    <Content Include="images\TV-SVG.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="lib\geckofx-core-16.dll" />
     <Content Include="lib\Geckofx-Winforms-16.dll" />
   </ItemGroup>

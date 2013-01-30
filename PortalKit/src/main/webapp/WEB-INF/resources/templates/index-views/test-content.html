@@ -1,37 +1,39 @@
-             <div class="content-box" id="test-content">
-                    
-                    <span class="tdName">Test Type</span>
-                    <div class="war-input">
-                        <select class="testType">
-                            <option>Ipad</option>
-                            <option>Iphone</option>
-                            <option>Html</option>
-                            <option>SVG</option>
-                        </select>
+<div class="content-box" id="test-content">
+    <span class="tdName">Test Type</span>
+    <div class="war-input">
+        <select id="portal" class="testType">
+            <option value="">Please select ...</option>
+            <option value="STB-HTML">STB-HTML</option>
+            <option value="STB-SVG">STB-SVG</option>
+            <option value="PC">PC</option>
+            <option value="iPad">iPad</option>
+            <option value="iPhone">iPhone</option>
+        </select>
+    </div>
+    <span class="tdName">User Story List</span>
+    <div class="test-feature-content">
+        <div class="us-list">
+            <ul class="group" ng-repeat="device in devices">
+                <label class="category">
+                    <div class="lightpoint">
+                        <input type="checkbox" class="parentB" value="{{device.deviceName}}" ng-checked="true" /><label></label>
                     </div>
-                    <span class="tdName">User Story List</span>
-                    <div class="test-feature-content">
-                        <div class="us-list">
-                        
-                            <ul class="group"><label class="category"><div class="lightpoint"><input name="" type="checkbox" value="" /><label></label></div>Plug-in</label>
-                                  <li>
-                                      <div class="lightpoint"><input name="" type="checkbox"><label></label></div>
-                                      list 01
-                                      <div class="status s-success"><img src="resources/images/loading.gif"/></div>
-                                  </li>
-                                  <li>
-                                      <div class="lightpoint"><input name="" type="checkbox"><label></label></div>
-                                      list 02
-                                      <div class="status s-working"><img src="resources/images/loading.gif"/></div>
-                                  </li>
-                            </ul>
-                        
-                        </div>
-                        
-                        <div class="clear"></div>
+                    <span>{{device.deviceName}}</span>
+                </label>
+                <li ng-repeat="testcase in device.results">
+                    <div class="lightpoint">
+                        <input type="checkbox" class="childB" ng-checked="testcase.skipped" value="{{testcase.testCaseName}}" /><label></label>
                     </div>
-                    
-                    <div class="main-button-area">
-                        <input class="primary-button test" type="button" value="Test"/>
+                    <span>{{testcase.testCaseName}}</span>
+                    <div class="status">
+                        <img src="resources/images/loading.gif" />
                     </div>
-             </div>
+                </li>
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="main-button-area">
+        <input class="primary-button test" type="button" value="Test"/>
+    </div>
+</div>

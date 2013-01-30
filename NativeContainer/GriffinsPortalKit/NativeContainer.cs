@@ -82,7 +82,7 @@ namespace GriffinsPortalKit
             if (message.StartsWith("STARTPORTAL:"))
             {
                 message = message.Replace("STARTPORTAL:", "");
-                Browser portal = new Browser(message, 720, 596);
+                Browser portal = new Browser(message, "STB-HTML");
                 portal.Visible = true;
             }
             else if (message.StartsWith("EXECMD:"))

@@ -35,9 +35,9 @@
             // 
             this.geckoWebBrowser1.DisableWmImeSetContext = false;
             this.geckoWebBrowser1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.geckoWebBrowser1.Location = new System.Drawing.Point(0, 0);
+            this.geckoWebBrowser1.Location = new System.Drawing.Point(23, 30);
             this.geckoWebBrowser1.Name = "geckoWebBrowser1";
-            this.geckoWebBrowser1.Size = new System.Drawing.Size(284, 262);
+            this.geckoWebBrowser1.Size = new System.Drawing.Size(576, 460);
             this.geckoWebBrowser1.TabIndex = 0;
             this.geckoWebBrowser1.UseHttpActivityObserver = false;
             // 
@@ -45,10 +45,18 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 262);
+            this.BackColor = System.Drawing.Color.DarkGray;
+            this.BackgroundImage = global::GriffinsPortalKit.Properties.Resources.TV_HTML_small;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ClientSize = new System.Drawing.Size(622, 678);
             this.Controls.Add(this.geckoWebBrowser1);
+            this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Browser";
+            this.Padding = new System.Windows.Forms.Padding(23, 30, 23, 188);
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Browser";
+            this.TransparencyKey = System.Drawing.Color.DarkGray;
             this.Load += new System.EventHandler(this.Browser_Load);
             this.ResumeLayout(false);
 

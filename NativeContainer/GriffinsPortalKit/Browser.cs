@@ -12,22 +12,19 @@ namespace GriffinsPortalKit
     public partial class Browser : Form
     {
         private string m_Url;
-        private int m_Width;
-        private int m_Height;
+        private string m_Type;
 
-        public Browser(string url, int width, int height)
+        public Browser(string url, string type)
         {
             this.m_Url = url;
-            this.m_Width = width;
-            this.m_Height = height;
+            this.m_Type = type;
             InitializeComponent();
         }
 
         private void Browser_Load(object sender, EventArgs e)
         {
-            this.Width = this.m_Width;
-            this.Height = this.m_Height;
             this.geckoWebBrowser1.Navigate(this.m_Url);
+            this.geckoWebBrowser1.GetMarkupDocumentViewer().SetFullZoomAttribute(0.8f);
         }
     }
 }
