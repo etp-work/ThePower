@@ -11,12 +11,12 @@ import org.apache.commons.lang.StringUtils;
 import org.etp.portalKit.common.service.DeployService;
 import org.etp.portalKit.common.service.PropertiesManager;
 import org.etp.portalKit.common.util.CompressUtil;
+import org.etp.portalKit.common.util.FileUtils;
 import org.etp.portalKit.deploy.bean.DeployInfo4CI;
 import org.etp.portalKit.deploy.bean.PackageInfo4CI;
 import org.etp.portalKit.deploy.bean.request.CheckPackageCommand;
 import org.etp.portalKit.deploy.bean.response.DownloadedPath;
 import org.etp.portalKit.deploy.bean.response.PackageCheckedResult;
-import org.etp.portalKit.deploy.service.CIFileUtils;
 import org.etp.portalKit.deploy.service.PackagesCheckService;
 import org.etp.portalKit.setting.bean.Settings;
 import org.springframework.stereotype.Component;
@@ -106,10 +106,10 @@ public class DeployLogic {
      * firstly, unpack them. And scan the unpacked folders, find all
      * the needed war files and deploy them to tomcat.
      * 
-     * @param cmd
-     *        cmd.downloadPath folder path that .gz files located.
-     *        cmd.typeToDeploy type that you want to deploy the set of.
-     *        cmd.deployPackages .gz file names that used to unpack and deploy.
+     * @param cmd cmd.downloadPath folder path that .gz files located.
+     *            cmd.typeToDeploy type that you want to deploy the
+     *            set of. cmd.deployPackages .gz file names that used
+     *            to unpack and deploy.
      * @return is all war files deployed successful.
      */
     public boolean deployInType(CheckPackageCommand cmd) {
@@ -154,10 +154,10 @@ public class DeployLogic {
         for (PackageInfo4CI packageInfo4CI : portals) {
             if (!containsPackage(packageInfo4CI.getPackageName(), packages))
                 continue;
-            File folder = CIFileUtils.FolderFinder(downLoadPath, packageInfo4CI.getPackageName());
+            File folder = FileUtils.FolderFinder(downLoadPath, packageInfo4CI.getPackageName())[0];
             for (String warFile : packageInfo4CI.getWarfiles()) {
                 File base = new File(folder, packageInfo4CI.getRelativePath());
-                File foundFile = CIFileUtils.FileFinder(base.getAbsolutePath(), warFile, ".war");
+                File foundFile = FileUtils.FileFinder(base.getAbsolutePath(), warFile, ".war")[0];
                 isAllSuccess = deployService.deployFromFile(foundFile.getAbsolutePath(), deployPath);
             }
         }

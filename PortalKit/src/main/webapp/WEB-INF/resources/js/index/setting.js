@@ -6,6 +6,7 @@
     'use strict';
 
 //=========================================variable=====================================
+    var getSettingsUrl = "/settings/getAll.ajax";
     var ptPath = undefined;
     var twPath = undefined;
 //=========================================functions=====================================
@@ -35,8 +36,7 @@
             return;
         }
         
-        var url = "/settings/getAll.ajax";
-        DynamicLoad.loadJSON(url, undefined, function(data){
+        DynamicLoad.loadJSON(getSettingsUrl, undefined, function(data){
             if(data){
                 var scope = angular.element($('#setting-content')).scope();
                 scope.$apply(function(){

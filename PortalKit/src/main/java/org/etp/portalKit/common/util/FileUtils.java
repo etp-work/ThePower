@@ -1,19 +1,15 @@
-package org.etp.portalKit.deploy.service;
+package org.etp.portalKit.common.util;
 
 import java.io.File;
 import java.io.FileFilter;
 
-import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 
 /**
  * The purpose of this class is to provide some APIs to help to get
- * File related stuff from downloaded CI packages folder.
+ * File related stuff from specified folder.
  */
-public class CIFileUtils {
-
-    private static CustomizedFolderFilter folderFilter = new CustomizedFolderFilter();
-    private static CustomizedFileFilder fileFilter = new CustomizedFileFilder();
+public class FileUtils {
 
     /**
      * Given a baseFoler path, find all the child folder with
@@ -23,7 +19,7 @@ public class CIFileUtils {
      * @param folderPrefix
      * @return find folder
      */
-    public static File FolderFinder(String baseFolder, String folderPrefix) {
+    public static File[] FolderFinder(String baseFolder, String folderPrefix) {
         if (StringUtils.isBlank(baseFolder))
             throw new NullPointerException("baseFolder could not be empty or null.");
         if (StringUtils.isBlank(folderPrefix))
@@ -31,11 +27,10 @@ public class CIFileUtils {
         File baseFile = new File(baseFolder);
         if (!baseFile.isDirectory())
             throw new RuntimeException("baseFolder is invalid folder path.");
+        CustomizedFolderFilter folderFilter = new CustomizedFolderFilter();
         folderFilter.folderPrefix = folderPrefix;
         File[] finds = baseFile.listFiles(folderFilter);
-        if (ArrayUtils.isEmpty(finds))
-            throw new RuntimeException("Could not find any folder with specified folder prefix.");
-        return finds[0];
+        return finds;
     }
 
     /**
@@ -47,7 +42,7 @@ public class CIFileUtils {
      * @param fileSuffix
      * @return find file
      */
-    public static File FileFinder(String baseFolder, String filePrefix, String fileSuffix) {
+    public static File[] FileFinder(String baseFolder, String filePrefix, String fileSuffix) {
         if (StringUtils.isBlank(baseFolder))
             throw new NullPointerException("baseFolder could not be empty or null.");
         if (StringUtils.isBlank(filePrefix))
@@ -55,14 +50,11 @@ public class CIFileUtils {
         File baseFile = new File(baseFolder);
         if (!baseFile.isDirectory())
             throw new RuntimeException("baseFolder is invalid folder path.");
-
+        CustomizedFileFilder fileFilter = new CustomizedFileFilder();
         fileFilter.filePrefix = filePrefix;
         fileFilter.fileSuffix = fileSuffix;
         File[] finds = baseFile.listFiles(fileFilter);
-        if (ArrayUtils.isEmpty(finds))
-            throw new RuntimeException("Could not find any folder with specified file prefix.");
-
-        return finds[0];
+        return finds;
     }
 
     /**
