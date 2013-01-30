@@ -21,6 +21,7 @@ $(document).ready(function(){
     var shownViewId = undefined;
     var viewsInfo = undefined;
     
+    //remove a view from viewsInfo with specified viewId.
     function removeViewInfo(viewId){
         for(var i in viewsInfo){
             if(viewsInfo[i].viewId === viewId){
@@ -29,7 +30,8 @@ $(document).ready(function(){
             }
         }
     }
-    
+
+    //find the view from viewsInfo with specified viewId.
     function findViewInfo(viewId){
         if(viewsInfo.length === 0){
             return undefined;
@@ -43,6 +45,8 @@ $(document).ready(function(){
         //implicitly falsy
     }
     
+    //load a specified view for its html,js.
+    //callback will be executed after html and js are loaded successfully.
     function loadViewJS(view, callback){
         if(!view){
             return;
@@ -88,6 +92,7 @@ $(document).ready(function(){
         });
     }
   
+    //load viewSettings info, in order to append views dynamically.
     DynamicLoad.loadJSON(initUrl, undefined, viewsInfoLoad, function(error){ViewManager.simpleError(error.message);});
     
 
