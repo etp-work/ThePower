@@ -1,12 +1,15 @@
 package org.etp.portalKit.clean.logic;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
+import org.etp.portalKit.clean.bean.request.CleanCommand;
 import org.etp.portalKit.clean.bean.response.CleanItems;
 import org.etp.portalKit.common.service.PropertiesManager;
 import org.etp.portalKit.common.util.FileUtils;
@@ -68,5 +71,63 @@ public class CleanLogic {
         }
         items.setWarFiles(warFiles);
         return items;
+    }
+
+    /**
+     * Delete an item with its specified type and item name.
+     * 
+     * @param cmd cmd.cleanItem item name which will be used to delete
+     *            cmd.cleanType item type which will be used to delete
+     * @return true if delete successfully. Otherwise, false.
+     */
+    public boolean cleanItem(CleanCommand cmd) {
+        String userHome = System.getProperty("user.home");
+        String webappsHome = prop.get(Settings.TOMCAT_WEBAPPS_PATH);
+        if (StringUtils.isBlank(userHome))
+            throw new NullPointerException("user.home could not be null or empty.");
+        if (StringUtils.isBlank(webappsHome))
+            throw new NullPointerException("You haven't set tomcat's webapps path yet.");
+
+        String type = cmd.getCleanType();
+        String item = cmd.getCleanItem();
+        if (StringUtils.isBlank(type))
+            throw new NullPointerException("cleanType could not be null or empty.");
+        if (StringUtils.isBlank(item))
+            throw new NullPointerException("item could not be null or empty.");
+        boolean isDeleteSuc = true;
+        if ("widget".equals(type)) {
+            File cacheBase = new File(userHome, WIDGET_CACHE_RELATIVE_PATH);
+            File historyBase = new File(userHome, WIDGET_HISTORY_RELATIVE_PATH);
+            File[] caches = FileUtils.FolderFinder(cacheBase.getAbsolutePath(), item);
+            File[] historys = FileUtils.FolderFinder(historyBase.getAbsolutePath(), item);
+            if (ArrayUtils.isNotEmpty(caches)) {
+                try {
+                    org.apache.commons.io.FileUtils.forceDelete(caches[0]);
+                } catch (IOException e) {
+                    isDeleteSuc = false;
+                    e.printStackTrace();
+                }
+            }
+            if (ArrayUtils.isNotEmpty(historys)) {
+                try {
+                    org.apache.commons.io.FileUtils.forceDelete(historys[0]);
+                } catch (IOException e) {
+                    isDeleteSuc = false;
+                    e.printStackTrace();
+                }
+            }
+
+        } else if ("tomcat".equals(type)) {
+            File[] portalWars = FileUtils.FileFinder(webappsHome, item, ".war");
+            if (ArrayUtils.isNotEmpty(portalWars)) {
+                try {
+                    org.apache.commons.io.FileUtils.forceDelete(portalWars[0]);
+                } catch (IOException e) {
+                    isDeleteSuc = false;
+                    e.printStackTrace();
+                }
+            }
+        }
+        return isDeleteSuc;
     }
 }

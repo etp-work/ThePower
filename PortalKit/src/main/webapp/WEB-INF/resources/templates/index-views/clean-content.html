@@ -2,24 +2,20 @@
 	<span class="tdName">Clean List</span>
 
 	<div class="clean-list">
-		<ul class="group">
-			<label class="category"><div class="lightpoint">
-					<input name="" type="checkbox" value="" /><label></label>
-				</div>Wekgit</label>
+		<ul class="group Widget">
+			<label class="category">Widget</label>
 			<li ng-repeat="cache in widgetCaches"><div class="lightpoint">
-					<input name="" type="checkbox"><label></label>
+					<input name="" type="checkbox" value="{{cache}}"><label></label>
 				</div><span title="{{cache}}">{{cache}}</span>
 				<div class="status">
 					<img src="resources/images/loading.gif" />
 				</div></li>
 		</ul>
 
-		<ul class="group">
-			<label class="category"><div class="lightpoint">
-					<input name="" type="checkbox" value="" /><label></label>
-				</div>Tomcat</label>
+		<ul class="group Tomcat">
+			<label class="category">Tomcat</label>
 			<li ng-repeat="war in warFiles"><div class="lightpoint">
-					<input name="" type="checkbox"><label></label>
+					<input name="" type="checkbox" value="{{war}}"><label></label>
 				</div><span title="{{war}}">{{war}}</span>
 				<div class="status">
 					<img src="resources/images/loading.gif" />
@@ -29,7 +25,7 @@
 	</div>
 
 	<div class="main-button-area">
-		<input class="primary-button clean" type="button" value="Clean" />
+		<input id="cleanButton" class="primary-button clean" type="button" value="Clean" />
 	</div>
 
 
