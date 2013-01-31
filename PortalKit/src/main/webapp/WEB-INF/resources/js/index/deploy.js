@@ -141,6 +141,7 @@
         switch (status) {
             case Lifecycle.NORMAL:
                 isValueDirty();
+                $('#deploy-content #downloadedPath').attr("disabled", false);
                 break;
             case Lifecycle.IN_PROCESS:
             case Lifecycle.NO_CONFIGURATION:
@@ -148,6 +149,7 @@
                 $('#deploy-content #deploy4CI').attr("disabled", true);
                 $('#deploy-content .table-wrapper .war-list-wrapper input').attr("disabled", true);
                 $('#deploy-content .table-wrapper .war-list-wrapper input').attr("checked", false);
+                $('#deploy-content #downloadedPath').attr("disabled", true);
                 break;
             default:
                 break;
