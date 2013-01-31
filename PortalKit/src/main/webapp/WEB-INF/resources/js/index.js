@@ -87,7 +87,6 @@ $(document).ready(function(){
         loadViewJS(defaultView, function(){
 
             ViewManager.show("#" + defaultView.viewId);
-            $('.maincontent .content-wrapper').addClass("contentAnimation");
         
         });
     }
@@ -110,8 +109,8 @@ $(document).ready(function(){
                     ViewManager.hide(".maincontent .content-wrapper .content-box");
                     shownViewId = newId;
                     var callbackOnshow = function(){
-                        ViewManager.show("#" + shownViewId);
                         $('.maincontent .content-wrapper').addClass("contentAnimation");
+                        ViewManager.show("#" + shownViewId);
                     };
                     
                     var view = findViewInfo(shownViewId);

@@ -17,8 +17,6 @@
                 scope.warFiles = CleanItems.warFiles;
             });
             
-        }, function(error){
-            ViewManager.simpleError(error.message);
         });
     }
     

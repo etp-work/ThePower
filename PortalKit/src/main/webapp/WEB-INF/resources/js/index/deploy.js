@@ -102,9 +102,57 @@
         }
     }
     
+    function isValueDirty(){
+        if(!$(this).val()){
+            $('#deploy-content #checkDeployPathButton').attr("disabled", true);
+            $('#deploy-content #deploy4CI').attr("disabled", true);
+            $('#deploy-content .table-wrapper .war-list-wrapper input').attr("disabled", true);
+        }else if($(this).val() === downloadedPath && allfiles.length > 0){
+            $('#deploy-content #checkDeployPathButton').attr("disabled", true);
+            $('#deploy-content #deploy4CI').attr("disabled", false);
+            $('#deploy-content .table-wrapper .war-list-wrapper input').attr("disabled", false);
+        }else if($(this).val() === downloadedPath && allfiles.length === 0){
+            $('#deploy-content #checkDeployPathButton').attr("disabled", false);
+            $('#deploy-content #deploy4CI').attr("disabled", true);
+            $('#deploy-content .table-wrapper .war-list-wrapper input').attr("disabled", true);
+        }else if($(this).val() !== downloadedPath && allfiles.length > 0){
+            var scope = angular.element($('#deploy-content .deployList')).scope();
+            scope.$apply(function(){
+                scope.allGzFiles = [];
+            });
+            allfiles = [];
+            $('#deploy-content #checkDeployPathButton').attr("disabled", false);
+            $('#deploy-content #deploy4CI').attr("disabled", true);
+            $('#deploy-content .table-wrapper .war-list-wrapper input').attr("disabled", true);
+            $('#deploy-content .table-wrapper .war-list-wrapper input').attr("checked", false);
+        }else if($(this).val() !== downloadedPath && allfiles.length === 0){
+            $('#deploy-content #checkDeployPathButton').attr("disabled", false);
+            $('#deploy-content #deploy4CI').attr("disabled", true);
+            $('#deploy-content .table-wrapper .war-list-wrapper input').attr("disabled", true);
+        }
+    
+    }
+    
     
 //========================================init listener=====================================
     ViewManager.addViewListener("onShow", "#"+viewId, deployViewOnShow);
+    
+    Lifecycle.setCallback("build-content", function(status){
+        switch (status) {
+            case Lifecycle.NORMAL:
+                isValueDirty();
+                break;
+            case Lifecycle.BUILD_EXECUTING:
+            case Lifecycle.NO_CONFIGURATION:
+                $('#deploy-content #checkDeployPathButton').attr("disabled", true);
+                $('#deploy-content #deploy4CI').attr("disabled", true);
+                $('#deploy-content .table-wrapper .war-list-wrapper input').attr("disabled", true);
+                $('#deploy-content .table-wrapper .war-list-wrapper input').attr("checked", false);
+                break;
+            default:
+                break;
+        }
+    });
     
 //================================================event bind================================
     $('#deploy-content #checkDeployPathButton').click(function(event){
@@ -159,33 +207,7 @@
     });
     
     $('#deploy-content #downloadedPath').keyup(function(event){
-        console.log("value = "+$(this).val()+"||downloadedPath = "+downloadedPath+ "||allfiles = "+allfiles.length);
-        if(!$(this).val()){
-            $('#deploy-content #checkDeployPathButton').attr("disabled", true);
-            $('#deploy-content #deploy4CI').attr("disabled", true);
-            $('#deploy-content .table-wrapper .war-list-wrapper input').attr("disabled", true);
-        }else if($(this).val() === downloadedPath && allfiles.length > 0){
-            $('#deploy-content #checkDeployPathButton').attr("disabled", true);
-            $('#deploy-content #deploy4CI').attr("disabled", false);
-            $('#deploy-content .table-wrapper .war-list-wrapper input').attr("disabled", false);
-        }else if($(this).val() === downloadedPath && allfiles.length === 0){
-            $('#deploy-content #checkDeployPathButton').attr("disabled", false);
-            $('#deploy-content #deploy4CI').attr("disabled", true);
-            $('#deploy-content .table-wrapper .war-list-wrapper input').attr("disabled", true);
-        }else if($(this).val() !== downloadedPath && allfiles.length > 0){
-            var scope = angular.element($('#deploy-content .deployList')).scope();
-            scope.$apply(function(){
-                scope.allGzFiles = [];
-            });
-            allfiles = [];
-            $('#deploy-content #checkDeployPathButton').attr("disabled", false);
-            $('#deploy-content #deploy4CI').attr("disabled", true);
-            $('#deploy-content .table-wrapper .war-list-wrapper input').attr("disabled", true);
-        }else if($(this).val() !== downloadedPath && allfiles.length === 0){
-            $('#deploy-content #checkDeployPathButton').attr("disabled", false);
-            $('#deploy-content #deploy4CI').attr("disabled", true);
-            $('#deploy-content .table-wrapper .war-list-wrapper input').attr("disabled", true);
-        }
+        isValueDirty();
     });
     
 }(window));

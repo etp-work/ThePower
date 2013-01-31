@@ -79,7 +79,7 @@
         
         DynamicLoad.loadJSON(getTreesUrl, undefined, function(dirTrees){
             if(!dirTrees || dirTrees.length === 0){
-                Lifecycle.setState(Lifecycle.NO_CONFIGURATION);
+                Lifecycle.setState(viewId, Lifecycle.NO_CONFIGURATION);
                 return;
             }
             
