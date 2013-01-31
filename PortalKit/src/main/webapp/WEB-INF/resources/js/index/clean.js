@@ -11,11 +11,29 @@
 //=========================================functions========================================
     function cleanOnShowListener(){
         DynamicLoad.loadJSON(getCleanItemsUrl, undefined, function(CleanItems){
+            $('#clean-content .clean-list input').off("click");
+            
             var scope = angular.element($('.bulid-list')).scope();
             scope.$apply(function(){
-                scope.widgetCaches = CleanItems.widgetCaches;
-                scope.warFiles = CleanItems.warFiles;
+                if(CleanItems.widgetCaches){
+                    scope.widgetCaches = CleanItems.widgetCaches;
+                }
+                if(CleanItems.warFiles){
+                    scope.warFiles = CleanItems.warFiles;
+                }
             });
+            
+            if(CleanItems.widgetCaches || CleanItems.warFiles){
+                $('#clean-content .clean-list input').on("click", function(event){
+                    var isAllUnChecked = true;
+                    $('#clean-content .clean-list input').each(function(){
+                        if($(this).is(':checked')){
+                            isAllUnChecked = false;
+                        }
+                    });
+                    $('#clean-content #cleanButton').attr("disabled", isAllUnChecked);
+                });
+            }
             
         });
     }
@@ -93,7 +111,7 @@
     ViewManager.addViewListener("onShow", "#clean-content", cleanOnShowListener); //add listener to monitor what will happen when settings-content shown.
 //================================================event bind================================
     $('#clean-content #cleanButton').click(function(event){
-        
         removeSelection();
     });
+    
 }(window));

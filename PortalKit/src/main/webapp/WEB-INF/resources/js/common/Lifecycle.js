@@ -20,9 +20,9 @@
     _lifecycle.NEWCONFIG = "NEWCONFIG";
     
     /**
-     * This status means build-content view is doing package compiling.
+     * This status means there is something are working, any view need care about this status should addStateListener to do things that need to do.
      */
-    _lifecycle.BUILD_EXECUTING = "BUILD_EXECUTING";
+    _lifecycle.IN_PROCESS = "IN_PROCESS";
     /**
      * This status means there is no configuration setted yet. much of functionalites should not be used.
      */
@@ -30,18 +30,12 @@
     
     /**
      * state = {
-     *       build-content: {
-     *             state: "LOADED",
+     *             status: "LOADED", 
      *             callback: [function(){}, function(){}]
-     *       },
-     *       deploy-content: {
-     *             state: "NORMAL",
-     *             callback: [function(){}, function(){}]
-     *       }
      * };
      * 
      */
-    var state = {};
+    var stateObject = {};
     
     /**
      * modules = [
@@ -75,13 +69,10 @@
     
     
     
-    _lifecycle.setState = function(viewId, status){
-        if(!state[viewId]){
-            state[viewId] = {};
-        }
-        state[viewId].state = status;
+    _lifecycle.setState = function(status){
+        stateObject.status = status;
         
-        var calls = state[viewId].callback;
+        var calls = stateObject.callback;
         if(!calls){
             return;
         }
@@ -89,31 +80,36 @@
         for(var i in calls){
             calls[i](status);
         }
-        
     };
     
     
-    _lifecycle.getState = function(viewId){
-        if(!state[viewId]){
-            state[viewId] = {};
-            state[viewId].state = Lifecycle.LOADED;
+    _lifecycle.getState = function(){
+        if(!stateObject.status){
+            stateObject.status = Lifecycle.LOADED;
         }
-        if(!state[viewId].state){
-            state[viewId].state = Lifecycle.LOADED;
+        return stateObject.status;
+    };
+    
+    _lifecycle.removeStateListener = function(callback){
+        if(!stateObject.callback){
+            return;
         }
-        return state[viewId].state;
+        for(var i = 0; i < stateObject.callback.length; i++){
+            if(stateObject.callback[i] === callback){
+                stateObject.callback.slice(i, 1);
+                break;
+            }
+        }
     };
     
     
-    _lifecycle.setCallback = function(viewId, callback){
-        if(!state[viewId]){
-            state[viewId] = {};
-            state[viewId].callback = [];
+    _lifecycle.addStateListener = function(callback){
+        if(!stateObject.callback){
+            stateObject.callback = [];
         }
-        if(!state[viewId].callback){
-            state[viewId].callback = [];
+        if(callback){
+            stateObject.callback.push(callback);
         }
-        state[viewId].callback.push(callback);
     };
     
     

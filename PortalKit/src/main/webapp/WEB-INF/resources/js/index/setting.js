@@ -15,14 +15,14 @@
     }
     
     function setInputDisable(isDisable){
-        $('#portalTeamPath').attr("disabled", isDisable);
-        $('#tomcatWebappsPath').attr("disabled", isDisable);
+        $('#setting-content #portalTeamPath').attr("disabled", isDisable);
+        $('#setting-content #tomcatWebappsPath').attr("disabled", isDisable);
     }
     
     function valueDirty(){
-        if(!ptPath && !twPath){
+        if(!ptPath && !twPath && !$('#setting-content #portalTeamPath').val() && !$('#setting-content #tomcatWebappsPath').val()){
             setSaveDisable(true);
-        }else if($('#portalTeamPath').val() === ptPath && $('#tomcatWebappsPath').val() === twPath){
+        }else if($('#setting-content #portalTeamPath').val() === ptPath && $('#setting-content #tomcatWebappsPath').val() === twPath){
             setSaveDisable(true);
         }else{
             setSaveDisable(false);
@@ -53,13 +53,13 @@
     ViewManager.addViewListener("onShow", "#setting-content", settingsOnShowListener); //add listener to monitor what will happen when settings-content shown.
     
     
-    Lifecycle.setCallback("build-content" ,function(status){
+    Lifecycle.addStateListener(function(status){
         switch (status) {
             case Lifecycle.NORMAL:
                 setInputDisable(false);
                 valueDirty();
                 break;
-            case Lifecycle.BUILD_EXECUTING:
+            case Lifecycle.IN_PROCESS:
                 setInputDisable(true);
                 setSaveDisable(true);
                 break;
@@ -70,28 +70,28 @@
     
 //================================================event bind==================================
     
-    $('#portalTeamPath').keyup(function(event) {
+    $('#setting-content #portalTeamPath').keyup(function(event) {
         valueDirty();
     });
     
-    $('#tomcatWebappsPath').keyup(function(event) {
+    $('#setting-content #tomcatWebappsPath').keyup(function(event) {
         valueDirty();
     });
     
-    $('#saveSettings').click(function(event) {
-                ptPath = $('#portalTeamPath').val();
-                twPath = $('#tomcatWebappsPath').val();
+    $('#setting-content #saveSettings').click(function(event) {
+                ptPath = $('#setting-content #portalTeamPath').val();
+                twPath = $('#setting-content #tomcatWebappsPath').val();
                 var url = "/settings/set.ajax";
                 var settings = {
                         portalTeamPath: ptPath,
                         tomcatWebappsPath: twPath
                     };
                 DynamicLoad.postJSON(url, settings, function(){
-                    successNotification("Successfully saved settings");
-                    Lifecycle.setState("bulid-content", Lifecycle.NEWCONFIG);
+                    ViewManager.simpleSuccess("Successfully saved settings");
+                    Lifecycle.setState(Lifecycle.NEWCONFIG);
                     
                 }, function(error){
-                    errorNotification(error.message);
+                    ViewManager.simpleError(error.message);
                 });
                 
                 setSaveDisable(true);

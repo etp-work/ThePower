@@ -73,13 +73,13 @@
         $('#build-content .bulid-feature-header a').removeClass("active");
         $('#build-content .bulid-feature-header a').first().addClass("active");
         
-        if(Lifecycle.getState(viewId) !== Lifecycle.LOADED && Lifecycle.getState(viewId) !== Lifecycle.NEWCONFIG){
+        if(Lifecycle.getState() !== Lifecycle.LOADED && Lifecycle.getState() !== Lifecycle.NEWCONFIG){
             return;
         }
         
         DynamicLoad.loadJSON(getTreesUrl, undefined, function(dirTrees){
             if(!dirTrees || dirTrees.length === 0){
-                Lifecycle.setState(viewId, Lifecycle.NO_CONFIGURATION);
+                Lifecycle.setState(Lifecycle.NO_CONFIGURATION);
                 return;
             }
             
@@ -94,7 +94,7 @@
 //                );
             rebindSelection();
           
-            Lifecycle.setState(viewId, Lifecycle.NORMAL);
+            Lifecycle.setState(Lifecycle.NORMAL);
         });
     }
     
@@ -131,16 +131,16 @@
     }
     //save selecton to server
     function saveDefaultSelection(defaultSelection, keyWord){
-        Lifecycle.setState(viewId, Lifecycle.BUILD_EXECUTING);
+        Lifecycle.setState(Lifecycle.IN_PROCESS);
         DynamicLoad.postJSON(setDefaultUrl, { selection: defaultSelection }, function (){
                 ViewManager.simpleSuccess("Successfully "+keyWord+" default selection.");
-                Lifecycle.setState(viewId, Lifecycle.NORMAL);
+                Lifecycle.setState(Lifecycle.NORMAL);
             }, function (error){ ViewManager.simpleError(error.message); });
     }
     
     function build(selection){
         if(selection.length === 0){
-            Lifecycle.setState(viewId, Lifecycle.NORMAL);
+            Lifecycle.setState(Lifecycle.NORMAL);
             return;
         }
         var packagename = selection.shift();
@@ -152,11 +152,11 @@
                     if(!BuildResult.success){
                         ViewManager.simpleError("Build error");
                         element.addClass("s-error");
-                        Lifecycle.setState(viewId, Lifecycle.NORMAL);
+                        Lifecycle.setState(Lifecycle.NORMAL);
                     }else if(!BuildResult.deployed && needDeploy()){
                         ViewManager.simpleError("Deploy error");
                         element.addClass("s-error");
-                        Lifecycle.setState(viewId, Lifecycle.NORMAL);
+                        Lifecycle.setState(Lifecycle.NORMAL);
                      }else{
                         var sucMessage = packagename + " build "+(needDeploy() ? "+ deploy" : "" )+" successfully.";
                         ViewManager.simpleSuccess(sucMessage);
@@ -166,21 +166,21 @@
                  }, function(error){
                        element.removeClass("s-working");
                        ViewManager.simpleError("Internal error:"+error.message);
-                       Lifecycle.setState(viewId, Lifecycle.NORMAL);
+                       Lifecycle.setState(Lifecycle.NORMAL);
                  }
         );
     }
     //build all sub selection on common view. 
     function commonBuild(subSelection){
         $('#build-content #common .status').attr("class", "status");
-        Lifecycle.setState(viewId, Lifecycle.BUILD_EXECUTING);
+        Lifecycle.setState(Lifecycle.IN_PROCESS);
         build(subSelection);
     }
     //build all the desing packages, and deploy the specified set of them.
     function environmentBuild(choosedElement){
         var chooseId = choosedElement.val();
         $('#build-content #environment .status').attr("class", "status");
-        Lifecycle.setState(viewId, Lifecycle.BUILD_EXECUTING);
+        Lifecycle.setState(Lifecycle.IN_PROCESS);
         var element = choosedElement.parent().next('.status');
         element.addClass("s-working");
         DynamicLoad.postJSON(buildSetUrl, {
@@ -199,11 +199,11 @@
                                         ViewManager.simpleSuccess(sucMessage);
                                         element.addClass("s-success");
                                    }
-                                   Lifecycle.setState(viewId, Lifecycle.NORMAL);
+                                   Lifecycle.setState(Lifecycle.NORMAL);
                             }, function(error){
                                    element.removeClass("s-working");
                                    ViewManager.simpleError("Internal error:"+error.message);
-                                   Lifecycle.setState(viewId, Lifecycle.NORMAL);
+                                   Lifecycle.setState(Lifecycle.NORMAL);
                             }
         );
     }
@@ -212,12 +212,12 @@
     
     ViewManager.addViewListener("onShow", "#"+viewId, buildViewOnShow);
     
-    Lifecycle.setCallback(viewId, function(status){
+    Lifecycle.addStateListener(function(status){
             switch (status) {
                 case Lifecycle.NORMAL:
                     setDisableElements(false);
                     break;
-                case Lifecycle.BUILD_EXECUTING:
+                case Lifecycle.IN_PROCESS:
                 case Lifecycle.NO_CONFIGURATION:
                     setDisableElements(true);
                     break;

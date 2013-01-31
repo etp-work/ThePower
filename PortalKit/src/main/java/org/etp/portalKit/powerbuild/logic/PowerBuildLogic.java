@@ -228,7 +228,9 @@ public class PowerBuildLogic {
      * @return List<DirTree>
      */
     public List<DirTree> getCommonBuildListDirTrees() {
-        String basePath = checkDesignPath();
+        String basePath = prop.get(Settings.PORTAL_TEAM_PATH);
+        if (StringUtils.isBlank(basePath))
+            return new ArrayList<DirTree>();
         List<String> defaultSelection = getDefaultSelectionFromProperties();
         commonBuildListProvider.setBasePath(basePath);
         commonBuildListProvider.setDefaultSelection(defaultSelection);

@@ -41,13 +41,14 @@ public class CleanLogic {
      * @return CleanItems
      */
     public CleanItems retrieveCleanItems() {
+        CleanItems items = new CleanItems();
         String userHome = System.getProperty("user.home");
         String webappsHome = prop.get(Settings.TOMCAT_WEBAPPS_PATH);
         if (StringUtils.isBlank(userHome))
             throw new NullPointerException("user.home could not be null or empty.");
         if (StringUtils.isBlank(webappsHome))
-            throw new NullPointerException("You haven't set tomcat's webapps path yet.");
-        CleanItems items = new CleanItems();
+            return items;
+        
         File cacheBase = new File(userHome, WIDGET_CACHE_RELATIVE_PATH);
         File[] caches = FileUtils.FolderFinder(cacheBase.getAbsolutePath(), WIDGET_PREFIX);
         List<String> widgetCaches = new ArrayList<String>();

@@ -53,9 +53,11 @@ public class DeployLogic {
     public PackageCheckedResult setPathAndRetrieveincludedPkgs(CheckPackageCommand cmd) {
         if (StringUtils.isBlank(cmd.getDownloadPath()))
             throw new RuntimeException("downloadPath could not be null.");
+        PackageCheckedResult pcr = new PackageCheckedResult();
+        if (!new File(cmd.getDownloadPath()).isDirectory())
+            return pcr;
         DownloadedPath path = new DownloadedPath();
         path.setDownloadedPath(cmd.getDownloadPath());
-        PackageCheckedResult pcr = new PackageCheckedResult();
         File[] allDeployedPkgs = packageCheck.retrieveDeployedPkgs(cmd.getDownloadPath());
         List<String> list = new ArrayList<String>();
         for (File file : allDeployedPkgs) {

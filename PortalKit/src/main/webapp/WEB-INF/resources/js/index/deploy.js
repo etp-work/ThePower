@@ -103,19 +103,19 @@
     }
     
     function isValueDirty(){
-        if(!$(this).val()){
+        if(!$('#deploy-content #downloadedPath').val()){
             $('#deploy-content #checkDeployPathButton').attr("disabled", true);
             $('#deploy-content #deploy4CI').attr("disabled", true);
             $('#deploy-content .table-wrapper .war-list-wrapper input').attr("disabled", true);
-        }else if($(this).val() === downloadedPath && allfiles.length > 0){
+        }else if($('#deploy-content #downloadedPath').val() === downloadedPath && allfiles.length > 0){
             $('#deploy-content #checkDeployPathButton').attr("disabled", true);
             $('#deploy-content #deploy4CI').attr("disabled", false);
             $('#deploy-content .table-wrapper .war-list-wrapper input').attr("disabled", false);
-        }else if($(this).val() === downloadedPath && allfiles.length === 0){
+        }else if($('#deploy-content #downloadedPath').val() === downloadedPath && allfiles.length === 0){
             $('#deploy-content #checkDeployPathButton').attr("disabled", false);
             $('#deploy-content #deploy4CI').attr("disabled", true);
             $('#deploy-content .table-wrapper .war-list-wrapper input').attr("disabled", true);
-        }else if($(this).val() !== downloadedPath && allfiles.length > 0){
+        }else if($('#deploy-content #downloadedPath').val() !== downloadedPath && allfiles.length > 0){
             var scope = angular.element($('#deploy-content .deployList')).scope();
             scope.$apply(function(){
                 scope.allGzFiles = [];
@@ -125,7 +125,7 @@
             $('#deploy-content #deploy4CI').attr("disabled", true);
             $('#deploy-content .table-wrapper .war-list-wrapper input').attr("disabled", true);
             $('#deploy-content .table-wrapper .war-list-wrapper input').attr("checked", false);
-        }else if($(this).val() !== downloadedPath && allfiles.length === 0){
+        }else if($('#deploy-content #downloadedPath').val() !== downloadedPath && allfiles.length === 0){
             $('#deploy-content #checkDeployPathButton').attr("disabled", false);
             $('#deploy-content #deploy4CI').attr("disabled", true);
             $('#deploy-content .table-wrapper .war-list-wrapper input').attr("disabled", true);
@@ -137,12 +137,12 @@
 //========================================init listener=====================================
     ViewManager.addViewListener("onShow", "#"+viewId, deployViewOnShow);
     
-    Lifecycle.setCallback("build-content", function(status){
+    Lifecycle.addStateListener(function(status){
         switch (status) {
             case Lifecycle.NORMAL:
                 isValueDirty();
                 break;
-            case Lifecycle.BUILD_EXECUTING:
+            case Lifecycle.IN_PROCESS:
             case Lifecycle.NO_CONFIGURATION:
                 $('#deploy-content #checkDeployPathButton').attr("disabled", true);
                 $('#deploy-content #deploy4CI').attr("disabled", true);
