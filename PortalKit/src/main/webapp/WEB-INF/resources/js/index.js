@@ -105,7 +105,7 @@ $(document).ready(function(){
                     }
                     $(this).parent().siblings().find("a").removeClass('active'); // Remove active class from all the other tabs
                     $(this).addClass('active');
-                    $('.content-wrapper').removeClass("contentAnimation");
+                    $('.maincontent .content-wrapper').removeClass("contentAnimation");
                     ViewManager.hide(".maincontent .content-wrapper .content-box");
                     shownViewId = newId;
                     var callbackOnshow = function(){
