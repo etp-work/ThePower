@@ -163,7 +163,6 @@ public class PropertiesManager {
                 if (annotation.annotationType() == MarkinFile.class) {
                     String nameInFile = ((MarkinFile) annotation).name();
                     try {
-                        String value = PropManagerUtils.fromString(this.get(nameInFile)).toString();
                         PropertyUtils
                                 .setProperty(t, field.getName(), PropManagerUtils.fromString(this.get(nameInFile)));
                     } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
