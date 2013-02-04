@@ -497,7 +497,16 @@ img{ border:none; margin:0; padding:0;}
     margin:0 auto;
     width:200px;
     }
-.clean,
+.refresh{
+    float:left;
+    display:block;
+    width:105px;
+    }
+.clean{
+    float:right;
+    display:block;
+    width:105px;
+    }
 .test{
     display:block;
     margin:0 auto;
