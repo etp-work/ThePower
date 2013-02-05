@@ -95,6 +95,12 @@
             rebindSelection();
           
             Lifecycle.setState(Lifecycle.NORMAL);
+        }, function(){
+            var scope = angular.element($('.bulid-list')).scope();
+            scope.$apply(function(){
+                scope.dirTrees = [];
+            });
+            setDisableElements(true);
         });
     }
     
