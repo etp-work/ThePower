@@ -12,6 +12,7 @@
     function cleanOnShowListener(){
         DynamicLoad.loadJSON(getCleanItemsUrl, undefined, function(CleanItems){
             $('#clean-content .clean-list input').off("click");
+            $('#clean-content #cleanButton').attr("disabled", true);
             
             var scope = angular.element($('.bulid-list')).scope();
             scope.$apply(function(){
@@ -110,8 +111,13 @@
 //========================================init listener=====================================
     ViewManager.addViewListener("onShow", "#clean-content", cleanOnShowListener); //add listener to monitor what will happen when settings-content shown.
 //================================================event bind================================
+
     $('#clean-content #cleanButton').click(function(event){
         removeSelection();
+    });
+    
+    $('#clean-content #refreshButton').click(function(event){
+        cleanOnShowListener();
     });
     
 }(window));
