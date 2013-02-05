@@ -5,10 +5,10 @@
 <%@ include file="/WEB-INF/views/common/header_head.jsp"%>
 <link href="resources/css/index.css" rel="stylesheet" type="text/css">
 <script type="text/javascript">
-    function startSTBHTMLPortal(){
+    function startPortal(portalType){
         event = window.document.createEvent('MessageEvent'); 
         var origin = window.location.protocol + '' + window.location.host; 
-        event.initMessageEvent('startPortal', true, true, 'STARTPORTAL:http://150.236.48.198:18080/portal-root-war/index_mock.html?deviceId=00:01:02:03:04:05&type=plain', origin, 1234, window, null); 
+        event.initMessageEvent('startPortal', true, true, 'STARTPORTAL:' + portalType, origin, 1234, window, null); 
         window.document.dispatchEvent(event);
     }
 </script>

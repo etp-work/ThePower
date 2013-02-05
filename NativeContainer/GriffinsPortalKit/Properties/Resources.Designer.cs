@@ -63,6 +63,16 @@ namespace GriffinsPortalKit.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ipad_small {
+            get {
+                object obj = ResourceManager.GetObject("ipad_small", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap TV_HTML {
             get {
                 object obj = ResourceManager.GetObject("TV-HTML", resourceCulture);

@@ -1,6 +1,6 @@
 ﻿namespace GriffinsPortalKit
 {
-    partial class Browser
+    partial class STBHTML
     {
         /// <summary>
         /// Required designer variable.
@@ -52,12 +52,12 @@
             this.Controls.Add(this.geckoWebBrowser1);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "Browser";
+            this.Name = "STBHTML";
             this.Padding = new System.Windows.Forms.Padding(23, 30, 23, 188);
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "Browser";
+            this.Text = "STBHTML";
             this.TransparencyKey = System.Drawing.Color.DarkGray;
-            this.Load += new System.EventHandler(this.Browser_Load);
+            this.Load += new System.EventHandler(this.STBHTML_Load);
             this.ResumeLayout(false);
 
         }

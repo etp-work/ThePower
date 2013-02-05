@@ -23,9 +23,7 @@
     
     $('#test-content #portal').change(function() {
         var portaltype = $('#test-content #portal').val();
-        if(portaltype === "STB-HTML"){
-            startSTBHTMLPortal();
-        }
+        startPortal(portaltype);
     });
 
 //========================================init listener=====================================

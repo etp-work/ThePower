@@ -10,12 +10,14 @@ using Gecko;
 using Gecko.DOM;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using AForge.Imaging;
 
 namespace GriffinsPortalKit
 {
     public partial class NativeContainer : Form
     {
-        static private string XULRUNNERPATH = "\\xulrunner\\";
+        private static string XULRUNNERPATH = "\\xulrunner\\";
+        private static List<Form> portals = new List<Form>();
         private GeckoWebBrowser browser;
         private Action<String> message = new Action<String>(NativeContainer.onMessage);
         private SplashForm frmSplash = new SplashForm();
@@ -30,6 +32,14 @@ namespace GriffinsPortalKit
         public NativeContainer()
         {
             InitializeComponent();
+
+            Bitmap sourceImage = (Bitmap)Bitmap.FromFile("images\\login.png");
+            Bitmap template = (Bitmap)Bitmap.FromFile("images\\sarah.png");
+            ExhaustiveTemplateMatching tm = new ExhaustiveTemplateMatching(0.921f);
+            TemplateMatch[] matchings = tm.ProcessImage(sourceImage, template);
+
+
+
 
             Gecko.Xpcom.Initialize(Application.StartupPath + XULRUNNERPATH);
             browser = new GeckoWebBrowser();
@@ -81,9 +91,28 @@ namespace GriffinsPortalKit
         {
             if (message.StartsWith("STARTPORTAL:"))
             {
-                message = message.Replace("STARTPORTAL:", "");
-                Browser portal = new Browser(message, "STB-HTML");
-                portal.Visible = true;
+                foreach (Form portal in portals)
+                {
+                    portal.Close();
+                }
+                portals.Clear();
+
+                message = message.Replace("STARTPORTAL:", "").ToUpper();
+                switch (message)
+                {
+                    case "STBHTML":
+                        string portalFullUrl = String.Format("http://{0}:{1}{2}", ConfigurationManager.AppSettings["PortalAddress"], ConfigurationManager.AppSettings["PortalPort"], ConfigurationManager.AppSettings["PortalUrl_STBHTML"]);
+                        STBHTML portalSTBHTML = new STBHTML(portalFullUrl);
+                        portalSTBHTML.Visible = true;
+                        portals.Add(portalSTBHTML);
+                        break;
+                    /*case "IPAD":
+                        IPAD portalIPAD = new IPAD(ConfigurationManager.AppSettings["PORTAL_IPAD"]);
+                        portalIPAD.Visible = true;
+                        portals.Add(portalIPAD);
+                        break;*/
+                }
+
             }
             else if (message.StartsWith("EXECMD:"))
             {
