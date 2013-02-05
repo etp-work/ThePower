@@ -1,0 +1,40 @@
+<project default="build" basedir="." name="EmbeddedTomcat builder">
+	<!--
+       *** Properties to be changed to reflect your build environment ***
+
+       These should be set in eclipse. Go to Window -> Preferences -> Ant -> Runtime
+       and select the tab Properties
+
+       Here you should add maven.home, deploy.local.dir,  embedded.home, java.home.
+      -->
+
+	<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+	          -               Properties set in eclipse
+	          - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	<property name="deploy.local.dir" value="" />
+	<property name="maven.home" value="" />
+	<property name="java.home" value="" />
+
+	<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+	      -                          Properties
+	      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	<property name="embedded.home" value="." />
+	<property name="mvn.build.cmd" value="clean install" />
+	<property name="project.name" value="EmbeddedTomcat" />
+
+	<target name="build">
+		<mvn dir="${embedded.home}" args="${mvn.build.cmd}" />
+	</target>
+
+	<macrodef name="mvn">
+		<attribute name="dir" />
+		<attribute name="args" default="${mvn.build.cmd} ${mvn.skip.test}" />
+		<sequential>
+			<exec dir="@{dir}" failonerror="true" executable="${maven.home}/bin/mvn.bat">
+				<arg line="@{args}" />
+				<env key="MAVEN_TERMINATE_CMD" value="on" />
+				<env key="JAVA_HOME" value="${java.home}" />
+			</exec>
+		</sequential>
+	</macrodef>
+</project>
