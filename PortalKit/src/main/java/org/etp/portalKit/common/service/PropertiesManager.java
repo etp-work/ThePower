@@ -119,8 +119,10 @@ public class PropertiesManager {
             isDirty = true;
         else if (!prop.getProperty(key).equals(value))
             isDirty = true;
-        if (isDirty)
+        if (isDirty) {
             prop.setProperty(key, value);
+            this.write();
+        }
     }
 
     /**
