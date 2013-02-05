@@ -60,7 +60,7 @@
 					</descriptors>
 					<archive>
 						<manifest>
-							<mainClass>org.etp.portalKit.service.ServiceController</mainClass>
+							<mainClass>org.etp.portalKit.tomcat.EmbeddedTomcat</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
