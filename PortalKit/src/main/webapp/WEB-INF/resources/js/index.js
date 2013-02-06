@@ -2,6 +2,7 @@
  * This JS module is written for view index.jsp. It provider all the common functionalities.
  */
 (function(angular){
+    //this part provides the capbility that data render can be used within the dynamic loaded html templates.
     angular.module('myModule', []).
     factory('compiler', function($compile) {
       return {

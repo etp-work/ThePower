@@ -73,6 +73,7 @@
         $('#build-content .bulid-feature-header a').removeClass("active");
         $('#build-content .bulid-feature-header a').first().addClass("active");
         
+        //this is because the data on this page won't fetch each time.
         if(Lifecycle.getState() !== Lifecycle.LOADED && Lifecycle.getState() !== Lifecycle.NEWCONFIG){
             return;
         }
@@ -83,16 +84,13 @@
                 return;
             }
             
-            $('#build-content #common .parentB').off("click");//remove click binding to .parent first.
-            $('#build-content #common .childB').off("click");//remove click binding to .child first.
+            $('#build-content #common .parentB').off("click");//remove click binding to .parent first. Then will be re-bind again when data fetched later.
+            $('#build-content #common .childB').off("click");//remove click binding to .child first. Then will be re-bind again when data fetched later.
             var scope = angular.element($('.bulid-list')).scope();
             scope.$apply(function(){
                 scope.dirTrees = dirTrees;
             });
-//            $( "#common .bulid-list" ).html(
-//                    $( "#DirTreeTemplate" ).render( dirTrees )
-//                );
-            rebindSelection();
+            rebindSelection();//re-bind click event to .parent .child element. 
           
             Lifecycle.setState(Lifecycle.NORMAL);
         }, function(){

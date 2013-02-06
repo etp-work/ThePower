@@ -39,6 +39,7 @@
         });
     }
     
+    //get all the selection in both widget and tomcat.
     function getSelection(){
         var selection = {
                 widget: [],
@@ -57,6 +58,7 @@
         return selection;
     }
     
+    //remove one stuff whatever it is widget or tomcat.
     function removeOne(selection, type, callback){
         if(selection.length === 0){
             if(callback){
@@ -101,6 +103,7 @@
         
     }
     
+    //remove selected items
     function removeSelection(){
         var selection = getSelection();
         removeOne(selection.widget, "widget", function(){

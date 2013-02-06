@@ -16,6 +16,7 @@
     var portals = {};
     
 //=========================================functions========================================
+    //check deploy type, and set the corresponding selection to grayed.
     function checkChoose(){
         checkedList = [];
         $('#deploy-content .table-wrapper .deployList li').removeClass("grayed");
@@ -53,6 +54,7 @@
         
     }
     
+    //check the set download path for exist .gz packages.
     function doCheck(){
         if(!downloadedPath){
             return;
@@ -157,6 +159,7 @@
     });
     
 //================================================event bind================================
+    //click event bind on check button
     $('#deploy-content #checkDeployPathButton').click(function(event){
         var path = $('#deploy-content #downloadedPath').val();
         if(!path){
@@ -168,7 +171,7 @@
         doCheck();
     });
     
-    
+    //click event bind on the checkboxs that indicate the deploy type.
     $('#deploy-content .table-wrapper .war-list-wrapper input').click(function(event){
         if($(this).is(':checked')){
             $(this).parent().parent().siblings('li').find('input').attr("checked", false);
@@ -176,6 +179,7 @@
         checkChoose();
     });
     
+    //click event bind on the deploy button.
     $('#deploy-content #deploy4CI').click(function(event){
         if(!$('#deploy-content #downloadedPath').val()){
             ViewManager.simpleWarning("Please set download path first.");
@@ -208,6 +212,7 @@
         });
     });
     
+    //keyup event bind on the downloadpath input field.
     $('#deploy-content #downloadedPath').keyup(function(event){
         isValueDirty();
     });
