@@ -1,0 +1,94 @@
+<project default="compile32" basedir="." name="Installer builder">
+	<!-- *** Properties to be changed to reflect your build environment *** 
+		These should be set in eclipse. Go to Window -> Preferences -> Ant -> Runtime 
+		and select the tab Properties Here you should add inno.home, output.dir. -->
+
+	<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+		- - - Properties set in eclipse - - - - - - - - - - - - - - - - - - - - - 
+		- - - - - - - - - - - - - - - -->
+	<property name="inno.home" value="" />
+
+	<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+		- - - Properties - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+		- - - - - - - - -->
+
+	<property name="xulRunner.ftp.server" value="ftp.mozilla.org" />
+	<property name="xulRunner.ftp.path" value="/pub/xulrunner/releases/16.0/runtimes/" />
+	<property name="xulRunner.ftp.filename" value="xulrunner-16.0.en-US.win32.zip" />
+	<property name="xulRunner.local.downloadpath" value="resources/download" />
+	<property name="xulRunner.local.path" value="resources" />
+
+	<property name="tomcat.compile.home" value="../EmbeddedTomcat" />
+	<property name="tomcat.jar"
+		value="${tomcat.compile.home}/target/EmbeddedTomcat.jar" />
+	<property name="tomcat.local.home" value="resources/CustomizedTomcat/" />
+
+	<property name="shell.home" value="../NativeContainer" />
+	<property name="shell.bin.home" value="${shell.home}/GriffinsPortalKit/release" />
+	<property name="shell.local.home" value="resources/shell" />
+
+	<property name="script.home" value="resources/scripts" />
+	<property name="output.dir" value="../output" />
+
+
+	<target name="compile32">
+		<prepare />
+		<compile dir="${script.home}" args="/O'${output.dir}' /F'ThePowerSetup-32b' ThePowerInstallerScript-32b.iss" />
+	</target>
+	
+	<target name="compile64">
+        <prepare />
+        <compile dir="${script.home}" args="/O'${output.dir}' /F'ThePowerSetup-64b' ThePowerInstallerScript-64b.iss" />
+    </target>
+
+	<target name="checkXulRunner">
+		<available file="resources/xulrunner" property="runnerExists" />
+	</target>
+
+
+
+	<target name="loadXulRunner" depends="checkXulRunner" unless="runnerExists">
+		<mkdir dir="${xulRunner.local.downloadpath}" />
+		<ftp action="get" binary="yes" userid="anonymous" passive="yes"
+			password="" verbose="true" server="${xulRunner.ftp.server}"
+			remotedir="${xulRunner.ftp.path}">
+			<fileset dir="${xulRunner.local.downloadpath}">
+				<include name="${xulRunner.ftp.filename}" />
+			</fileset>
+		</ftp>
+		<unzip src="${xulRunner.local.downloadpath}/${xulRunner.ftp.filename}"
+			dest="${xulRunner.local.path}" />
+	</target>
+
+	<macrodef name="prepare">
+		<sequential>
+			<antcall target="loadXulRunner" />
+			<ant antfile="build.xml" dir="${tomcat.compile.home}" inheritall="false"
+				inheritrefs="false" />
+			<delete dir="${tomcat.local.home}" />
+			<mkdir dir="${tomcat.local.home}" />
+			<copy todir="${tomcat.local.home}" file="${tomcat.jar}" />
+			<delete dir="${shell.local.home}" />
+			<mkdir dir="${shell.local.home}" />
+			<copy todir="${shell.local.home}">
+				<fileset dir="${shell.bin.home}">
+					<include name="*.dll" />
+					<include name="GriffinsPortalKit.exe" />
+					<include name="GriffinsPortalKit.exe.config" />
+				</fileset>
+			</copy>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="compile">
+		<attribute name="dir" />
+		<attribute name="args" />
+		<sequential>
+			<delete dir="${output.dir}" />
+			<mkdir dir="${output.dir}" />
+			<exec dir="@{dir}" failonerror="true" executable="${inno.home}/ISCC.exe">
+				<arg line="@{args}" />
+			</exec>
+		</sequential>
+	</macrodef>
+</project>
