@@ -129,13 +129,13 @@ img{ border:none; margin:0; padding:0;}
     
 .contentAnimation{
     -moz-animation-name:loadContent;
-    -moz-animation-duration: 2s;
+    -moz-animation-duration: 1s;
     -moz-animation-timing-function: ease-out-in;
     -moz-animation-iteration-count: 1;
     }
 
 @-moz-keyframes loadContent{
-    0%{ opacity:0; -moz-transform:rotateY(-60deg);}
+    0%{ opacity:0; -moz-transform:rotateY(-45deg);}
     100%{ opacity:1; -moz-transform:rotateY(0deg);}
     } 
 
