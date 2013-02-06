@@ -8,7 +8,7 @@
     
   //=========================================variable=====================================
     var viewId = "test-content";
-    var dataUrl = "/test/data.ajax?targetIP=150.236.48.198&targetPort=18080";
+    var dataUrl = "/test/data.ajax";
     
     function TestController($http, $scope){
     }
@@ -29,9 +29,6 @@
 //========================================init listener=====================================
     
     function buildViewOnShow(){
-        if(Lifecycle.getState(viewId) !== Lifecycle.LOADED && Lifecycle.getState(viewId) !== Lifecycle.NEWCONFIG){
-            return;
-        }
         
         DynamicLoad.loadJSON(dataUrl, undefined, function(devices){
             if(!devices || devices.length === 0){
@@ -41,7 +38,24 @@
             
             var scope = angular.element($('.us-list')).scope();
             scope.$apply(function(){
-                scope.devices = devices;
+                var testsuites = {};
+                if(devices.length > 0){
+                    var device = devices[0];
+                    for(var i=0; i<device.results.length; i++){
+                        var testcase = device.results[i];
+                        var testSuiteId = testcase.testSuiteId;
+                        var ids = testSuiteId.split(".");
+                        var suiteId = ids[ids.length - 1];
+                        if(!testsuites[suiteId]) {
+                            testsuites[suiteId] = {
+                                suiteId: suiteId,
+                                cases: []
+                            };
+                        }
+                        testsuites[suiteId].cases.push(testcase);
+                    }
+                }
+                scope.testsuites = testsuites;
             });
           
             Lifecycle.setState(viewId, Lifecycle.NORMAL);

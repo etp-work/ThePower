@@ -1,5 +1,5 @@
 <div class="content-box" id="test-content">
-    <span class="tdName">Test Type</span>
+    <span class="tdName">Portal Selection</span>
     <div class="war-input">
         <select id="portal" class="testType">
             <option value="">Please select ...</option>
@@ -10,17 +10,17 @@
             <option value="iPhone">iPhone</option>
         </select>
     </div>
-    <span class="tdName">User Story List</span>
+    <span class="tdName">Test Suite List</span>
     <div class="test-feature-content">
         <div class="us-list">
-            <ul class="group" ng-repeat="device in devices">
+            <ul class="group" ng-repeat="testsuite in testsuites">
                 <label class="category">
                     <div class="lightpoint">
-                        <input type="checkbox" class="parentB" value="{{device.deviceName}}" ng-checked="true" /><label></label>
+                        <input type="checkbox" class="parentB" value="{{testsuite.suiteId}}" ng-checked="true" /><label></label>
                     </div>
-                    <span>{{device.deviceName}}</span>
+                    <span>{{testsuite.suiteId}}</span>
                 </label>
-                <li ng-repeat="testcase in device.results">
+                <li ng-repeat="testcase in testsuite.cases">
                     <div class="lightpoint">
                         <input type="checkbox" class="childB" ng-checked="testcase.skipped" value="{{testcase.testCaseName}}" /><label></label>
                     </div>
