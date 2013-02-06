@@ -6,61 +6,18 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using System.Diagnostics;
 
 namespace GriffinsPortalKit
 {
     public partial class SplashForm : Form
     {
-        static private string TOMCATPATH = "\\tomcat\\bin\\";
         bool fadeIn = true;
         bool fadeOut = false;
-        private BackgroundWorker worker;
 
         public SplashForm()
         {
             InitializeComponent();
-
-            /*
-            this.worker = new BackgroundWorker();
-            this.worker.DoWork += worker_DoWork;
-            this.worker.ProgressChanged += worker_ProgressChanged;
-            this.worker.RunWorkerCompleted += worker_RunWorkerCompleted;
-            this.worker.WorkerReportsProgress = true;
-            this.worker.RunWorkerAsync();
-             * */
-
             this.Opacity = 0.5;
-            
-        }
-
-        void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            fadeIn = false;
-            fadeOut = true;
-        }
-
-        void worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            // e.ProgressPercentage.ToString() + "% complete";
-        }
-
-        void worker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            ProcessStartInfo procStartInfo = new ProcessStartInfo("startup.bat");
-            procStartInfo.WorkingDirectory = Application.StartupPath + TOMCATPATH;
-
-            //procStartInfo.RedirectStandardOutput = true;
-            procStartInfo.UseShellExecute = true;
-            procStartInfo.CreateNoWindow = false;
-
-            Process proc = new Process();
-            proc.StartInfo = procStartInfo;
-            proc.Start();
-            proc.WaitForExit();
-
-            BackgroundWorker worker = (BackgroundWorker)sender;
-            worker.ReportProgress(100);
         }
 
         private void timer1_Tick(object sender, EventArgs e)

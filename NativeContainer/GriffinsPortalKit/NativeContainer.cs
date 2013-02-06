@@ -10,7 +10,6 @@ using Gecko;
 using Gecko.DOM;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using AForge.Imaging;
 
 namespace GriffinsPortalKit
 {
@@ -33,14 +32,6 @@ namespace GriffinsPortalKit
         {
             InitializeComponent();
 
-            Bitmap sourceImage = (Bitmap)Bitmap.FromFile("images\\login.png");
-            Bitmap template = (Bitmap)Bitmap.FromFile("images\\sarah.png");
-            ExhaustiveTemplateMatching tm = new ExhaustiveTemplateMatching(0.921f);
-            TemplateMatch[] matchings = tm.ProcessImage(sourceImage, template);
-
-
-
-
             Gecko.Xpcom.Initialize(Application.StartupPath + XULRUNNERPATH);
             browser = new GeckoWebBrowser();
             browser.Parent = this;
@@ -49,42 +40,30 @@ namespace GriffinsPortalKit
             browser.DomClick += browser_DomClick;
             browser.CreateControl();
 
-            string serverFullUrl = "";
-
-            if (null != ConfigurationManager.AppSettings["ServerAddress"] && null != ConfigurationManager.AppSettings["ServerPort"] && null != ConfigurationManager.AppSettings["ServerUrl"])
-            {
-                serverFullUrl = String.Format("http://{0}:{1}{2}", ConfigurationManager.AppSettings["ServerAddress"], ConfigurationManager.AppSettings["ServerPort"], ConfigurationManager.AppSettings["ServerUrl"]);
-            }
-
-            if (null != ConfigurationManager.AppSettings["ServerFullUrl"])
-            {
-                serverFullUrl = ConfigurationManager.AppSettings["ServerFullUrl"];
-            }
-
             this.Width = Convert.ToInt32(ConfigurationManager.AppSettings["WindowWidth"]);
             this.Height = Convert.ToInt32(ConfigurationManager.AppSettings["WindowHeight"]);
             this.FormBorderStyle = FormBorderStyle.Fixed3D;
-            browser.Navigate(serverFullUrl);
         }
 
         void browser_DomClick(object sender, DomEventArgs e)
         {
-            browser.WebBrowserFocus.Activate();
+            GeckoElement clicked = e.Target;
+            if (clicked.TagName == "INPUT" || clicked.TagName == "SELECT")
+            {
+                browser.WebBrowserFocus.Activate();
+            }
+            else
+            {
+                browser.WebBrowserFocus.Deactivate();
+            }
         }
 
         void browser_DocumentCompleted(object sender, EventArgs e)
         {
             GeckoWebBrowser br = sender as GeckoWebBrowser;
-            if (br.Url.ToString() == "about:blank") { return; }
             browser.AddMessageEventListener("startPortal", message);
-
-            // Call JavaScript
-            /*
-            GeckoScriptElement script = (GeckoScriptElement)br.Document.CreateElement("script");
-            script.Type = "text/javascript";
-            script.Text = "alert('My alert');";
-            br.Document.Body.AppendChild(script);
-            */
+            browser.WebBrowserFocus.Deactivate();
+            this.Show();
         }
 
         static void onMessage(String message)
@@ -158,8 +137,19 @@ namespace GriffinsPortalKit
 
         private void SplashScreen_Load(object sender, EventArgs e)
         {
+            this.Hide();
             frmSplash.ShowDialog();
-            this.Show();
+            string serverFullUrl = "";
+            if (null != ConfigurationManager.AppSettings["ServerAddress"] && null != ConfigurationManager.AppSettings["ServerPort"] && null != ConfigurationManager.AppSettings["ServerUrl"])
+            {
+                serverFullUrl = String.Format("http://{0}:{1}{2}", ConfigurationManager.AppSettings["ServerAddress"], ConfigurationManager.AppSettings["ServerPort"], ConfigurationManager.AppSettings["ServerUrl"]);
+            }
+
+            if (null != ConfigurationManager.AppSettings["ServerFullUrl"])
+            {
+                serverFullUrl = ConfigurationManager.AppSettings["ServerFullUrl"];
+            }
+            browser.Navigate(serverFullUrl);
         }
 
         private void NativeContainer_Resize(object sender, EventArgs e)
