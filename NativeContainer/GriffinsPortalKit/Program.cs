@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Net;
+using System.Net.Sockets;
 
 namespace GriffinsPortalKit
 {
@@ -15,10 +17,22 @@ namespace GriffinsPortalKit
         static BackgroundWorker worker;
         static NativeContainer nativeContainer;
         static Process proc;
+        static TcpListener socket;
 
         [STAThread]
         static void Main()
         {
+            try
+            {
+                Int32 port = 57777;
+                IPAddress localAddr = IPAddress.Parse("127.0.0.1");
+                socket = new TcpListener(localAddr, port);
+                socket.Start();
+            } catch {
+                MessageBox.Show("PortalKit already started");
+                return;
+            }
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
@@ -39,6 +53,8 @@ namespace GriffinsPortalKit
             proc.Kill();
             proc.Dispose();
             proc = null;
+            socket.Stop();
+            socket = null;
         }
 
         static void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)

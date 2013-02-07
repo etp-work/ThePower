@@ -10,22 +10,6 @@
     var viewId = "test-content";
     var dataUrl = "/test/data.ajax";
     
-    function TestController($http, $scope){
-    }
-    
- // Create a new module
-    var switchModule = Lifecycle.getModule("switchModule");
-    
-    switchModule.config(['$routeProvider', function($routeProvider) {
-        $routeProvider.
-        when('/test-content', {templateUrl: 'resources/templates/index-views/test-content.html',   controller: TestController});
-    }]);
-    
-    $('#test-content #portal').change(function() {
-        var portaltype = $('#test-content #portal').val();
-        startPortal(portaltype);
-    });
-
 //========================================init listener=====================================
     
     function buildViewOnShow(){
@@ -63,5 +47,12 @@
     }
     
     ViewManager.addViewListener("onShow", "#"+viewId, buildViewOnShow);
+
+    //================================================event bind======================
     
+    $('#test-content #portal').change(function() {
+        var portaltype = $('#test-content #portal').val();
+        startPortal(portaltype);
+    });
+
 }(window));
