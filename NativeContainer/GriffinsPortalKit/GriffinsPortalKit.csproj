@@ -68,6 +68,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>lib\Geckofx-Winforms-16.dll</HintPath>
     </Reference>
+    <Reference Include="MathNet.Iridium">
+      <HintPath>lib\MathNet.Iridium.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenSURFcs">
+      <HintPath>lib\OpenSURFcs.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
@@ -98,6 +104,12 @@
     <Compile Include="SplashForm.Designer.cs">
       <DependentUpon>SplashForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="SURFCompare.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SURFCompare.Designer.cs">
+      <DependentUpon>SURFCompare.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="STBHTML.resx">
       <DependentUpon>STBHTML.cs</DependentUpon>
     </EmbeddedResource>
@@ -116,6 +128,9 @@
     </Compile>
     <EmbeddedResource Include="SplashForm.resx">
       <DependentUpon>SplashForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SURFCompare.resx">
+      <DependentUpon>SURFCompare.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.manifest">
       <SubType>Designer</SubType>

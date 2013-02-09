@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Data;
 using System.Text;
-using System.Threading.Tasks;
 using System.Configuration;
 using System.Diagnostics;
 using System.Reflection;
@@ -13,11 +12,14 @@ using MySql.Data.MySqlClient;
 using log4net;
 using System.Timers;
 using Newtonsoft.Json.Linq;
+using TestNodeMonitor;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 [assembly: log4net.Config.XmlConfigurator(Watch = true)]
 namespace TestNodeMonitor.Entities
 {
-    public class TestNode
+    public class TestNode : IDisposable
     {
         public int NodeID { get; set; }
         public string NodeName { get; set; }
@@ -28,9 +30,6 @@ namespace TestNodeMonitor.Entities
         public int NodeHttpPort2 { get; set; }
         public int NodeHttpPort3 { get; set; }
         public Dictionary<string, string> Configurations { get; set; }
-        public Dictionary<string, string> ForClose { get; set; }
-
-        private Process proc;
         private Timer timer;
         //private FileSystemWatcher watcher;
 
@@ -40,8 +39,12 @@ namespace TestNodeMonitor.Entities
         private static string BaseDir = "C:\\testnodes";
         private static string BaseNodeDir = "C:\\testnodes\\tomcat_base";
         private static string TargetWebDir = "C:\\Program Files (x86)\\Apache Software Foundation\\Apache2.2\\htdocs\\portaltest\\logs";
+        private static bool checking = false;
+        private static bool testing = false;
+        private static bool updating = false;
+        private static Process testProcess;
 
-        public void startTimer() 
+        public void startTimer()
         {
             timer = new Timer();
             timer.Elapsed += timer_Elapsed;
@@ -72,7 +75,7 @@ namespace TestNodeMonitor.Entities
             procStartInfo.WorkingDirectory = String.Format("{0}\\{1}\\bin", BaseDir, Location);
             procStartInfo.UseShellExecute = true;
 
-            proc = new Process();
+            Process proc = new Process();
             proc.StartInfo = procStartInfo;
             proc.Start();
             updateNodeStatus("STARTING");
@@ -80,6 +83,11 @@ namespace TestNodeMonitor.Entities
 
         void timer_Elapsed(object sender, ElapsedEventArgs e)
         {
+            if (checking || testing || updating)
+            {
+                return;
+            }
+
             bool isrunning = false;
             try
             {
@@ -99,12 +107,13 @@ namespace TestNodeMonitor.Entities
             }
             catch (Exception ex)
             {
+                isrunning = false;
                 logger.Error(ex.Message, ex);
             }
 
             if (isrunning)
             {
-                if (NodeStatus != "RUNNING")
+                if ("RUNNING" != NodeStatus)
                 {
                     updateNodeStatus("RUNNING");
                 }
@@ -118,7 +127,29 @@ namespace TestNodeMonitor.Entities
                 {
                     logger.Error(ex.Message, ex);
                 }
-            } else if (NodeStatus == "RUNNING")
+
+                DateTime nowtime = DateTime.Now;
+                int every3hour = nowtime.Hour % 3;
+                int minute = nowtime.Minute;
+                switch (every3hour)
+                {
+                    case 0:
+                        if (minute == 15 && "UPDATE" != NodeStatus && NodeID == 1)
+                        {
+                            updateNodeStatus("UPDATE");
+                        }
+                        break;
+                    case 1:
+                        if (minute == 15 && "TEST" != NodeStatus && NodeID == 1)
+                        {
+                            updateNodeStatus("TEST");
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else if ("RUNNING" == NodeStatus)
             {
                 // The actual node is stopped, need to restart
                 updateNodeStatus("RESTART");
@@ -149,20 +180,26 @@ namespace TestNodeMonitor.Entities
 
         public void stop()
         {
+            updateNodeStatus("STOPPED");
             closeTimer();
             //stopWatcher();
+
+            if (null != testProcess)
+            {
+                testProcess.Kill();
+                testProcess.Dispose();
+                testProcess = null;
+            }
 
             ProcessStartInfo procStartInfo = new ProcessStartInfo("shutdown.bat");
             procStartInfo.WorkingDirectory = String.Format("{0}\\{1}\\bin", BaseDir, Location);
             procStartInfo.UseShellExecute = true;
 
-            proc = new Process();
+            Process proc = new Process();
             proc.StartInfo = procStartInfo;
             proc.Start();
             proc.WaitForExit();
             proc = null;
-
-            updateNodeStatus("STOPPED");
         }
 
         public void updateNodeStatus(string status)
@@ -297,24 +334,50 @@ namespace TestNodeMonitor.Entities
 
         public static void check()
         {
-            Dictionary<int, TestNode> _nodes = getNodesFromDB();     
+            if (checking)
+            {
+                return;
+            }
+            else
+            {
+                checking = true;
+            }
+
+            Dictionary<int, TestNode> _nodes = getNodesFromDB();
             var enumerator = _nodes.GetEnumerator();
             while (enumerator.MoveNext())
             {
                 TestNode testnode = enumerator.Current.Value;
-                switch(testnode.NodeStatus){
+
+                if (!nodes.ContainsKey(testnode.NodeID))
+                {
+                    if (testnode.NodeStatus == "RUNNING")
+                    {
+                        testnode.startTimer();
+                    }
+                    nodes.Add(testnode.NodeID, testnode);
+                }
+                else
+                {
+                    TestNode _node = nodes[testnode.NodeID];
+                    _node.NodeName = testnode.NodeName;
+                    _node.Location = testnode.Location;
+                    _node.NodeStatus = testnode.NodeStatus;
+                    _node.NodeIPAddress = testnode.NodeIPAddress;
+                    _node.NodeHttpPort1 = testnode.NodeHttpPort1;
+                    _node.NodeHttpPort2 = testnode.NodeHttpPort2;
+                    _node.NodeHttpPort3 = testnode.NodeHttpPort3;
+                }
+
+                switch (testnode.NodeStatus)
+                {
                     case "START":
-                        if (!nodes.ContainsKey(testnode.NodeID))
-                        {
-                            logger.Info(String.Format("{0} TestNode ID:{1}, Name:{2}", testnode.NodeStatus, testnode.NodeID, testnode.NodeName));
-                            testnode.start();
-                            nodes.Add(testnode.NodeID, testnode);
-                        }
+                        logger.Info(String.Format("{0} TestNode ID:{1}, Name:{2}", testnode.NodeStatus, testnode.NodeID, testnode.NodeName));
+                        testnode.start();
                         break;
                     case "RESTART":
                         logger.Info(String.Format("{0} TestNode ID:{1}, Name:{2}", testnode.NodeStatus, testnode.NodeID, testnode.NodeName));
                         testnode.stop();
-                        nodes.Remove(testnode.NodeID);
                         testnode.updateNodeStatus("START");
                         break;
                     case "STOP":
@@ -322,37 +385,127 @@ namespace TestNodeMonitor.Entities
                         testnode.stop();
                         break;
                     case "UPDATE":
+                        updating = true;
                         logger.Info(String.Format("{0} TestNode ID:{1}, Name:{2}", testnode.NodeStatus, testnode.NodeID, testnode.NodeName));
                         testnode.stop();
                         testnode.updateNodeStatus("UPDATING");
-                        nodes.Remove(testnode.NodeID);
                         break;
                     case "UPDATING":
-                        logger.Info(String.Format("{0} TestNode ID:{1}, Name:{2}", testnode.NodeStatus, testnode.NodeID, testnode.NodeName));
-                        string dirApps = String.Format("{0}\\{1}\\webapps", BaseDir, testnode.Location);
-                        if (Directory.Exists(dirApps))
+                        updating = true;
+                        try
                         {
-                            Directory.Delete(dirApps, true);
+                            logger.Info(String.Format("{0} TestNode ID:{1}, Name:{2}", testnode.NodeStatus, testnode.NodeID, testnode.NodeName));
+                            string dirApps = String.Format("{0}\\{1}\\webapps", BaseDir, testnode.Location);
+                            if (Directory.Exists(dirApps))
+                            {
+                                DeleteDir(dirApps);
+                            }
+                            DirectoryCopy(BaseNodeDir + "\\webapps", dirApps, true);
+
+                            string dirWork = String.Format("{0}\\{1}\\work", BaseDir, testnode.Location);
+                            if (Directory.Exists(dirWork))
+                            {
+                                DeleteDir(dirWork);
+                            }
+
+                            ProcessStartInfo procStartInfo = new ProcessStartInfo("job_allInOne.py");
+                            procStartInfo.WorkingDirectory = String.Format("{0}\\scripts", BaseDir);
+                            procStartInfo.UseShellExecute = true;
+
+                            Process proc = new Process();
+                            proc.StartInfo = procStartInfo;
+                            proc.Start();
+                            proc.WaitForExit();
+                            proc = null;
+
+                            testnode.updateNodeStatus("RESTART");
                         }
-                        DirectoryCopy(BaseNodeDir + "\\webapps", dirApps, true);
-                        string dirWork = String.Format("{0}\\{1}\\work", BaseDir, testnode.Location);
-                        if (Directory.Exists(dirWork))
+                        catch (Exception ex)
                         {
-                            Directory.Delete(dirWork, true);
+                            logger.Error(ex.Message, ex);
                         }
-                        DirectoryCopy(BaseNodeDir + "\\work", dirWork, true);
-                        testnode.updateNodeStatus("START");
+                        updating = false;
                         break;
-                    default:
-                        if (!nodes.ContainsKey(testnode.NodeID) && testnode.NodeStatus == "RUNNING")
+                    case "TEST":
+                        testing = true;
+                        try
                         {
-                            testnode.startTimer();
-                            //testnode.startWatcher();
-                            nodes.Add(testnode.NodeID, testnode);
+                            if (null != testProcess)
+                            {
+                                testProcess.Kill();
+                                testProcess.Dispose();
+                                testProcess = null;
+                            }
+
+                            logger.Info(String.Format("{0} TestNode ID:{1}, Name:{2}", testnode.NodeStatus, testnode.NodeID, testnode.NodeName));
+                            testnode.updateNodeStatus("STARTTEST");
+                            ProcessStartInfo procStartInfo = new ProcessStartInfo("TestBrowser.exe");
+                            procStartInfo.WorkingDirectory = ".";
+                            procStartInfo.UseShellExecute = true;
+
+                            testProcess = new Process();
+                            testProcess.StartInfo = procStartInfo;
+                            testProcess.Start();
+                        }
+                        catch (Exception ex)
+                        {
+                            testing = false;
+                            logger.Error(ex.Message, ex);
+                        }
+                        break;
+                    case "STARTTEST":
+                        testing = true;
+                        try
+                        {
+                            string portalTestUrl = "http://127.0.0.1:18080/portal-testserver-war-3.4.2/public/test/startTest.ajax?async=ture";
+                            HttpWebRequest request1 = (HttpWebRequest)WebRequest.Create(portalTestUrl);
+                            request1.Method = WebRequestMethods.Http.Get;
+                            HttpWebResponse response1 = (HttpWebResponse)request1.GetResponse();
+                            StreamReader reader1 = new StreamReader(response1.GetResponseStream());
+                            string responseString1 = reader1.ReadToEnd();
+                            response1.Close();
+                            testnode.updateNodeStatus("TESTING");
+                        }
+                        catch (Exception ex)
+                        {
+                            testing = false;
+                            logger.Error(ex.Message, ex);
+                        }
+                        break;
+                    case "TESTING":
+                        testing = true;
+                        try
+                        {
+                            string portalTestResultUrl = "http://127.0.0.1:18080/portal-testserver-war-3.4.2/public/test/data.ajax";
+                            HttpWebRequest request2 = (HttpWebRequest)WebRequest.Create(portalTestResultUrl);
+                            request2.Method = WebRequestMethods.Http.Get;
+                            HttpWebResponse response2 = (HttpWebResponse)request2.GetResponse();
+                            StreamReader reader2 = new StreamReader(response2.GetResponseStream());
+                            string responseString2 = reader2.ReadToEnd();
+                            JArray jsonArray = JArray.Parse(responseString2);
+                            JObject deviceJson = (JObject)jsonArray[0];
+                            string sessionStatus = (string)deviceJson["sessionStatus"];
+                            response2.Close();
+                            if ("STOPPED" == sessionStatus.ToUpper())
+                            {
+                                testing = false;
+                                testnode.updateNodeStatus("RUNNING");
+                            }
+                            else if ("IDLE" == sessionStatus)
+                            {
+                                testnode.updateNodeStatus("STARTTEST");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            testing = false;
+                            logger.Error(ex.Message, ex);
                         }
                         break;
                 }
             }
+
+            checking = false;
         }
 
         public static void startup()
@@ -363,6 +516,7 @@ namespace TestNodeMonitor.Entities
             {
                 TestNode testnode = enumerator.Current.Value;
                 testnode.updateNodeStatus("RUNNING");
+                testnode.startTimer();
             }
         }
 
@@ -374,6 +528,20 @@ namespace TestNodeMonitor.Entities
                 TestNode testnode = enumerator.Current.Value;
                 testnode.stop();
             }
+        }
+
+        private static void DeleteDir(string dirName)
+        {
+            ProcessStartInfo procStartInfo = new ProcessStartInfo();
+            procStartInfo.Arguments = "/C rd /s /q \"" + dirName + "\"";
+            procStartInfo.CreateNoWindow = false;
+            procStartInfo.UseShellExecute = true;
+            procStartInfo.FileName = "cmd.exe";
+            Process proc = new Process();
+            proc.StartInfo = procStartInfo;
+            proc.Start();
+            proc.WaitForExit();
+            proc = null;
         }
 
         private static void DirectoryCopy(string sourceDirName, string destDirName, bool copySubDirs)
@@ -408,6 +576,11 @@ namespace TestNodeMonitor.Entities
                     DirectoryCopy(subdir.FullName, temppath, copySubDirs);
                 }
             }
+        }
+
+        public void Dispose()
+        {
+            closeTimer();
         }
     }
 }

@@ -2,16 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using System.Security.Permissions;
-using Gecko;
 
-namespace TestNodeMonitor
+namespace TestBrowser
 {
     static class Program
     {
-
-        private static string XULRUNNERPATH = "\\xulrunner\\";
-
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -20,15 +15,7 @@ namespace TestNodeMonitor
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            
-            Gecko.Xpcom.Initialize(Application.StartupPath + XULRUNNERPATH);
-            Application.Run(new Monitor());
-        }
-
-        [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
-        public static void Run()
-        {
-
+            Application.Run(new STBHTML());
         }
     }
 }

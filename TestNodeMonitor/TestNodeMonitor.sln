@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Express 2012 for Windows Desktop
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestNodeMonitor", "TestNodeMonitor\TestNodeMonitor.csproj", "{5F63BD5C-2DB9-4241-9CAE-D3E6C2980F14}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestBrowser", "TestBrowser\TestBrowser.csproj", "{C8B09292-121B-4F27-906C-6673C6112CF1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{5F63BD5C-2DB9-4241-9CAE-D3E6C2980F14}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F63BD5C-2DB9-4241-9CAE-D3E6C2980F14}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F63BD5C-2DB9-4241-9CAE-D3E6C2980F14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8B09292-121B-4F27-906C-6673C6112CF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8B09292-121B-4F27-906C-6673C6112CF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8B09292-121B-4F27-906C-6673C6112CF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8B09292-121B-4F27-906C-6673C6112CF1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
