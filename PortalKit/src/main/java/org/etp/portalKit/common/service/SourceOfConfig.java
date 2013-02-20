@@ -14,7 +14,7 @@ public class SourceOfConfig implements Source {
     @Override
     public File getSource() {
         File configFile = null;
-        String home = System.getenv("HOME");
+        String home = System.getProperty("user.home");
         File root = new File(home);
         if (!root.isDirectory()) {
             root = new File("c:");
