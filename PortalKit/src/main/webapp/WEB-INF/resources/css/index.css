@@ -344,6 +344,7 @@ img{ border:none; margin:0; padding:0;}
     }
     
 .war-list-wrapper li{
+	position:relative;
     padding:2px 0px 1px 10px;
     height:20px;
     line-height:20px;

@@ -10,8 +10,16 @@
                     </div>
                     
                     <div class="war-list-wrapper">
-                        <li><div class="lightpoint"><input value="referencePortal" type="checkbox"><label></label></div>Reference Portal</li>
-                        <li><div class="lightpoint"><input value="multiscreenPortal" type="checkbox"><label></label></div>Multiscreen Portal</li>
+                        <li><div class="lightpoint"><input value="referencePortal" type="checkbox"><label></label></div>Reference Portal
+                        <div class="status">
+                            <img src="resources/images/loading.gif" />
+                        </div>
+                        </li>
+                        <li><div class="lightpoint"><input value="multiscreenPortal" type="checkbox"><label></label></div>Multiscreen Portal
+                        <div class="status">
+                            <img src="resources/images/loading.gif" />
+                        </div>
+                        </li>
                         <div class="deployList">
                             <li ng-repeat="file in allGzFiles" ><span title="{{file}}">{{file}}</span></li>
                         </div>

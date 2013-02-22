@@ -19,7 +19,7 @@
     //check deploy type, and set the corresponding selection to grayed.
     function checkChoose(){
         checkedList = [];
-        $('#deploy-content .table-wrapper .deployList li').removeClass("grayed");
+        $('#deploy-content .table-wrapper .deployList li').addClass("grayed");
         if(!downloadedPath){
             return;
         }
@@ -44,11 +44,9 @@
                 if(fileName.indexOf(choose[i]) > -1){
                     checkedList.push(fileName);
                     isChosen = true;
+                    $(this).removeClass("grayed");
                     break;
                 }
-            }
-            if(isChosen){
-                $(this).addClass("grayed");
             }
         });
         
@@ -146,6 +144,11 @@
                 $('#deploy-content #downloadedPath').attr("disabled", false);
                 break;
             case Lifecycle.IN_PROCESS:
+                $('#deploy-content #checkDeployPathButton').attr("disabled", true);
+                $('#deploy-content #deploy4CI').attr("disabled", true);
+                $('#deploy-content .table-wrapper .war-list-wrapper input').attr("disabled", true);
+                $('#deploy-content #downloadedPath').attr("disabled", true);
+                break;
             case Lifecycle.NO_CONFIGURATION:
                 $('#deploy-content #checkDeployPathButton').attr("disabled", true);
                 $('#deploy-content #deploy4CI').attr("disabled", true);
@@ -181,6 +184,11 @@
     
     //click event bind on the deploy button.
     $('#deploy-content #deploy4CI').click(function(event){
+        
+        $('#deploy-content .war-list-wrapper .status').attr("class", "status");
+        
+        var thisElem = $(this);
+        
         if(!$('#deploy-content #downloadedPath').val()){
             ViewManager.simpleWarning("Please set download path first.");
             return false;
@@ -200,16 +208,27 @@
             return false;
         }
         
+        var statusElem = $(choosedElement).parent().siblings('div[class="status"]');
+        statusElem.addClass("s-working");
+        
+        Lifecycle.setState(Lifecycle.IN_PROCESS);
+        
         DynamicLoad.postJSON(deployUrl, {
             downloadPath: downloadedPath,
             typeToDeploy: choosedElement.val(),
             deployPackages: checkedList
         }, function(data){
             ViewManager.simpleSuccess("Deployed successfully.");
-            $('#deploy-content #deploy4CI').attr("disabled", true);
+            Lifecycle.setState(Lifecycle.NORMAL);
+            statusElem.removeClass("s-working");
+            statusElem.addClass("s-success");
         },function(error){
             ViewManager.simpleError("Deployed error : "+error.message);
+            Lifecycle.setState(Lifecycle.NORMAL);
+            statusElem.removeClass("s-working");
+            statusElem.addClass("s-error");
         });
+        
     });
     
     //keyup event bind on the downloadpath input field.
