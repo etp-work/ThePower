@@ -26,8 +26,6 @@
 		class="org.springframework.core.io.support.PathMatchingResourcePatternResolver" />
 	<bean id="configSource" class="org.etp.portalKit.common.service.MockSourceOfConfig" />
 	<bean id="propertiesManager" class="org.etp.portalKit.common.service.PropertiesManager" />
-	<bean id="specProvider" class="org.etp.portalKit.powerbuild.service.SpecDirProvider" />
-	<bean id="designProvider" class="org.etp.portalKit.powerbuild.service.DesignDirProvider" />
 	<bean id="shellRunner" class="org.etp.portalKit.common.shell.ShellRunner" />
 	<bean id="buildExecutor" class="org.etp.portalKit.powerbuild.service.BuildExecutor" />
 	<bean id="exceptionResolver"
