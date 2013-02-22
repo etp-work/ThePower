@@ -169,7 +169,7 @@ public class PowerBuildLogic {
         BuildResult result = build(null, path);
         if (!result.isSuccess())
             return result;
-        boolean deployed = deployService.deployFromFolder(absPath, deployPath);
+        boolean deployed = deployService.deployFromFolder(path, deployPath);
         result.setDeployed(deployed);
         return result;
     }
