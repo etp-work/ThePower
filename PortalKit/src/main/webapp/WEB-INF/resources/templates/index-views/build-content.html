@@ -1,32 +1,3 @@
-<script id="DirTreeTemplate" type="text/x-jsrender">
-    <ul class="group">
-        <label class="category">
-		    <div class="lightpoint">
-                {{if checked}}
-			        <input type="checkbox" class="parentB" value="{{>name}}" checked="checked"/><label></label>
-                {{else}}
-                    <input type="checkbox" class="parentB" value="{{>name}}" /><label></label>
-                {{/if}}
-			</div>
-			<span>{{>name}}</span>
-		</label>
-        {{for subDirs}}
-		<li>
-		    <div class="lightpoint">
-                {{if checked}}
-			        <input type="checkbox" class="childB" value="{{>name}}" checked="checked"><label></label>
-                {{else}}
-                    <input type="checkbox" class="childB" value="{{>name}}" ><label></label>
-                {{/if}}
-			</div>
-			<span>{{>name}}</span>
-			<div class="status">
-				<img src="resources/images/loading.gif" />
-			</div>
-		</li>
-        {{/for}}
-	</ul>
-</script>
 <!-- ================================================================================ -->
 <div class="content-box" id="build-content">
 
@@ -76,7 +47,7 @@
     <div class="bulid-feature-content" id="environment">
           <div class="bulid-list">
               <ul class="group"><label class="category">Environment Package</label>
-                <li><div class="lightpoint"><input id="multiscreenPortal" value="multiscreenPortal" type="checkbox"><label></label></div>Mulitscreen Portal<div class="status"><img src="resources/images/loading.gif"/></div></li>
+                <li><div class="lightpoint"><input id="multiscreenPortal" value="multiscreenPortal" type="checkbox"><label></label></div>Multiscreen Portal<div class="status"><img src="resources/images/loading.gif"/></div></li>
                 <li><div class="lightpoint"><input id="referencePortal" value="referencePortal" type="checkbox"><label></label></div>Reference Portal<div class="status"><img src="resources/images/loading.gif"/></div></li>
               </ul>
           </div>
