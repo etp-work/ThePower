@@ -30,7 +30,7 @@
                 }
             });
             
-            if(CleanItems.widgetCaches || CleanItems.warFiles){
+            if(CleanItems.widgetCaches.length > 0 || CleanItems.warFiles.length > 0){
                 $('#clean-content .clean-list input').on("click", function(event){
                     var isAllUnChecked = true;
                     $('#clean-content .clean-list input').each(function(){

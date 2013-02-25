@@ -7,7 +7,7 @@
 			    <div class="lightpoint">
 			        <input type="checkbox" class="parentB" /><label></label>
 			    </div>
-			    <span>Widget cache</span>
+			    <span title="Only the cache of selected widget will be clean">Widget cache</span>
 			</label>
 			<li ng-repeat="cache in widgetCaches"><div class="lightpoint">
 					<input name="" class="childB" type="checkbox" value="{{cache}}"><label></label>
@@ -22,7 +22,7 @@
                 <div class="lightpoint">
                     <input type="checkbox" class="parentB" /><label></label>
                 </div>
-                <span>Tomcat war files</span>
+                <span title="Only the selected war files will be removed">Tomcat war files</span>
             </label>
 			<li ng-repeat="war in warFiles"><div class="lightpoint">
 					<input name="" class="childB" type="checkbox" value="{{war}}"><label></label>
