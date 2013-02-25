@@ -1,6 +1,6 @@
 ﻿namespace GriffinsPortalKit
 {
-    partial class NativeContainer
+    partial class RemoteControl
     {
         /// <summary>
         /// Required designer variable.
@@ -28,38 +28,35 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NativeContainer));
-            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.geckoWebBrowser1 = new Gecko.GeckoWebBrowser();
             this.SuspendLayout();
             // 
-            // notifyIcon1
+            // geckoWebBrowser1
             // 
-            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
-            this.notifyIcon1.Text = "notifyIcon1";
-            this.notifyIcon1.Visible = true;
-            this.notifyIcon1.DoubleClick += new System.EventHandler(this.notifyIcon1_DoubleClick);
+            this.geckoWebBrowser1.DisableWmImeSetContext = false;
+            this.geckoWebBrowser1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.geckoWebBrowser1.Location = new System.Drawing.Point(0, 0);
+            this.geckoWebBrowser1.Name = "geckoWebBrowser1";
+            this.geckoWebBrowser1.Size = new System.Drawing.Size(284, 262);
+            this.geckoWebBrowser1.TabIndex = 0;
+            this.geckoWebBrowser1.UseHttpActivityObserver = false;
             // 
-            // NativeContainer
+            // RemoteControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 262);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximizeBox = false;
-            this.Name = "NativeContainer";
+            this.Controls.Add(this.geckoWebBrowser1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Name = "RemoteControl";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "Griffins Portal Kit";
-            this.Load += new System.EventHandler(this.SplashScreen_Load);
-            this.Resize += new System.EventHandler(this.NativeContainer_Resize);
+            this.Text = "RemoteControl";
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.NotifyIcon notifyIcon1;
-
+        private Gecko.GeckoWebBrowser geckoWebBrowser1;
     }
 }
-

@@ -1,0 +1,123 @@
+body {
+    font-family: Verdana, Tahoma, Arial, Helvetica, sans-serif, sans;
+    font-size: 8pt;
+}
+
+body#popup {
+    background-color: #666;
+}
+
+body#options {
+    
+}
+
+div.popup {
+    width: 272px;
+}
+
+div.popup div.title {
+    display: block;
+    margin: 3px;
+    width: 100%;
+    font-size: 20px;
+    font-weight: bolder;
+    text-align: center;
+    color: white;
+    text-shadow: 2px 2px 2px black;
+}
+
+div.popup table tr.divider {
+    height: 20px;
+}
+
+div.popup input[type='button'] {
+    width: 50px;
+    height: 30px;
+    font-size: 8pt;
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    display: none;
+    border: 3px solid silver;
+    padding: 0;
+    -webkit-border-radius: 6px;
+    -webkit-box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+    border-radius: 6px;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+#ACTION_SHOW_GUI {
+    background: #090;
+}
+
+#ACTION_PREVIOUS_MENU {
+    background: #09C;
+}
+
+#REMOTE_1,#REMOTE_2,#REMOTE_3,#REMOTE_4,#REMOTE_5,#REMOTE_6,#REMOTE_7,#REMOTE_8,#REMOTE_9,#REMOTE_0 {
+    background: #333;
+}
+
+#ACTION_SELECT_ITEM {
+    background: #C33;
+}
+
+#ACTION_VOLUME_UP,#ACTION_VOLUME_DOWN,#ACTION_PAGE_UP,#ACTION_PAGE_DOWN {
+    background: #999;
+    color: #000;
+}
+
+#record {
+    margin-left: 30px;
+    display: block;
+    width: 200px;
+    height: 30px;
+    font-size: 8pt;
+    background-color: #066;
+    color: white;
+    font-weight: bold;
+    border: 1px solid silver;
+    -webkit-border-radius: 6px;
+    -webkit-box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+    border-radius: 6px;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+div.popup input.buttonAction {
+    display: block
+}
+
+div.popup div#status {
+    background-color: white;
+    padding: 3px;
+    font-size: 8pt;
+    font-weight: bold;
+    text-align: center;
+    border: 1px dashed silver;
+    height: 15px;
+}
+
+div.options {
+    
+}
+
+div.options fieldset {
+    width: 500px;
+}
+
+div.options fieldset legend {
+    color: darkblue;
+    font-weight: bold;
+}
+
+div.options label {
+    width: 150px;
+    padding-right: 10px;
+    float: left;
+}
+
+div.options div#status {
+    padding-top: 20px;
+    color: darkred;
+    font-weight: bold;
+}

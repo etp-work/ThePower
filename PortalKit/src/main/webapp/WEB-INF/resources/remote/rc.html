@@ -1,0 +1,178 @@
+<html>
+<head>
+    <title>RemoteControl</title>
+    <link href="../css/rc.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="../js/common/json2.js"></script>
+    <script type="text/javascript" src="../js/common/jquery-1.8.3.js"></script>
+    <script type="text/javascript">
+        var actionKeyMapping = {};
+        actionKeyMapping['ACTION_UP'] = 'UP';
+        actionKeyMapping['ACTION_DOWN'] = 'DOWN';
+        actionKeyMapping['ACTION_LEFT'] = 'LEFT';
+        actionKeyMapping['ACTION_RIGHT'] = 'RIGHT';
+        actionKeyMapping['ACTION_OK'] = 'ENTER';
+        actionKeyMapping['ACTION_BACK'] = 'B';
+        actionKeyMapping['REMOTE_0'] = '0';
+        actionKeyMapping['REMOTE_1'] = '1';
+        actionKeyMapping['REMOTE_2'] = '2';
+        actionKeyMapping['REMOTE_3'] = '3';
+        actionKeyMapping['REMOTE_4'] = '4';
+        actionKeyMapping['REMOTE_5'] = '5';
+        actionKeyMapping['REMOTE_6'] = '6';
+        actionKeyMapping['REMOTE_7'] = '7';
+        actionKeyMapping['REMOTE_8'] = '8';
+        actionKeyMapping['REMOTE_9'] = '9';
+        actionKeyMapping['ACTION_MENU'] = 'M';
+        var initRemoteControl = function () {
+            window.wsconn = new window.WebSocket(window.wsuri);
+            window.wsconn.onopen = function(event) {
+                window.wsconn.send("ID:REMOTECONTROL"); 
+            };
+            window.wsconn.onmessage = function(event) {
+                var command = JSON.parse(event.data);
+            };
+            window.wsconn.onclose = function(event) {};
+            window.wsconn.onerror = function(event) {};
+            
+            function doAction(action){
+                if(window.wsconn && actionKeyMapping[action]){
+                    window.wsconn.send(JSON.stringify({
+                        from:"ID:REMOTECONTROL",
+                        to:window.nativeID,
+                        type:"REMOTECONTROL",
+                        action:action,
+                        key:actionKeyMapping[action]
+                    }));
+                }
+                return true;
+            }
+            
+            $('.buttonAction').click(function () {
+                var button = $(this);
+                var action = button.attr('id');
+                var success = doAction(action);
+                var statusMsg;
+                if(success) { 
+                    statusMsg = 'Successful';
+                } else {
+                    statusMsg = 'Failed';
+                };                
+                $('#status span').html(statusMsg).show().fadeOut();
+            });
+            
+            // Keyboard
+            $(document).bind('keydown', 'up', function () { doAction('ACTION_UP'); });
+            $(document).bind('keydown', 'down', function () { doAction('ACTION_DOWN'); });
+            $(document).bind('keydown', 'left', function () { doAction('ACTION_LEFT'); });
+            $(document).bind('keydown', 'right', function () { doAction('ACTION_RIGHT'); }); 
+            $(document).bind('keydown', 'return', function () { doAction('ACTION_OK'); });                                       
+            $(document).bind('keydown', 'b', function () { doAction('ACTION_BACK'); }); 
+            $(document).bind('keydown', '0', function () { doAction('REMOTE_0'); });         
+            $(document).bind('keydown', '1', function () { doAction('REMOTE_1'); });
+            $(document).bind('keydown', '2', function () { doAction('REMOTE_2'); });
+            $(document).bind('keydown', '3', function () { doAction('REMOTE_3'); });
+            $(document).bind('keydown', '4', function () { doAction('REMOTE_4'); });
+            $(document).bind('keydown', '5', function () { doAction('REMOTE_5'); });
+            $(document).bind('keydown', '6', function () { doAction('REMOTE_6'); });
+            $(document).bind('keydown', '7', function () { doAction('REMOTE_7'); });
+            $(document).bind('keydown', '8', function () { doAction('REMOTE_8'); });
+            $(document).bind('keydown', '9', function () { doAction('REMOTE_9'); });                                                                 
+            $(document).bind('keydown', 'm', function () { doAction('ACTION_MENU'); });
+        };
+    </script>
+</head>
+<body id="popup">
+    <div class="popup">
+        <div class="title">RemoteControl</div>
+        <table>
+            <tbody>
+                
+                <tr class="divider">
+                    <td colspan="5"></td>
+                </tr>
+                <tr>
+                    <td><input id="ACTION_MENU" type="button" value="Menu" class="buttonAction" /></td>
+                    <td>&nbsp;</td>                    
+                    <td>&nbsp;</td>
+                    <td></td>  
+                    <td><input id="ACTION_BACK" type="button" value="Back" class="buttonAction" /></td>                                                                       
+                </tr>
+                <tr class="divider">
+                    <td colspan="5"></td>
+                </tr>                
+                <tr>
+                    <td><input id="ACTION_VOLUME_UP" type="button" value="Vol +" class="buttonAction" /></td>
+                    <td></td>
+                    <td><input id="ACTION_UP" type="button" value="/\" class="buttonAction" /></td>                                        
+                    <td></td>              
+                    <td><input id="ACTION_PAGE_UP" type="button" value="Pg Up" class="buttonAction" /></td>                    
+                </tr>                
+                <tr>
+                    <td></td>
+                    <td><input id="ACTION_LEFT" type="button" value="&lt;" class="buttonAction" /></td>
+                    <td><input id="ACTION_OK" type="button" value="OK" class="buttonAction" /></td>                                                       
+                    <td><input id="ACTION_RIGHT" type="button" value="&gt;" class="buttonAction" /></td>                    
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input id="ACTION_VOLUME_DOWN" type="button" value="Vol -" class="buttonAction" /></td>
+                    <td></td>                      
+                    <td><input id="ACTION_DOWN" type="button" value="\/" class="buttonAction" /></td>                                        
+                    <td></td>
+                    <td><input id="ACTION_PAGE_DOWN" type="button" value="Pg Dn" class="buttonAction" /></td>                    
+                </tr>      
+                <tr class="divider">
+                    <td colspan="5"></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>                
+                <tr>
+                    <td></td>        
+                    <td><input id="REMOTE_1" type="button" value="1" class="buttonAction" /></td>              
+                    <td><input id="REMOTE_2" type="button" value="2" class="buttonAction" /></td>                                        
+                    <td><input id="REMOTE_3" type="button" value="3" class="buttonAction" /></td>                    
+                    <td></td>                    
+                </tr>  
+                <tr>
+                    <td></td>        
+                    <td><input id="REMOTE_4" type="button" value="4" class="buttonAction" /></td>              
+                    <td><input id="REMOTE_5" type="button" value="5" class="buttonAction" /></td>                                        
+                    <td><input id="REMOTE_6" type="button" value="6" class="buttonAction" /></td>                                        
+                    <td></td>                    
+                </tr>  
+                <tr>
+                    <td></td>        
+                    <td><input id="REMOTE_7" type="button" value="7" class="buttonAction" /></td>              
+                    <td><input id="REMOTE_8" type="button" value="8" class="buttonAction" /></td>                                        
+                    <td><input id="REMOTE_9" type="button" value="9" class="buttonAction" /></td>                    
+                    <td></td>                    
+                </tr>                
+                <tr>
+                    <td></td>        
+                    <td></td>              
+                    <td><input id="REMOTE_0" type="button" value="0" class="buttonAction" /></td>                                        
+                    <td></td>                    
+                    <td></td>                    
+                </tr>
+                <tr class="divider">
+                    <td colspan="5"></td>
+                </tr> 
+                <tr>
+                    <td colspan="5">
+                        <input type="button" value="Record" id="record" />
+                    </td>
+                </tr>                      
+                <tr>
+                    <td colspan="5">
+                        <div id="status"><span>Ready</span></div>
+                    </td>
+                </tr>                    
+            </tbody>
+        </table>
+    </div>
+</body>

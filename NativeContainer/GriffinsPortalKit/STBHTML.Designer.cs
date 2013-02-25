@@ -41,7 +41,7 @@
             this.geckoWebBrowser1.TabIndex = 0;
             this.geckoWebBrowser1.UseHttpActivityObserver = false;
             // 
-            // Browser
+            // STBHTML
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -65,5 +65,6 @@
         #endregion
 
         private Gecko.GeckoWebBrowser geckoWebBrowser1;
+
     }
 }

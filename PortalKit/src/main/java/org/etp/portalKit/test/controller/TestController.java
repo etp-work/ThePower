@@ -23,7 +23,7 @@ public class TestController {
 
     private static final HttpClient httpclient = new HttpClient();
     private static final Log logger = LogFactory.getLog(TestController.class);
-    
+
     private String getDefatltIP() {
         return "127.0.0.1";
     }
@@ -38,6 +38,10 @@ public class TestController {
 
     private String getDataRequestURL() {
         return "public/test/data.ajax";
+    }
+
+    private String getStartTestRequestURL() {
+        return "public/test/startTest.ajax?async=ture";
     }
 
     /**
@@ -55,14 +59,36 @@ public class TestController {
         String requestURL = String.format("http://%s:%s/%s/%s", requestIP, requestPort, requestContextPath,
                 getDataRequestURL());
         String response = "";
-        try{
+        try {
             response = sendGetRequest(requestURL);
-        }catch(Exception ex){
+        } catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
         }
         return response;
     }
-    
+
+    /**
+     * @param targetIP
+     * @param targetPort
+     * @param targetContextPath
+     * @return do nothing
+     */
+    @RequestMapping(value = "/test/start.ajax", method = RequestMethod.GET)
+    public @ResponseBody
+    String startTest(String targetIP, String targetPort, String targetContextPath) {
+        String requestIP = null != targetIP ? targetIP : getDefatltIP();
+        String requestPort = null != targetPort ? targetPort : getDefaultPort();
+        String requestContextPath = null != targetContextPath ? targetContextPath : getDefaultContextPath();
+        String requestURL = String.format("http://%s:%s/%s/%s", requestIP, requestPort, requestContextPath,
+                getStartTestRequestURL());
+        String response = "";
+        try {
+            response = sendGetRequest(requestURL);
+        } catch (Exception ex) {
+            logger.error(ex.getMessage(), ex);
+        }
+        return response;
+    }
 
     protected String sendGetRequest(String url) throws HttpException, IOException {
         return execMethod(new GetMethod(url));

@@ -4,14 +4,6 @@
 <head>
 <%@ include file="/WEB-INF/views/common/header_head.jsp"%>
 <link href="resources/css/index.css" rel="stylesheet" type="text/css">
-<script type="text/javascript">
-    function startPortal(portalType){
-        event = window.document.createEvent('MessageEvent'); 
-        var origin = window.location.protocol + '' + window.location.host; 
-        event.initMessageEvent('startPortal', true, true, 'STARTPORTAL:' + portalType, origin, 1234, window, null); 
-        window.document.dispatchEvent(event);
-    }
-</script>
 <script type="text/javascript" src="resources/js/index.js"></script>
 <title>The Power</title>
 </head>
@@ -21,9 +13,6 @@
     <div class="header">
         <div class="toolsName"><img class="logo" src="resources/images/logo_24.png"/>THE POWER</div>    
     </div>
-
-
-
 
     <div class="maincontent">
         <div class="tab-header">

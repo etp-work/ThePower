@@ -10,16 +10,23 @@ using Gecko;
 using Gecko.DOM;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using WebSocket4Net;
+using System.Reflection;
+using log4net;
+using Newtonsoft.Json.Linq;
+using System.Threading;
 
 namespace GriffinsPortalKit
 {
     public partial class NativeContainer : Form
     {
         private static string XULRUNNERPATH = "\\xulrunner\\";
-        private static List<Form> portals = new List<Form>();
+        private static ILog logger = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private STBHTML portal;
+        private RemoteControl remoteControl;
         private GeckoWebBrowser browser;
-        private Action<String> message = new Action<String>(NativeContainer.onMessage);
         private SplashForm frmSplash = new SplashForm();
+        private WebSocket websocketclient;
 
         [DllImport("USER32.DLL", CharSet = CharSet.Unicode)]
         public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
@@ -33,6 +40,7 @@ namespace GriffinsPortalKit
             InitializeComponent();
 
             Gecko.Xpcom.Initialize(Application.StartupPath + XULRUNNERPATH);
+            //GeckoPreferences.User["gfx.font_rendering.graphite.enabled"] = true;
             browser = new GeckoWebBrowser();
             browser.Parent = this;
             browser.Dock = DockStyle.Fill;
@@ -42,6 +50,8 @@ namespace GriffinsPortalKit
 
             this.Width = Convert.ToInt32(ConfigurationManager.AppSettings["WindowWidth"]);
             this.Height = Convert.ToInt32(ConfigurationManager.AppSettings["WindowHeight"]);
+            this.Left = System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Right - this.Width;
+            this.Top = 0;
             this.FormBorderStyle = FormBorderStyle.Fixed3D;
         }
 
@@ -60,79 +70,100 @@ namespace GriffinsPortalKit
 
         void browser_DocumentCompleted(object sender, EventArgs e)
         {
-            GeckoWebBrowser br = sender as GeckoWebBrowser;
-            browser.AddMessageEventListener("startPortal", message);
-            browser.WebBrowserFocus.Deactivate();
             this.Show();
+            GeckoWebBrowser br = sender as GeckoWebBrowser;
+            br.WebBrowserFocus.Deactivate();
+            string wsuri = ConfigurationManager.AppSettings["WebSocketUri"];
+            GeckoScriptElement script = (GeckoScriptElement)br.Document.CreateElement("script");
+            script.Type = "text/javascript";
+            script.Text = "window.wsuri = '" + wsuri + "';";
+            script.Text += "window.nativeID = '" + Program.nativeID.ToString() + "';";
+            script.Text += "window.portalID = '" + Program.portalID.ToString() + "';";
+            br.Document.Body.AppendChild(script);
+            websocketclient = new WebSocket(wsuri);
+            websocketclient.Opened += websocketclient_Opened;
+            websocketclient.Error += websocketclient_Error;
+            websocketclient.Closed += websocketclient_Closed;
+            websocketclient.MessageReceived += websocketclient_MessageReceived;
+            websocketclient.Open();
         }
 
-        static void onMessage(String message)
+        void websocketclient_Opened(object sender, EventArgs e)
         {
-            if (message.StartsWith("STARTPORTAL:"))
+            logger.Debug("WebSocket Native Client Opened");
+            websocketclient.Send("ID:" + Program.nativeID.ToString());
+        }
+
+        void websocketclient_Error(object sender, SuperSocket.ClientEngine.ErrorEventArgs e)
+        {
+            logger.Debug("WebSocket Native Client Error");
+        }
+
+        void websocketclient_Closed(object sender, EventArgs e)
+        {
+            logger.Debug("WebSocket Native Client Closed");
+        }
+
+        void websocketclient_MessageReceived(object sender, MessageReceivedEventArgs e)
+        {
+            logger.Debug("WebSocket Native Client MessageReceived:" + e.Message);
+            try
             {
-                foreach (Form portal in portals)
+                JObject json = JObject.Parse(e.Message);
+                string type = (string)json["type"];
+                switch (type)
+                {
+                    case "STARTPORTAL":
+                        string portaltype = (string)json["portaltype"];
+                        switch (portaltype)
+                        {
+                            case "STBHTML":
+                                Thread portalThread = new Thread(new ThreadStart(startPortal));
+                                portalThread.Start();
+                                break;
+                            /*case "IPAD":
+                                IPAD portalIPAD = new IPAD(ConfigurationManager.AppSettings["PORTAL_IPAD"]);
+                                portalIPAD.Visible = true;
+                                portals.Add(portalIPAD);
+                                break;*/
+                        }
+                        break;
+                    default:
+                        this.BeginInvoke((Action)delegate
+                        {
+                            if (null != portal)
+                            {
+                                portal.onMessage(json);
+                            }
+                        });
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message, ex);
+            }
+        }
+
+        private void startPortal()
+        {
+            this.BeginInvoke((Action)delegate
+            {
+                if (null != portal)
                 {
                     portal.Close();
                 }
-                portals.Clear();
-
-                message = message.Replace("STARTPORTAL:", "").ToUpper();
-                switch (message)
+                if (null != remoteControl)
                 {
-                    case "STBHTML":
-                        string portalFullUrl = String.Format("http://{0}:{1}{2}", ConfigurationManager.AppSettings["PortalAddress"], ConfigurationManager.AppSettings["PortalPort"], ConfigurationManager.AppSettings["PortalUrl_STBHTML"]);
-                        STBHTML portalSTBHTML = new STBHTML(portalFullUrl);
-                        portalSTBHTML.Visible = true;
-                        portals.Add(portalSTBHTML);
-                        break;
-                    /*case "IPAD":
-                        IPAD portalIPAD = new IPAD(ConfigurationManager.AppSettings["PORTAL_IPAD"]);
-                        portalIPAD.Visible = true;
-                        portals.Add(portalIPAD);
-                        break;*/
+                    remoteControl.Close();
                 }
+                string portalFullUrl = String.Format("http://{0}:{1}{2}", ConfigurationManager.AppSettings["PortalAddress"], ConfigurationManager.AppSettings["PortalPort"], ConfigurationManager.AppSettings["PortalUrl_STBHTML"]);
+                portal = new STBHTML(portalFullUrl);
+                portal.Visible = true;
 
-            }
-            else if (message.StartsWith("EXECMD:"))
-            {
-                message = message.Replace("EXECMD:", "");
-                ProcessStartInfo procStartInfo = new ProcessStartInfo("cmd.exe", "/c " + message);
-
-                //procStartInfo.FileName = "cmd.exe";
-                procStartInfo.WorkingDirectory = "c:\\";
-                //procStartInfo.Arguments = "/c " + message;
-
-                procStartInfo.RedirectStandardOutput = true;
-                procStartInfo.UseShellExecute = false;
-                procStartInfo.CreateNoWindow = true;
-
-                Process proc = new Process();
-                proc.StartInfo = procStartInfo;
-                proc.Start();
-                string result = proc.StandardOutput.ReadToEnd();
-                MessageBox.Show(result);
-            }
-            else if (message.StartsWith("BUILD:"))
-            {
-                message = message.Replace("BUILD:", "");
-                ProcessStartInfo procStartInfo = new ProcessStartInfo("mvn", "clean install");
-                procStartInfo.WorkingDirectory = message;
-                //procStartInfo.RedirectStandardOutput = true;
-                procStartInfo.UseShellExecute = true;
-                procStartInfo.CreateNoWindow = false;
-
-                Process proc = new Process();
-                proc.StartInfo = procStartInfo;
-                proc.Start();
-                //proc.WaitForExit();
-                //string result = proc.StandardOutput.ReadToEnd();
-                //MessageBox.Show(result);
-            }
-            else if (message.StartsWith("KEY:"))
-            {
-                message = message.Replace("KEY:", "");
-                SendKeys.SendWait(message);
-            }
+                remoteControl = new RemoteControl();
+                remoteControl.Visible = true;
+            });
         }
 
         private void SplashScreen_Load(object sender, EventArgs e)

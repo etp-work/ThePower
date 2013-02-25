@@ -9,6 +9,40 @@
   //=========================================variable=====================================
     var viewId = "test-content";
     var dataUrl = "/test/data.ajax";
+    var startUrl = "/test/start.ajax";
+    
+    if (window.wsuri) {
+        window.wsconn = new window.WebSocket(window.wsuri);
+        window.wsconn.onopen = function(event) {
+            window.wsconn.send("ID:"+window.portalID); 
+        };
+        window.wsconn.onmessage = function(event) {
+            var command = JSON.parse(event.data);
+            if(command.type == "TESTSUITEUPDATE"){
+                var scope = angular.element($('.us-list')).scope();
+                scope.$apply(function(){
+                    scope.testsuites = command.testsuites;
+                });
+            }
+            
+            if(command.type == "TESTCASE_START"){
+                var element = $("#test-content .us-list .childB[value=\""+command.casename+"\"]").parent().siblings('.status');
+                element.addClass("s-working");
+            }
+            
+            if(command.type == "TESTCASE_END"){
+                var element = $("#test-content .us-list .childB[value=\""+command.casename+"\"]").parent().siblings('.status');
+                element.removeClass("s-working");
+                if(command.result === "OK"){
+                    element.addClass("s-success");
+                } else {
+                    element.addClass("s-error");
+                }
+            }
+        };
+        window.wsconn.onclose = function(event) {};
+        window.wsconn.onerror = function(event) {};
+    }
     
 //========================================init listener=====================================
     
@@ -52,7 +86,18 @@
     
     $('#test-content #portal').change(function() {
         var portaltype = $('#test-content #portal').val();
-        startPortal(portaltype);
+        if(window.wsconn && portaltype){
+            window.wsconn.send(JSON.stringify({
+                from:window.portalID,
+                to:window.nativeID,
+                type:"STARTPORTAL",
+                portaltype:portaltype
+            }));
+        }
+    });
+    
+    $('#test-content .main-button-area .test').click(function(event){
+        DynamicLoad.loadJSON(startUrl, undefined, function(response){});
     });
 
 }(window));

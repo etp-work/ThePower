@@ -60,6 +60,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>lib\AForge.Math.dll</HintPath>
     </Reference>
+    <Reference Include="CefSharp">
+      <HintPath>lib\CefSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="CefSharp.WinForms">
+      <HintPath>lib\CefSharp.WinForms.dll</HintPath>
+    </Reference>
     <Reference Include="geckofx-core-16, Version=16.0.1.0, Culture=neutral, PublicKeyToken=3209ac31600d1857, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>lib\geckofx-core-16.dll</HintPath>
@@ -68,22 +74,58 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>lib\Geckofx-Winforms-16.dll</HintPath>
     </Reference>
+    <Reference Include="log4net">
+      <HintPath>lib\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="MathNet.Iridium">
       <HintPath>lib\MathNet.Iridium.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="OpenSURFcs">
       <HintPath>lib\OpenSURFcs.dll</HintPath>
+    </Reference>
+    <Reference Include="SuperSocket.Common">
+      <HintPath>lib\SuperSocket.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="SuperSocket.SocketBase">
+      <HintPath>lib\SuperSocket.SocketBase.dll</HintPath>
+    </Reference>
+    <Reference Include="SuperSocket.SocketEngine">
+      <HintPath>lib\SuperSocket.SocketEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="SuperWebSocket">
+      <HintPath>lib\SuperWebSocket.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Threading">
+      <HintPath>lib\System.Threading.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WebSocket4Net">
+      <HintPath>lib\WebSocket4Net.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DebugWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DebugWindow.Designer.cs">
+      <DependentUpon>DebugWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="ImageCompare.cs" />
+    <Compile Include="RemoteControl.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RemoteControl.Designer.cs">
+      <DependentUpon>RemoteControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="STBHTML.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -110,6 +152,9 @@
     <Compile Include="SURFCompare.Designer.cs">
       <DependentUpon>SURFCompare.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="RemoteControl.resx">
+      <DependentUpon>RemoteControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="STBHTML.resx">
       <DependentUpon>STBHTML.cs</DependentUpon>
     </EmbeddedResource>
