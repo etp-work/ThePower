@@ -3,9 +3,14 @@
 
 	<div class="clean-list">
 		<ul class="group Widget">
-			<label class="category">Widget cache</label>
+			<label class="category">
+			    <div class="lightpoint">
+			        <input type="checkbox" class="parentB" /><label></label>
+			    </div>
+			    <span>Widget cache</span>
+			</label>
 			<li ng-repeat="cache in widgetCaches"><div class="lightpoint">
-					<input name="" type="checkbox" value="{{cache}}"><label></label>
+					<input name="" class="childB" type="checkbox" value="{{cache}}"><label></label>
 				</div><span title="{{cache}}">{{cache}}</span>
 				<div class="status">
 					<img src="resources/images/loading.gif" />
@@ -13,9 +18,14 @@
 		</ul>
 
 		<ul class="group Tomcat">
-			<label class="category">Tomcat war files</label>
+		    <label class="category">
+                <div class="lightpoint">
+                    <input type="checkbox" class="parentB" /><label></label>
+                </div>
+                <span>Tomcat war files</span>
+            </label>
 			<li ng-repeat="war in warFiles"><div class="lightpoint">
-					<input name="" type="checkbox" value="{{war}}"><label></label>
+					<input name="" class="childB" type="checkbox" value="{{war}}"><label></label>
 				</div><span title="{{war}}">{{war}}</span>
 				<div class="status">
 					<img src="resources/images/loading.gif" />

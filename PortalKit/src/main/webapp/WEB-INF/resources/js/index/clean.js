@@ -11,6 +11,12 @@
 //=========================================functions========================================
     function cleanOnShowListener(){
         DynamicLoad.loadJSON(getCleanItemsUrl, undefined, function(CleanItems){
+            
+            $('#clean-content .clean-list input').attr("checked", false);
+            
+            $('#clean-content .clean-list .parentB').off("click");
+            $('#clean-content .clean-list .childB').off("click");
+            
             $('#clean-content .clean-list input').off("click");
             $('#clean-content #cleanButton').attr("disabled", true);
             
@@ -34,6 +40,7 @@
                     });
                     $('#clean-content #cleanButton').attr("disabled", isAllUnChecked);
                 });
+                rebindSelection();
             }
             
         });
@@ -44,13 +51,13 @@
         var selection = {
                 widget: [],
                 tomcat: []};
-        $('#clean-content .clean-list .Widget input').each(function(){
+        $('#clean-content .clean-list .Widget .childB').each(function(){
             if($(this).is(':checked')){
                 selection.widget.push($(this).val());
             }
         });
         
-        $('#clean-content .clean-list .Tomcat input').each(function(){
+        $('#clean-content .clean-list .Tomcat .childB').each(function(){
             if($(this).is(':checked')){
                 selection.tomcat.push($(this).val());
             }
@@ -107,8 +114,39 @@
     function removeSelection(){
         var selection = getSelection();
         removeOne(selection.widget, "widget", function(){
-            removeOne(selection.tomcat, "tomcat");
+            removeOne(selection.tomcat, "tomcat", function(){
+                var selection = getSelection();
+                $('#clean-content .clean-list .Widget .parentB').attr("checked", selection.widget.length > 0);
+                $('#clean-content .clean-list .Tomcat .parentB').attr("checked", selection.tomcat.length > 0);
+            });
         });
+    }
+    
+    //rebind click event clean-list checkbox items
+    function rebindSelection(){
+
+        $('#clean-content .clean-list .parentB').on("click", function(event){
+                    var isChecked = $(this).is(':checked');
+                    $(this).parent().parent().siblings().find('.childB').attr("checked", isChecked);
+        });
+        $('#clean-content .clean-list .childB').on("click", function(event){
+                    var isChecked = $(this).is(':checked');
+                    var parent = $(this).parent().parent().parent().find('.parentB');
+                    if(isChecked){
+                        parent.attr("checked", true);
+                    }else{
+                        var isAllFalse = true;
+                        $(this).parent().parent().siblings().find('.childB').each(function(){
+                            if($(this).is(':checked')){
+                                isAllFalse = false;
+                            }
+                        });
+                        if(isAllFalse){
+                            parent.attr("checked", false);
+                        }
+                    }
+                }
+        );
     }
     
 //========================================init listener=====================================
