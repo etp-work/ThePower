@@ -4,6 +4,11 @@
 <head>
 <%@ include file="/WEB-INF/views/common/header_head.jsp"%>
 <link href="resources/css/index.css" rel="stylesheet" type="text/css">
+<c:forEach var="view" items="${viewInfo}" varStatus="status">
+    <c:if test="${view.css != ''}">
+         <link href="<c:out value='${view.css}'/>" rel="stylesheet" type="text/css">
+    </c:if>
+</c:forEach>
 <script type="text/javascript" src="resources/js/index.js"></script>
 <title>The Power</title>
 </head>

@@ -8,8 +8,23 @@ public class ViewInfo {
     private String viewId;
     private String viewName;
     private String js;
+    private String css;
     private String templateUrl;
     private boolean defaultView;
+
+    /**
+     * @return Returns the css.
+     */
+    public String getCss() {
+        return css;
+    }
+
+    /**
+     * @param css The css to set.
+     */
+    public void setCss(String css) {
+        this.css = css;
+    }
 
     /**
      * @return Returns the defaultView.
