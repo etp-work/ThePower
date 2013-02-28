@@ -6,5 +6,7 @@ target/
 eclipse-out/
 .svn/
 .buildpath
+.log
 bin
 obj
+xulrunner

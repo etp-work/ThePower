@@ -66,7 +66,7 @@ namespace GriffinsPortalKit
             worker.ProgressChanged += worker_ProgressChanged;
             worker.RunWorkerCompleted += worker_RunWorkerCompleted;
             worker.WorkerReportsProgress = true;
-            //worker.RunWorkerAsync();
+            worker.RunWorkerAsync();
 
             nativeContainer = new NativeContainer();
             nativeContainer.FormClosed += nativeContainer_FormClosed;
