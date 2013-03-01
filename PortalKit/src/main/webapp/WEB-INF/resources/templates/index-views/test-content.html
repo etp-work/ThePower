@@ -13,6 +13,7 @@
     <span class="tdName">Test Suite List</span>
     <div class="test-feature-content">
         <div class="us-list">
+            <input type="text" ng-model="search" placeholder="filter test case name..."/>
             <ul class="group" ng-repeat="testsuite in testsuites">
                 <label class="category">
                     <div class="lightpoint">
@@ -20,7 +21,7 @@
                     </div>
                     <span>{{testsuite.suiteId}}</span>
                 </label>
-                <li ng-repeat="testcase in testsuite.cases">
+                <li ng-repeat="testcase in testsuite.cases | filter:search">
                     <div class="lightpoint">
                         <input type="checkbox" class="childB" ng-checked="true" value="{{testcase.testCaseName}}" /><label></label>
                     </div>
