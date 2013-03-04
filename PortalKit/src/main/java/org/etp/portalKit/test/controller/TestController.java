@@ -49,22 +49,18 @@ public class TestController {
      * @param targetPort
      * @param targetContextPath
      * @return do nothing
+     * @throws IOException 
+     * @throws HttpException 
      */
     @RequestMapping(value = "/test/data.ajax", method = RequestMethod.GET)
     public @ResponseBody
-    String getData(String targetIP, String targetPort, String targetContextPath) {
+    String getData(String targetIP, String targetPort, String targetContextPath) throws HttpException, IOException {
         String requestIP = null != targetIP ? targetIP : getDefatltIP();
         String requestPort = null != targetPort ? targetPort : getDefaultPort();
         String requestContextPath = null != targetContextPath ? targetContextPath : getDefaultContextPath();
         String requestURL = String.format("http://%s:%s/%s/%s", requestIP, requestPort, requestContextPath,
                 getDataRequestURL());
-        String response = "";
-        try {
-            response = sendGetRequest(requestURL);
-        } catch (Exception ex) {
-            logger.error(ex.getMessage(), ex);
-        }
-        return response;
+        return sendGetRequest(requestURL);
     }
 
     /**
@@ -72,22 +68,18 @@ public class TestController {
      * @param targetPort
      * @param targetContextPath
      * @return do nothing
+     * @throws IOException 
+     * @throws HttpException 
      */
     @RequestMapping(value = "/test/start.ajax", method = RequestMethod.GET)
     public @ResponseBody
-    String startTest(String targetIP, String targetPort, String targetContextPath) {
+    String startTest(String targetIP, String targetPort, String targetContextPath) throws HttpException, IOException {
         String requestIP = null != targetIP ? targetIP : getDefatltIP();
         String requestPort = null != targetPort ? targetPort : getDefaultPort();
         String requestContextPath = null != targetContextPath ? targetContextPath : getDefaultContextPath();
         String requestURL = String.format("http://%s:%s/%s/%s", requestIP, requestPort, requestContextPath,
                 getStartTestRequestURL());
-        String response = "";
-        try {
-            response = sendGetRequest(requestURL);
-        } catch (Exception ex) {
-            logger.error(ex.getMessage(), ex);
-        }
-        return response;
+        return sendGetRequest(requestURL);
     }
 
     protected String sendGetRequest(String url) throws HttpException, IOException {
