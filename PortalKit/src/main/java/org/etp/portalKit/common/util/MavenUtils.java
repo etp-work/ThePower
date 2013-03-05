@@ -20,9 +20,9 @@ public class MavenUtils {
      */
     public static boolean isMavenProject(File file) {
         if (file == null)
-            throw new NullPointerException("maven project folder could not be null.");
+            return false;
         if (!file.isDirectory())
-            throw new RuntimeException("maven project path must be a folder path.");
+            return false;
         File[] children = file.listFiles(new FileFilter() {
             @Override
             public boolean accept(File pathname) {

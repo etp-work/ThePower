@@ -11,6 +11,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
+import java.util.Observable;
 import java.util.Properties;
 
 import javax.annotation.PostConstruct;
@@ -31,7 +32,7 @@ import org.springframework.stereotype.Component;
  */
 @Component(value = "propertiesManager")
 @EnableScheduling
-public class PropertiesManager {
+public class PropertiesManager extends Observable {
 
     private File configFile;
     private Properties prop;
@@ -122,6 +123,8 @@ public class PropertiesManager {
         if (isDirty) {
             prop.setProperty(key, value);
             this.write();
+            this.setChanged();
+            this.notifyObservers(key);
         }
     }
 

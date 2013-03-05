@@ -39,12 +39,16 @@
         DynamicLoad.loadJSON(getSettingsUrl, undefined, function(data){
             if(data){
                 var scope = angular.element($('#setting-content')).scope();
+                if(data.portalTeamPath){
+                    ptPath = data.portalTeamPath;
+                }
+                if(data.tomcatWebappsPath){
+                    twPath = data.tomcatWebappsPath;
+                }
                 scope.$apply(function(){
-                    scope.portalTeamPath = data.portalTeamPath;
-                    scope.tomcatWebappsPath = data.tomcatWebappsPath;
+                    scope.portalTeamPath = ptPath ? ptPath : "";
+                    scope.tomcatWebappsPath = twPath ? twPath : "";
                 });
-                ptPath = data.portalTeamPath;
-                twPath = data.tomcatWebappsPath;
             }
             
         });

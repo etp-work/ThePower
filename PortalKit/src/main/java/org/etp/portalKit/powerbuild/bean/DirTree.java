@@ -1,5 +1,6 @@
 package org.etp.portalKit.powerbuild.bean;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +8,11 @@ import java.util.List;
  * The purpose of this class is to provide a json format allowed data
  * collection.
  */
-public class DirTree {
+public class DirTree implements Serializable {
+    /**
+     * <code>serialVersionUID</code>
+     */
+    private static final long serialVersionUID = -5814542843030755068L;
     private String name;
     private String absolutePath;
     private String relativePath;

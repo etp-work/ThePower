@@ -4,10 +4,23 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
+
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
+import org.codehaus.jackson.type.TypeReference;
+import org.etp.portalKit.common.service.PropertiesManager;
+import org.etp.portalKit.common.util.JSONUtils;
 import org.etp.portalKit.common.util.MavenUtils;
+import org.etp.portalKit.common.util.ObjectUtil;
+import org.etp.portalKit.common.util.PropManagerUtils;
 import org.etp.portalKit.powerbuild.bean.DirTree;
+import org.etp.portalKit.powerbuild.bean.SelectionCommand;
+import org.etp.portalKit.setting.bean.SettingsCommand;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
@@ -16,13 +29,32 @@ import org.springframework.util.CollectionUtils;
  * information with DirTree.
  */
 @Component(value = "commonBuildListProvider")
-public class CommonBuildListProvider {
+public class CommonBuildListProvider implements Observer {
+
+    @Resource(name = "pathMatchingResourcePatternResolver")
+    private PathMatchingResourcePatternResolver pathResolver;
+
+    @Resource(name = "propertiesManager")
+    private PropertiesManager prop;
 
     private String basePath;
     private List<String> defaultSelection;
     private List<DirTree> basedListTree;
+    private List<DirTree> retrieveTree;
 
-    private boolean hasReset;
+    private String COMMON_BUILD_LIST_BASE_JSON = "powerbuild/commonBuildList.json";
+
+    @PostConstruct
+    private void init() {
+        basedListTree = JSONUtils.fromJSONResource(pathResolver.getResource(COMMON_BUILD_LIST_BASE_JSON),
+                new TypeReference<List<DirTree>>() {
+                    //
+                });
+        if (CollectionUtils.isEmpty(basedListTree))
+            throw new RuntimeException("Load commonBuildList.json error.");
+        prop.addObserver(this);
+        resetDirInfo();
+    }
 
     /**
      * Iterate basedListTree for set the absolute path for each item
@@ -31,36 +63,41 @@ public class CommonBuildListProvider {
      * target folder), if not, remvoe this item from the DirTree which
      * this item belongs to.
      */
+    @SuppressWarnings("unchecked")
     private void resetDirInfo() {
-        if (StringUtils.isBlank(basePath))
-            throw new RuntimeException("basePath could not be empty or null.");
-        if (CollectionUtils.isEmpty(basedListTree))
-            throw new RuntimeException("basedListTree could not be empty or null.");
-        List<String> selection = null;
-        if (CollectionUtils.isEmpty(defaultSelection))
-            selection = new ArrayList<String>();
+        basePath = prop.get(SettingsCommand.PORTAL_TEAM_PATH);
+        if (StringUtils.isBlank(basePath)) {
+            retrieveTree = new ArrayList<DirTree>();
+            return;
+        }
+        if (CollectionUtils.isEmpty(basedListTree)) {
+            retrieveTree = new ArrayList<DirTree>();
+            return;
+        }
+
+        String defs = prop.get(SelectionCommand.SPEC_DEFAULT);
+        if (!StringUtils.isBlank(defs))
+            defaultSelection = (List<String>) PropManagerUtils.fromString(defs);
         else
-            selection = new ArrayList<String>(defaultSelection);
-        Iterator<DirTree> itr = basedListTree.iterator();
+            defaultSelection = new ArrayList<String>();
+        retrieveTree = (List<DirTree>) ObjectUtil.clone(basedListTree);
+        Iterator<DirTree> itr = retrieveTree.iterator();
         while (itr.hasNext()) {
             DirTree tree = itr.next();
-            iterateTreesForConvertPath(tree, itr, selection);
+            iterateTreesForConvertPath(tree, itr, defaultSelection);
         }
-        itr = basedListTree.iterator();
+        itr = retrieveTree.iterator();
         while (itr.hasNext()) {
             DirTree tree = itr.next();
             iterateTreesForRemoveNoChildItem(tree, itr);
         }
-        hasReset = true;
     }
 
     /**
      * @return get the converted result.
      */
     public List<DirTree> retrieveDirTrees() {
-        if (!hasReset)
-            resetDirInfo();
-        return new ArrayList<DirTree>(basedListTree);
+        return retrieveTree;
     }
 
     /**
@@ -118,57 +155,9 @@ public class CommonBuildListProvider {
         }
     }
 
-    /**
-     * @return Returns the basePath.
-     */
-    public String getBasePath() {
-        return basePath;
-    }
-
-    /**
-     * @param basePath a folder path used to combined with relative
-     *            path for each item itself to generate absolute path
-     *            and set it to each item.
-     */
-    public void setBasePath(String basePath) {
-        if (StringUtils.isBlank(basePath))
-            throw new RuntimeException("basePath could not be empty or null.");
-        this.basePath = basePath;
-        hasReset = false;
-    }
-
-    /**
-     * @return Returns the defaultSelection.
-     */
-    public List<String> getDefaultSelection() {
-        return defaultSelection;
-    }
-
-    /**
-     * @param defaultSelection list of selection, if a item included
-     *            in defaultSelection, set the checked state to true,
-     *            otherwise false.
-     */
-    public void setDefaultSelection(List<String> defaultSelection) {
-        this.defaultSelection = defaultSelection;
-        hasReset = false;
-    }
-
-    /**
-     * @return Returns the basedListTree.
-     */
-    public List<DirTree> getBasedListTree() {
-        return basedListTree;
-    }
-
-    /**
-     * @param basedListTree a based list of DirTree, which will be
-     *            full filled the absolute path of each item.
-     */
-    public void setBasedListTree(List<DirTree> basedListTree) {
-        if (CollectionUtils.isEmpty(basedListTree))
-            throw new RuntimeException("basedListTree could not be empty or null.");
-        this.basedListTree = basedListTree;
-        hasReset = false;
+    @Override
+    public void update(Observable o, Object key) {
+        if (key.equals(SettingsCommand.PORTAL_TEAM_PATH) || key.equals(SelectionCommand.SPEC_DEFAULT))
+            resetDirInfo();
     }
 }

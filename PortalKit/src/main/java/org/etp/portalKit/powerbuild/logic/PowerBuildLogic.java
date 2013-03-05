@@ -14,7 +14,6 @@ import org.etp.portalKit.common.service.DeployService;
 import org.etp.portalKit.common.service.PropertiesManager;
 import org.etp.portalKit.common.util.CommandResult;
 import org.etp.portalKit.common.util.JSONUtils;
-import org.etp.portalKit.common.util.PropManagerUtils;
 import org.etp.portalKit.powerbuild.bean.BuildResult;
 import org.etp.portalKit.powerbuild.bean.DeployInformation;
 import org.etp.portalKit.powerbuild.bean.DirTree;
@@ -46,7 +45,6 @@ public class PowerBuildLogic {
     @Resource(name = "deployService")
     private DeployService deployService;
 
-    private String COMMON_BUILD_LIST_BASE_JSON = "powerbuild/commonBuildList.json";
     private String ENVIRONMENT_DEPLOY_JSON = "powerbuild/deployInformation.json";
 
     private DeployInformation deployInformation;
@@ -56,12 +54,6 @@ public class PowerBuildLogic {
      */
     @PostConstruct
     public void initCommbuildList() {
-        List<DirTree> list = JSONUtils.fromJSONResource(pathResolver.getResource(COMMON_BUILD_LIST_BASE_JSON),
-                new TypeReference<List<DirTree>>() {
-                    //
-                });
-
-        commonBuildListProvider.setBasedListTree(list);
         deployInformation = JSONUtils.fromJSONResource(pathResolver.getResource(ENVIRONMENT_DEPLOY_JSON),
                 new TypeReference<DeployInformation>() {
                     //            
@@ -192,17 +184,6 @@ public class PowerBuildLogic {
         return result;
     }
 
-    @SuppressWarnings("unchecked")
-    private List<String> getDefaultSelectionFromProperties() {
-        List<String> defaultSelection = null;
-        String defs = prop.get(SelectionCommand.SPEC_DEFAULT);
-        if (!StringUtils.isBlank(defs))
-            defaultSelection = (List<String>) PropManagerUtils.fromString(defs);
-        else
-            defaultSelection = new ArrayList<String>();
-        return defaultSelection;
-    }
-
     /**
      * Get Specified build trees due to design path setted in settings
      * page.
@@ -210,12 +191,6 @@ public class PowerBuildLogic {
      * @return List<DirTree>
      */
     public List<DirTree> getCommonBuildListDirTrees() {
-        String basePath = prop.get(SettingsCommand.PORTAL_TEAM_PATH);
-        if (StringUtils.isBlank(basePath))
-            return new ArrayList<DirTree>();
-        List<String> defaultSelection = getDefaultSelectionFromProperties();
-        commonBuildListProvider.setBasePath(basePath);
-        commonBuildListProvider.setDefaultSelection(defaultSelection);
         return commonBuildListProvider.retrieveDirTrees();
     }
 
