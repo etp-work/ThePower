@@ -6,7 +6,7 @@ import org.etp.portalKit.fw.annotation.MarkinFile;
  * The purpose of this class is a settings content interface that used
  * to convert post parameters to a instance of java.
  */
-public class Settings {
+public class SettingsCommand {
 
     /**
      * <code>PORTAL_TEAM_PATH</code> absolute path of portal-team

@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.etp.portalKit.common.util.MavenUtils;
-import org.etp.portalKit.powerbuild.bean.response.DirTree;
+import org.etp.portalKit.powerbuild.bean.DirTree;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
@@ -22,6 +22,8 @@ public class CommonBuildListProvider {
     private List<String> defaultSelection;
     private List<DirTree> basedListTree;
 
+    private boolean hasReset;
+
     /**
      * Iterate basedListTree for set the absolute path for each item
      * within this basedListTree. Note: each converted absolute path
@@ -29,7 +31,7 @@ public class CommonBuildListProvider {
      * target folder), if not, remvoe this item from the DirTree which
      * this item belongs to.
      */
-    public void resetDirInfo() {
+    private void resetDirInfo() {
         if (StringUtils.isBlank(basePath))
             throw new RuntimeException("basePath could not be empty or null.");
         if (CollectionUtils.isEmpty(basedListTree))
@@ -49,12 +51,15 @@ public class CommonBuildListProvider {
             DirTree tree = itr.next();
             iterateTreesForRemoveNoChildItem(tree, itr);
         }
+        hasReset = true;
     }
 
     /**
      * @return get the converted result.
      */
     public List<DirTree> retrieveDirTrees() {
+        if (!hasReset)
+            resetDirInfo();
         return new ArrayList<DirTree>(basedListTree);
     }
 
@@ -126,7 +131,10 @@ public class CommonBuildListProvider {
      *            and set it to each item.
      */
     public void setBasePath(String basePath) {
+        if (StringUtils.isBlank(basePath))
+            throw new RuntimeException("basePath could not be empty or null.");
         this.basePath = basePath;
+        hasReset = false;
     }
 
     /**
@@ -143,6 +151,7 @@ public class CommonBuildListProvider {
      */
     public void setDefaultSelection(List<String> defaultSelection) {
         this.defaultSelection = defaultSelection;
+        hasReset = false;
     }
 
     /**
@@ -157,6 +166,9 @@ public class CommonBuildListProvider {
      *            full filled the absolute path of each item.
      */
     public void setBasedListTree(List<DirTree> basedListTree) {
+        if (CollectionUtils.isEmpty(basedListTree))
+            throw new RuntimeException("basedListTree could not be empty or null.");
         this.basedListTree = basedListTree;
+        hasReset = false;
     }
 }

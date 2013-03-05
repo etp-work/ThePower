@@ -6,7 +6,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.etp.portalKit.common.service.PropertiesManager;
-import org.etp.portalKit.setting.bean.Settings;
+import org.etp.portalKit.setting.bean.SettingsCommand;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +27,7 @@ public class SettingController {
      */
     @RequestMapping(value = "/settings/set.ajax", method = RequestMethod.POST)
     public @ResponseBody
-    Map<String, String> set(@RequestBody Settings settings) {
+    Map<String, String> set(@RequestBody SettingsCommand settings) {
         prop.fromBean(settings);
         return Collections.emptyMap();
     }
@@ -37,8 +37,8 @@ public class SettingController {
      */
     @RequestMapping(value = "/settings/getAll.ajax", method = RequestMethod.GET)
     public @ResponseBody
-    Settings get() {
-        Settings set = new Settings();
+    SettingsCommand get() {
+        SettingsCommand set = new SettingsCommand();
         prop.toBean(set);
         return set;
     }

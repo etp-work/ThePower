@@ -5,9 +5,9 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.etp.portalKit.deploy.bean.request.CheckPackageCommand;
-import org.etp.portalKit.deploy.bean.response.DownloadedPath;
-import org.etp.portalKit.deploy.bean.response.PackageCheckedResult;
+import org.etp.portalKit.deploy.bean.CheckPackageCommand;
+import org.etp.portalKit.deploy.bean.DownloadedPath;
+import org.etp.portalKit.deploy.bean.PackageCheckedResult;
 import org.etp.portalKit.deploy.logic.DeployLogic;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;

@@ -1,4 +1,4 @@
-package org.etp.portalKit.powerbuild.bean.response;
+package org.etp.portalKit.powerbuild.bean;
 
 import java.util.ArrayList;
 import java.util.List;

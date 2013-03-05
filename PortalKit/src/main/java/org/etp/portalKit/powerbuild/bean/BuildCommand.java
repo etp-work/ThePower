@@ -1,4 +1,4 @@
-package org.etp.portalKit.powerbuild.bean.request;
+package org.etp.portalKit.powerbuild.bean;
 
 /**
  * The purpose of this class is to provide a Model that hold the

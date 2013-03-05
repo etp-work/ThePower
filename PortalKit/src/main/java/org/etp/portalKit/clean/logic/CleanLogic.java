@@ -9,11 +9,11 @@ import javax.annotation.Resource;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
-import org.etp.portalKit.clean.bean.request.CleanCommand;
-import org.etp.portalKit.clean.bean.response.CleanItems;
+import org.etp.portalKit.clean.bean.CleanCommand;
+import org.etp.portalKit.clean.bean.CleanItems;
 import org.etp.portalKit.common.service.PropertiesManager;
 import org.etp.portalKit.common.util.FileUtils;
-import org.etp.portalKit.setting.bean.Settings;
+import org.etp.portalKit.setting.bean.SettingsCommand;
 import org.springframework.stereotype.Component;
 
 /**
@@ -43,7 +43,7 @@ public class CleanLogic {
     public CleanItems retrieveCleanItems() {
         CleanItems items = new CleanItems();
         String userHome = System.getProperty("user.home");
-        String webappsHome = prop.get(Settings.TOMCAT_WEBAPPS_PATH);
+        String webappsHome = prop.get(SettingsCommand.TOMCAT_WEBAPPS_PATH);
         if (StringUtils.isBlank(userHome))
             throw new NullPointerException("user.home could not be null or empty.");
         if (StringUtils.isBlank(webappsHome))
@@ -83,7 +83,7 @@ public class CleanLogic {
      */
     public boolean cleanItem(CleanCommand cmd) {
         String userHome = System.getProperty("user.home");
-        String webappsHome = prop.get(Settings.TOMCAT_WEBAPPS_PATH);
+        String webappsHome = prop.get(SettingsCommand.TOMCAT_WEBAPPS_PATH);
         if (StringUtils.isBlank(userHome))
             throw new NullPointerException("user.home could not be null or empty.");
         if (StringUtils.isBlank(webappsHome))

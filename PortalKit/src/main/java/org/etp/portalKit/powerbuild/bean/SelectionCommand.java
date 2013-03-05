@@ -1,4 +1,4 @@
-package org.etp.portalKit.powerbuild.bean.request;
+package org.etp.portalKit.powerbuild.bean;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import org.etp.portalKit.fw.annotation.MarkinFile;
  * The purpose of this class is to provide a Model that hold default
  * selection in power build page.
  */
-public class Selection {
+public class SelectionCommand {
 
     /**
      * <code>SPEC_DEFAULT</code> default options within spec-default.

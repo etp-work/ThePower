@@ -12,13 +12,13 @@ import org.etp.portalKit.common.service.DeployService;
 import org.etp.portalKit.common.service.PropertiesManager;
 import org.etp.portalKit.common.util.CompressUtil;
 import org.etp.portalKit.common.util.FileUtils;
+import org.etp.portalKit.deploy.bean.CheckPackageCommand;
 import org.etp.portalKit.deploy.bean.DeployInfo4CI;
+import org.etp.portalKit.deploy.bean.DownloadedPath;
+import org.etp.portalKit.deploy.bean.PackageCheckedResult;
 import org.etp.portalKit.deploy.bean.PackageInfo4CI;
-import org.etp.portalKit.deploy.bean.request.CheckPackageCommand;
-import org.etp.portalKit.deploy.bean.response.DownloadedPath;
-import org.etp.portalKit.deploy.bean.response.PackageCheckedResult;
 import org.etp.portalKit.deploy.service.PackagesCheckService;
-import org.etp.portalKit.setting.bean.Settings;
+import org.etp.portalKit.setting.bean.SettingsCommand;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
@@ -80,7 +80,7 @@ public class DeployLogic {
     }
 
     private String checkDeployPath() {
-        String deployPath = prop.get(Settings.TOMCAT_WEBAPPS_PATH);
+        String deployPath = prop.get(SettingsCommand.TOMCAT_WEBAPPS_PATH);
         if (StringUtils.isBlank(deployPath))
             throw new RuntimeException("You haven't deploy path setted.");
         return deployPath;

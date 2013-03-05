@@ -1,4 +1,4 @@
-package org.etp.portalKit.common.shell;
+package org.etp.portalKit.common.util;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;

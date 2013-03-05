@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.etp.portalKit.init.bean.response.ViewInfo;
+import org.etp.portalKit.init.bean.ViewInfo;
 import org.etp.portalKit.init.service.IndexViewSettings;
 import org.springframework.stereotype.Component;
 

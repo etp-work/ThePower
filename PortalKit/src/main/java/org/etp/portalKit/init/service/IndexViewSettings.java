@@ -8,7 +8,7 @@ import org.apache.commons.io.Charsets;
 import org.apache.commons.io.FileUtils;
 import org.codehaus.jackson.type.TypeReference;
 import org.etp.portalKit.common.util.JSONUtils;
-import org.etp.portalKit.init.bean.response.ViewInfo;
+import org.etp.portalKit.init.bean.ViewInfo;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.stereotype.Component;

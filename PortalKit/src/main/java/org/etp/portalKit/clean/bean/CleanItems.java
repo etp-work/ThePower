@@ -1,4 +1,4 @@
-package org.etp.portalKit.clean.bean.response;
+package org.etp.portalKit.clean.bean;
 
 import java.util.List;
 

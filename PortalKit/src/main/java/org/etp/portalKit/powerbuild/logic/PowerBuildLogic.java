@@ -1,7 +1,6 @@
 package org.etp.portalKit.powerbuild.logic;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -9,22 +8,20 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
-import org.apache.commons.io.Charsets;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.codehaus.jackson.type.TypeReference;
 import org.etp.portalKit.common.service.DeployService;
 import org.etp.portalKit.common.service.PropertiesManager;
-import org.etp.portalKit.common.shell.CommandResult;
+import org.etp.portalKit.common.util.CommandResult;
 import org.etp.portalKit.common.util.JSONUtils;
 import org.etp.portalKit.common.util.PropManagerUtils;
+import org.etp.portalKit.powerbuild.bean.BuildResult;
 import org.etp.portalKit.powerbuild.bean.DeployInformation;
-import org.etp.portalKit.powerbuild.bean.request.Selection;
-import org.etp.portalKit.powerbuild.bean.response.BuildResult;
-import org.etp.portalKit.powerbuild.bean.response.DirTree;
+import org.etp.portalKit.powerbuild.bean.DirTree;
+import org.etp.portalKit.powerbuild.bean.SelectionCommand;
 import org.etp.portalKit.powerbuild.service.BuildExecutor;
 import org.etp.portalKit.powerbuild.service.CommonBuildListProvider;
-import org.etp.portalKit.setting.bean.Settings;
+import org.etp.portalKit.setting.bean.SettingsCommand;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.stereotype.Component;
 
@@ -59,31 +56,16 @@ public class PowerBuildLogic {
      */
     @PostConstruct
     public void initCommbuildList() {
-        List<DirTree> list = null;
-        org.springframework.core.io.Resource commonBuildListResource = pathResolver
-                .getResource(COMMON_BUILD_LIST_BASE_JSON);
-        String json = null;
-        try {
-            json = FileUtils.readFileToString(commonBuildListResource.getFile(), Charsets.UTF_8);
-            list = JSONUtils.fromJSON(json, new TypeReference<List<DirTree>>() {
-                //            
-            });
-        } catch (IOException e) {
-            list = new ArrayList<DirTree>();
-        }
+        List<DirTree> list = JSONUtils.fromJSONResource(pathResolver.getResource(COMMON_BUILD_LIST_BASE_JSON),
+                new TypeReference<List<DirTree>>() {
+                    //
+                });
 
         commonBuildListProvider.setBasedListTree(list);
-
-        org.springframework.core.io.Resource envDeployInfoResource = pathResolver.getResource(ENVIRONMENT_DEPLOY_JSON);
-        try {
-            json = FileUtils.readFileToString(envDeployInfoResource.getFile(), Charsets.UTF_8);
-            deployInformation = JSONUtils.fromJSON(json, new TypeReference<DeployInformation>() {
-                //            
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        deployInformation = JSONUtils.fromJSONResource(pathResolver.getResource(ENVIRONMENT_DEPLOY_JSON),
+                new TypeReference<DeployInformation>() {
+                    //            
+                });
     }
 
     /**
@@ -120,14 +102,14 @@ public class PowerBuildLogic {
     }
 
     private String checkDeployPath() {
-        String deployPath = prop.get(Settings.TOMCAT_WEBAPPS_PATH);
+        String deployPath = prop.get(SettingsCommand.TOMCAT_WEBAPPS_PATH);
         if (StringUtils.isBlank(deployPath))
             throw new RuntimeException("You haven't deploy path setted.");
         return deployPath;
     }
 
     private String checkDesignPath() {
-        String path = prop.get(Settings.PORTAL_TEAM_PATH);
+        String path = prop.get(SettingsCommand.PORTAL_TEAM_PATH);
         if (StringUtils.isBlank(path))
             throw new RuntimeException("You haven't design path setted.");
         return path;
@@ -213,7 +195,7 @@ public class PowerBuildLogic {
     @SuppressWarnings("unchecked")
     private List<String> getDefaultSelectionFromProperties() {
         List<String> defaultSelection = null;
-        String defs = prop.get(Selection.SPEC_DEFAULT);
+        String defs = prop.get(SelectionCommand.SPEC_DEFAULT);
         if (!StringUtils.isBlank(defs))
             defaultSelection = (List<String>) PropManagerUtils.fromString(defs);
         else
@@ -228,13 +210,12 @@ public class PowerBuildLogic {
      * @return List<DirTree>
      */
     public List<DirTree> getCommonBuildListDirTrees() {
-        String basePath = prop.get(Settings.PORTAL_TEAM_PATH);
+        String basePath = prop.get(SettingsCommand.PORTAL_TEAM_PATH);
         if (StringUtils.isBlank(basePath))
             return new ArrayList<DirTree>();
         List<String> defaultSelection = getDefaultSelectionFromProperties();
         commonBuildListProvider.setBasePath(basePath);
         commonBuildListProvider.setDefaultSelection(defaultSelection);
-        commonBuildListProvider.resetDirInfo();
         return commonBuildListProvider.retrieveDirTrees();
     }
 
@@ -243,7 +224,7 @@ public class PowerBuildLogic {
      * 
      * @param selection
      */
-    public void setSelectionsToSettings(Selection selection) {
+    public void setSelectionsToSettings(SelectionCommand selection) {
         prop.fromBean(selection);
     }
 }

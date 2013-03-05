@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 
+import org.apache.commons.io.Charsets;
+import org.apache.commons.io.FileUtils;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -11,6 +13,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.SerializationConfig;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.type.TypeReference;
+import org.springframework.core.io.Resource;
 
 /**
  * JSON utilities.
@@ -68,6 +71,30 @@ public class JSONUtils {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * De-serialize from JSON to a specific type
+     * 
+     * @param input
+     * @param typeRef
+     * @return Object representation of the JSON input
+     */
+    public static <T> T fromJSONResource(Resource input, TypeReference<T> typeRef) {
+        String json = null;
+        try {
+            json = FileUtils.readFileToString(input.getFile(), Charsets.UTF_8);
+        } catch (IOException e) {
+            e.printStackTrace();
+            json = "";
+        }
+        T t = null;
+        try {
+            t = fromJSON(json, typeRef);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return t;
     }
 
     /**

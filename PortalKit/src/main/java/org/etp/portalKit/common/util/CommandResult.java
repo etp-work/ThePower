@@ -1,4 +1,4 @@
-package org.etp.portalKit.common.shell;
+package org.etp.portalKit.common.util;
 
 /**
  * The purpose of this class is to provide a bean storage to hold the

@@ -5,8 +5,8 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.etp.portalKit.clean.bean.request.CleanCommand;
-import org.etp.portalKit.clean.bean.response.CleanItems;
+import org.etp.portalKit.clean.bean.CleanCommand;
+import org.etp.portalKit.clean.bean.CleanItems;
 import org.etp.portalKit.clean.logic.CleanLogic;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;

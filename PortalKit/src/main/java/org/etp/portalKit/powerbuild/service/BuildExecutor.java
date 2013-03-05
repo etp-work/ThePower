@@ -6,9 +6,9 @@ import java.text.MessageFormat;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
-import org.etp.portalKit.common.shell.CommandResult;
-import org.etp.portalKit.common.shell.OutputHandler;
-import org.etp.portalKit.common.shell.ShellRunner;
+import org.etp.portalKit.common.util.CommandResult;
+import org.etp.portalKit.common.util.OutputHandler;
+import org.etp.portalKit.common.util.ShellRunner;
 import org.springframework.stereotype.Component;
 
 /**

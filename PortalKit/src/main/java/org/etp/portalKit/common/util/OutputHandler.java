@@ -1,4 +1,4 @@
-package org.etp.portalKit.common.shell;
+package org.etp.portalKit.common.util;
 
 /**
  * The purpose of this class is to provide a interface of command

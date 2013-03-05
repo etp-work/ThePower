@@ -1,4 +1,4 @@
-package org.etp.portalKit.clean.bean.request;
+package org.etp.portalKit.clean.bean;
 
 /**
  * The class hold data of clean functionality that which item will be

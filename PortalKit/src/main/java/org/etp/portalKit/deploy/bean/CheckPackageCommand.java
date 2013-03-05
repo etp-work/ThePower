@@ -1,4 +1,4 @@
-package org.etp.portalKit.deploy.bean.request;
+package org.etp.portalKit.deploy.bean;
 
 import java.util.List;
 
