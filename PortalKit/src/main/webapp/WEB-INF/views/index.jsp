@@ -13,14 +13,33 @@
 <title>The Power</title>
 </head>
 <body>
+
+<div class="left-nav">
+
+        <div class="header">
+                <img class="logo" src="resources/images/logo_40.png"/>   
+        </div>
+        
+        <div class="tab-header">
+            <ul>
+                <li><a class=" iconBulid default-tab" href="#bulid-content">Bulid</a></li>
+                <li><a class="iconDeploy" href="#deploy-content">Deploy</a></li>
+                <li><a class="iconClean"href="#clean-content">Clean</a></li>
+                <li><a class="iconTest"href="#test-content">Test</a></li>
+                <li><a class="iconSet"href="#setting-content">Set</a></li>
+            </ul>
+            <div class="clear"></div>
+        </div>
+
+</div>
+
+
+
 <div class="mainWrapper">
 
-    <div class="header">
-        <div class="toolsName"><img class="logo" src="resources/images/logo_24.png"/>THE POWER</div>    
-    </div>
 
     <div class="maincontent">
-        <div class="tab-header">
+     <!--    <div class="tab-header">
             <ul>
                 <c:forEach var="view" items="${viewInfo}" varStatus="status">
                    <c:if test="${view.defaultView == true}">
@@ -32,7 +51,8 @@
                 </c:forEach>
             </ul>
             <div class="clear"></div>
-        </div>
+        </div> 
+     -->
         
         <div class="content-wrapper">
         </div>
