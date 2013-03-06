@@ -11,7 +11,7 @@
 	
         <div class="list-header">
             <span>Bulid List</span>
-            <div class="quickSearch"><input type="text" placeholder="Quick Search"/></div>
+            <div class="quickSearch"><input type="text" ng-model="searchBuildList" placeholder="Quick Search"/></div>
             <div class="clear"></div>
         </div>
 
@@ -23,7 +23,7 @@
                     </div>
                     <span>{{dirTree.name}}</span>
                 </label>
-                <li ng-repeat="subTree in dirTree.subDirs">
+                <li ng-repeat="subTree in dirTree.subDirs | filter:searchBuildList">
                     <div class="lightpoint">
                         <input type="checkbox" class="childB" ng-checked="subTree.checked" value="{{subTree.name}}" ><label></label>
                     </div>

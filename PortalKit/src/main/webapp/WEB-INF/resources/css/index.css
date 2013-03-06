@@ -82,7 +82,7 @@ img{ border:none; margin:0; padding:0;}
     font-size:11px;
     color:rgba(225,225,225,0);
     }
-.tab-header ul li a.iconBulid{background:url(../images/icon_bulid.png) #838383 no-repeat; background-position:10px 8px;}
+.tab-header ul li a.iconBuild{background:url(../images/icon_bulid.png) #838383 no-repeat; background-position:10px 8px;}
 .tab-header ul li a.iconDeploy{background:url(../images/icon_deploy.png) #838383 no-repeat; background-position:10px 8px;}
 .tab-header ul li a.iconClean{background:url(../images/icon_clean.png) #838383 no-repeat; background-position:10px 8px;}
 .tab-header ul li a.iconTest{background:url(../images/icon_test.png) #838383 no-repeat; background-position:10px 8px;}
@@ -122,7 +122,7 @@ img{ border:none; margin:0; padding:0;}
     -moz-animation-iteration-count: 1;
     }
 
-.tab-header ul li a.iconBulid.active{background:url(../images/icon_bulid.png) #82d7fe no-repeat; background-position:10px 2px;}
+.tab-header ul li a.iconBuild.active{background:url(../images/icon_bulid.png) #82d7fe no-repeat; background-position:10px 2px;}
 .tab-header ul li a.iconDeploy.active{background:url(../images/icon_deploy.png) #82d7fe no-repeat; background-position:10px 2px;}
 .tab-header ul li a.iconClean.active{background:url(../images/icon_clean.png) #82d7fe no-repeat; background-position:10px 2px;}
 .tab-header ul li a.iconTest.active{background:url(../images/icon_test.png) #82d7fe no-repeat; background-position:10px 2px;}

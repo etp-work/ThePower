@@ -17,16 +17,19 @@
 <div class="left-nav">
 
         <div class="header">
-                <img class="logo" src="resources/images/logo_40.png"/>   
+                <img class="logo" src="resources/images/LOGO_40.png"/>   
         </div>
         
         <div class="tab-header">
             <ul>
-                <li><a class=" iconBulid default-tab" href="#bulid-content">Bulid</a></li>
-                <li><a class="iconDeploy" href="#deploy-content">Deploy</a></li>
-                <li><a class="iconClean"href="#clean-content">Clean</a></li>
-                <li><a class="iconTest"href="#test-content">Test</a></li>
-                <li><a class="iconSet"href="#setting-content">Set</a></li>
+                <c:forEach var="view" items="${viewInfo}" varStatus="status">
+                    <c:if test="${view.defaultView == true}">
+                        <li><a class="icon<c:out value='${view.viewName}'/> active" href="#/<c:out value='${view.viewId}'/>"><c:out value="${view.viewName}"/></a></li>
+                    </c:if>
+                    <c:if test="${view.defaultView == false}">
+                        <li><a class="icon<c:out value='${view.viewName}'/>" href="#/<c:out value='${view.viewId}'/>"><c:out value="${view.viewName}"/></a></li>
+                    </c:if>
+                </c:forEach>
             </ul>
             <div class="clear"></div>
         </div>
@@ -39,21 +42,6 @@
 
 
     <div class="maincontent">
-     <!--    <div class="tab-header">
-            <ul>
-                <c:forEach var="view" items="${viewInfo}" varStatus="status">
-                   <c:if test="${view.defaultView == true}">
-                       <li><a class="active" href="#/<c:out value='${view.viewId}'/>"><c:out value="${view.viewName}"/></a></li>
-                   </c:if>
-                   <c:if test="${view.defaultView == false}">
-                       <li><a href="#/<c:out value='${view.viewId}'/>"><c:out value="${view.viewName}"/></a></li>
-                   </c:if>
-                </c:forEach>
-            </ul>
-            <div class="clear"></div>
-        </div> 
-     -->
-        
         <div class="content-wrapper">
         </div>
         <div class="clear"></div>
