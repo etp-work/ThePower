@@ -229,7 +229,7 @@ img{ border:none; margin:0; padding:0;}
     line-height:25px;
     background:-moz-linear-gradient(top,rgba(245, 245, 245, 1),rgba(235, 235, 235, 1));
     border-bottom:solid 2px #82d7fe;
-    color:#59b3dc;
+    color:#1285ba;
     padding:5px 3px 5px 8px;
     font-weight:bolder;
     }
@@ -392,6 +392,7 @@ img{ border:none; margin:0; padding:0;}
 .deployList{
     float:left;
     width:334px;
+
     } 
     
 .deployList li{
@@ -423,6 +424,7 @@ img{ border:none; margin:0; padding:0;}
 .clean-list{
     height:288px;
     overflow:auto;
+    border: solid 1px #e1e1e1;
     } 
 /*====================================== TEST ===============================*/
 #test-content{}
@@ -431,6 +433,7 @@ img{ border:none; margin:0; padding:0;}
     margin-top:5px;
     width:334px;
     height:230px;
+    border: solid 1px #e1e1e1;
     overflow:auto;
     }
 .testType{
