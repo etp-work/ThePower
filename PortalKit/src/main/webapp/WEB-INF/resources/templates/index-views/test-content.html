@@ -10,7 +10,11 @@
             <option value="iPhone">iPhone</option>
         </select>
     </div>
-    <span class="tdName">Test Suite List</span>
+    <div class="list-header">
+        <span>User Story List</span>
+        <div class="quickSearch"><input type="text" ng-model="searchBuildList" placeholder="Quick Search"/></div>
+        <div class="clear"></div>
+    </div>
     <div class="test-feature-content">
         <div class="us-list">
             <input type="text" ng-model="searchTestCase" placeholder="filter test case name..."/>
