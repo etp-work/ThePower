@@ -306,4 +306,11 @@
     });
     
     
+    $('#build-content #common #quickSearch').keyup(function(event) {
+        var text = $(this).val();
+        ViewManager.filter("#build-content #common .bulid-list ul li", "div input[type=\"checkbox\"]", text);
+        
+    });
+    
+    
 }(window));

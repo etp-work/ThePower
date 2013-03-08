@@ -339,6 +339,12 @@
         return id;
     };
     
+    /**
+     * Add a simple success notification. It will stay for 5 seconds.
+     * 
+     * @returns id identity of the added notification. Can be used to 
+     *        remove it.
+     */
     _viewManager.simpleSuccess = function(msg){
         ViewManager.addNotification({
             type: "success",
@@ -347,6 +353,12 @@
         });
     };
     
+    /**
+     * Add a simple warning notification. It will stay for 10 seconds.
+     * 
+     * @returns id identity of the added notification. Can be used to 
+     *        remove it.
+     */
     _viewManager.simpleWarning = function(msg){
         ViewManager.addNotification({
             type: "attention",
@@ -355,12 +367,54 @@
         });
     };
     
+    /**
+     * Add a simple error notification. It will stay for 30 minutes.
+     * 
+     * @returns id identity of the added notification. Can be used to 
+     *        remove it.
+     */
     _viewManager.simpleError = function(msg, callback){
         ViewManager.addNotification({
             type: "error",
             message: msg,
             callback: callback
         });
+    };
+    
+    
+    //return a text from specified html element.
+    function getTextFromElement(obj){
+        var str = undefined;
+        if(obj.is('input') || obj.is('select') || obj.is('textarea')){
+            str = obj.val();
+        }else{
+            str = obj.text();
+        }
+        return str;
+    }
+    
+    /**
+     * Filter view elements base on text match. All matched elements will 
+     * be shown, otherwise hide.
+     * 
+     * @param baseSelector string value of selector which is used to 
+     *        describe a range of elements that will be filtered. 
+     * @param subSelector string value of selector which is used to 
+     *        describe the element which indicate the filtered field.
+     * @param text string value to filter the element.
+     */
+    _viewManager.filter = function(baseSelector, subSelector, text){
+        $(baseSelector).filter(function(index) {
+            var obj = $(this).find(subSelector);
+            return getTextFromElement(obj) === undefined ? false : getTextFromElement(obj).indexOf(text) === -1;
+          }
+        ).hide();
+        
+        $(baseSelector).filter(function(index) {
+            var obj = $(this).find(subSelector);
+            return getTextFromElement(obj) === undefined ? false : getTextFromElement(obj).indexOf(text) !== -1;
+          }
+        ).show();
     };
 
 }());
