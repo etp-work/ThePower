@@ -149,16 +149,31 @@
         );
     }
     
+    //do filter the specified text within a specified range of elements.
+    function doFilter(text){
+        ViewManager.filter("#clean-content .clean-list ul li", "div input[type=\"checkbox\"]", text);
+    }
+    
 //========================================init listener=====================================
     ViewManager.addViewListener("onShow", "#clean-content", cleanOnShowListener); //add listener to monitor what will happen when settings-content shown.
 //================================================event bind================================
 
     $('#clean-content #cleanButton').click(function(event){
+        $('#clean-content .list-header #quickSearch').val("");
+        doFilter("");
         removeSelection();
     });
     
     $('#clean-content #refreshButton').click(function(event){
+        $('#clean-content .list-header #quickSearch').val("");
+        doFilter("");
         cleanOnShowListener();
     });
+    
+    $('#clean-content .list-header #quickSearch').keyup(function(event) {
+        var text = $(this).val();
+        doFilter(text);
+    });
+    
     
 }(window));

@@ -212,6 +212,11 @@
         );
     }
     
+    //do filter the specified text within a specified range of elements.
+    function doFilter(text){
+        ViewManager.filter("#build-content #common .bulid-list ul li", "div input[type=\"checkbox\"]", text);
+    }
+    
 //========================================init listener=====================================
     
     ViewManager.addViewListener("onShow", "#"+viewId, buildViewOnShow);
@@ -248,6 +253,9 @@
     });
     
     $('#build-content #common #setDefault4Build').click(function(event){
+        $('#build-content #common #quickSearch').val("");
+        doFilter("");
+        
         var defaultSelection = getBuildSelection();
                 
         if(defaultSelection.length === 0){//if no anything checked, give a warning.
@@ -259,12 +267,18 @@
     });
     
     $('#build-content #common #resetDefault4Build').click(function(event){
+        $('#build-content #common #quickSearch').val("");
+        doFilter("");
+        
         $('#common .bulid-list input').attr("checked", false);
         saveDefaultSelection([], "reset");
         return false;
     });
     
     $('#build-content #common #buildButton').click(function(event){
+        $('#build-content #common #quickSearch').val("");
+        doFilter("");
+        
         var subSelection = getSubBuildSelection();
         if(subSelection.length === 0){
             ViewManager.simpleWarning("You can't set nothing to default.");
@@ -308,8 +322,7 @@
     
     $('#build-content #common #quickSearch').keyup(function(event) {
         var text = $(this).val();
-        ViewManager.filter("#build-content #common .bulid-list ul li", "div input[type=\"checkbox\"]", text);
-        
+        doFilter(text);
     });
     
     

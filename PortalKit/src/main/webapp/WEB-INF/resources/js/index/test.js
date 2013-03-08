@@ -6,10 +6,17 @@
 (function(window) {
     'use strict';
     
-  //=========================================variable=====================================
+//=========================================variable=====================================
     var viewId = "test-content";
     var dataUrl = "/test/data.ajax";
     var startUrl = "/test/start.ajax";
+    
+//=========================================functions========================================
+    
+    //do filter the specified text within a specified range of elements.
+    function doFilter(text){
+        ViewManager.filter("#test-content .test-feature-content .us-list ul li", "div input[type=\"checkbox\"]", text);
+    }
     
     if (window.wsuri) {
         window.wsconn = new window.WebSocket(window.wsuri);
@@ -97,7 +104,15 @@
     });
     
     $('#test-content .main-button-area .test').click(function(event){
+        $('#test-content .list-header #quickSearch').val("");
+        doFilter("");
         DynamicLoad.loadJSON(startUrl, undefined, function(response){});
     });
+    
+    $('#test-content .list-header #quickSearch').keyup(function(event) {
+        var text = $(this).val();
+        doFilter(text);
+    });
+    
 
 }(window));
