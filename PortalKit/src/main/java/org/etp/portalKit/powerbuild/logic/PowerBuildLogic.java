@@ -19,7 +19,7 @@ import org.etp.portalKit.powerbuild.bean.DeployInformation;
 import org.etp.portalKit.powerbuild.bean.DirTree;
 import org.etp.portalKit.powerbuild.bean.SelectionCommand;
 import org.etp.portalKit.powerbuild.service.BuildExecutor;
-import org.etp.portalKit.powerbuild.service.CommonBuildListProvider;
+import org.etp.portalKit.powerbuild.service.BuildListProvider;
 import org.etp.portalKit.setting.bean.SettingsCommand;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.stereotype.Component;
@@ -33,8 +33,8 @@ public class PowerBuildLogic {
     @Resource(name = "pathMatchingResourcePatternResolver")
     private PathMatchingResourcePatternResolver pathResolver;
 
-    @Resource(name = "commonBuildListProvider")
-    private CommonBuildListProvider commonBuildListProvider;
+    @Resource(name = "portalTeamBuildListProvider")
+    private BuildListProvider buildListProvider;
 
     @Resource(name = "propertiesManager")
     private PropertiesManager prop;
@@ -191,7 +191,7 @@ public class PowerBuildLogic {
      * @return List<DirTree>
      */
     public List<DirTree> getCommonBuildListDirTrees() {
-        return commonBuildListProvider.retrieveDirTrees();
+        return buildListProvider.retrieveDirTrees();
     }
 
     /**

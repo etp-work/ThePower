@@ -11,11 +11,12 @@ import org.etp.portalKit.fw.annotation.MarkinFile;
 public class SelectionCommand {
 
     /**
-     * <code>SPEC_DEFAULT</code> default options within spec-default.
+     * <code>DEFAULT_BUILD_LIST</code> default options within
+     * defaultBuildList.
      */
-    public static final String SPEC_DEFAULT = "spec-default";
+    public static final String DEFAULT_BUILD_LIST = "defaultBuildList";
 
-    @MarkinFile(name = SPEC_DEFAULT)
+    @MarkinFile(name = DEFAULT_BUILD_LIST)
     private List<String> selection;
 
     /**
