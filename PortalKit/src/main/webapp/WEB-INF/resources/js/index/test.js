@@ -25,7 +25,7 @@
         };
         window.wsconn.onmessage = function(event) {
             var command = JSON.parse(event.data);
-            if(command.type == "TESTSUITEUPDATE"){
+            if(command.type == "TESTSUITE_UPDATE"){
                 var scope = angular.element($('.us-list')).scope();
                 scope.$apply(function(){
                     scope.testsuites = command.testsuites;
@@ -91,22 +91,39 @@
 
     //================================================event bind======================
     
-    $('#test-content #portal').change(function() {
+    function loadPortal(){
         var portaltype = $('#test-content #portal').val();
         if(window.wsconn && portaltype){
             window.wsconn.send(JSON.stringify({
                 from:window.portalID,
                 to:window.nativeID,
                 type:"STARTPORTAL",
-                portaltype:portaltype
+                portaltype:portaltype,
+                enableDevTool:needDevTool()
             }));
         }
+    }
+    
+    function needDevTool(isNeeded){
+        if(isNeeded === undefined){
+            return $('#test-content #needDevTool').is(':checked');
+        }
+        $('#test-content #needDevTool').attr("checked", isNeeded);
+    }
+    
+    $('#test-content #portal').change(function() {
+        loadPortal();
     });
     
-    $('#test-content .main-button-area .test').click(function(event){
-        $('#test-content .list-header #quickSearch').val("");
-        doFilter("");
-        DynamicLoad.loadJSON(startUrl, undefined, function(response){});
+    $('#test-content #needDevTool').change(function() {
+        if(window.wsconn){
+            window.wsconn.send(JSON.stringify({
+                from:window.portalID,
+                to:window.nativeID,
+                type:"ENABLEDEVTOOL",
+                enableDevTool:needDevTool()
+            }));
+        }
     });
     
     $('#test-content .list-header #quickSearch').keyup(function(event) {
@@ -114,5 +131,8 @@
         doFilter(text);
     });
     
+    $('#test-content #reloadButton').click(function() {
+        loadPortal();
+    });
 
 }(window));

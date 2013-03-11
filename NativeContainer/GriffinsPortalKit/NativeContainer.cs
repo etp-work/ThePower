@@ -22,8 +22,7 @@ namespace GriffinsPortalKit
     {
         private static string XULRUNNERPATH = "\\xulrunner\\";
         private static ILog logger = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-        private STBHTML portal;
-        private RemoteControl remoteControl;
+        private Browser portal;
         private GeckoWebBrowser browser;
         private SplashForm frmSplash = new SplashForm();
         private WebSocket websocketclient;
@@ -118,8 +117,8 @@ namespace GriffinsPortalKit
                         switch (portaltype)
                         {
                             case "STBHTML":
-                                Thread portalThread = new Thread(new ThreadStart(startPortal));
-                                portalThread.Start();
+                                Thread portalThread = new Thread(new ParameterizedThreadStart(startPortal));
+                                portalThread.Start(json);
                                 break;
                             /*case "IPAD":
                                 IPAD portalIPAD = new IPAD(ConfigurationManager.AppSettings["PORTAL_IPAD"]);
@@ -145,24 +144,18 @@ namespace GriffinsPortalKit
             }
         }
 
-        private void startPortal()
+        private void startPortal(object param)
         {
+            JObject json = (JObject)param;
             this.BeginInvoke((Action)delegate
             {
                 if (null != portal)
                 {
                     portal.Close();
                 }
-                if (null != remoteControl)
-                {
-                    remoteControl.Close();
-                }
                 string portalFullUrl = String.Format("http://{0}:{1}{2}", ConfigurationManager.AppSettings["PortalAddress"], ConfigurationManager.AppSettings["PortalPort"], ConfigurationManager.AppSettings["PortalUrl_STBHTML"]);
-                portal = new STBHTML(portalFullUrl);
+                portal = new Browser(portalFullUrl, json);
                 portal.Visible = true;
-
-                remoteControl = new RemoteControl();
-                remoteControl.Visible = true;
             });
         }
 

@@ -392,6 +392,63 @@
         }
         return str;
     }
+    function MatchWildcardString(strPattern, strInput)
+    {
+        if (strPattern === strInput)
+        {
+            return true;
+        }
+        else if(!strInput)
+        {
+            if (!strPattern.replace("*"))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else if(!strPattern)
+        {
+            return false;
+        }
+        else if (strPattern[0] === '?')
+        {
+            return MatchWildcardString(strPattern.substring(1), strInput.substring(1));
+        }
+        else if (strPattern[strPattern.length - 1] === '?')
+        {
+            return MatchWildcardString(strPattern.substring(0, pattern.length - 1), strInput.substring(0, strInput.length - 1));
+        }
+        else if (strPattern[0] === '*')
+        {
+            if (strPattern.length === 1 || MatchWildcardString(strPattern.substring(1), strInput))
+            {
+                return true;
+            }
+            else
+            {
+                return MatchWildcardString(strPattern, strInput.substring(1));
+            }
+        }
+        else if (strPattern[strPattern.length - 1] === '*')
+        {
+            if (MatchWildcardString(strPattern.substring(0, strPattern.length - 1), strInput))
+            {
+                return true;
+            }
+            else
+            {
+                return MatchWildcardString(strPattern, strInput.substring(0, strInput.length - 1));
+            }
+        }
+        else if (strPattern[0] == strInput[0])
+        {
+            return MatchWildcardString(strPattern.substring(1), strInput.substring(1));
+        }
+        return false;
+    }
     
     /**
      * Filter view elements base on text match. All matched elements will 
@@ -406,13 +463,13 @@
     _viewManager.filter = function(baseSelector, subSelector, text){
         $(baseSelector).filter(function(index) {
             var obj = $(this).find(subSelector);
-            return getTextFromElement(obj) === undefined ? false : getTextFromElement(obj).indexOf(text) === -1;
+            return getTextFromElement(obj) === undefined ? false : !MatchWildcardString(text, getTextFromElement(obj));
           }
         ).hide();
         
         $(baseSelector).filter(function(index) {
             var obj = $(this).find(subSelector);
-            return getTextFromElement(obj) === undefined ? false : getTextFromElement(obj).indexOf(text) !== -1;
+            return getTextFromElement(obj) === undefined ? false : MatchWildcardString(text, getTextFromElement(obj));
           }
         ).show();
     };

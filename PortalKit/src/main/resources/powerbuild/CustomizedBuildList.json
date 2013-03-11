@@ -22,6 +22,43 @@
         "checked": "",
         "subDirs": []
     }]
+},
+{
+    "name": "AutoTest",
+    "absolutePath": "",
+    "relativePath": "",
+    "checked": "",
+    "subDirs": [{
+        "name": "testfw-jar",
+        "absolutePath": "",
+        "relativePath": "design\\AutoTest\\portal-testfw-jar",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "testfw-war",
+        "absolutePath": "",
+        "relativePath": "design\\AutoTest\\portal-testfw-war",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "testserver-war",
+        "absolutePath": "",
+        "relativePath": "design\\AutoTest\\portal-testserver-war",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "testsuites-functions",
+        "absolutePath": "",
+        "relativePath": "design\\AutoTest\\portal-testsuites-functions-war",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "AutoTest All",
+        "absolutePath": "",
+        "relativePath": "design\\AutoTest",
+        "checked": "",
+        "subDirs": []
+    }]
 },{
 	"name": "Framework",
 	"absolutePath": "",

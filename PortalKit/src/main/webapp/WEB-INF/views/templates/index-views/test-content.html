@@ -4,31 +4,26 @@
         <select id="portal" class="testType">
             <option value="">Please select ...</option>
             <option value="STBHTML">STB-HTML</option>
-            <option value="STBSVG">STB-SVG</option>
+            <!-- option value="STBSVG">STB-SVG</option>
             <option value="PC">PC</option>
             <option value="iPad">iPad</option>
-            <option value="iPhone">iPhone</option>
+            <option value="iPhone">iPhone</option-->
         </select>
+        <input id="reloadButton" class="primary-button reload" type="button" value="Reload"/>
     </div>
     <div class="list-header">
-        <span>User Story List</span>
+        <span>Test Cases</span>
         <div class="quickSearch"><input id="quickSearch" type="text" placeholder="Quick Search"/></div>
         <div class="clear"></div>
     </div>
     <div class="test-feature-content">
         <div class="us-list">
             <ul class="group" ng-repeat="testsuite in testsuites">
-                <label class="category">
-                    <div class="lightpoint">
-                        <input type="checkbox" class="parentB" value="{{testsuite.suiteId}}" ng-checked="true" /><label></label>
-                    </div>
-                    <span>{{testsuite.suiteId}}</span>
-                </label>
                 <li ng-repeat="testcase in testsuite.cases">
                     <div class="lightpoint">
-                        <input type="checkbox" class="childB" ng-checked="true" value="{{testcase.testCaseName}}" /><label></label>
+                        <input type="checkbox" class="childB" ng-checked="false" value="{{testcase.testCaseName}}" /><label></label>
                     </div>
-                    <span>{{testcase.testCaseName}}</span>
+                    <span>{{testcase.testCaseName}} [{{testsuite.suiteId}}]</span>
                     <div class="status">
                         <img src="resources/images/loading.gif" />
                     </div>
@@ -38,6 +33,8 @@
         <div class="clear"></div>
     </div>
     <div class="main-button-area">
-        <input class="primary-button test" type="button" value="Test"/>
+        <input class="primary-button test" type="button" value="Start Test"/>
+        <div class="check-devtool"><div class="lightpoint"><input id="needDevTool" type="checkbox"><label></label></div>DevTools</div>
+        <div class="clear"></div>
     </div>
 </div>
