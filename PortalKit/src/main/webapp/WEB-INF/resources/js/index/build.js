@@ -154,7 +154,7 @@
                 function(BuildResult){
                     element.removeClass("s-working");
                     if(!BuildResult.success){
-                        ViewManager.simpleError("Build error");
+                        ViewManager.simpleError("Build error",function(){window.open("templates/console.html?message="+window.encodeURIComponent(BuildResult.message));});
                         element.addClass("s-error");
                         Lifecycle.setState(Lifecycle.NORMAL);
                     }else if(!BuildResult.deployed && needDeploy()){
@@ -281,7 +281,7 @@
         
         var subSelection = getSubBuildSelection();
         if(subSelection.length === 0){
-            ViewManager.simpleWarning("You can't set nothing to default.");
+            ViewManager.simpleWarning("You should choose at least one project.");
             return false;
         }
         commonBuild(subSelection);

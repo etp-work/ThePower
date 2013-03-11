@@ -1,0 +1,40 @@
+<html>
+<head>
+<title>log</title>
+<script type="text/javascript">
+
+    var queryMap = {};
+
+    function load(){
+        var query = location.search.substring(1);
+        // Get query string
+        var pairs = query.split("&"); 
+        // Break at ampersand
+        for(var i = 0; i < pairs.length; i++) {
+            var pos = pairs[i].indexOf('=');
+            // Look for "name=value"
+            // If not found, skip
+            if (pos == -1){
+                continue;
+            }
+            // Extract the name
+            var argname = pairs[i].substring(0, pos);
+            // Extract the value
+            var value = pairs[i].substring(pos+1);
+            // Decode it, if needed
+            value = decodeURIComponent(value);
+            // Store as a property
+            queryMap[argname] = value;
+        }
+    
+        var message = document.getElementById("message");
+        message.innerHTML = queryMap["message"];
+    }
+    
+
+</script>
+</head>
+<body onload="load()">
+    <pre id="message"></pre>
+</body>
+</html>
