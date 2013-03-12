@@ -478,5 +478,14 @@
           }
         ).show();
     };
+    
+    /**
+     * Open a new log page to show the log information.
+     * @param log string value of log message.
+     */
+    _viewManager.showLog = function(log){
+        window.open("templates/console.html?message="+window.encodeURIComponent(log));
+    };
+    
 
 }());

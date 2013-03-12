@@ -154,7 +154,7 @@
                 function(BuildResult){
                     element.removeClass("s-working");
                     if(!BuildResult.success){
-                        ViewManager.simpleError("Build error",function(){window.open("templates/console.html?message="+window.encodeURIComponent(BuildResult.message));});
+                        ViewManager.simpleError("Build error",function(){ViewManager.showLog(BuildResult.message)});
                         element.addClass("s-error");
                         Lifecycle.setState(Lifecycle.NORMAL);
                     }else if(!BuildResult.deployed && needDeploy()){
