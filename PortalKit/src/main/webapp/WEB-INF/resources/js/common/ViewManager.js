@@ -392,8 +392,13 @@
         }
         return str;
     }
+    
     function MatchWildcardString(strPattern, strInput)
     {
+        if(!strPattern || !strPattern.trim()){
+            return true;
+        }
+        
         if (strPattern === strInput)
         {
             return true;
