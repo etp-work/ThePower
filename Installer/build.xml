@@ -1,4 +1,4 @@
-<project default="compile32" basedir="." name="Installer builder">
+<project default="compile64" basedir="." name="Installer builder">
 	<!-- *** Properties to be changed to reflect your build environment *** 
 		These should be set in eclipse. Go to Window -> Preferences -> Ant -> Runtime 
 		and select the tab Properties Here you should add inno.home, output.dir. -->
