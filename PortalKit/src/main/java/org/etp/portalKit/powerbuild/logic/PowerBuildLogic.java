@@ -33,7 +33,7 @@ public class PowerBuildLogic {
     @Resource(name = "pathMatchingResourcePatternResolver")
     private PathMatchingResourcePatternResolver pathResolver;
 
-    @Resource(name = "portalTeamBuildListProvider")
+    @Resource(name = "customizedBuildListProvider")
     private BuildListProvider buildListProvider;
 
     @Resource(name = "propertiesManager")
