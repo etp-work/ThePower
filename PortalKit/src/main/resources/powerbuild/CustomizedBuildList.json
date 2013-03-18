@@ -1,28 +1,4 @@
 [{
-    "name": "Others",
-    "absolutePath": "",
-    "relativePath": "",
-    "checked": "",
-    "subDirs": [{
-        "name": "maven-plugins",
-        "absolutePath": "",
-        "relativePath": "maven-plugins",
-        "checked": "",
-        "subDirs": []
-    }, {
-        "name": "parent",
-        "absolutePath": "",
-        "relativePath": "design\\parent",
-        "checked": "",
-        "subDirs": []
-    }, {
-        "name": "widgettool-war",
-        "absolutePath": "",
-        "relativePath": "design\\FW\\portal-widgettool-war",
-        "checked": "",
-        "subDirs": []
-    }]
-}, {
     "name": "AutoTest",
     "absolutePath": "",
     "relativePath": "",
@@ -205,6 +181,30 @@
         "name": "portal-coreapps-sessiontransfer-skin-svg-next-war",
         "absolutePath": "",
         "relativePath": "design\\CoreApps\\Skin\\portal-coreapps-sessiontransfer-skin-svg-next-war",
+        "checked": "",
+        "subDirs": []
+    }]
+},{
+    "name": "Others",
+    "absolutePath": "",
+    "relativePath": "",
+    "checked": "",
+    "subDirs": [{
+        "name": "maven-plugins",
+        "absolutePath": "",
+        "relativePath": "maven-plugins",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "parent",
+        "absolutePath": "",
+        "relativePath": "design\\parent",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "widgettool-war",
+        "absolutePath": "",
+        "relativePath": "design\\FW\\portal-widgettool-war",
         "checked": "",
         "subDirs": []
     }]
