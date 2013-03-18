@@ -128,7 +128,7 @@
         var defaultSelection = [];
         $('#build-content #common .childB').each(function (){
             if($(this).is(':checked')){
-                defaultSelection.push($(this).val());
+                defaultSelection.push($(this));
             }
         });
         return defaultSelection;
@@ -147,10 +147,10 @@
             Lifecycle.setState(Lifecycle.NORMAL);
             return;
         }
-        var packagename = selection.shift();
-        var element = $("#build-content #common .childB[value=\""+packagename+"\"]").parent().siblings('.status');
+        var pack = selection.shift();
+        var element = pack.parent().siblings('.status');
         element.addClass("s-working");
-        DynamicLoad.postJSON(buildUrl, {selection: packagename, needDeploy: needDeploy()}, 
+        DynamicLoad.postJSON(buildUrl, {selection: pack.val(), needDeploy: needDeploy()}, 
                 function(BuildResult){
                     element.removeClass("s-working");
                     if(!BuildResult.success){
@@ -162,7 +162,7 @@
                         element.addClass("s-error");
                         Lifecycle.setState(Lifecycle.NORMAL);
                      }else{
-                        var sucMessage = packagename + " build "+(needDeploy() ? "+ deploy" : "" )+" successfully.";
+                        var sucMessage = pack.val() + " build "+(needDeploy() ? "+ deploy" : "" )+" successfully.";
                         ViewManager.simpleSuccess(sucMessage);
                         element.addClass("s-success");
                         build(selection);

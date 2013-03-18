@@ -25,9 +25,9 @@
                 </label>
                 <li ng-repeat="subTree in dirTree.subDirs">
                     <div class="lightpoint">
-                        <input type="checkbox" class="childB" ng-checked="subTree.checked" value="{{subTree.name}}" ><label></label>
+                        <input type="checkbox" class="childB" ng-checked="subTree.checked" title="{{subTree.name}}" value="{{subTree.name}}" ><label></label>
                     </div>
-                    <span>{{subTree.name}}</span>
+                    <span title="{{subTree.name}}">{{subTree.name}}</span>
                     <div class="status">
                         <img src="resources/images/loading.gif" />
                     </div>

@@ -184,7 +184,121 @@
         "checked": "",
         "subDirs": []
     }]
-},{
+}, {
+    "name": "Multiscreen Portal",
+    "absolutePath": "",
+    "relativePath": "",
+    "checked": "",
+    "subDirs": [{
+        "name": "portal-coreapps-backend-mock-war",
+        "absolutePath": "",
+        "relativePath": "design\\CoreApps\\Backend\\portal-coreapps-backend-mock-war",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "portal-multiscreen-backend-metadata-war",
+        "absolutePath": "",
+        "relativePath": "design\\Multiscreen\\Backend\\portal-multiscreen-backend-metadata-war",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "portal-coreapps-device-dev-war",
+        "absolutePath": "",
+        "relativePath": "design\\CoreApps\\Device\\portal-coreapps-device-dev-war",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "portal-multiscreen-device-web-viewright-war",
+        "absolutePath": "",
+        "relativePath": "design\\Multiscreen\\Device\\portal-multiscreen-device-web-viewright-war",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "portal-multiscreen-apps-war",
+        "absolutePath": "",
+        "relativePath": "design\\Multiscreen\\Application\\portal-multiscreen-apps-war",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "portal-multiscreen-service-war",
+        "absolutePath": "",
+        "relativePath": "design\\Multiscreen\\Application\\portal-multiscreen-service-war",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "portal-multiscreen-sessiontransfer-war",
+        "absolutePath": "",
+        "relativePath": "design\\Multiscreen\\Application\\portal-multiscreen-sessiontransfer-war",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "portal-multiscreen-enus-war",
+        "absolutePath": "",
+        "relativePath": "design\\Multiscreen\\Locale\\portal-multiscreen-enus-war",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "portal-multiscreen-svse-war",
+        "absolutePath": "",
+        "relativePath": "design\\Multiscreen\\Locale\\portal-multiscreen-svse-war",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "portal-multiscreen-sessiontransfer-enus-war",
+        "absolutePath": "",
+        "relativePath": "design\\Multiscreen\\Locale\\portal-multiscreen-sessiontransfer-enus-war",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "portal-multiscreen-sessiontransfer-svse-war",
+        "absolutePath": "",
+        "relativePath": "design\\Multiscreen\\Locale\\portal-multiscreen-sessiontransfer-svse-war",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "portal-multiscreen-skin-common-war",
+        "absolutePath": "",
+        "relativePath": "design\\Multiscreen\\Skin\\portal-multiscreen-skin-common-war",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "portal-multiscreen-skin-ipad-next-war",
+        "absolutePath": "",
+        "relativePath": "design\\Multiscreen\\Skin\\portal-multiscreen-skin-ipad-next-war",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "portal-multiscreen-skin-iphone-next-war",
+        "absolutePath": "",
+        "relativePath": "design\\Multiscreen\\Skin\\portal-multiscreen-skin-iphone-next-war",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "portal-multiscreen-skin-web-next-war",
+        "absolutePath": "",
+        "relativePath": "design\\Multiscreen\\Skin\\portal-multiscreen-skin-web-next-war",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "portal-multiscreen-sessiontransfer-skin-ipad-next-war",
+        "absolutePath": "",
+        "relativePath": "design\\Multiscreen\\Skin\\portal-multiscreen-sessiontransfer-skin-ipad-next-war",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "portal-multiscreen-sessiontransfer-skin-iphone-next-war",
+        "absolutePath": "",
+        "relativePath": "design\\Multiscreen\\Skin\\portal-multiscreen-sessiontransfer-skin-iphone-next-war",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "portal-multiscreen-sessiontransfer-skin-web-next-war",
+        "absolutePath": "",
+        "relativePath": "design\\Multiscreen\\Skin\\portal-multiscreen-sessiontransfer-skin-web-next-war",
+        "checked": "",
+        "subDirs": []
+    }]
+}, {
     "name": "Others",
     "absolutePath": "",
     "relativePath": "",
