@@ -340,6 +340,7 @@ img{ border:none; margin:0; padding:0;}
     -moz-animation-iteration-count: 1;/*动画播放次涒为无限次*/
     } 
 .s-working img{
+	margin-top:3px;
     visibility:visible;
     }  
     
