@@ -1,35 +1,39 @@
-<project default="build" basedir="." name="PortalKit builder">
+<project default="build_nontest" basedir="." name="PortalKit builder">
+
+	<property environment="env" />
+	<property file="./build.properties" />
 	<!--
        *** Properties to be changed to reflect your build environment ***
 
-       These should be set in eclipse. Go to Window -> Preferences -> Ant -> Runtime
-       and select the tab Properties
+       These should be set in eclipse. If you intend to run this script in eclipse.
+       Go to Window -> Preferences -> Ant -> Runtime and select the tab Properties.
 
-       Here you should add maven.home, deploy.local.dir,  portalkit.home, java.home.
+       Here you should add deploy.local.dir. And make sure you have sytem variables 
+       M2_HOME and JAVA_HOME on your laptop.
       -->
 
 	<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-	          -               Properties set in eclipse
-	          - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-	<property name="deploy.local.dir" value="" />
-	<property name="maven.home" value="" />
-	<property name="java.home" value="" />
-
-	<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-	      -                          Properties
-	      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+          -                          Properties
+          - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 	<property name="portalkit.home" value="." />
 	<property name="mvn.build.cmd" value="clean install" />
 	<property name="mvn.skip.test" value="-Dmaven.test.skip=true" />
 	<property name="project.name" value="PortalKit" />
 
+	<target name="build_nontest">
+		<mvn dir="${portalkit.home}" />
+	</target>
 
-	<target name="build">
+	<target name="build_test">
+		<mvn dir="${portalkit.home}" args="${mvn.build.cmd}" />
+	</target>
+
+	<target name="build_deploy_nontest">
 		<mvn dir="${portalkit.home}" />
 		<deploy dir="${portalkit.home}" />
 	</target>
 
-	<target name="build_test">
+	<target name="build_deploy_test">
 		<mvn dir="${portalkit.home}" args="${mvn.build.cmd}" />
 		<deploy dir="${portalkit.home}" />
 	</target>
@@ -39,10 +43,10 @@
 		<attribute name="dir" />
 		<attribute name="args" default="${mvn.build.cmd} ${mvn.skip.test}" />
 		<sequential>
-			<exec dir="@{dir}" failonerror="true" executable="${maven.home}/bin/mvn.bat">
+			<exec dir="@{dir}" failonerror="true" executable="${env.M2_HOME}/bin/mvn.bat">
 				<arg line="@{args}" />
 				<env key="MAVEN_TERMINATE_CMD" value="on" />
-				<env key="JAVA_HOME" value="${java.home}" />
+				<env key="JAVA_HOME" value="${env.JAVA_HOME}" />
 			</exec>
 		</sequential>
 	</macrodef>

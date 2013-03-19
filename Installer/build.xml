@@ -1,12 +1,10 @@
 <project default="compile64" basedir="." name="Installer builder">
+
+	<property environment="env" />
+	<property file="./build.properties" />
 	<!-- *** Properties to be changed to reflect your build environment *** 
 		These should be set in eclipse. Go to Window -> Preferences -> Ant -> Runtime 
 		and select the tab Properties Here you should add inno.home, output.dir. -->
-
-	<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-		- - - Properties set in eclipse - - - - - - - - - - - - - - - - - - - - - 
-		- - - - - - - - - - - - - - - -->
-	<property name="inno.home" value="" />
 
 	<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 		- - - Properties - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
