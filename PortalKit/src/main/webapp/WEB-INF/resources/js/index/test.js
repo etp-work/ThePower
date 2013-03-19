@@ -55,7 +55,11 @@
     
     function buildViewOnShow(){
         
-        DynamicLoad.loadJSON(dataUrl, undefined, function(devices){
+        DynamicLoad.postJSON(dataUrl, {
+                targetIP: undefined,
+                targetPort: undefined,
+                targetContextPath: undefined
+            }, function(devices){
             if(!devices || devices.length === 0){
                 Lifecycle.setState(Lifecycle.NO_CONFIGURATION);
                 return;
@@ -99,9 +103,11 @@
                 to:window.nativeID,
                 type:"STARTPORTAL",
                 portaltype:portaltype,
-                enableDevTool:needDevTool()
+                enableDevTool:needDevTool(),
+                enableRemoteControl:needRemoteControl()
             }));
         }
+        setTimeout(buildViewOnShow, 5000); // Wait 5s for portal load and refresh test cases
     }
     
     function needDevTool(isNeeded){
@@ -109,6 +115,13 @@
             return $('#test-content #needDevTool').is(':checked');
         }
         $('#test-content #needDevTool').attr("checked", isNeeded);
+    }
+    
+    function needRemoteControl(isNeeded){
+        if(isNeeded === undefined){
+            return $('#test-content #needRemoteControl').is(':checked');
+        }
+        $('#test-content #needRemoteControl').attr("checked", isNeeded);
     }
     
     $('#test-content #portal').change(function() {
@@ -126,6 +139,17 @@
         }
     });
     
+    $('#test-content #needRemoteControl').change(function() {
+        if(window.wsconn){
+            window.wsconn.send(JSON.stringify({
+                from:window.portalID,
+                to:window.nativeID,
+                type:"ENABLEREMOTECONTROL",
+                enableDevTool:needRemoteControl()
+            }));
+        }
+    });
+    
     $('#test-content .list-header #quickSearch').keyup(function(event) {
         var text = $(this).val();
         doFilter(text);
@@ -135,4 +159,24 @@
         loadPortal();
     });
 
+    function getCases(){
+        var cases = [];
+        $('#test-content .us-list .childB').each(function (){
+            if($(this).is(':checked')){
+                cases.push($(this).attr("caseId"));
+            }
+        });
+        return cases;
+    }
+    
+    $('#test-content .test').click(function(event){
+        var cases = getCases();
+        DynamicLoad.postJSON(startUrl, {
+            targetIP: undefined,
+            targetPort: undefined,
+            targetContextPath: undefined,
+            cases:cases
+        }, function(){});
+    });
+    
 }(window));

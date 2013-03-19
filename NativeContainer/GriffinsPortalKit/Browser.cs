@@ -53,6 +53,11 @@ namespace GriffinsPortalKit
                     if ((bool)this.m_Param["enableDevTool"])
                     {
                         m_WebView.ShowDevTools();
+
+                    }
+
+                    if ((bool)this.m_Param["enableRemoteControl"])
+                    {
                         m_RemoteControl.Visible = true;
                     }
                     break;
@@ -68,15 +73,36 @@ namespace GriffinsPortalKit
                     if ((bool)json["enableDevTool"])
                     {
                         m_WebView.ShowDevTools();
-                        m_RemoteControl.Visible = true;
                     }
                     else
                     {
                         m_WebView.CloseDevTools();
+                    }
+                    break;
+                case "ENABLEREMOTECONTROL":
+                    if ((bool)json["enableRemoteControl"])
+                    {
+                        m_RemoteControl.Visible = true;
+                    }
+                    else
+                    {
                         m_RemoteControl.Visible = false;
                     }
                     break;
-
+                case "REMOTECONTROL":
+                    string key = (string)json["key"];
+                    switch (key)
+                    {
+                        default:
+                            if (key.Length > 1)
+                            {
+                                key = "{" + key + "}";
+                            }
+                            this.Focus();
+                            SendKeys.Send(key);
+                            break;
+                    }
+                    break;
             }
         }
     }

@@ -12,16 +12,19 @@
         <servlet-api.version>2.5</servlet-api.version>
         <apache.lang.version>2.6</apache.lang.version>
         <apache.io.version>2.4</apache.io.version>
+        <apache.lucene.version>4.2.0</apache.lucene.version>
         <apache.httpclient.version>3.1</apache.httpclient.version>
         <apache.collections.version>3.2.1</apache.collections.version>
         <apache.compress.version>1.4.1</apache.compress.version>
         <apache.beanutils.version>1.8.3</apache.beanutils.version>
         <org.aspectj.version>1.6.12</org.aspectj.version>
         <org.codehaus.jackson.version>1.8.7</org.codehaus.jackson.version>
+        <org.jdom.version>2.0.4</org.jdom.version>
         <tomcat.version>7.0.35</tomcat.version>
     </properties>
     <name>PortalKit</name>
     <url>http://maven.apache.org</url>
+
     <dependencies>
         <!-- Spring -->
         <dependency>
@@ -79,6 +82,33 @@
             <artifactId>commons-beanutils</artifactId>
             <version>${apache.beanutils.version}</version>
         </dependency>
+        
+        <!-- lucene -->
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-core</artifactId>
+            <version>${apache.lucene.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-queries</artifactId>
+            <version>${apache.lucene.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-test-framework</artifactId>
+            <version>${apache.lucene.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-analyzers-common</artifactId>
+            <version>${apache.lucene.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-queryparser</artifactId>
+            <version>${apache.lucene.version}</version>
+        </dependency>
 
         <!-- jackson -->
         <dependency>
@@ -86,7 +116,13 @@
             <artifactId>jackson-mapper-asl</artifactId>
             <version>${org.codehaus.jackson.version}</version>
         </dependency>
-        
+
+        <dependency>
+            <groupId>org.jdom</groupId>
+            <artifactId>jdom2</artifactId>
+            <version>${org.jdom.version}</version>
+        </dependency>
+
         <!-- tomcat -->
         <dependency>
             <groupId>org.apache.tomcat</groupId>

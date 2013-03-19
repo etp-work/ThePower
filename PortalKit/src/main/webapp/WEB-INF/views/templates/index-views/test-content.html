@@ -27,7 +27,7 @@
             <ul class="group" ng-repeat="testsuite in testsuites">
                 <li ng-repeat="testcase in testsuite.cases">
                     <div class="lightpoint">
-                        <input type="checkbox" class="childB" ng-checked="false" value="{{testcase.testCaseName}}" /><label></label>
+                        <input type="checkbox" class="childB" ng-checked="false" value="{{testcase.testCaseName}}" caseId="{{testcase.caseId}}" /><label></label>
                     </div>
                     <span>{{testcase.testCaseName}}</span>
                     <div class="status">
@@ -41,6 +41,7 @@
     <div class="main-button-area">
         <input class="primary-button test" type="button" value="Start Test"/>
         <div class="check-devtool"><div class="lightpoint"><input id="needDevTool" type="checkbox"><label></label></div>DevTools</div>
+        <div class="check-remotecontrol"><div class="lightpoint"><input id="needRemoteControl" type="checkbox"><label></label></div>RemoteControl</div>
         <div class="clear"></div>
     </div>
     <div class="clear"></div>

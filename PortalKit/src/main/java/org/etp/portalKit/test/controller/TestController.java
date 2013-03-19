@@ -1,6 +1,7 @@
 package org.etp.portalKit.test.controller;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
@@ -10,7 +11,10 @@ import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.etp.portalKit.test.bean.DataCommand;
+import org.etp.portalKit.test.bean.TestCommand;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -44,41 +48,40 @@ public class TestController {
         return "public/test/startTest.ajax?async=ture";
     }
 
-    /**
-     * @param targetIP
-     * @param targetPort
-     * @param targetContextPath
-     * @return do nothing
-     * @throws IOException 
-     * @throws HttpException 
-     */
-    @RequestMapping(value = "/test/data.ajax", method = RequestMethod.GET)
+    @RequestMapping(value = "/test/data.ajax", method = RequestMethod.POST)
     public @ResponseBody
-    String getData(String targetIP, String targetPort, String targetContextPath) throws HttpException, IOException {
-        String requestIP = null != targetIP ? targetIP : getDefatltIP();
-        String requestPort = null != targetPort ? targetPort : getDefaultPort();
-        String requestContextPath = null != targetContextPath ? targetContextPath : getDefaultContextPath();
+    String getData(@RequestBody DataCommand cmd) throws HttpException, IOException {
+        String requestIP = null != cmd.getTargetIP() ? cmd.getTargetIP() : getDefatltIP();
+        String requestPort = null != cmd.getTargetPort() ? cmd.getTargetPort() : getDefaultPort();
+        String requestContextPath = null != cmd.getTargetContextPath() ? cmd.getTargetContextPath()
+                : getDefaultContextPath();
         String requestURL = String.format("http://%s:%s/%s/%s", requestIP, requestPort, requestContextPath,
                 getDataRequestURL());
         return sendGetRequest(requestURL);
     }
 
-    /**
-     * @param targetIP
-     * @param targetPort
-     * @param targetContextPath
-     * @return do nothing
-     * @throws IOException 
-     * @throws HttpException 
-     */
-    @RequestMapping(value = "/test/start.ajax", method = RequestMethod.GET)
+    @RequestMapping(value = "/test/start.ajax", method = RequestMethod.POST)
     public @ResponseBody
-    String startTest(String targetIP, String targetPort, String targetContextPath) throws HttpException, IOException {
-        String requestIP = null != targetIP ? targetIP : getDefatltIP();
-        String requestPort = null != targetPort ? targetPort : getDefaultPort();
-        String requestContextPath = null != targetContextPath ? targetContextPath : getDefaultContextPath();
+    String startTest(@RequestBody TestCommand cmd) throws HttpException, IOException {
+        String requestIP = null != cmd.getTargetIP() ? cmd.getTargetIP() : getDefatltIP();
+        String requestPort = null != cmd.getTargetPort() ? cmd.getTargetPort() : getDefaultPort();
+        String requestContextPath = null != cmd.getTargetContextPath() ? cmd.getTargetContextPath()
+                : getDefaultContextPath();
+
+        String cases = "";
+        for (String caseId : cmd.getCases()) {
+            if (cases.equals("")) {
+                cases = caseId;
+            } else {
+                cases += "|" + caseId;
+            }
+        }
+
         String requestURL = String.format("http://%s:%s/%s/%s", requestIP, requestPort, requestContextPath,
                 getStartTestRequestURL());
+
+        requestURL += "&cases=" + URLEncoder.encode(cases, "utf-8");
+
         return sendGetRequest(requestURL);
     }
 

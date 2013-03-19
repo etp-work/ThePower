@@ -444,7 +444,7 @@ img{ border:none; margin:0; padding:0;}
     }
 .testType{
     margin:0 auto;
-    width:255px;
+    width:245px;
     height:24px;
     padding:2px 5px;
     border: 1px solid #09C;
@@ -457,6 +457,14 @@ img{ border:none; margin:0; padding:0;}
     }
     
 .check-devtool{
+    float:left;
+    margin:5px 0px 0px 10px;
+    height:22px;
+    line-height:22px; 
+    vertical-align:middle;
+    }
+
+.check-remotecontrol{
     float:left;
     margin:5px 0px 0px 10px;
     height:22px;
@@ -570,7 +578,7 @@ img{ border:none; margin:0; padding:0;}
 .testType{
 
     margin:0 auto;
-    width:255px;
+    width:245px;
     height:24px;
     padding:2px 5px;
     border: 1px solid #09C;
@@ -579,7 +587,7 @@ img{ border:none; margin:0; padding:0;}
 
 .test{
     float:left;
-    width:200px;
+    width:100px;
     }
 /*input[type="checkbox"]{
     float:left;
