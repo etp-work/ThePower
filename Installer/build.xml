@@ -2,9 +2,12 @@
 
 	<property environment="env" />
 	<property file="./build.properties" />
-	<!-- *** Properties to be changed to reflect your build environment *** 
-		These should be set in eclipse. Go to Window -> Preferences -> Ant -> Runtime 
-		and select the tab Properties Here you should add inno.home, output.dir. -->
+	<!-- 
+	    *** Properties to be changed to reflect your build environment *** 
+	    
+		Here you should make sure you have inno.home set in build.properties. 
+		
+	-->
 
 	<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 		- - - Properties - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
