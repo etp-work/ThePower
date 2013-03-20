@@ -30,7 +30,6 @@
         $('#build-content #common #needDeploy').attr("disabled", isDisable);
         $('#build-content #common input').attr("disabled", isDisable);
         $('#build-content #environment input').attr("disabled", isDisable);
-        $('#build-content #environment #build4Set').attr("disabled", isDisable);
     }
     
     //rebind click event build-list checkbox items
@@ -99,6 +98,7 @@
                 scope.dirTrees = [];
             });
             setDisableElements(true);
+            $('#build-content #environment #build4Set').attr("disabled", true);
         });
     }
     
@@ -193,7 +193,7 @@
                             }, function(BuildResult){
                                    element.removeClass("s-working");
                                    if(!BuildResult.success){
-                                        ViewManager.simpleError("Build error");
+                                        ViewManager.simpleError("Build error", function(){ViewManager.showLog(BuildResult.message)});
                                         element.addClass("s-error");
                                    }else if(!BuildResult.deployed){
                                         ViewManager.simpleError("There might be some of packages failed to deploy.");
@@ -217,6 +217,17 @@
         ViewManager.filter("#build-content #common .bulid-list ul li", "div input[type=\"checkbox\"]", text);
     }
     
+    function checkBuild4SetValid(){
+        var options = $('#build-content #environment input[type="checkbox"]');
+        for(var i = 0; i < options.length; i++){
+            if($(options[i]).is(':checked')){
+                $('#build-content #environment #build4Set').attr("disabled", false);
+                return true;
+            }
+        }
+        $('#build-content #environment #build4Set').attr("disabled", true);
+    }
+    
 //========================================init listener=====================================
     
     ViewManager.addViewListener("onShow", "#"+viewId, buildViewOnShow);
@@ -225,9 +236,11 @@
             switch (status) {
                 case Lifecycle.NORMAL:
                     setDisableElements(false);
+                    checkBuild4SetValid();
                     break;
                 case Lifecycle.IN_PROCESS:
                     setDisableElements(true);
+                    $('#build-content #environment #build4Set').attr("disabled", true);
                     break;
                 case Lifecycle.NO_CONFIGURATION:
                     var scope = angular.element($('.bulid-list')).scope();
@@ -235,6 +248,7 @@
                         scope.dirTrees = [];
                     });
                     setDisableElements(true);
+                    $('#build-content #environment #build4Set').attr("disabled", true);
                     break;
                 default:
                     break;
@@ -313,10 +327,11 @@
         environmentBuild(choosedElement);
     });
     
-    $('#build-content #environment input').click(function(event){
+    $('#build-content #environment input[type="checkbox"]').click(function(event){
         if($(this).is(':checked')){
             $(this).parent().parent().siblings('li').find('input').attr("checked", false);
         }
+        checkBuild4SetValid();
     });
     
     
