@@ -41,6 +41,8 @@ Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescrip
 
 [Files]
 Source: "..\shell\*"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\shell\images\*"; DestDir: "{app}\images"; Flags: ignoreversion
+Source: "..\shell\locales\*"; DestDir: "{app}\locales"; Flags: ignoreversion
 Source: "..\icons\The_power_icon_128.ico"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\xulrunner\*"; DestDir: "{app}\xulrunner"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "..\CustomizedTomcat\*"; DestDir: "{localappdata}\CustomizedTomcat"; Flags: ignoreversion recursesubdirs createallsubdirs
