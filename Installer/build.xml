@@ -85,9 +85,10 @@
 			<mkdir dir="${shell.local.home}" />
 			<copy todir="${shell.local.home}">
 				<fileset dir="${shell.bin.home}">
-					<include name="*.dll" />
-					<include name="GriffinsPortalKit.exe" />
-					<include name="GriffinsPortalKit.exe.config" />
+					<include name="*" />
+					<include name="*/*" />
+					<exclude name="xulrunner"/>
+					<exclude name="xulrunner/*"/>
 				</fileset>
 			</copy>
 		</sequential>

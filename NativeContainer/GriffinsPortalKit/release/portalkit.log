@@ -4,3 +4,49 @@
 2013-03-20 18:55:38,524 [5288] INFO  WebSocketServer-48285313 - The server instance WebSocketServer-48285313 has been started!
 2013-03-21 08:53:56,047 [3828] DEBUG WebSocketServer-48285313 - Listener (0.0.0.0:58887) was started
 2013-03-21 08:53:56,070 [3828] INFO  WebSocketServer-48285313 - The server instance WebSocketServer-48285313 has been started!
+2013-03-21 09:05:58,028 [8096] DEBUG WebSocketServer-48285313 - Listener (0.0.0.0:58887) was started
+2013-03-21 09:05:58,048 [8096] INFO  WebSocketServer-48285313 - The server instance WebSocketServer-48285313 has been started!
+2013-03-21 09:06:12,553 [6372] DEBUG GriffinsPortalKit.NativeContainer - WebSocket Native Client Opened
+2013-03-21 09:06:12,586 [7544] DEBUG GriffinsPortalKit.Program - WebSocket Server NewMessageReceived:ID:86c09680-9e6f-4d34-b3c1-3f7bc8f32c59, Session:1ce46d55-4d12-49a8-9181-73433175fba4
+2013-03-21 09:06:14,206 [7544] DEBUG GriffinsPortalKit.Program - WebSocket Server NewMessageReceived:ID:54b363a4-7f2b-4e3b-83c8-0bf98eaf484f, Session:00e58d78-2010-4e0a-bbe7-ea9515bc8d7b
+2013-03-21 09:06:18,781 [7544] DEBUG GriffinsPortalKit.Program - WebSocket Server NewMessageReceived:{"from":"54b363a4-7f2b-4e3b-83c8-0bf98eaf484f","to":"86c09680-9e6f-4d34-b3c1-3f7bc8f32c59","type":"STARTPORTAL","portaltype":"STBHTML","enableDevTool":false,"enableRemoteControl":false}, Session:00e58d78-2010-4e0a-bbe7-ea9515bc8d7b
+2013-03-21 09:06:18,861 [4416] DEBUG GriffinsPortalKit.NativeContainer - WebSocket Native Client MessageReceived:{"from":"54b363a4-7f2b-4e3b-83c8-0bf98eaf484f","to":"86c09680-9e6f-4d34-b3c1-3f7bc8f32c59","type":"STARTPORTAL","portaltype":"STBHTML","enableDevTool":false,"enableRemoteControl":false}
+2013-03-21 09:06:19,888 [7544] DEBUG GriffinsPortalKit.Program - WebSocket Server NewMessageReceived:ID:REMOTECONTROL, Session:359f1f8b-78a8-40f4-874a-e14d93ac5d0d
+2013-03-21 09:06:29,991 [7156] DEBUG GriffinsPortalKit.Program - WebSocket Server NewMessageReceived:ID:mockDevice-PC, Session:490f2991-dd73-48fc-8091-8c9bd113206d
+2013-03-21 09:06:31,625 [7156] DEBUG GriffinsPortalKit.Program - WebSocket Server NewMessageReceived:ID:mockDevice-PC, Session:042682cb-a6e8-4543-bb3e-6586cd07e478
+2013-03-21 09:06:36,175 [8096] DEBUG WebSocketServer-48285313 - Listener (0.0.0.0:58887) was stoppped
+2013-03-21 09:06:36,175 [8096] INFO  WebSocketServer-48285313 - The server instance WebSocketServer-48285313 has been stopped!
+2013-03-21 09:06:36,185 [6372] DEBUG GriffinsPortalKit.NativeContainer - WebSocket Native Client Closed
+2013-03-21 09:06:58,218 [2696] DEBUG WebSocketServer-48285313 - Listener (0.0.0.0:58887) was started
+2013-03-21 09:06:58,238 [2696] INFO  WebSocketServer-48285313 - The server instance WebSocketServer-48285313 has been started!
+2013-03-21 09:07:12,208 [3872] DEBUG GriffinsPortalKit.NativeContainer - WebSocket Native Client Opened
+2013-03-21 09:07:12,240 [7904] DEBUG GriffinsPortalKit.Program - WebSocket Server NewMessageReceived:ID:fe5178d5-9212-43a6-af97-eb062bbe086c, Session:b1dee2bd-929a-47bc-9cfe-607f6e1cdcc3
+2013-03-21 09:07:17,488 [6504] DEBUG GriffinsPortalKit.Program - WebSocket Server NewMessageReceived:ID:e20e5058-db09-4bd9-a3f7-01d6eca51cea, Session:19073ad7-f576-4049-9f40-37941a2a5c35
+2013-03-21 09:07:23,232 [8176] DEBUG GriffinsPortalKit.Program - WebSocket Server NewMessageReceived:{"from":"e20e5058-db09-4bd9-a3f7-01d6eca51cea","to":"fe5178d5-9212-43a6-af97-eb062bbe086c","type":"STARTPORTAL","portaltype":"STBHTML","enableDevTool":false,"enableRemoteControl":false}, Session:19073ad7-f576-4049-9f40-37941a2a5c35
+2013-03-21 09:07:23,309 [4104] DEBUG GriffinsPortalKit.NativeContainer - WebSocket Native Client MessageReceived:{"from":"e20e5058-db09-4bd9-a3f7-01d6eca51cea","to":"fe5178d5-9212-43a6-af97-eb062bbe086c","type":"STARTPORTAL","portaltype":"STBHTML","enableDevTool":false,"enableRemoteControl":false}
+2013-03-21 09:07:23,915 [8176] DEBUG GriffinsPortalKit.Program - WebSocket Server NewMessageReceived:ID:REMOTECONTROL, Session:2405508c-631c-4983-b0f8-8686d5215600
+2013-03-21 09:07:24,976 [8176] DEBUG GriffinsPortalKit.Program - WebSocket Server NewMessageReceived:ID:mockDevice-PC, Session:6df5b69c-423e-40f3-8389-ac541f53de3b
+2013-03-21 09:07:25,481 [7904] DEBUG GriffinsPortalKit.Program - WebSocket Server NewMessageReceived:ID:mockDevice-PC, Session:23cacbe6-4642-44a7-ad27-66f98baa1ac3
+2013-03-21 09:07:29,007 [7904] DEBUG GriffinsPortalKit.Program - WebSocket Server NewMessageReceived:{"from":"mockDevice-PC","to":"e20e5058-db09-4bd9-a3f7-01d6eca51cea","type":"TESTCASE_START","area":"Broadcast","casename":"testTuneTo"}, Session:23cacbe6-4642-44a7-ad27-66f98baa1ac3
+2013-03-21 09:07:29,398 [7904] DEBUG GriffinsPortalKit.Program - WebSocket Server NewMessageReceived:{"from":"e20e5058-db09-4bd9-a3f7-01d6eca51cea","to":"fe5178d5-9212-43a6-af97-eb062bbe086c","type":"ENABLEREMOTECONTROL","enableRemoteControl":true}, Session:19073ad7-f576-4049-9f40-37941a2a5c35
+2013-03-21 09:07:29,399 [3872] DEBUG GriffinsPortalKit.NativeContainer - WebSocket Native Client MessageReceived:{"from":"e20e5058-db09-4bd9-a3f7-01d6eca51cea","to":"fe5178d5-9212-43a6-af97-eb062bbe086c","type":"ENABLEREMOTECONTROL","enableRemoteControl":true}
+2013-03-21 09:07:33,267 [6504] DEBUG GriffinsPortalKit.Program - WebSocket Server NewMessageReceived:ID:mockDevice-PC, Session:d1e6dd44-8c40-4e4d-ad15-fd789766c131
+2013-03-21 09:07:36,479 [8176] DEBUG GriffinsPortalKit.Program - WebSocket Server NewMessageReceived:{"from":"mockDevice-PC","to":"e20e5058-db09-4bd9-a3f7-01d6eca51cea","type":"TESTCASE_START","area":"Broadcast","casename":"testTuneTo"}, Session:d1e6dd44-8c40-4e4d-ad15-fd789766c131
+2013-03-21 09:07:38,778 [2696] DEBUG WebSocketServer-48285313 - Listener (0.0.0.0:58887) was stoppped
+2013-03-21 09:07:38,778 [2696] INFO  WebSocketServer-48285313 - The server instance WebSocketServer-48285313 has been stopped!
+2013-03-21 09:07:38,782 [3872] DEBUG GriffinsPortalKit.NativeContainer - WebSocket Native Client Closed
+2013-03-21 10:18:05,917 [7880] ERROR WebSocketServer-48285313 - Listener (0.0.0.0:58887) error: Only one usage of each socket address (protocol/network address/port) is normally permitted
+2013-03-21 10:18:05,935 [7880] DEBUG WebSocketServer-48285313 - Listener (0.0.0.0:58887) failed to start
+2013-03-21 10:18:05,936 [7880] ERROR GriffinsPortalKit.Program - ERROR:Failed to start server!
+System.Exception: ERROR:Failed to start server!
+   at GriffinsPortalKit.Program.Main()
+2013-03-21 10:18:14,904 [7108] ERROR WebSocketServer-48285313 - Listener (0.0.0.0:58887) error: Only one usage of each socket address (protocol/network address/port) is normally permitted
+2013-03-21 10:18:14,923 [7108] DEBUG WebSocketServer-48285313 - Listener (0.0.0.0:58887) failed to start
+2013-03-21 10:18:14,923 [7108] ERROR GriffinsPortalKit.Program - ERROR:Failed to start server!
+System.Exception: ERROR:Failed to start server!
+   at GriffinsPortalKit.Program.Main()
+2013-03-21 10:18:24,681 [6848] ERROR WebSocketServer-48285313 - Listener (0.0.0.0:58887) error: Only one usage of each socket address (protocol/network address/port) is normally permitted
+2013-03-21 10:18:24,701 [6848] DEBUG WebSocketServer-48285313 - Listener (0.0.0.0:58887) failed to start
+2013-03-21 10:18:24,701 [6848] ERROR GriffinsPortalKit.Program - ERROR:Failed to start server!
+System.Exception: ERROR:Failed to start server!
+   at GriffinsPortalKit.Program.Main()

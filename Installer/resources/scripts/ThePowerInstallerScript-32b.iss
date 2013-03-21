@@ -37,9 +37,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 0,6.1
 
 [Files]
-Source: "..\shell\GriffinsPortalKit.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\shell\*.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\shell\GriffinsPortalKit.exe.config"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\shell\*"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\icons\The_power_icon_128.ico"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\xulrunner\*"; DestDir: "{app}\xulrunner"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "..\CustomizedTomcat\*"; DestDir: "{localappdata}\CustomizedTomcat"; Flags: ignoreversion recursesubdirs createallsubdirs
