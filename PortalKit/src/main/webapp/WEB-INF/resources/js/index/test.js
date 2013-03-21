@@ -30,15 +30,15 @@
                 scope.$apply(function(){
                     scope.testsuites = command.testsuites;
                 });
-            }
-            
-            if(command.type == "TESTCASE_START"){
-                var element = $("#test-content .us-list .childB[value=\""+command.casename+"\"]").parent().siblings('.status');
+            } else if(command.type == "TESTCASE_START"){
+                var id = command.area + "." + command.casename;
+                var element = $("#test-content .us-list .childB[value=\""+id+"\"]").parent().siblings('.status');
+                element.removeClass("s-success");
+                element.removeClass("s-error");
                 element.addClass("s-working");
-            }
-            
-            if(command.type == "TESTCASE_END"){
-                var element = $("#test-content .us-list .childB[value=\""+command.casename+"\"]").parent().siblings('.status');
+            } else if(command.type == "TESTCASE_END"){
+                var id = command.area + "." + command.casename;
+                var element = $("#test-content .us-list .childB[value=\""+id+"\"]").parent().siblings('.status');
                 element.removeClass("s-working");
                 if(command.result === "OK"){
                     element.addClass("s-success");
@@ -145,7 +145,7 @@
                 from:window.portalID,
                 to:window.nativeID,
                 type:"ENABLEREMOTECONTROL",
-                enableDevTool:needRemoteControl()
+                enableRemoteControl:needRemoteControl()
             }));
         }
     });

@@ -99,7 +99,7 @@ namespace GriffinsPortalKit
                                 key = "{" + key + "}";
                             }
                             this.Focus();
-                            SendKeys.Send(key);
+                            SendKeys.SendWait(key);
                             break;
                     }
                     break;

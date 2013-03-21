@@ -27,9 +27,9 @@
             <ul class="group" ng-repeat="testsuite in testsuites">
                 <li ng-repeat="testcase in testsuite.cases">
                     <div class="lightpoint">
-                        <input type="checkbox" class="childB" ng-checked="false" value="{{testcase.testCaseName}}" caseId="{{testcase.caseId}}" /><label></label>
+                        <input type="checkbox" class="childB" ng-checked="false" value="{{testcase.area}}.{{testcase.testCaseName}}" caseId="{{testcase.caseId}}" /><label></label>
                     </div>
-                    <span>{{testcase.testCaseName}}</span>
+                    <span>{{testcase.area}}.{{testcase.testCaseName}}</span>
                     <div class="status">
                         <img src="resources/images/loading.gif" />
                     </div>
