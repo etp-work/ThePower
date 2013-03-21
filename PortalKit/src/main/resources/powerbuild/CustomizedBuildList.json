@@ -16,6 +16,12 @@
         "checked": "",
         "subDirs": []
     }, {
+        "name": "portal-testsuites-recordingset-war",
+        "absolutePath": "",
+        "relativePath": "design\\AutoTest\\portal-testsuites-recordingset-war",
+        "checked": "",
+        "subDirs": []
+    }, {
         "name": "portal-testsuites-multiscreen-war",
         "absolutePath": "",
         "relativePath": "design\\AutoTest\\portal-testsuites-multiscreen-war",
@@ -295,6 +301,66 @@
         "name": "portal-multiscreen-sessiontransfer-skin-web-next-war",
         "absolutePath": "",
         "relativePath": "design\\Multiscreen\\Skin\\portal-multiscreen-sessiontransfer-skin-web-next-war",
+        "checked": "",
+        "subDirs": []
+    }]
+}, {
+    "name": "Experimental",
+    "absolutePath": "",
+    "relativePath": "",
+    "checked": "",
+    "subDirs": [{
+        "name": "portal-coreapps-remote-apps-enus-war",
+        "absolutePath": "",
+        "relativePath": "design\\Experimental\\portal-coreapps-remote-apps-enus-war",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "portal-coreapps-remote-apps-war",
+        "absolutePath": "",
+        "relativePath": "design\\Experimental\\portal-coreapps-remote-apps-war",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "portal-lpvr-npvr-war",
+        "absolutePath": "",
+        "relativePath": "design\\Experimental\\portal-lpvr-npvr-war",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "portal-nowplaying-war",
+        "absolutePath": "",
+        "relativePath": "design\\Experimental\\portal-nowplaying-war",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "portal-playlist-views-war",
+        "absolutePath": "",
+        "relativePath": "design\\Experimental\\portal-playlist-views-war",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "portal-pvr-views-war",
+        "absolutePath": "",
+        "relativePath": "design\\Experimental\\portal-pvr-views-war",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "portal-test-firebug-war",
+        "absolutePath": "",
+        "relativePath": "design\\Experimental\\portal-test-firebug-war",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "portal-test-seriespvr-war",
+        "absolutePath": "",
+        "relativePath": "design\\Experimental\\portal-test-seriespvr-war",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "proxy-lowendbrowser-war",
+        "absolutePath": "",
+        "relativePath": "design\\Experimental\\proxy-lowendbrowser-war",
         "checked": "",
         "subDirs": []
     }]
