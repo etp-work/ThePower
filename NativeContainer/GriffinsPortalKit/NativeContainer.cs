@@ -24,7 +24,7 @@ namespace GriffinsPortalKit
         private static ILog logger = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private Browser portal;
         private GeckoWebBrowser browser;
-        private SplashForm frmSplash = new SplashForm();
+        private ThePower frmSplash = new ThePower();
         private WebSocket websocketclient;
 
         [DllImport("USER32.DLL", CharSet = CharSet.Unicode)]

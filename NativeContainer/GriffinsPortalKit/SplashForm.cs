@@ -9,12 +9,12 @@ using System.Windows.Forms;
 
 namespace GriffinsPortalKit
 {
-    public partial class SplashForm : Form
+    public partial class ThePower : Form
     {
         bool fadeIn = true;
         bool fadeOut = false;
 
-        public SplashForm()
+        public ThePower()
         {
             InitializeComponent();
             this.Opacity = 0.5;

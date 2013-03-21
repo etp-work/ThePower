@@ -2,3 +2,5 @@
 2013-03-11 18:00:59,179 [6576] INFO  WebSocketServer-48285313 - The server instance WebSocketServer-48285313 has been started!
 2013-03-20 18:55:38,502 [5288] DEBUG WebSocketServer-48285313 - Listener (0.0.0.0:58887) was started
 2013-03-20 18:55:38,524 [5288] INFO  WebSocketServer-48285313 - The server instance WebSocketServer-48285313 has been started!
+2013-03-21 08:53:56,047 [3828] DEBUG WebSocketServer-48285313 - Listener (0.0.0.0:58887) was started
+2013-03-21 08:53:56,070 [3828] INFO  WebSocketServer-48285313 - The server instance WebSocketServer-48285313 has been started!
