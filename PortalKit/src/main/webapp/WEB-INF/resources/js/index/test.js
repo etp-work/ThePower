@@ -31,6 +31,7 @@
                     scope.testsuites = command.testsuites;
                 });
             } else if(command.type == "TESTCASE_START"){
+                disableElements(true);
                 var id = command.area + "." + command.casename;
                 var element = $("#test-content .us-list .childB[value=\""+id+"\"]").parent().siblings('.status');
                 element.removeClass("s-success");
@@ -45,10 +46,18 @@
                 } else {
                     element.addClass("s-error");
                 }
+                disableElements(false);
             }
         };
         window.wsconn.onclose = function(event) {};
         window.wsconn.onerror = function(event) {};
+    }
+    
+    function disableElements(isDisable){
+        $('#test-content .test').attr("disabled", isDisable);
+        $('#test-content #needRemoteControl').attr("disabled", isDisable);
+        $('#test-content #reloadButton').attr("disabled", isDisable);
+        $('#test-content #portal').attr("disabled", isDisable);
     }
     
 //========================================init listener=====================================
@@ -61,7 +70,6 @@
                 targetContextPath: undefined
             }, function(devices){
             if(!devices || devices.length === 0){
-                Lifecycle.setState(Lifecycle.NO_CONFIGURATION);
                 return;
             }
             
@@ -87,7 +95,6 @@
                 scope.testsuites = testsuites;
             });
           
-            Lifecycle.setState(viewId, Lifecycle.NORMAL);
         });
     }
     
@@ -126,6 +133,12 @@
     
     $('#test-content #portal').change(function() {
         loadPortal();
+        var portaltype = $(this).val();
+        if("" !== portaltype){
+            $('#test-content #reloadButton').attr("disabled", false);
+        }else{
+            $('#test-content #reloadButton').attr("disabled", true);
+        }
     });
     
     $('#test-content #needDevTool').change(function() {
@@ -171,6 +184,7 @@
     
     $('#test-content .test').click(function(event){
         var cases = getCases();
+        $('#test-content .test-feature-content .us-list .status').attr("class", "status");
         DynamicLoad.postJSON(startUrl, {
             targetIP: undefined,
             targetPort: undefined,

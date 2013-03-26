@@ -56,10 +56,11 @@ public class PowerBuildController {
     public @ResponseBody
     BuildResult build(@RequestBody BuildCommand cmd) {
         BuildResult br = null;
-        if (cmd.isNeedDeploy())
-            br = logic.buildDeploy(cmd.getSelection(), null);
-        else
-            br = logic.build(cmd.getSelection(), null);
+        if (cmd.isNeedDeploy()) {
+            br = logic.buildDeploy(cmd.getSelection());
+        } else {
+            br = logic.build(cmd.getSelection());
+        }
         return br;
     }
 

@@ -1,6 +1,7 @@
 package org.etp.portalKit.powerbuild.logic;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -60,51 +61,44 @@ public class PowerBuildLogic {
                 });
     }
 
-    /**
-     * Get absolute path of specified project name.
-     * 
-     * @param selection specified project name.
-     * @return path
-     */
-    private String getAbsPathFromCommonBuildList(String selection) {
-        List<DirTree> retrieveDirInfo = getCommonBuildListDirTrees();
-        String absPath = null;
-        for (DirTree dirTree : retrieveDirInfo) {
-            for (DirTree subTree : dirTree.getSubDirs()) {
-                if (subTree.getName().equals(selection)) {
-                    absPath = subTree.getAbsolutePath();
-                    break;
-                }
-            }
-        }
-        return absPath;
-    }
-
-    private String getFinalPath(String selection, String absPath) {
-        String path = null;
-        if (StringUtils.isBlank(absPath)) {
-            if (StringUtils.isBlank(selection))
-                throw new NullPointerException("selection could not be null or empty if absPath is not defined.");
-            path = getAbsPathFromCommonBuildList(selection);
-        } else
-            path = absPath;
-        if (StringUtils.isBlank(path))
-            throw new RuntimeException("Incorrect path to build.");
-        return path;
-    }
-
     private String checkDeployPath() {
         String deployPath = prop.get(SettingsCommand.TOMCAT_WEBAPPS_PATH);
-        if (StringUtils.isBlank(deployPath))
+        if (StringUtils.isBlank(deployPath)) {
             throw new RuntimeException("You haven't deploy path setted.");
+        }
         return deployPath;
     }
 
     private String checkDesignPath() {
         String path = prop.get(SettingsCommand.PORTAL_TEAM_PATH);
-        if (StringUtils.isBlank(path))
+        if (StringUtils.isBlank(path)) {
             throw new RuntimeException("You haven't design path setted.");
+        }
         return path;
+    }
+
+    private boolean checkCanBeDeployed(String absolutePath) {
+        File file = new File(absolutePath);
+        File[] files = file.listFiles(new FileFilter() {
+            @Override
+            public boolean accept(File arg0) {
+                return arg0.isDirectory() && "target".equals(arg0.getName());
+            }
+        });
+        if (files.length == 0) {
+            return false;
+        }
+        File target = new File(absolutePath, "target");
+        File[] wars = target.listFiles(new FileFilter() {
+            @Override
+            public boolean accept(File arg0) {
+                return arg0.isFile() && arg0.getName().endsWith(".war");
+            }
+        });
+        if (wars.length == 0) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -113,14 +107,12 @@ public class PowerBuildLogic {
      * list tree for its own absolute path. Otherwise, absPath will be
      * used as a maven project folder to compile.
      * 
-     * @param selection used to scan the absolute path from common
+     * @param absolutePath used to scan the absolute path from common
      *            build list if absPath is null or empty.
-     * @param absPath used to compile a maven project, if exists.
      * @return BuildResult
      */
-    public BuildResult build(String selection, String absPath) {
-        String path = getFinalPath(selection, absPath);
-        CommandResult compile = executor.compile(path);
+    public BuildResult build(String absolutePath) {
+        CommandResult compile = executor.compile(absolutePath);
         BuildResult br = new BuildResult(compile);
         return br;
     }
@@ -132,18 +124,22 @@ public class PowerBuildLogic {
      * absolute path. Otherwise, absPath will be used as a maven
      * project folder to compile.
      * 
-     * @param selection used to scan the absolute path from common
-     *            build list if absPath is null or empty.
-     * @param absPath used to compile a maven project, if exists.
+     * @param absolutePath absolute path of project.
      * @return BuildResult
      */
-    public BuildResult buildDeploy(String selection, String absPath) {
+    public BuildResult buildDeploy(String absolutePath) {
         String deployPath = checkDeployPath();
-        String path = getFinalPath(selection, absPath);
-        BuildResult result = build(null, path);
-        if (!result.isSuccess())
+        BuildResult result = build(absolutePath);
+        if (!result.isSuccess()) {
             return result;
-        boolean deployed = deployService.deployFromFolder(path, deployPath);
+        }
+        boolean deployed;
+        boolean canDeploy = checkCanBeDeployed(absolutePath);
+        if (canDeploy) {
+            deployed = deployService.deployFromFolder(absolutePath, deployPath);
+        } else {
+            deployed = true;
+        }
         result.setDeployed(deployed);
         return result;
     }
@@ -157,11 +153,13 @@ public class PowerBuildLogic {
     public BuildResult buildDeploySet(String deployType) {
         String deployPath = checkDeployPath();
         String basePath = checkDesignPath();
-        BuildResult result = build(null, new File(basePath, "design").getAbsolutePath());
-        if (!result.isSuccess())
+        BuildResult result = build(new File(basePath, "design").getAbsolutePath());
+        if (!result.isSuccess()) {
             return result;
-        if (deployInformation == null)
+        }
+        if (deployInformation == null) {
             throw new RuntimeException("failed to read deployinformation.");
+        }
         List<String> deploySet = new ArrayList<String>();
         boolean deployed = true;
         if ("referencePortal".equals(deployType)) {

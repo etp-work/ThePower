@@ -1,5 +1,5 @@
 /**
- * This module called DynamicLoad, it provide some APIs which have to do with network connectivity.
+\ * This module called DynamicLoad, it provide some APIs which have to do with network connectivity.
  * Such as postJSON, loadJSON... 
  *
  */

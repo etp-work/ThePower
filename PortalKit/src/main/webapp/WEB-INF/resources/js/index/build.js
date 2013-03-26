@@ -37,20 +37,12 @@
         $('#build-content #common .parentB').on("click", function(event){
                     var isChecked = $(this).is(':checked');
                     $(this).parent().parent().siblings().find('.childB').attr("checked", isChecked);
-                    if($(this).val() === "Others" && isChecked && needDeploy()){//unselect deploy button if something in Others selected.
-                        needDeploy(false);
-                        ViewManager.simpleWarning("Items in Others can't be deployed.");
-                    }
         });
         $('#build-content #common .childB').on("click", function(event){
                     var isChecked = $(this).is(':checked');
                     var parent = $(this).parent().parent().parent().find('.parentB');
                     if(isChecked){
                         parent.attr("checked", true);
-                        if(parent.val() === "Others" && needDeploy()){//unselect deploy button if something in Others selected.
-                            needDeploy(false);
-                            ViewManager.simpleWarning("Items in Others can't be deployed.");
-                        }
                     }else{
                         var isAllFalse = true;
                         $(this).parent().parent().siblings().find('.childB').each(function(){
@@ -300,17 +292,6 @@
         }
         commonBuild(subSelection);
         return false;
-    });
-    
-    $('#build-content #common #needDeploy').click(function(event){
-        var isNeeded = needDeploy();
-        if(!isNeeded){
-            return;
-        }
-        if($('#build-content #common .parentB[value="Others"]').is(':checked')){
-            ViewManager.simpleWarning("Items in Others can't be deployed.");
-            needDeploy(false);
-        }
     });
     
     $('#build-content #environment #build4Set').click(function(event){
