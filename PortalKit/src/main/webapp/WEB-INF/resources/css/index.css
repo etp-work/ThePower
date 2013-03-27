@@ -736,7 +736,7 @@ select:focus {
     }
 .lightpoint input[type="checkbox"] {
     opacity:0;
-    width:30px;
+    width:100px;
     height:16px;
     position:absolute;
     z-index:100;
