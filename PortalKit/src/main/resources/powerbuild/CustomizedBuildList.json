@@ -1,4 +1,28 @@
 [{
+    "name": "Others",
+    "absolutePath": "",
+    "relativePath": "",
+    "checked": "",
+    "subDirs": [{
+        "name": "maven-plugins",
+        "absolutePath": "",
+        "relativePath": "maven-plugins",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "parent",
+        "absolutePath": "",
+        "relativePath": "design\\parent",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "widgettool-war",
+        "absolutePath": "",
+        "relativePath": "design\\FW\\portal-widgettool-war",
+        "checked": "",
+        "subDirs": []
+    }]
+}, {
     "name": "AutoTest",
     "absolutePath": "",
     "relativePath": "",
@@ -365,26 +389,56 @@
         "subDirs": []
     }]
 }, {
-    "name": "Others",
+    "name": "Sdk",
     "absolutePath": "",
     "relativePath": "",
     "checked": "",
     "subDirs": [{
-        "name": "maven-plugins",
+        "name": "portal-sdk",
         "absolutePath": "",
-        "relativePath": "maven-plugins",
+        "relativePath": "design\\Sdk\\portal-sdk",
         "checked": "",
         "subDirs": []
     }, {
-        "name": "parent",
+        "name": "maven-archetype-jsmodule",
         "absolutePath": "",
-        "relativePath": "design\\parent",
+        "relativePath": "design\\Sdk\\maven-archetype-jsmodule",
         "checked": "",
         "subDirs": []
     }, {
-        "name": "widgettool-war",
+        "name": "portal-examples-backend-war",
         "absolutePath": "",
-        "relativePath": "design\\FW\\portal-widgettool-war",
+        "relativePath": "design\\Sdk\\portal-examples-backend-war",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "portal-examples-war",
+        "absolutePath": "",
+        "relativePath": "design\\Sdk\\portal-examples-war",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "portal-keyoverride-war",
+        "absolutePath": "",
+        "relativePath": "design\\Sdk\\portal-keyoverride-war",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "portal-pinauthorizer-war",
+        "absolutePath": "",
+        "relativePath": "design\\Sdk\\portal-pinauthorizer-war",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "portal-scoreupdate-war",
+        "absolutePath": "",
+        "relativePath": "design\\Sdk\\portal-scoreupdate-war",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "portal-websocketserver-war",
+        "absolutePath": "",
+        "relativePath": "design\\Sdk\\portal-websocketserver-war",
         "checked": "",
         "subDirs": []
     }]
