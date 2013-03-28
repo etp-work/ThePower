@@ -38,7 +38,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "Browser";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "Browser";
+            this.Text = "Ericsson TV";
             this.Load += new System.EventHandler(this.Browser_Load);
             this.ResumeLayout(false);
 
