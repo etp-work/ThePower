@@ -19,6 +19,7 @@
     //check deploy type, and set the corresponding selection to grayed.
     function checkChoose(){
         checkedList = [];
+        $('#deploy-content #deploy4CI').attr("disabled", true);
         $('#deploy-content .table-wrapper .deployList li').addClass("grayed");
         if(!downloadedPath){
             return;
@@ -37,6 +38,7 @@
         if(!choose){
             return;
         }
+        $('#deploy-content #deploy4CI').attr("disabled", false);
         $('#deploy-content .table-wrapper .deployList li').each(function(){
             var isChosen = false;
             for(var i in choose){

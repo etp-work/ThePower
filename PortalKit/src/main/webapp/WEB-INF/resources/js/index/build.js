@@ -146,7 +146,7 @@
                 function(BuildResult){
                     element.removeClass("s-working");
                     if(!BuildResult.success){
-                        ViewManager.simpleError("Build error, click to check log.",function(){ViewManager.showLog(BuildResult.message)});
+                        ViewManager.simpleError("Build error, click to check log.",function(){alert(BuildResult.message)});
                         element.addClass("s-error");
                         Lifecycle.setState(Lifecycle.NORMAL);
                     }else if(!BuildResult.deployed && needDeploy()){
@@ -185,7 +185,7 @@
                             }, function(BuildResult){
                                    element.removeClass("s-working");
                                    if(!BuildResult.success){
-                                        ViewManager.simpleError("Build error", function(){ViewManager.showLog(BuildResult.message)});
+                                        ViewManager.simpleError("Build error", function(){alert(BuildResult.message)});
                                         element.addClass("s-error");
                                    }else if(!BuildResult.deployed){
                                         ViewManager.simpleError("There might be some of packages failed to deploy.");
