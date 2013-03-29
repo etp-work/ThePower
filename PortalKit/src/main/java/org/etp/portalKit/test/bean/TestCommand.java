@@ -2,6 +2,9 @@ package org.etp.portalKit.test.bean;
 
 import java.util.List;
 
+/**
+ * A JSON data bean which used to store auto-test parameters.
+ */
 public class TestCommand {
 
     private String targetIP;

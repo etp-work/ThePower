@@ -9,8 +9,6 @@ import org.apache.commons.httpclient.HttpMethodBase;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.etp.portalKit.test.bean.DataCommand;
 import org.etp.portalKit.test.bean.TestCommand;
 import org.springframework.stereotype.Controller;
@@ -26,7 +24,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class TestController {
 
     private static final HttpClient httpclient = new HttpClient();
-    private static final Log logger = LogFactory.getLog(TestController.class);
 
     private String getDefatltIP() {
         return "127.0.0.1";
@@ -48,6 +45,12 @@ public class TestController {
         return "public/test/startTest.ajax?async=ture";
     }
 
+    /**
+     * @param cmd
+     * @return auto testcases
+     * @throws HttpException
+     * @throws IOException
+     */
     @RequestMapping(value = "/test/data.ajax", method = RequestMethod.POST)
     public @ResponseBody
     String getData(@RequestBody DataCommand cmd) throws HttpException, IOException {
@@ -60,6 +63,12 @@ public class TestController {
         return sendGetRequest(requestURL);
     }
 
+    /**
+     * @param cmd
+     * @return nothing
+     * @throws HttpException
+     * @throws IOException
+     */
     @RequestMapping(value = "/test/start.ajax", method = RequestMethod.POST)
     public @ResponseBody
     String startTest(@RequestBody TestCommand cmd) throws HttpException, IOException {
@@ -68,31 +77,48 @@ public class TestController {
         String requestContextPath = null != cmd.getTargetContextPath() ? cmd.getTargetContextPath()
                 : getDefaultContextPath();
 
-        String cases = "";
+        StringBuffer cases = new StringBuffer();
         for (String caseId : cmd.getCases()) {
-            if (cases.equals("")) {
-                cases = caseId;
-            } else {
-                cases += "|" + caseId;
-            }
+            cases.append("|" + caseId);
+        }
+        if (cases.length() > 0) {
+            cases.delete(0, 1);
         }
 
         String requestURL = String.format("http://%s:%s/%s/%s", requestIP, requestPort, requestContextPath,
                 getStartTestRequestURL());
 
-        requestURL += "&cases=" + URLEncoder.encode(cases, "utf-8");
+        requestURL += "&cases=" + URLEncoder.encode(cases.toString(), "utf-8");
 
         return sendGetRequest(requestURL);
     }
 
+    /**
+     * @param url
+     * @return execute result
+     * @throws HttpException
+     * @throws IOException
+     */
     protected String sendGetRequest(String url) throws HttpException, IOException {
         return execMethod(new GetMethod(url));
     }
 
+    /**
+     * @param url
+     * @return execute result
+     * @throws HttpException
+     * @throws IOException
+     */
     protected String sendPostRequest(String url) throws HttpException, IOException {
         return execMethod(new PostMethod(url));
     }
 
+    /**
+     * @param method
+     * @return execute result
+     * @throws HttpException
+     * @throws IOException
+     */
     protected String execMethod(HttpMethodBase method) throws HttpException, IOException {
         String result = null;
         try {

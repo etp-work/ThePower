@@ -1,5 +1,8 @@
 package org.etp.portalKit.test.bean;
 
+/**
+ * A JSON data bean which used to store auto-test server parameters.
+ */
 public class DataCommand {
 
     private String targetIP;
