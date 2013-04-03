@@ -37,37 +37,6 @@
      */
     var stateObject = {};
     
-    /**
-     * modules = [
-     *           {
-     *               moduleId: '',
-     *               module: object
-     *           }
-     * ];
-     */
-    var modules = [];
-    
-    _lifecycle.getModule = function (moduleId){
-        var module = undefined;
-        for ( var i = 0; i < modules.length; i++) {
-            if(modules[i].moduleId === moduleId){
-                module = modules[i].module;
-                break;
-            }
-        }
-        if(!module){
-            module = angular.module(moduleId, []);
-            var mo = {
-                    moduleId: moduleId,
-                    module: module
-            };
-            modules.push(mo);
-        }
-        return module;
-    };
-    
-    
-    
     
     _lifecycle.setState = function(status){
         stateObject.status = status;
