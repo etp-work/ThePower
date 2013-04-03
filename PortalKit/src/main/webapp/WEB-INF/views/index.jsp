@@ -9,7 +9,6 @@
          <link href="<c:out value='${view.css}'/>" rel="stylesheet" type="text/css">
     </c:if>
 </c:forEach>
-<script type="text/javascript" src="resources/js/index.js"></script>
 <title>The Power</title>
 </head>
 <body>
