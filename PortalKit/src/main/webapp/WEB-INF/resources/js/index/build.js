@@ -154,7 +154,7 @@
                         element.addClass("s-error");
                         Lifecycle.setState(Lifecycle.NORMAL);
                      }else{
-                        var sucMessage = pack.val() + " build "+(needDeploy() ? "+ deploy" : "" )+" successfully.";
+                        var sucMessage = pack.attr("title") + " build "+(needDeploy() ? "+ deploy" : "" )+" successfully.";
                         ViewManager.simpleSuccess(sucMessage);
                         element.addClass("s-success");
                         build(selection);
