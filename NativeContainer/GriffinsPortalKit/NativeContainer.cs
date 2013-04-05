@@ -24,7 +24,7 @@ namespace GriffinsPortalKit
         private static ILog logger = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private Browser portal;
         private GeckoWebBrowser browser;
-        private ThePower frmSplash = new ThePower();
+        private ThePower frmSplash;
         private WebSocket websocketclient;
 
         [DllImport("USER32.DLL", CharSet = CharSet.Unicode)]
@@ -37,7 +37,6 @@ namespace GriffinsPortalKit
         public NativeContainer()
         {
             InitializeComponent();
-
             Gecko.Xpcom.Initialize(Application.StartupPath + XULRUNNERPATH);
             //GeckoPreferences.User["gfx.font_rendering.graphite.enabled"] = true;
             browser = new GeckoWebBrowser();
@@ -52,6 +51,21 @@ namespace GriffinsPortalKit
             this.Left = System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Right - this.Width;
             this.Top = 0;
             this.FormBorderStyle = FormBorderStyle.Fixed3D;
+        }
+
+        public void initPortalKitUrl() {
+            string serverFullUrl = "";
+            if (null != ConfigurationManager.AppSettings["ServerAddress"] && null != ConfigurationManager.AppSettings["ServerPort"] && null != ConfigurationManager.AppSettings["ServerUrl"])
+            {
+                serverFullUrl = String.Format("http://{0}:{1}{2}", ConfigurationManager.AppSettings["ServerAddress"], ConfigurationManager.AppSettings["ServerPort"], ConfigurationManager.AppSettings["ServerUrl"]);
+            }
+
+            if (null != ConfigurationManager.AppSettings["ServerFullUrl"])
+            {
+                serverFullUrl = ConfigurationManager.AppSettings["ServerFullUrl"];
+            }
+            browser.Navigate(serverFullUrl);
+        
         }
 
         void browser_DomClick(object sender, DomEventArgs e)
@@ -70,6 +84,10 @@ namespace GriffinsPortalKit
         void browser_DocumentCompleted(object sender, EventArgs e)
         {
             this.Show();
+            if (this.frmSplash != null)
+            {
+                this.frmSplash.stopAndClose();
+            }
             GeckoWebBrowser br = sender as GeckoWebBrowser;
             br.WebBrowserFocus.Deactivate();
             string wsuri = ConfigurationManager.AppSettings["WebSocketUri"];
@@ -159,22 +177,6 @@ namespace GriffinsPortalKit
             });
         }
 
-        private void SplashScreen_Load(object sender, EventArgs e)
-        {
-            this.Hide();
-            frmSplash.ShowDialog();
-            string serverFullUrl = "";
-            if (null != ConfigurationManager.AppSettings["ServerAddress"] && null != ConfigurationManager.AppSettings["ServerPort"] && null != ConfigurationManager.AppSettings["ServerUrl"])
-            {
-                serverFullUrl = String.Format("http://{0}:{1}{2}", ConfigurationManager.AppSettings["ServerAddress"], ConfigurationManager.AppSettings["ServerPort"], ConfigurationManager.AppSettings["ServerUrl"]);
-            }
-
-            if (null != ConfigurationManager.AppSettings["ServerFullUrl"])
-            {
-                serverFullUrl = ConfigurationManager.AppSettings["ServerFullUrl"];
-            }
-            browser.Navigate(serverFullUrl);
-        }
 
         private void NativeContainer_Resize(object sender, EventArgs e)
         {
@@ -192,6 +194,10 @@ namespace GriffinsPortalKit
         {
             Show();
             WindowState = FormWindowState.Normal;
+        }
+
+        public ThePower FrmSplash {
+            set { this.frmSplash = value; }
         }
     }
 }

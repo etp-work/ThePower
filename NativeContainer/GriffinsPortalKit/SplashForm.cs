@@ -27,7 +27,7 @@ namespace GriffinsPortalKit
             {
                 if (this.Opacity < 1.0)
                 {
-                    this.Opacity += 0.02;
+                    this.Opacity += 0.01;
                 }
                 // After fadeIn complete, begin fadeOut
                 else
@@ -40,7 +40,7 @@ namespace GriffinsPortalKit
             {
                 if (this.Opacity > 0)
                 {
-                    this.Opacity -= 0.02;
+                    this.Opacity -= 0.01;
                 }
                 else
                 {
@@ -51,8 +51,15 @@ namespace GriffinsPortalKit
             // After fadeIn and fadeOut complete, stop the timer and close this splash. 
             if (!(fadeIn || fadeOut))
             {
+                stopAndClose();
+            }
+        }
+
+        public void stopAndClose() {
+            if (this.Visible)
+            {
                 timer1.Stop();
-                this.Close();
+                this.Hide();
             }
         }
     }

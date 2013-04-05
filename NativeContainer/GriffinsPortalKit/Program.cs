@@ -23,6 +23,7 @@ namespace GriffinsPortalKit
 
         static BackgroundWorker worker;
         static NativeContainer nativeContainer;
+        static ThePower thePower;
         static Process proc;
         static WebSocketServer websocketserver;
         static Dictionary<String, WebSocketSession> sessions = new Dictionary<String, WebSocketSession>();
@@ -69,8 +70,11 @@ namespace GriffinsPortalKit
             worker.RunWorkerAsync();
 
             nativeContainer = new NativeContainer();
-            nativeContainer.FormClosed += nativeContainer_FormClosed;
-            Application.Run(nativeContainer);
+            nativeContainer.FormClosing += nativeContainer_FormClosing;
+            nativeContainer.initPortalKitUrl();
+            thePower = new ThePower();
+            nativeContainer.FrmSplash = thePower;
+            Application.Run(thePower);
         }
 
 
@@ -105,7 +109,7 @@ namespace GriffinsPortalKit
             }
         }
 
-        static void nativeContainer_FormClosed(object sender, FormClosedEventArgs e)
+        static void nativeContainer_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (null != proc)
             {
@@ -123,6 +127,7 @@ namespace GriffinsPortalKit
                 websocketserver.Dispose();
                 websocketserver = null;
             }
+            thePower.Close();
         }
 
         static void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)

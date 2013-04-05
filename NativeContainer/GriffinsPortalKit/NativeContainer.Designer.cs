@@ -36,7 +36,7 @@
             // notifyIcon1
             // 
             this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
-            this.notifyIcon1.Text = "notifyIcon1";
+            this.notifyIcon1.Text = "PortalKit";
             this.notifyIcon1.Visible = true;
             this.notifyIcon1.DoubleClick += new System.EventHandler(this.notifyIcon1_DoubleClick);
             // 
@@ -50,7 +50,6 @@
             this.Name = "NativeContainer";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Griffins Portal Kit";
-            this.Load += new System.EventHandler(this.SplashScreen_Load);
             this.Resize += new System.EventHandler(this.NativeContainer_Resize);
             this.ResumeLayout(false);
 
