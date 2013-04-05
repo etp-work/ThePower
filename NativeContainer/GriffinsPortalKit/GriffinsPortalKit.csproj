@@ -66,13 +66,11 @@
     <Reference Include="CefSharp.WinForms">
       <HintPath>lib\CefSharp.WinForms.dll</HintPath>
     </Reference>
-    <Reference Include="geckofx-core-16, Version=16.0.1.0, Culture=neutral, PublicKeyToken=3209ac31600d1857, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>lib\geckofx-core-16.dll</HintPath>
+    <Reference Include="geckofx-core-18">
+      <HintPath>lib\geckofx-core-18.dll</HintPath>
     </Reference>
-    <Reference Include="Geckofx-Winforms-16, Version=16.0.1.0, Culture=neutral, PublicKeyToken=3209ac31600d1857, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>lib\Geckofx-Winforms-16.dll</HintPath>
+    <Reference Include="Geckofx-Winforms-18">
+      <HintPath>lib\Geckofx-Winforms-18.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
       <HintPath>lib\log4net.dll</HintPath>
