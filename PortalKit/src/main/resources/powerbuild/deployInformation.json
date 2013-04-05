@@ -12,9 +12,6 @@
         "packageName": "portal-coreapps-sessiontransfer-war",
         "relativePath": "design\\CoreApps\\Application\\portal-coreapps-sessiontransfer-war"
     }, {
-        "packageName": "portal-load-indicator-war",
-        "relativePath": "design\\CoreApps\\Application\\portal-load-indicator-war"
-    }, {
         "packageName": "portal-scanapp-war",
         "relativePath": "design\\CoreApps\\Application\\portal-scanapp-war"
     }, {
