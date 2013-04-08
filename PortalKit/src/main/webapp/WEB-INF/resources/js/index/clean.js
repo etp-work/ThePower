@@ -1,5 +1,5 @@
 /**
- * This module is only worked for view clean-content which included in
+\ * This module is only worked for view clean-content which included in
  * index.jsp.
  */
 (function(window) {
@@ -9,6 +9,34 @@
     var getCleanItemsUrl = "/clean/getCleanItems.ajax";
     var cleanItemUrl = "/clean/cleanItem.ajax";
 //=========================================functions========================================
+    
+    //rebind click event clean-list checkbox items
+    function rebindSelection(){
+
+        $('#clean-content .clean-list .parentB').on("click", function(event){
+                    var isChecked = $(this).is(':checked');
+                    $(this).parent().parent().siblings().find('.childB').attr("checked", isChecked);
+        });
+        $('#clean-content .clean-list .childB').on("click", function(event){
+                    var isChecked = $(this).is(':checked');
+                    var parent = $(this).parent().parent().parent().find('.parentB');
+                    if(isChecked){
+                        parent.attr("checked", true);
+                    }else{
+                        var isAllFalse = true;
+                        $(this).parent().parent().siblings().find('.childB').each(function(){
+                            if($(this).is(':checked')){
+                                isAllFalse = false;
+                            }
+                        });
+                        if(isAllFalse){
+                            parent.attr("checked", false);
+                        }
+                    }
+                }
+        );
+    }
+    
     function cleanOnShowListener(){
         DynamicLoad.loadJSON(getCleanItemsUrl, undefined, function(CleanItems){
             
@@ -22,12 +50,8 @@
             
             var scope = angular.element($('.bulid-list')).scope();
             scope.$apply(function(){
-                if(CleanItems.widgetCaches){
-                    scope.widgetCaches = CleanItems.widgetCaches;
-                }
-                if(CleanItems.warFiles){
-                    scope.warFiles = CleanItems.warFiles;
-                }
+                scope.widgetCaches = CleanItems.widgetCaches;
+                scope.warFiles = CleanItems.warFiles;
             });
             
             if(CleanItems.widgetCaches.length > 0 || CleanItems.warFiles.length > 0){
@@ -121,33 +145,7 @@
             });
         });
     }
-    
-    //rebind click event clean-list checkbox items
-    function rebindSelection(){
-
-        $('#clean-content .clean-list .parentB').on("click", function(event){
-                    var isChecked = $(this).is(':checked');
-                    $(this).parent().parent().siblings().find('.childB').attr("checked", isChecked);
-        });
-        $('#clean-content .clean-list .childB').on("click", function(event){
-                    var isChecked = $(this).is(':checked');
-                    var parent = $(this).parent().parent().parent().find('.parentB');
-                    if(isChecked){
-                        parent.attr("checked", true);
-                    }else{
-                        var isAllFalse = true;
-                        $(this).parent().parent().siblings().find('.childB').each(function(){
-                            if($(this).is(':checked')){
-                                isAllFalse = false;
-                            }
-                        });
-                        if(isAllFalse){
-                            parent.attr("checked", false);
-                        }
-                    }
-                }
-        );
-    }
+   
     
     //do filter the specified text within a specified range of elements.
     function doFilter(text){
