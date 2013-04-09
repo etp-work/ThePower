@@ -48,7 +48,7 @@
             $('#clean-content .clean-list input').off("click");
             $('#clean-content #cleanButton').attr("disabled", true);
             
-            var scope = angular.element($('.bulid-list')).scope();
+            var scope = angular.element($('#clean-content .clean-list')).scope();
             scope.$apply(function(){
                 scope.widgetCaches = CleanItems.widgetCaches;
                 scope.warFiles = CleanItems.warFiles;
