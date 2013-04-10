@@ -38,6 +38,8 @@ Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescrip
 
 [Files]
 Source: "..\shell\*"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\shell\images\*"; DestDir: "{app}\images"; Flags: ignoreversion
+Source: "..\shell\locales\*"; DestDir: "{app}\locales"; Flags: ignoreversion
 Source: "..\icons\The_power_icon_128.ico"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\xulrunner\*"; DestDir: "{app}\xulrunner"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "..\CustomizedTomcat\*"; DestDir: "{localappdata}\CustomizedTomcat"; Flags: ignoreversion recursesubdirs createallsubdirs
@@ -46,7 +48,7 @@ Source: "..\CustomizedTomcat\*"; DestDir: "{localappdata}\CustomizedTomcat"; Fla
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
 Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"
-Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
+Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; IconFilename:"{app}\The_power_icon_128.ico" ; Tasks: desktopicon
 Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: quicklaunchicon
 
 [Run]
