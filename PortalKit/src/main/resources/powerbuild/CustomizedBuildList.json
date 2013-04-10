@@ -508,27 +508,15 @@
         "checked": "",
         "subDirs": []
     }, {
-        "name": "maven-archetype-jsmodule",
-        "absolutePath": "",
-        "relativePath": "design\\Sdk\\maven-archetype-jsmodule",
-        "checked": "",
-        "subDirs": []
-    }, {
-        "name": "portal-examples-backend-war",
-        "absolutePath": "",
-        "relativePath": "design\\Sdk\\portal-examples-backend-war",
-        "checked": "",
-        "subDirs": []
-    }, {
         "name": "portal-examples-war",
         "absolutePath": "",
         "relativePath": "design\\Sdk\\portal-examples-war",
         "checked": "",
         "subDirs": []
     }, {
-        "name": "portal-keyoverride-war",
+        "name": "portal-examples-backend-war",
         "absolutePath": "",
-        "relativePath": "design\\Sdk\\portal-keyoverride-war",
+        "relativePath": "design\\Sdk\\portal-examples-backend-war",
         "checked": "",
         "subDirs": []
     }, {
@@ -541,6 +529,18 @@
         "name": "portal-scoreupdate-war",
         "absolutePath": "",
         "relativePath": "design\\Sdk\\portal-scoreupdate-war",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "portal-keyoverride-war",
+        "absolutePath": "",
+        "relativePath": "design\\Sdk\\portal-keyoverride-war",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "maven-archetype-jsmodule",
+        "absolutePath": "",
+        "relativePath": "design\\Sdk\\maven-archetype-jsmodule",
         "checked": "",
         "subDirs": []
     }, {
