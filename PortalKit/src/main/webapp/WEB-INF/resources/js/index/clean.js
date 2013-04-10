@@ -8,6 +8,8 @@
 //=========================================variable=========================================
     var getCleanItemsUrl = "/clean/getCleanItems.ajax";
     var cleanItemUrl = "/clean/cleanItem.ajax";
+    var widgetCaches = [];
+    var warFiles = [];
 //=========================================functions========================================
     
     //rebind click event clean-list checkbox items
@@ -48,13 +50,16 @@
             $('#clean-content .clean-list input').off("click");
             $('#clean-content #cleanButton').attr("disabled", true);
             
+            widgetCaches = CleanItems.widgetCaches;
+            warFiles = CleanItems.warFiles;
+            
             var scope = angular.element($('#clean-content .clean-list')).scope();
             scope.$apply(function(){
-                scope.widgetCaches = CleanItems.widgetCaches;
-                scope.warFiles = CleanItems.warFiles;
+                scope.widgetCaches = widgetCaches;
+                scope.warFiles = warFiles;
             });
             
-            if(CleanItems.widgetCaches.length > 0 || CleanItems.warFiles.length > 0){
+            if(widgetCaches.length > 0 || warFiles.length > 0){
                 $('#clean-content .clean-list input').on("click", function(event){
                     var isAllUnChecked = true;
                     $('#clean-content .clean-list input').each(function(){
@@ -68,6 +73,23 @@
             }
             
         });
+    }
+    
+    function deleteElementFromArray(array, text){
+        for(var i = 0; i < array.length; i++){
+            if(array[i] === text){
+                array.splice(i, 1);
+                return;
+            }
+        }
+    }
+    
+    function deleteFromWidgetCaches(cache){
+        deleteElementFromArray(widgetCaches, cache);
+    }
+    
+    function deleteFromWarFiles(file){
+        deleteElementFromArray(warFiles, file);
     }
     
     //get all the selection in both widget and tomcat.
@@ -105,7 +127,11 @@
             }, function(data){
                 if(data && data.result){
                     ViewManager.simpleSuccess("remove "+select +" successfully.");
-                    $("#clean-content .clean-list .Widget li input[value=\""+ select +"\"]").parent().parent().remove();
+//                    $("#clean-content .clean-list .Widget li input[value=\""+ select +"\"]").parent().parent().remove();
+                    deleteFromWidgetCaches(select);
+                    angular.element($('#clean-content .clean-list')).scope().$apply(function(){
+                        scope.widgetCaches = widgetCaches;
+                    });
                     removeOne(selection, type, callback);    
                 }else{
                     ViewManager.simpleError("remove "+select +" error.");
@@ -121,7 +147,11 @@
             }, function(data){
                 if(data && data.result){
                     ViewManager.simpleSuccess("remove "+select +" successfully.");
-                    $("#clean-content .clean-list .Tomcat li input[value=\""+ select +"\"]").parent().parent().remove();
+//                    $("#clean-content .clean-list .Tomcat li input[value=\""+ select +"\"]").parent().parent().remove();
+                    deleteFromWarFiles(select);
+                    angular.element($('#clean-content .clean-list')).scope().$apply(function(){
+                        scope.warFiles = warFiles;
+                    });
                     removeOne(selection, type, callback);
                 }else{
                     ViewManager.simpleError("remove "+select +" error.");
