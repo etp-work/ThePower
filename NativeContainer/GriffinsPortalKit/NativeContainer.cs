@@ -204,6 +204,7 @@ namespace GriffinsPortalKit
             else {
                 this.Show();
                 WindowState = FormWindowState.Normal;
+                this.autoHideHandler.stop();
             }
         }
 

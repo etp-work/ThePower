@@ -27,7 +27,7 @@ namespace GriffinsPortalKit
                   this.nativeContainer.LocationChanged += new EventHandler(form_LocationChanged);
                   this.nativeContainer.TopMost = true;
                   this.timer.Enabled = true;
-                  this.timer.Interval = 100;
+                  this.timer.Interval = 300;
                   this.timer.Tick += new EventHandler(timer_Tick);
             }
         }
