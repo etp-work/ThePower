@@ -40,3 +40,12 @@ Preparation for command line
 9.  Execute command "ant -f build.xml compile64/compile32" to generate a 64-bit/32-bit executable file.
 
 10. The generated setup file located at resources/output/
+
+
+Usage
+
+1. To use this build.xml, you need rebuild source code of NativeContainer within Visual Stuido Express 2012.
+
+2. Copy all the files in NativeContainer\GriffinsPortalKit\bin\Release into NativeContainer\GriffinsPortalKit\release.(Do not do anything else, like copy xulRunner, CefSharp into this release folder. Those such things will be done by this script automatically)
+
+3. Execute this build.xml in ANT environment.
