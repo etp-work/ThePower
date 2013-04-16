@@ -9,8 +9,6 @@
 
 	<!-- Configures the @Controller programming model -->
 	<mvc:annotation-driven />
-	<!-- Forwards requests to the "/" resource to the "welcome" view -->
-	<mvc:view-controller path="/" view-name="index" />
 
 	<!-- config resources location -->
 	<mvc:resources location="/WEB-INF/resources/" mapping="/resources/**" />
