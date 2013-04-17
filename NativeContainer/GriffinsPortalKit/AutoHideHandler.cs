@@ -25,7 +25,6 @@ namespace GriffinsPortalKit
             set { this.nativeContainer = value;
                   this.timer = new Timer();
                   this.nativeContainer.LocationChanged += new EventHandler(form_LocationChanged);
-                  this.nativeContainer.TopMost = true;
                   this.timer.Enabled = true;
                   this.timer.Interval = 300;
                   this.timer.Tick += new EventHandler(timer_Tick);
@@ -62,6 +61,7 @@ namespace GriffinsPortalKit
         }
 
         public void hideToTop() {
+            nativeContainer.TopMost = true;
             nativeContainer.Location = new Point(nativeContainer.Location.X, (nativeContainer.Height - 4) * (-1));
             nativeContainer.ShowInTaskbar = false;
         }
@@ -69,6 +69,7 @@ namespace GriffinsPortalKit
         public void showToNormal() {
             nativeContainer.Location = new Point(nativeContainer.Location.X, 0);
             nativeContainer.ShowInTaskbar = true;
+            nativeContainer.TopMost = false;
         }
 
         public void stop() {

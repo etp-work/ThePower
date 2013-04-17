@@ -53,7 +53,7 @@ namespace GriffinsPortalKit
             this.Width = Convert.ToInt32(ConfigurationManager.AppSettings["WindowWidth"]);
             this.Height = Convert.ToInt32(ConfigurationManager.AppSettings["WindowHeight"]);
             this.Left = System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Right - this.Width;
-            this.Top = 0;
+            //this.Top = 0;
             this.FormBorderStyle = FormBorderStyle.Fixed3D;
         }
 
