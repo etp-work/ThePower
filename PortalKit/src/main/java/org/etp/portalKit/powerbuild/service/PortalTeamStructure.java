@@ -63,6 +63,9 @@ public class PortalTeamStructure implements BuildListProvider {
             return;
         File path = new File(basePath2);
         File[] listFiles = path.listFiles();
+        if (listFiles == null) {
+            return;
+        }
         for (int i = 0; i < listFiles.length; i++) {
             File file = listFiles[i];
             if (!MavenUtils.isMavenProject(file))
