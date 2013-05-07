@@ -111,7 +111,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AutoHideHandler.cs" />
     <Compile Include="Browser.cs">
       <SubType>Form</SubType>
     </Compile>

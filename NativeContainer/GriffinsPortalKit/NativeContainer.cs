@@ -26,7 +26,6 @@ namespace GriffinsPortalKit
         private GeckoWebBrowser browser;
         private ThePower frmSplash;
         private WebSocket websocketclient;
-        private AutoHideHandler autoHideHandler;
 
         [DllImport("USER32.DLL", CharSet = CharSet.Unicode)]
         public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
@@ -38,8 +37,6 @@ namespace GriffinsPortalKit
         public NativeContainer()
         {
             InitializeComponent();
-            this.autoHideHandler = new AutoHideHandler();
-            this.autoHideHandler.NativeContainer = this;
             //this.autoHideHandler.start();
             Gecko.Xpcom.Initialize(Application.StartupPath + XULRUNNERPATH);
             //GeckoPreferences.User["gfx.font_rendering.graphite.enabled"] = true;
@@ -53,7 +50,7 @@ namespace GriffinsPortalKit
             this.Width = Convert.ToInt32(ConfigurationManager.AppSettings["WindowWidth"]);
             this.Height = Convert.ToInt32(ConfigurationManager.AppSettings["WindowHeight"]);
             this.Left = System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Right - this.Width;
-            //this.Top = 0;
+            this.Top = 0;
             this.FormBorderStyle = FormBorderStyle.Fixed3D;
         }
 
@@ -196,16 +193,8 @@ namespace GriffinsPortalKit
 
         private void notifyIcon1_DoubleClick(object sender, EventArgs e)
         {
-            if (this.Visible && this.autoHideHandler.StopAnchor == AnchorStyles.Top)
-            {
-                this.autoHideHandler.showToNormal();
-                this.autoHideHandler.stop();
-            }
-            else {
                 this.Show();
                 WindowState = FormWindowState.Normal;
-                this.autoHideHandler.stop();
-            }
         }
 
         public ThePower FrmSplash {
