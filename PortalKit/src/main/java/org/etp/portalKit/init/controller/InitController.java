@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.etp.portalKit.init.bean.PortalKitInfo;
 import org.etp.portalKit.init.bean.ViewInfo;
 import org.etp.portalKit.init.logic.InitLogic;
 import org.springframework.stereotype.Controller;
@@ -29,6 +30,8 @@ public class InitController {
     public String index(Model model) {
         List<ViewInfo> retrieveViewInfo = logic.retrieveViewInfo();
         model.addAttribute("viewInfo", retrieveViewInfo);
+        PortalKitInfo retrievePortalKitInfo = logic.retrievePortalKitInfo();
+        model.addAttribute("portalKitInfo", retrievePortalKitInfo);
         return "index";
     }
 
