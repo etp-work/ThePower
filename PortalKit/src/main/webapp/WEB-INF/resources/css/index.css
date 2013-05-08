@@ -261,7 +261,7 @@ img{ border:none; margin:0; padding:0;}
 .bulid-list{
     float:left;
     width:332px;
-    height:290px;
+    height:320px;
     overflow:auto;
 /*  border: solid 1px #e1e1e1;*/
     }
@@ -567,9 +567,9 @@ img{ border:none; margin:0; padding:0;}
 .primary-button{
     height:30px;
     }   
-.bulid{
+.run{
     float:left;
-    width:200px;
+    width:150px;
     }
 
 .check{
