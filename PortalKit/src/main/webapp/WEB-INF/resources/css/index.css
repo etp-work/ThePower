@@ -168,11 +168,11 @@ img{ border:none; margin:0; padding:0;}
     -moz-animation-iteration-count: 1;
     }
 
-@-moz-keyframes loadContent{
+/*@-moz-keyframes loadContent{
     0%{ opacity:0; -moz-transform:rotateY(-45deg);}
     100%{ opacity:1; -moz-transform:rotateY(0deg);}
     } 
-
+*/
     
 .config-button-area{
     float:left;
