@@ -36,7 +36,7 @@
 </div>
 
 <div class="help">help</div>
-<div class="version">V 1.0.0</div>
+<div class="version">V <c:out value="${portalKitInfo.version}"/></div>
 
 <div class="mainWrapper">
 
