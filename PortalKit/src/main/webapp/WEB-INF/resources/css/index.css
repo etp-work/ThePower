@@ -31,6 +31,23 @@ img{ border:none; margin:0; padding:0;}
     
     }
     
+.help{
+    position:absolute;
+    font-size:10px;
+    left:10px;
+    top:460px;
+    width:40px;
+    overflow:hidden;
+}    
+.version{
+    position:absolute;
+    left:10px;
+    font-size:10px;
+    top:480px;
+    width:40px;
+    overflow:hidden;
+    
+}   
     
 /*=================================== HEADER ===================================*/
 .header{
