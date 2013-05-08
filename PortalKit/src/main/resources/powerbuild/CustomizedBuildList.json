@@ -118,15 +118,15 @@
         "checked": "",
         "subDirs": []
     }, {
-        "name": "portal-backend-mock-jar",
-        "absolutePath": "",
-        "relativePath": "design\\Common\\portal-backend-mock-jar",
-        "checked": "",
-        "subDirs": []
-    }, {
         "name": "portal-config-jar",
         "absolutePath": "",
         "relativePath": "design\\Common\\portal-config-jar",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "portal-backend-mock-jar",
+        "absolutePath": "",
+        "relativePath": "design\\Common\\portal-backend-mock-jar",
         "checked": "",
         "subDirs": []
     }, {
@@ -148,24 +148,6 @@
     "relativePath": "",
     "checked": "",
     "subDirs": [{
-        "name": "portal-root-war",
-        "absolutePath": "",
-        "relativePath": "design\\FwRoot\\portal-root-war",
-        "checked": "",
-        "subDirs": []
-    }, {
-        "name": "portal-fw-war",
-        "absolutePath": "",
-        "relativePath": "design\\FW\\portal-fw-war",
-        "checked": "",
-        "subDirs": []
-    }, {
-        "name": "portal-fw-jar",
-        "absolutePath": "",
-        "relativePath": "design\\FW\\portal-fw-jar",
-        "checked": "",
-        "subDirs": []
-    }, {
         "name": "portal-fw-services-jar",
         "absolutePath": "",
         "relativePath": "design\\FW\\portal-fw-services-jar",
@@ -175,6 +157,18 @@
         "name": "portal-fw-client-jar",
         "absolutePath": "",
         "relativePath": "design\\FW\\portal-fw-client-jar",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "portal-fw-jar",
+        "absolutePath": "",
+        "relativePath": "design\\FW\\portal-fw-jar",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "portal-fw-war",
+        "absolutePath": "",
+        "relativePath": "design\\FW\\portal-fw-war",
         "checked": "",
         "subDirs": []
     }, {
@@ -205,6 +199,12 @@
         "name": "portal-coreapps-war",
         "absolutePath": "",
         "relativePath": "design\\CoreApps\\Application\\portal-coreapps-war",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "portal-root-war",
+        "absolutePath": "",
+        "relativePath": "design\\FwRoot\\portal-root-war",
         "checked": "",
         "subDirs": []
     }]
@@ -241,6 +241,12 @@
         "name": "portal-coreapps-service-war",
         "absolutePath": "",
         "relativePath": "design\\CoreApps\\Application\\portal-coreapps-service-war",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "portal-load-indicator-war",
+        "absolutePath": "",
+        "relativePath": "design\\CoreApps\\Application\\portal-load-indicator-war",
         "checked": "",
         "subDirs": []
     }, {
@@ -292,15 +298,21 @@
         "checked": "",
         "subDirs": []
     }, {
-        "name": "portal-coreapps-enus-war",
+        "name": "portal-coreapps-backend-iap-war",
         "absolutePath": "",
-        "relativePath": "design\\CoreApps\\Locale\\portal-coreapps-enus-war",
+        "relativePath": "design\\CoreApps\\Backend\\portal-coreapps-backend-iap-war",
         "checked": "",
         "subDirs": []
     }, {
         "name": "portal-coreapps-svse-war",
         "absolutePath": "",
         "relativePath": "design\\CoreApps\\Locale\\portal-coreapps-svse-war",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "portal-coreapps-enus-war",
+        "absolutePath": "",
+        "relativePath": "design\\CoreApps\\Locale\\portal-coreapps-enus-war",
         "checked": "",
         "subDirs": []
     }, {
@@ -328,6 +340,12 @@
         "checked": "",
         "subDirs": []
     }, {
+        "name": "portal-multiscreen-skin-common-war",
+        "absolutePath": "",
+        "relativePath": "design\\Multiscreen\\Skin\\portal-multiscreen-skin-common-war",
+        "checked": "",
+        "subDirs": []
+    }, {
         "name": "portal-multiscreen-service-war",
         "absolutePath": "",
         "relativePath": "design\\Multiscreen\\Application\\portal-multiscreen-service-war",
@@ -349,12 +367,6 @@
         "name": "portal-multiscreen-device-web-viewright-war",
         "absolutePath": "",
         "relativePath": "design\\Multiscreen\\Device\\portal-multiscreen-device-web-viewright-war",
-        "checked": "",
-        "subDirs": []
-    }, {
-        "name": "portal-multiscreen-skin-common-war",
-        "absolutePath": "",
-        "relativePath": "design\\Multiscreen\\Skin\\portal-multiscreen-skin-common-war",
         "checked": "",
         "subDirs": []
     }, {
@@ -391,6 +403,12 @@
         "name": "portal-multiscreen-sessiontransfer-skin-web-next-war",
         "absolutePath": "",
         "relativePath": "design\\Multiscreen\\Skin\\portal-multiscreen-sessiontransfer-skin-web-next-war",
+        "checked": "",
+        "subDirs": []
+    }, {
+        "name": "portal-coreapps-backend-jar",
+        "absolutePath": "",
+        "relativePath": "design\\CoreApps\\Backend\\portal-coreapps-backend-jar",
         "checked": "",
         "subDirs": []
     }, {
