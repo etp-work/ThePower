@@ -19,15 +19,15 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration(locations = "/test-servlet.xml")
 @Ignore
 public class BuildExecutorTest {
-    @Resource(name = "buildExecutor")
-    private BuildExecutor executor;
+    @Resource(name = "mavenExecutor")
+    private MavenExecutor executor;
 
     /**
      * test compile
      */
     @Test
     public void testExecutor() {
-        CommandResult compile = executor.compile("E:\\Study\\GitHub\\workstation\\PortalKit");
+        CommandResult compile = executor.exec("E:\\Study\\GitHub\\workstation\\PortalKit", ExecuteType.COMPILE);
         assertTrue(compile.isSuccess());
         assertEquals(0, compile.getStateCode());
     }

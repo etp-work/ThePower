@@ -29,6 +29,15 @@ public class BuildResult extends CommandResult {
     }
 
     /**
+     * @param cmd
+     */
+    public void setCommandResult(CommandResult cmd) {
+        super.setMessage(cmd.getMessage());
+        super.setStateCode(cmd.getStateCode());
+        super.setSuccess(cmd.isSuccess());
+    }
+
+    /**
      * @return Returns the isDeployed.
      */
     public boolean isDeployed() {

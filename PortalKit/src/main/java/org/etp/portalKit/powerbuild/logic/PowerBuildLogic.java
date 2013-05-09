@@ -18,8 +18,10 @@ import org.etp.portalKit.common.util.JSONUtils;
 import org.etp.portalKit.powerbuild.bean.BuildResult;
 import org.etp.portalKit.powerbuild.bean.DeployInformation;
 import org.etp.portalKit.powerbuild.bean.DirTree;
-import org.etp.portalKit.powerbuild.service.BuildExecutor;
+import org.etp.portalKit.powerbuild.bean.ExecuteCommand;
 import org.etp.portalKit.powerbuild.service.BuildListProvider;
+import org.etp.portalKit.powerbuild.service.ExecuteType;
+import org.etp.portalKit.powerbuild.service.MavenExecutor;
 import org.etp.portalKit.setting.bean.SettingsCommand;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.stereotype.Component;
@@ -39,8 +41,8 @@ public class PowerBuildLogic {
     @Resource(name = "propertiesManager")
     private PropertiesManager prop;
 
-    @Resource(name = "buildExecutor")
-    private BuildExecutor executor;
+    @Resource(name = "mavenExecutor")
+    private MavenExecutor executor;
 
     @Resource(name = "deployService")
     private DeployService deployService;
@@ -101,65 +103,44 @@ public class PowerBuildLogic {
     }
 
     /**
-     * Build and deploy one package with specified
-     * <code>absolutePath</code> to tomcat. Note:
-     * <code>absolutePath</code> can not be empty or null. Otherwise,
-     * failed to build.
+     * Execute specified command to the project which given
+     * <code>absolutePath</code> indicates. There are four kinds of
+     * command, compile, test, compile_test, deploy.
      * 
-     * @param absolutePath used to scan the absolute path from common
-     *            build list if absPath is null or empty.
+     * @param absolutePath absolute path of project.
+     * @param cmd ExecuteCommand
      * @return BuildResult
      */
-    public BuildResult build(String absolutePath) {
-        CommandResult compile = executor.compile(absolutePath);
-        BuildResult br = new BuildResult(compile);
+    public BuildResult executeCommand(String absolutePath, ExecuteCommand cmd) {
+        BuildResult br = new BuildResult();
+        ExecuteType type = null;
+        if (cmd.isNeedBuild() && cmd.isNeedTest()) {
+            type = ExecuteType.COMPILE_TEST;
+        } else if (cmd.isNeedBuild()) {
+            type = ExecuteType.COMPILE;
+        } else if (cmd.isNeedTest()) {
+            type = ExecuteType.TEST;
+        }
+        if ((type == null) && !cmd.isNeedDeploy()) {
+            throw new RuntimeException("You have to choose at least one option.");
+        }
+        if (type != null) {
+            CommandResult cr = executor.exec(absolutePath, type);
+            br.setCommandResult(cr);
+        }
+
+        if (cmd.isNeedDeploy()) {
+            if ((type != null) && !br.isSuccess()) {
+                return br;
+            }
+            String deployPath = checkDeployPath();
+            if (checkCanBeDeployed(absolutePath)) {
+                br.setDeployed(deployService.deployFromFolder(absolutePath, deployPath));
+            } else {
+                br.setDeployed(true);
+            }
+        }
         return br;
-    }
-
-    /**
-     * Build and deploy one package with specified
-     * <code>absolutePath</code> to tomcat. Note:
-     * <code>absolutePath</code> can not be empty or null. Otherwise,
-     * failed to build and deploy.
-     * 
-     * @param absolutePath absolute path of project.
-     * @return BuildResult
-     */
-    public BuildResult buildDeploy(String absolutePath) {
-        String deployPath = checkDeployPath();
-        BuildResult result = build(absolutePath);
-        if (!result.isSuccess()) {
-            return result;
-        }
-        boolean deployed;
-        boolean canDeploy = checkCanBeDeployed(absolutePath);
-        if (canDeploy) {
-            deployed = deployService.deployFromFolder(absolutePath, deployPath);
-        } else {
-            deployed = true;
-        }
-        result.setDeployed(deployed);
-        return result;
-    }
-
-    /**
-     * Deploy one package with specified <code>absolutePath</code> to
-     * tomcat. Note: <code>absolutePath</code> can not be null or
-     * empty. Otherwise, failed to deploy this package.
-     * 
-     * @param absolutePath absolute path of project.
-     * @return BuildResult
-     */
-    public BuildResult deploy(String absolutePath) {
-        String deployPath = checkDeployPath();
-        BuildResult result = new BuildResult();
-        result.setSuccess(true);
-        if (checkCanBeDeployed(absolutePath)) {
-            result.setDeployed(deployService.deployFromFolder(absolutePath, deployPath));
-        } else {
-            result.setDeployed(true);
-        }
-        return result;
     }
 
     /**
@@ -171,7 +152,8 @@ public class PowerBuildLogic {
     public BuildResult buildDeploySet(String deployType) {
         String deployPath = checkDeployPath();
         String basePath = checkDesignPath();
-        BuildResult result = build(new File(basePath, "design").getAbsolutePath());
+        BuildResult result = new BuildResult(executor.exec(new File(basePath, "design").getAbsolutePath(),
+                ExecuteType.COMPILE));
         if (!result.isSuccess()) {
             return result;
         }

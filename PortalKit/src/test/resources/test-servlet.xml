@@ -27,7 +27,7 @@
 	<bean id="configSource" class="org.etp.portalKit.common.service.MockSourceOfConfig" />
 	<bean id="propertiesManager" class="org.etp.portalKit.common.service.PropertiesManager" />
 	<bean id="shellRunner" class="org.etp.portalKit.common.shell.ShellRunner" />
-	<bean id="buildExecutor" class="org.etp.portalKit.powerbuild.service.BuildExecutor" />
+	<bean id="mavenExecutor" class="org.etp.portalKit.powerbuild.service.MavenExecutor" />
 	<bean id="exceptionResolver"
 		class="org.etp.portalKit.fw.service.FailurecallbackExceptionResolver">
 		<property name="defaultErrorView">

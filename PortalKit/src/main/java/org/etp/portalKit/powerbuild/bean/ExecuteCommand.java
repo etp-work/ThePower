@@ -8,6 +8,21 @@ public class ExecuteCommand {
     private String selection;
     private boolean needDeploy;
     private boolean needBuild;
+    private boolean needTest;
+
+    /**
+     * @return Returns the needTest.
+     */
+    public boolean isNeedTest() {
+        return needTest;
+    }
+
+    /**
+     * @param needTest The needTest to set.
+     */
+    public void setNeedTest(boolean needTest) {
+        this.needTest = needTest;
+    }
 
     /**
      * @return Returns the needBuild.

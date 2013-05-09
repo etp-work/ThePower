@@ -42,20 +42,10 @@ public class PowerBuildController {
     @RequestMapping(value = "/powerbuild/execute.ajax", method = RequestMethod.POST)
     public @ResponseBody
     BuildResult build(@RequestBody ExecuteCommand cmd) {
-        BuildResult br = null;
         if (StringUtils.isBlank(cmd.getSelection())) {
             throw new RuntimeException("Error occurs when executing, please inform ZuoHao about this issue.");
         }
-        if (cmd.isNeedBuild() && cmd.isNeedDeploy()) {
-            br = logic.buildDeploy(cmd.getSelection());
-        } else if (cmd.isNeedBuild()) {
-            br = logic.build(cmd.getSelection());
-        } else if (cmd.isNeedDeploy()) {
-            br = logic.deploy(cmd.getSelection());
-        } else {
-            throw new RuntimeException("You should choose at least one option(such as: deploy, build).");
-        }
-        return br;
+        return logic.executeCommand(cmd.getSelection(), cmd);
     }
 
     /**
