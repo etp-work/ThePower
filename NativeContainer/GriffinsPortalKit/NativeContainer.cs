@@ -24,7 +24,8 @@ namespace GriffinsPortalKit
         private static ILog logger = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private Browser portal;
         private GeckoWebBrowser browser;
-        private ThePower frmSplash;
+        //private ThePower frmSplash;
+        private StartupProgressBar progressBar;
         private WebSocket websocketclient;
 
         [DllImport("USER32.DLL", CharSet = CharSet.Unicode)]
@@ -85,9 +86,13 @@ namespace GriffinsPortalKit
         void browser_DocumentCompleted(object sender, EventArgs e)
         {
             this.Show();
-            if (this.frmSplash != null)
-            {
-                this.frmSplash.stopAndClose();
+            this.notifyIcon1.Visible = true;
+            //if (this.frmSplash != null)
+            //{
+            //    this.frmSplash.stopAndClose();
+            //}
+            if (this.progressBar != null) {
+                this.progressBar.stop();
             }
             GeckoWebBrowser br = sender as GeckoWebBrowser;
             br.WebBrowserFocus.Deactivate();
@@ -184,7 +189,6 @@ namespace GriffinsPortalKit
             if (WindowState == FormWindowState.Minimized)
             {
                 Hide();
-
                 notifyIcon1.BalloonTipTitle = "Portal Kit Hidden";
                 notifyIcon1.BalloonTipText = "Your Portal Kit has been minimized to the taskbar.";
                 notifyIcon1.ShowBalloonTip(3000);
@@ -193,12 +197,18 @@ namespace GriffinsPortalKit
 
         private void notifyIcon1_DoubleClick(object sender, EventArgs e)
         {
+            if(!this.Visible){
                 this.Show();
                 WindowState = FormWindowState.Normal;
+            }
         }
 
-        public ThePower FrmSplash {
-            set { this.frmSplash = value; }
+        //public ThePower FrmSplash {
+        //    set { this.frmSplash = value; }
+        //}
+
+        public StartupProgressBar ProgressBar {
+            set { this.progressBar=value; }
         }
     }
 }

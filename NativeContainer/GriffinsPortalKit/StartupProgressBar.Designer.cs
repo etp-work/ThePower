@@ -1,6 +1,6 @@
 ﻿namespace GriffinsPortalKit
 {
-    partial class NativeContainer
+    partial class StartupProgressBar
     {
         /// <summary>
         /// Required designer variable.
@@ -28,36 +28,39 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NativeContainer));
-            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.progressBar = new System.Windows.Forms.ProgressBar();
             this.SuspendLayout();
             // 
-            // notifyIcon1
+            // progressBar
             // 
-            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
-            this.notifyIcon1.Text = "PortalKit";
-            this.notifyIcon1.DoubleClick += new System.EventHandler(this.notifyIcon1_DoubleClick);
+            this.progressBar.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.progressBar.Location = new System.Drawing.Point(0, 0);
+            this.progressBar.Maximum = 400;
+            this.progressBar.MinimumSize = new System.Drawing.Size(0, 1);
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(400, 5);
+            this.progressBar.Step = 1;
+            this.progressBar.TabIndex = 0;
             // 
-            // NativeContainer
+            // StartupProgressBar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 262);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximizeBox = false;
-            this.Name = "NativeContainer";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "Griffins Portal Kit";
-            this.Resize += new System.EventHandler(this.NativeContainer_Resize);
+            this.ClientSize = new System.Drawing.Size(400, 5);
+            this.Controls.Add(this.progressBar);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.MinimumSize = new System.Drawing.Size(0, 1);
+            this.Name = "StartupProgressBar";
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Startup";
+            this.TopMost = true;
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.NotifyIcon notifyIcon1;
-
+        private System.Windows.Forms.ProgressBar progressBar;
     }
 }
-

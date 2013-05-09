@@ -23,7 +23,8 @@ namespace GriffinsPortalKit
 
         static BackgroundWorker worker;
         static NativeContainer nativeContainer;
-        static ThePower thePower;
+        //static ThePower thePower;
+        static StartupProgressBar progressBar;
         static Process proc;
         static WebSocketServer websocketserver;
         static Dictionary<String, WebSocketSession> sessions = new Dictionary<String, WebSocketSession>();
@@ -72,9 +73,11 @@ namespace GriffinsPortalKit
             nativeContainer = new NativeContainer();
             nativeContainer.FormClosing += nativeContainer_FormClosing;
             nativeContainer.initPortalKitUrl();
-            thePower = new ThePower();
-            nativeContainer.FrmSplash = thePower;
-            Application.Run(thePower);
+            //thePower = new ThePower();
+            progressBar = new StartupProgressBar();
+            nativeContainer.ProgressBar = progressBar;
+            progressBar.start();
+            Application.Run(progressBar);
         }
 
 
@@ -127,7 +130,8 @@ namespace GriffinsPortalKit
                 websocketserver.Dispose();
                 websocketserver = null;
             }
-            thePower.Close();
+            //thePower.Close();
+            progressBar.Close();
         }
 
         static void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
