@@ -4,9 +4,24 @@ package org.etp.portalKit.powerbuild.bean;
  * The purpose of this class is to provide a Model that hold the
  * request from client.
  */
-public class BuildCommand {
+public class ExecuteCommand {
     private String selection;
     private boolean needDeploy;
+    private boolean needBuild;
+
+    /**
+     * @return Returns the needBuild.
+     */
+    public boolean isNeedBuild() {
+        return needBuild;
+    }
+
+    /**
+     * @param needBuild The needBuild to set.
+     */
+    public void setNeedBuild(boolean needBuild) {
+        this.needBuild = needBuild;
+    }
 
     /**
      * @return Returns the selection.

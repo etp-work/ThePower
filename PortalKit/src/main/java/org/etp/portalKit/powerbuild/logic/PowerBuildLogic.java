@@ -18,7 +18,6 @@ import org.etp.portalKit.common.util.JSONUtils;
 import org.etp.portalKit.powerbuild.bean.BuildResult;
 import org.etp.portalKit.powerbuild.bean.DeployInformation;
 import org.etp.portalKit.powerbuild.bean.DirTree;
-import org.etp.portalKit.powerbuild.bean.SelectionCommand;
 import org.etp.portalKit.powerbuild.service.BuildExecutor;
 import org.etp.portalKit.powerbuild.service.BuildListProvider;
 import org.etp.portalKit.setting.bean.SettingsCommand;
@@ -102,10 +101,10 @@ public class PowerBuildLogic {
     }
 
     /**
-     * Build one package with specified absPath. Note: if absPath is
-     * empty or null, selection will be used to scan from common build
-     * list tree for its own absolute path. Otherwise, absPath will be
-     * used as a maven project folder to compile.
+     * Build and deploy one package with specified
+     * <code>absolutePath</code> to tomcat. Note:
+     * <code>absolutePath</code> can not be empty or null. Otherwise,
+     * failed to build.
      * 
      * @param absolutePath used to scan the absolute path from common
      *            build list if absPath is null or empty.
@@ -118,11 +117,10 @@ public class PowerBuildLogic {
     }
 
     /**
-     * Build and deploy one package with specified absPath to setted
-     * web container. Note: if absPath is empty or null, selection
-     * will be used to scan from common build list tree for its own
-     * absolute path. Otherwise, absPath will be used as a maven
-     * project folder to compile.
+     * Build and deploy one package with specified
+     * <code>absolutePath</code> to tomcat. Note:
+     * <code>absolutePath</code> can not be empty or null. Otherwise,
+     * failed to build and deploy.
      * 
      * @param absolutePath absolute path of project.
      * @return BuildResult
@@ -141,6 +139,26 @@ public class PowerBuildLogic {
             deployed = true;
         }
         result.setDeployed(deployed);
+        return result;
+    }
+
+    /**
+     * Deploy one package with specified <code>absolutePath</code> to
+     * tomcat. Note: <code>absolutePath</code> can not be null or
+     * empty. Otherwise, failed to deploy this package.
+     * 
+     * @param absolutePath absolute path of project.
+     * @return BuildResult
+     */
+    public BuildResult deploy(String absolutePath) {
+        String deployPath = checkDeployPath();
+        BuildResult result = new BuildResult();
+        result.setSuccess(true);
+        if (checkCanBeDeployed(absolutePath)) {
+            result.setDeployed(deployService.deployFromFolder(absolutePath, deployPath));
+        } else {
+            result.setDeployed(true);
+        }
         return result;
     }
 
@@ -192,12 +210,4 @@ public class PowerBuildLogic {
         return buildListProvider.retrieveDirTrees();
     }
 
-    /**
-     * Set default selections to settings page.
-     * 
-     * @param selection
-     */
-    public void setSelectionsToSettings(SelectionCommand selection) {
-        prop.fromBean(selection);
-    }
 }

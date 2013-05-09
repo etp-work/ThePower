@@ -8,8 +8,7 @@
 //=========================================variable=====================================
     var viewId = "build-content";
     var getTreesUrl = "/powerbuild/getAllTrees.ajax";
-    var setDefaultUrl = "/powerbuild/setDefault.ajax";
-    var buildUrl = "/powerbuild/build.ajax";
+    var executeUrl = "/powerbuild/execute.ajax";
     var buildSetUrl = "/powerbuild/buildset.ajax";
     
     
@@ -22,10 +21,15 @@
         $('#build-content #needDeploy').attr("checked", isNeeded);
     }
     
+    function needBuild(isNeeded){
+        if(isNeeded === undefined){
+            return $('#build-content #needBuild').is(':checked');
+        }
+        $('#build-content #needBuild').attr("checked", isNeeded);
+    }
+    
   //set isdisable to all the editable elements on build-content.
     function setDisableElements(isDisable){
-        $('#build-content #common #setDefault4Build').attr("disabled", isDisable);
-        $('#build-content #common #resetDefault4Build').attr("disabled", isDisable);
         $('#build-content #common #buildButton').attr("disabled", isDisable);
         $('#build-content #common #needDeploy').attr("disabled", isDisable);
         $('#build-content #common input').attr("disabled", isDisable);
@@ -94,27 +98,6 @@
         });
     }
     
-    //check which sub view is shown, and return it's id.
-    function subViewShownId(){
-        var subViewId = undefined;
-        $('#build-content .bulid-feature-content').each(function(){
-            if($(this).is(':visible')){
-                subViewId = $(this).attr("id");
-            }
-        });
-        return subViewId;
-    }
-    //return all the selection
-    function getBuildSelection(){
-        var defaultSelection = [];
-        $('#build-content #common input').each(function (){
-            if($(this).is(':checked')){
-                defaultSelection.push($(this).val());
-            }
-        });
-        return defaultSelection;
-    }
-    
      //return all the 2 level selection
     function getSubBuildSelection(){
         var defaultSelection = [];
@@ -125,14 +108,6 @@
         });
         return defaultSelection;
     }
-    //save selecton to server
-    function saveDefaultSelection(defaultSelection, keyWord){
-        Lifecycle.setState(Lifecycle.IN_PROCESS);
-        DynamicLoad.postJSON(setDefaultUrl, { selection: defaultSelection }, function (){
-                ViewManager.simpleSuccess("Successfully "+keyWord+" default selection.");
-                Lifecycle.setState(Lifecycle.NORMAL);
-            }, function (error){ ViewManager.simpleError(error.message); });
-    }
     
     function build(selection){
         if(selection.length === 0){
@@ -142,7 +117,7 @@
         var pack = selection.shift();
         var element = pack.parent().siblings('.status');
         element.addClass("s-working");
-        DynamicLoad.postJSON(buildUrl, {selection: pack.val(), needDeploy: needDeploy()}, 
+        DynamicLoad.postJSON(executeUrl, {selection: pack.val(), needDeploy: needDeploy(), needBuild: needBuild()}, 
                 function(BuildResult){
                     element.removeClass("s-working");
                     if(!BuildResult.success){
@@ -258,29 +233,6 @@
         return false;
     });
     
-    $('#build-content #common #setDefault4Build').click(function(event){
-        $('#build-content #common #quickSearch').val("");
-        doFilter("");
-        
-        var defaultSelection = getBuildSelection();
-                
-        if(defaultSelection.length === 0){//if no anything checked, give a warning.
-            ViewManager.simpleWarning("You can't set nothing to default.");
-            return false;
-        }
-        saveDefaultSelection(defaultSelection, "saved");
-        return false;
-    });
-    
-    $('#build-content #common #resetDefault4Build').click(function(event){
-        $('#build-content #common #quickSearch').val("");
-        doFilter("");
-        
-        $('#common .bulid-list input').attr("checked", false);
-        saveDefaultSelection([], "reset");
-        return false;
-    });
-    
     $('#build-content #common #buildButton').click(function(event){
         $('#build-content #common #quickSearch').val("");
         doFilter("");
@@ -288,6 +240,10 @@
         var subSelection = getSubBuildSelection();
         if(subSelection.length === 0){
             ViewManager.simpleWarning("You should choose at least one project.");
+            return false;
+        }
+        if(!needBuild() && !needDeploy()){
+            ViewManager.simpleWarning("You should choose at least one option.");
             return false;
         }
         commonBuild(subSelection);
