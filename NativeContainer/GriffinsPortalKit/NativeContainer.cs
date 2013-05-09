@@ -86,6 +86,7 @@ namespace GriffinsPortalKit
         void browser_DocumentCompleted(object sender, EventArgs e)
         {
             this.Show();
+            this.TopMost = true;
             this.notifyIcon1.Visible = true;
             //if (this.frmSplash != null)
             //{

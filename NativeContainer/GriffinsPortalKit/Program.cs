@@ -21,15 +21,14 @@ namespace GriffinsPortalKit
         /// The main entry point for the application.
         /// </summary>
 
-        static BackgroundWorker worker;
         static NativeContainer nativeContainer;
         //static ThePower thePower;
         static StartupProgressBar progressBar;
-        static Process proc;
         static WebSocketServer websocketserver;
         static Dictionary<String, WebSocketSession> sessions = new Dictionary<String, WebSocketSession>();
         public static Guid nativeID;
         public static Guid portalID;
+        private static EmbeddedTomcatController tomcatController;
         static ILog logger = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         [STAThread]
@@ -37,6 +36,7 @@ namespace GriffinsPortalKit
         {
             try
             {
+                tomcatController = new EmbeddedTomcatController();
                 nativeID = Guid.NewGuid();
                 portalID = Guid.NewGuid();
                 websocketserver = new WebSocketServer();
@@ -46,10 +46,19 @@ namespace GriffinsPortalKit
                     throw new Exception("ERROR:" + port + " already used!");
                 }
 
-                if (!websocketserver.Start())
+                for (int i = 0; i < 3; i++ )
                 {
+                    if (!websocketserver.Start())
+                    {
+                        EmbeddedTomcatController.killExist();
+                        continue;
+                    }
+                    else {
+                        break;
+                    }
                     throw new Exception("ERROR:Failed to start server!");
                 }
+
 
                 websocketserver.NewMessageReceived += websocketserver_NewMessageReceived;
             }
@@ -63,12 +72,7 @@ namespace GriffinsPortalKit
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            worker = new BackgroundWorker();
-            worker.DoWork += worker_DoWork;
-            worker.ProgressChanged += worker_ProgressChanged;
-            worker.RunWorkerCompleted += worker_RunWorkerCompleted;
-            worker.WorkerReportsProgress = true;
-            worker.RunWorkerAsync();
+            tomcatController.startTomcat();
 
             nativeContainer = new NativeContainer();
             nativeContainer.FormClosing += nativeContainer_FormClosing;
@@ -114,12 +118,7 @@ namespace GriffinsPortalKit
 
         static void nativeContainer_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (null != proc)
-            {
-                proc.Kill();
-                proc.Dispose();
-                proc = null;
-            }
+            tomcatController.stopTomcat();
 
             if (null != websocketserver)
             {
@@ -132,33 +131,6 @@ namespace GriffinsPortalKit
             }
             //thePower.Close();
             progressBar.Close();
-        }
-
-        static void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            // complete
-        }
-
-        static void worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            // e.ProgressPercentage.ToString() + "% complete";
-        }
-
-        static void worker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            string javahome = Environment.GetEnvironmentVariable("JAVA_HOME");
-            string tomcathome = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            ProcessStartInfo procStartInfo = new ProcessStartInfo(javahome + "\\bin\\java.exe", "-jar EmbeddedTomcat.jar port=58888");
-            procStartInfo.WorkingDirectory = tomcathome + "\\CustomizedTomcat";
-            procStartInfo.UseShellExecute = false;
-            procStartInfo.CreateNoWindow = true;
-
-            proc = new Process();
-            proc.StartInfo = procStartInfo;
-            proc.Start();
-
-            BackgroundWorker worker = (BackgroundWorker)sender;
-            worker.ReportProgress(100);
         }
     }
 }

@@ -123,6 +123,7 @@
     <Compile Include="DebugWindow.Designer.cs">
       <DependentUpon>DebugWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="EmbeddedTomcatController.cs" />
     <Compile Include="ImageCompare.cs" />
     <Compile Include="RemoteControl.cs">
       <SubType>Form</SubType>
