@@ -23,6 +23,10 @@ namespace GriffinsPortalKit
         }
 
         public void startTomcat() {
+            if (File.Exists(TOMCAT_HOME + @"\" + PROCESS_ID_FILE))
+            {
+                File.Delete(TOMCAT_HOME + @"\" + PROCESS_ID_FILE);
+            }
             worker.RunWorkerAsync();
         }
 
