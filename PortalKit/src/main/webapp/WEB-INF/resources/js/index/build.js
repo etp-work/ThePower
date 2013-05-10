@@ -7,31 +7,46 @@
     
 //=========================================variable=====================================
     var viewId = "build-content";
-    var getTreesUrl = "/powerbuild/getAllTrees.ajax";
+    var getBuildInfoUrl = "/powerbuild/getBuildInformation.ajax";
     var executeUrl = "/powerbuild/execute.ajax";
-    var buildSetUrl = "/powerbuild/buildset.ajax";
+    var executeWithTypeUrl = "/powerbuild/executeWithType.ajax";
+    
+    var deployInformation;
     
     
 //=========================================functions=====================================
     
-    function needDeploy(isNeeded){
+    function needDeploy(viewId, isNeeded){
         if(isNeeded === undefined){
-            return $('#build-content #needDeploy').is(':checked');
+            return $("#build-content "+ viewId +" #needDeploy").is(':checked');
         }
-        $('#build-content #needDeploy').attr("checked", isNeeded);
+        $("#build-content "+ viewId +" #needDeploy").attr("checked", isNeeded);
     }
     
-    function needBuild(isNeeded){
+    function needBuild(viewId, isNeeded){
         if(isNeeded === undefined){
-            return $('#build-content #needBuild').is(':checked');
+            return $("#build-content "+ viewId +" #needBuild").is(':checked');
         }
-        $('#build-content #needBuild').attr("checked", isNeeded);
+        $("#build-content "+ viewId +" #needBuild").attr("checked", isNeeded);
+    }
+    
+    function needTest(viewId, isNeeded){
+        if(isNeeded === undefined){
+            return $("#build-content "+ viewId +" #needTest").is(':checked');
+        }
+        $("#build-content "+ viewId +" #needTest").attr("checked", isNeeded);
     }
     
   //set isdisable to all the editable elements on build-content.
     function setDisableElements(isDisable){
         $('#build-content #common #buildButton').attr("disabled", isDisable);
         $('#build-content #common #needDeploy').attr("disabled", isDisable);
+        $('#build-content #common #needBuild').attr("disabled", isDisable);
+        $('#build-content #common #needTest').attr("disabled", isDisable);
+        $('#build-content #environment #build4Set').attr("disabled", isDisable);
+        $('#build-content #environment #needDeploy').attr("disabled", isDisable);
+        $('#build-content #environment #needBuild').attr("disabled", isDisable);
+        $('#build-content #environment #needTest').attr("disabled", isDisable);
         $('#build-content #common input').attr("disabled", isDisable);
         $('#build-content #environment input').attr("disabled", isDisable);
     }
@@ -73,17 +88,17 @@
             return;
         }
         
-        DynamicLoad.loadJSON(getTreesUrl, undefined, function(dirTrees){
-            if(!dirTrees || dirTrees.length === 0){
+        DynamicLoad.loadJSON(getBuildInfoUrl, undefined, function(buildInfo){
+            if(!buildInfo){
                 Lifecycle.setState(Lifecycle.NO_CONFIGURATION);
                 return;
             }
-            
+            deployInformation = buildInfo.deployInfo;
             $('#build-content #common .parentB').off("click");//remove click binding to .parent first. Then will be re-bind again when data fetched later.
             $('#build-content #common .childB').off("click");//remove click binding to .child first. Then will be re-bind again when data fetched later.
             var scope = angular.element($('.bulid-list')).scope();
             scope.$apply(function(){
-                scope.dirTrees = dirTrees;
+                scope.dirTrees = buildInfo.buildList;
             });
             rebindSelection();//re-bind click event to .parent .child element. 
           
@@ -117,19 +132,19 @@
         var pack = selection.shift();
         var element = pack.parent().siblings('.status');
         element.addClass("s-working");
-        DynamicLoad.postJSON(executeUrl, {selection: pack.val(), needDeploy: needDeploy(), needBuild: needBuild()}, 
+        DynamicLoad.postJSON(executeUrl, {absolutePath: pack.val(), needDeploy: needDeploy("#common"), needBuild: needBuild("#common"), needTest: needTest("#common")}, 
                 function(BuildResult){
                     element.removeClass("s-working");
                     if(!BuildResult.success){
-                        ViewManager.simpleError("Build error, click to check log.",function(){alert(BuildResult.message)});
+                        ViewManager.simpleError("Executed failure, click to check log.",function(){alert(BuildResult.message)});
                         element.addClass("s-error");
                         Lifecycle.setState(Lifecycle.NORMAL);
-                    }else if(!BuildResult.deployed && needDeploy()){
-                        ViewManager.simpleError("Deploy error");
+                    }else if(!BuildResult.deployed && needDeploy("#common")){
+                        ViewManager.simpleError(pack.attr("title") + " deployed failure");
                         element.addClass("s-error");
                         Lifecycle.setState(Lifecycle.NORMAL);
                      }else{
-                        var sucMessage = pack.attr("title") + " build "+(needDeploy() ? "+ deploy" : "" )+" successfully.";
+                        var sucMessage = pack.attr("title") + " executed successfully.";
                         ViewManager.simpleSuccess(sucMessage);
                         element.addClass("s-success");
                         build(selection);
@@ -154,19 +169,21 @@
         Lifecycle.setState(Lifecycle.IN_PROCESS);
         var element = choosedElement.parent().next('.status');
         element.addClass("s-working");
-        DynamicLoad.postJSON(buildSetUrl, {
-                                 selection: chooseId,
-                                 needDeploy: true
+        DynamicLoad.postJSON(executeWithTypeUrl, {
+                                 type: chooseId,
+                                 needDeploy: needDeploy("#environment"),
+                                 needBuild: needBuild("#environment"), 
+                                 needTest: needTest("#environment")
                             }, function(BuildResult){
                                    element.removeClass("s-working");
                                    if(!BuildResult.success){
-                                        ViewManager.simpleError("Build error", function(){alert(BuildResult.message)});
+                                        ViewManager.simpleError("Executed failure", function(){alert(BuildResult.message)});
                                         element.addClass("s-error");
-                                   }else if(!BuildResult.deployed){
+                                   }else if(!BuildResult.deployed && needDeploy("#environment")){
                                         ViewManager.simpleError("There might be some of packages failed to deploy.");
                                         element.addClass("s-error");
                                    }else{
-                                        var sucMessage = "All packages build + deploy successfully.";
+                                        var sucMessage = "Executed successfully.";
                                         ViewManager.simpleSuccess(sucMessage);
                                         element.addClass("s-success");
                                    }
@@ -242,7 +259,7 @@
             ViewManager.simpleWarning("You should choose at least one project.");
             return false;
         }
-        if(!needBuild() && !needDeploy()){
+        if(!needBuild("#common") && !needDeploy("#common") && !needTest("#common")){
             ViewManager.simpleWarning("You should choose at least one option.");
             return false;
         }
@@ -252,13 +269,17 @@
     
     $('#build-content #environment #build4Set').click(function(event){
         var choosedElement = undefined;
-        $('#build-content #environment input').each(function(){
+        $('#build-content #environment .bulid-list input').each(function(){
             if($(this).is(':checked')){
                 choosedElement = $(this);
             }
         });
         if(!choosedElement){
-            ViewManager.simpleWarning("Please choose one type for build + deploy.");
+            ViewManager.simpleWarning("Please choose one type for execution.");
+            return false;
+        }
+        if(!needBuild("#environment") && !needDeploy("#environment") && !needTest("#environment")){
+            ViewManager.simpleWarning("You should choose at least one option.");
             return false;
         }
         environmentBuild(choosedElement);
@@ -267,6 +288,9 @@
     $('#build-content #environment input[type="checkbox"]').click(function(event){
         if($(this).is(':checked')){
             $(this).parent().parent().siblings('li').find('input').attr("checked", false);
+            if(deployInformation){
+                //TODO list deploy list.
+            }
         }
         checkBuild4SetValid();
     });

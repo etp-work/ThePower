@@ -11,9 +11,7 @@ import javax.annotation.Resource;
 import org.apache.commons.lang.StringUtils;
 import org.etp.portalKit.common.service.PropertiesManager;
 import org.etp.portalKit.common.util.MavenUtils;
-import org.etp.portalKit.common.util.PropManagerUtils;
 import org.etp.portalKit.powerbuild.bean.DirTree;
-import org.etp.portalKit.powerbuild.bean.SelectionCommand;
 import org.etp.portalKit.setting.bean.SettingsCommand;
 import org.springframework.stereotype.Component;
 
@@ -28,7 +26,6 @@ public class PortalTeamStructure implements BuildListProvider {
     private String basePath;
 
     private List<DirTree> retrieveTree;
-    private List<String> defaultSelection;
 
     @PostConstruct
     private void init() {
@@ -40,7 +37,6 @@ public class PortalTeamStructure implements BuildListProvider {
      * Iterate specified workspace, set the absolute path for each
      * maven project.
      */
-    @SuppressWarnings("unchecked")
     private void resetDirInfo() {
         basePath = prop.get(SettingsCommand.PORTAL_TEAM_PATH);
         if (StringUtils.isBlank(basePath)) {
@@ -48,34 +44,31 @@ public class PortalTeamStructure implements BuildListProvider {
             return;
         }
 
-        String defs = prop.get(SelectionCommand.DEFAULT_BUILD_LIST);
-        if (!StringUtils.isBlank(defs))
-            defaultSelection = (List<String>) PropManagerUtils.fromString(defs);
-        else
-            defaultSelection = new ArrayList<String>();
         retrieveTree = new ArrayList<DirTree>();
 
         iteratorPortalTeamWorkspace(basePath, retrieveTree, null);
     }
 
     private void iteratorPortalTeamWorkspace(String basePath2, List<DirTree> retrieveTree2, DirTree parentTree) {
-        if (StringUtils.isBlank(basePath2))
+        if (StringUtils.isBlank(basePath2)) {
             return;
+        }
         File path = new File(basePath2);
         File[] listFiles = path.listFiles();
         if (listFiles == null) {
             return;
         }
-        for (int i = 0; i < listFiles.length; i++) {
-            File file = listFiles[i];
-            if (!MavenUtils.isMavenProject(file))
+        for (File listFile : listFiles) {
+            File file = listFile;
+            if (!MavenUtils.isMavenProject(file)) {
                 continue;
+            }
             DirTree tree = new DirTree(file.getName(), file.getAbsolutePath());
-            tree.setChecked(defaultSelection.contains(tree.getName()));
-            if (parentTree == null)
+            if (parentTree == null) {
                 retrieveTree2.add(tree);
-            else
+            } else {
                 parentTree.addSub(tree);
+            }
             iteratorPortalTeamWorkspace(file.getAbsolutePath(), retrieveTree2, tree);
         }
     }
@@ -87,8 +80,9 @@ public class PortalTeamStructure implements BuildListProvider {
 
     @Override
     public void update(Observable o, Object key) {
-        if (key.equals(SettingsCommand.PORTAL_TEAM_PATH) || key.equals(SelectionCommand.DEFAULT_BUILD_LIST))
+        if (key.equals(SettingsCommand.PORTAL_TEAM_PATH)) {
             resetDirInfo();
+        }
     }
 
 }

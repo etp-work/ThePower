@@ -1,13 +1,12 @@
 package org.etp.portalKit.powerbuild.controller;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
+import org.etp.portalKit.powerbuild.bean.BuildInformation;
 import org.etp.portalKit.powerbuild.bean.BuildResult;
-import org.etp.portalKit.powerbuild.bean.DirTree;
-import org.etp.portalKit.powerbuild.bean.ExecuteCommand;
+import org.etp.portalKit.powerbuild.bean.ExecuteMultiCommand;
+import org.etp.portalKit.powerbuild.bean.ExecuteSingleCommand;
 import org.etp.portalKit.powerbuild.logic.PowerBuildLogic;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,10 +26,10 @@ public class PowerBuildController {
     /**
      * @return next page
      */
-    @RequestMapping(value = "/powerbuild/getAllTrees.ajax", method = RequestMethod.GET)
+    @RequestMapping(value = "/powerbuild/getBuildInformation.ajax", method = RequestMethod.GET)
     public @ResponseBody
-    List<DirTree> getBuildTrees() {
-        return logic.getCommonBuildListDirTrees();
+    BuildInformation getBuildTrees() {
+        return logic.getBuildInformation();
     }
 
     /**
@@ -41,11 +40,11 @@ public class PowerBuildController {
      */
     @RequestMapping(value = "/powerbuild/execute.ajax", method = RequestMethod.POST)
     public @ResponseBody
-    BuildResult build(@RequestBody ExecuteCommand cmd) {
-        if (StringUtils.isBlank(cmd.getSelection())) {
+    BuildResult build(@RequestBody ExecuteSingleCommand cmd) {
+        if (StringUtils.isBlank(cmd.getAbsolutePath())) {
             throw new RuntimeException("Error occurs when executing, please inform ZuoHao about this issue.");
         }
-        return logic.executeCommand(cmd.getSelection(), cmd);
+        return logic.executeCommand(cmd.getAbsolutePath(), cmd);
     }
 
     /**
@@ -54,10 +53,13 @@ public class PowerBuildController {
      * @param cmd
      * @return build result
      */
-    @RequestMapping(value = "/powerbuild/buildset.ajax", method = RequestMethod.POST)
+    @RequestMapping(value = "/powerbuild/executeWithType.ajax", method = RequestMethod.POST)
     public @ResponseBody
-    BuildResult buildSet(@RequestBody ExecuteCommand cmd) {
-        BuildResult br = logic.buildDeploySet(cmd.getSelection());
-        return br;
+    BuildResult buildSet(@RequestBody ExecuteMultiCommand cmd) {
+        if (cmd.getType() == null) {
+            throw new RuntimeException(
+                    "Error occurs when executing a set of portal, please inform ZuoHao about this issue.");
+        }
+        return logic.executeWithType(cmd.getType(), cmd);
     }
 }

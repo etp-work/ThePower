@@ -5,10 +5,16 @@ package org.etp.portalKit.powerbuild.bean;
  * request from client.
  */
 public class ExecuteCommand {
-    private String selection;
     private boolean needDeploy;
     private boolean needBuild;
     private boolean needTest;
+
+    /**
+     * @return Returns the needDeploy.
+     */
+    public boolean isNeedDeploy() {
+        return needDeploy;
+    }
 
     /**
      * @return Returns the needTest.
@@ -36,27 +42,6 @@ public class ExecuteCommand {
      */
     public void setNeedBuild(boolean needBuild) {
         this.needBuild = needBuild;
-    }
-
-    /**
-     * @return Returns the selection.
-     */
-    public String getSelection() {
-        return selection;
-    }
-
-    /**
-     * @param selection The selection to set.
-     */
-    public void setSelection(String selection) {
-        this.selection = selection;
-    }
-
-    /**
-     * @return Returns the needDeploy.
-     */
-    public boolean isNeedDeploy() {
-        return needDeploy;
     }
 
     /**

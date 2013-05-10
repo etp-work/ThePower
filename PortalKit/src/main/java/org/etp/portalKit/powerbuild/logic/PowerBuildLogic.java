@@ -3,6 +3,7 @@ package org.etp.portalKit.powerbuild.logic;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,10 +16,13 @@ import org.etp.portalKit.common.service.DeployService;
 import org.etp.portalKit.common.service.PropertiesManager;
 import org.etp.portalKit.common.util.CommandResult;
 import org.etp.portalKit.common.util.JSONUtils;
+import org.etp.portalKit.powerbuild.bean.BuildInformation;
 import org.etp.portalKit.powerbuild.bean.BuildResult;
 import org.etp.portalKit.powerbuild.bean.DeployInformation;
-import org.etp.portalKit.powerbuild.bean.DirTree;
+import org.etp.portalKit.powerbuild.bean.DeployType;
 import org.etp.portalKit.powerbuild.bean.ExecuteCommand;
+import org.etp.portalKit.powerbuild.bean.ExecuteMultiCommand;
+import org.etp.portalKit.powerbuild.bean.ExecuteSingleCommand;
 import org.etp.portalKit.powerbuild.service.BuildListProvider;
 import org.etp.portalKit.powerbuild.service.ExecuteType;
 import org.etp.portalKit.powerbuild.service.MavenExecutor;
@@ -102,6 +106,18 @@ public class PowerBuildLogic {
         return true;
     }
 
+    private ExecuteType getExecuteType(ExecuteCommand cmd) {
+        ExecuteType type = null;
+        if (cmd.isNeedBuild() && cmd.isNeedTest()) {
+            type = ExecuteType.COMPILE_TEST;
+        } else if (cmd.isNeedBuild()) {
+            type = ExecuteType.COMPILE;
+        } else if (cmd.isNeedTest()) {
+            type = ExecuteType.TEST;
+        }
+        return type;
+    }
+
     /**
      * Execute specified command to the project which given
      * <code>absolutePath</code> indicates. There are four kinds of
@@ -111,28 +127,21 @@ public class PowerBuildLogic {
      * @param cmd ExecuteCommand
      * @return BuildResult
      */
-    public BuildResult executeCommand(String absolutePath, ExecuteCommand cmd) {
+    public BuildResult executeCommand(String absolutePath, ExecuteSingleCommand cmd) {
         BuildResult br = new BuildResult();
-        ExecuteType type = null;
-        if (cmd.isNeedBuild() && cmd.isNeedTest()) {
-            type = ExecuteType.COMPILE_TEST;
-        } else if (cmd.isNeedBuild()) {
-            type = ExecuteType.COMPILE;
-        } else if (cmd.isNeedTest()) {
-            type = ExecuteType.TEST;
-        }
+        ExecuteType type = getExecuteType(cmd);
         if ((type == null) && !cmd.isNeedDeploy()) {
             throw new RuntimeException("You have to choose at least one option.");
         }
         if (type != null) {
             CommandResult cr = executor.exec(absolutePath, type);
             br.setCommandResult(cr);
+            if (!br.isSuccess()) {
+                return br;
+            }
         }
 
         if (cmd.isNeedDeploy()) {
-            if ((type != null) && !br.isSuccess()) {
-                return br;
-            }
             String deployPath = checkDeployPath();
             if (checkCanBeDeployed(absolutePath)) {
                 br.setDeployed(deployService.deployFromFolder(absolutePath, deployPath));
@@ -143,53 +152,91 @@ public class PowerBuildLogic {
         return br;
     }
 
-    /**
-     * Build + deploy a set of packages.
-     * 
-     * @param deployType referencePortal/multiscreenPortal
-     * @return BuildResult
-     */
-    public BuildResult buildDeploySet(String deployType) {
-        String deployPath = checkDeployPath();
+    private List<String> getDeploySet(DeployType deployType) {
         String basePath = checkDesignPath();
-        BuildResult result = new BuildResult(executor.exec(new File(basePath, "design").getAbsolutePath(),
-                ExecuteType.COMPILE));
-        if (!result.isSuccess()) {
-            return result;
-        }
-        if (deployInformation == null) {
-            throw new RuntimeException("failed to read deployinformation.");
-        }
         List<String> deploySet = new ArrayList<String>();
-        boolean deployed = true;
-        if ("referencePortal".equals(deployType)) {
+        switch (deployType) {
+        case REFERENCE_PORTAL:
             for (Map<String, String> fw : deployInformation.getFramework()) {
                 deploySet.add(new File(basePath, fw.get("relativePath")).getAbsolutePath());
             }
             for (Map<String, String> fw : deployInformation.getReferencePortal()) {
                 deploySet.add(new File(basePath, fw.get("relativePath")).getAbsolutePath());
             }
-        } else if ("multiscreenPortal".equals(deployType)) {
+            break;
+        case MULTISCREEN_PORTAL:
             for (Map<String, String> fw : deployInformation.getFramework()) {
                 deploySet.add(new File(basePath, fw.get("relativePath")).getAbsolutePath());
             }
             for (Map<String, String> fw : deployInformation.getMultiscreenPortal()) {
                 deploySet.add(new File(basePath, fw.get("relativePath")).getAbsolutePath());
             }
+            break;
         }
-        deployed = deployService.deployListFromFolder(deploySet, deployPath);
-        result.setDeployed(deployed);
+        return deploySet;
+    }
+
+    /**
+     * Execute compile, test, deploy command to a specified type such
+     * as <code>REFERENCE_PORTAL</code>,
+     * <code>MULTISCREEN_PORTAL</code>
+     * 
+     * @param deployType <code>REFERENCE_PORTAL</code>,
+     *            <code>MULTISCREEN_PORTAL</code>
+     * @param cmd ExecuteMultiCommand
+     * @return BuildResult
+     */
+    public BuildResult executeWithType(DeployType deployType, ExecuteMultiCommand cmd) {
+        String deployPath = checkDeployPath();
+        String basePath = checkDesignPath();
+        ExecuteType executeType = getExecuteType(cmd);
+        if ((executeType == null) && !cmd.isNeedDeploy()) {
+            throw new RuntimeException("You have to choose at least one option.");
+        }
+        BuildResult result = new BuildResult();
+        if (executeType != null) {
+            result.setCommandResult(executor.exec(new File(basePath, "design").getAbsolutePath(), executeType));
+            if (!result.isSuccess()) {
+                return result;
+            }
+        }
+        List<String> deploySet = getDeploySet(deployType);
+
+        if (cmd.isNeedDeploy()) {
+            for (String abs : deploySet) {
+                if (checkCanBeDeployed(abs)) {
+                    result.setDeployed(deployService.deployFromFolder(abs, deployPath));
+                } else {
+                    result.setDeployed(true);
+                }
+            }
+        }
         return result;
     }
 
     /**
-     * Get Specified build trees due to design path setted in settings
-     * page.
+     * Get information which build page needed.
      * 
-     * @return List<DirTree>
+     * @return BuildInformation
      */
-    public List<DirTree> getCommonBuildListDirTrees() {
-        return buildListProvider.retrieveDirTrees();
+    public BuildInformation getBuildInformation() {
+        Map<String, List<String>> deployInfo = new HashMap<String, List<String>>();
+        List<String> refApps = new ArrayList<String>();
+        for (Map<String, String> fw : deployInformation.getFramework()) {
+            refApps.add(fw.get("packageName"));
+        }
+        for (Map<String, String> rp : deployInformation.getReferencePortal()) {
+            refApps.add(rp.get("packageName"));
+        }
+        deployInfo.put("referencePortal", refApps);
+        List<String> multi = new ArrayList<String>();
+        for (Map<String, String> fw : deployInformation.getFramework()) {
+            multi.add(fw.get("packageName"));
+        }
+        for (Map<String, String> mp : deployInformation.getMultiscreenPortal()) {
+            multi.add(mp.get("packageName"));
+        }
+        deployInfo.put("multiscreenPortal", multi);
+        return new BuildInformation(buildListProvider.retrieveDirTrees(), deployInfo);
     }
-
 }

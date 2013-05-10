@@ -15,9 +15,7 @@ import org.etp.portalKit.common.service.PropertiesManager;
 import org.etp.portalKit.common.util.JSONUtils;
 import org.etp.portalKit.common.util.MavenUtils;
 import org.etp.portalKit.common.util.ObjectUtil;
-import org.etp.portalKit.common.util.PropManagerUtils;
 import org.etp.portalKit.powerbuild.bean.DirTree;
-import org.etp.portalKit.powerbuild.bean.SelectionCommand;
 import org.etp.portalKit.setting.bean.SettingsCommand;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.stereotype.Component;
@@ -37,7 +35,6 @@ public class CustomizedBuildListProvider implements BuildListProvider {
     private PropertiesManager prop;
 
     private String basePath;
-    private List<String> defaultSelection;
     private List<DirTree> basedListTree;
     private List<DirTree> retrieveTree;
 
@@ -49,19 +46,20 @@ public class CustomizedBuildListProvider implements BuildListProvider {
                 new TypeReference<List<DirTree>>() {
                     //
                 });
-        if (CollectionUtils.isEmpty(basedListTree))
+        if (CollectionUtils.isEmpty(basedListTree)) {
             throw new RuntimeException("Load CustomizedBuildList.json error.");
+        }
         prop.addObserver(this);
         resetDirInfo();
     }
 
     /**
      * Iterate basedListTree, set the absolute path for each item
-     * based on the relative path, and specified workspace which has 
-     * set in settings page. Note: each converted absolute path
-     * should a regular maven project folder(include a pom.xml and a
-     * target folder), if not, remvoe this item from the DirTree which
-     * this item belongs to.
+     * based on the relative path, and specified workspace which has
+     * set in settings page. Note: each converted absolute path should
+     * a regular maven project folder(include a pom.xml and a target
+     * folder), if not, remvoe this item from the DirTree which this
+     * item belongs to.
      */
     @SuppressWarnings("unchecked")
     private void resetDirInfo() {
@@ -75,16 +73,11 @@ public class CustomizedBuildListProvider implements BuildListProvider {
             return;
         }
 
-        String defs = prop.get(SelectionCommand.DEFAULT_BUILD_LIST);
-        if (!StringUtils.isBlank(defs))
-            defaultSelection = (List<String>) PropManagerUtils.fromString(defs);
-        else
-            defaultSelection = new ArrayList<String>();
         retrieveTree = (List<DirTree>) ObjectUtil.clone(basedListTree);
         Iterator<DirTree> itr = retrieveTree.iterator();
         while (itr.hasNext()) {
             DirTree tree = itr.next();
-            iterateTreesForConvertPath(tree, itr, defaultSelection);
+            iterateTreesForConvertPath(tree, itr);
         }
         itr = retrieveTree.iterator();
         while (itr.hasNext()) {
@@ -111,9 +104,9 @@ public class CustomizedBuildListProvider implements BuildListProvider {
      * @param itr used to remove this dir from current DirTree
      */
     private void iterateTreesForRemoveNoChildItem(DirTree tree, Iterator<DirTree> itr) {
-        if (CollectionUtils.isEmpty(tree.getSubDirs()) && StringUtils.isBlank(tree.getRelativePath()))
+        if (CollectionUtils.isEmpty(tree.getSubDirs()) && StringUtils.isBlank(tree.getRelativePath())) {
             itr.remove();
-        else {
+        } else {
             List<DirTree> subs = tree.getSubDirs();
             Iterator<DirTree> subItr = subs.iterator();
             while (subItr.hasNext()) {
@@ -132,33 +125,32 @@ public class CustomizedBuildListProvider implements BuildListProvider {
      * @param tree The DirTree which will be iterated for converting
      *            absolute path.
      * @param itr used to remove this dir from current DirTree.
-     * @param selection defaultSelection that used to set the checked
-     *            state.
      */
-    private void iterateTreesForConvertPath(DirTree tree, Iterator<DirTree> itr, List<String> selection) {
-        tree.setChecked(selection.contains(tree.getName()));
+    private void iterateTreesForConvertPath(DirTree tree, Iterator<DirTree> itr) {
         if (StringUtils.isBlank(tree.getRelativePath())) {
             List<DirTree> subs = tree.getSubDirs();
             if (!CollectionUtils.isEmpty(subs)) {
                 Iterator<DirTree> subItr = subs.iterator();
                 while (subItr.hasNext()) {
                     DirTree subTree = subItr.next();
-                    iterateTreesForConvertPath(subTree, subItr, selection);
+                    iterateTreesForConvertPath(subTree, subItr);
                 }
             }
         } else {
             String relativePath = tree.getRelativePath();
             File relative = new File(basePath, relativePath);
-            if (MavenUtils.isMavenProject(relative))
+            if (MavenUtils.isMavenProject(relative)) {
                 tree.setAbsolutePath(relative.getAbsolutePath());
-            else
+            } else {
                 itr.remove();
+            }
         }
     }
 
     @Override
     public void update(Observable o, Object key) {
-        if (key.equals(SettingsCommand.PORTAL_TEAM_PATH) || key.equals(SelectionCommand.DEFAULT_BUILD_LIST))
+        if (key.equals(SettingsCommand.PORTAL_TEAM_PATH)) {
             resetDirInfo();
+        }
     }
 }
