@@ -5,12 +5,13 @@
 #define MyAppVersion "1.0.1"
 #define MyAppPublisher "Ericsson three persons"
 #define MyAppExeName "GriffinsPortalKit.exe"
+#define AppId "ThePowerFromEricssonThreePerson"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
 ; Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
-AppId={{59D5CAB0-74C7-47E1-B179-4A73E98ACE8C}
+AppId={#AppId}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 AppVerName={#MyAppName} {#MyAppVersion}
@@ -33,11 +34,11 @@ ArchitecturesAllowed=x86
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Tasks]
-Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
+Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 0,6.1
 
 [Files]
-Source: "..\shell\*"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\shell\*"; DestDir: "{app}"; Flags: ignoreversion; BeforeInstall: ExistInstallationCheck()
 Source: "..\shell\images\*"; DestDir: "{app}\images"; Flags: ignoreversion
 Source: "..\shell\locales\*"; DestDir: "{app}\locales"; Flags: ignoreversion
 Source: "..\icons\The_power_icon_128.ico"; DestDir: "{app}"; Flags: ignoreversion
@@ -56,4 +57,23 @@ Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChang
 
 [UninstallDelete]
 Type: filesandordirs; Name: "{localappdata}\CustomizedTomcat"
+
+[Code]
+var CancelWithoutPrompt: boolean;
+
+procedure ExistInstallationCheck();
+begin
+  if RegKeyExists(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{#AppId}_is1') then
+  begin
+      MsgBox('You have ThePower installed on your workstation, please uninstall it first. ', mbInformation, MB_OK);
+      CancelWithoutPrompt := true;
+      WizardForm.Close;
+  end;
+end;
+
+procedure CancelButtonClick(CurPageID: Integer; var Cancel, Confirm: Boolean);
+begin
+  if CurPageID=wpInstalling then
+    Confirm := not CancelWithoutPrompt;
+end;
 

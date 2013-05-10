@@ -20,3 +20,7 @@ Version 1.0.1 at 2013-05-09
   8. Remove the auto hide feature.
 
   9. Fix bug that sometimes reboot computer is needed to solve "ERROR:Failed to start server!".
+
+  10. Add pre-check to "create a desktop icon".
+
+  11. Add new feature to prevent a new installation if you already have one on your computer.
