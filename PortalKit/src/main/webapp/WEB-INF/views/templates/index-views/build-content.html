@@ -34,16 +34,17 @@
                 </li>
             </ul>
 		</div>
-	<!--	<div class="config-button-area">
-			<li><input id="setDefault4Build" class="small-button config" disabled="disabled" type="button" value="Set Default" /></li>
-			<li><input id="resetDefault4Build" class="small-button reset" disabled="disabled" type="button" value="Reset" /></li>
+		<div class="options-area">
+			<!-- <li><input id="setDefault4Build" class="small-button config" disabled="disabled" type="button" value="Set Default" /></li>
+			<li><input id="resetDefault4Build" class="small-button reset" disabled="disabled" type="button" value="Reset" /></li> -->
+			<div class="check-deploy"><div class="lightpoint"><input id="needBuild" disabled="disabled" type="checkbox"><label></label></div>Build</div>
+            <div class="check-deploy"><div class="lightpoint"><input id="needDeploy" disabled="disabled" type="checkbox"><label></label></div>Deploy</div>
+			<div class="check-deploy"><div class="lightpoint"><input id="needDeploy" disabled="disabled" type="checkbox"><label></label></div>Test</div>
 			<div class="clear"></div>
-		</div>  -->
+		</div>  
 		
 		<div class="main-button-area">
-	          <input id="buildButton" class="primary-button run" disabled="disabled" type="button" value="RUN"/> 
-	          <div class="check-deploy"><div class="lightpoint"><input id="needBuild" disabled="disabled" type="checkbox"><label></label></div>Build</div>
-	          <div class="check-deploy"><div class="lightpoint"><input id="needDeploy" disabled="disabled" type="checkbox"><label></label></div>Deploy</div>
+	          <input id="buildButton" class="primary-button run" disabled="disabled" type="button" value="RUN"/>  
 	          <div class="clear"></div>
         </div>
 
@@ -58,11 +59,19 @@
                 <li><div class="lightpoint"><input id="referencePortal" value="referencePortal" type="checkbox"><label></label></div>Reference Portal<div class="status"><img src="resources/images/loading.gif"/></div></li>
               </ul>
           </div>
-          <div class="bulid-message">
+         <!--   <div class="bulid-message">
               Selected option will be deployed                           
-          </div>
+          </div> -->
+          <div class="options-area">
+            <!-- <li><input id="setDefault4Build" class="small-button config" disabled="disabled" type="button" value="Set Default" /></li>
+            <li><input id="resetDefault4Build" class="small-button reset" disabled="disabled" type="button" value="Reset" /></li> -->
+            <div class="check-deploy"><div class="lightpoint"><input id="needBuild" disabled="disabled" type="checkbox"><label></label></div>Build</div>
+            <div class="check-deploy"><div class="lightpoint"><input id="needDeploy" disabled="disabled" type="checkbox"><label></label></div>Deploy</div>
+            <div class="check-deploy"><div class="lightpoint"><input id="needDeploy" disabled="disabled" type="checkbox"><label></label></div>Test</div>
+            <div class="clear"></div>
+        </div>
           <div class="main-button-area">
-            <input id="build4Set" class="primary-button save" disabled="disabled" type="button" value="Bulid + Deploy"/> 
+            <input id="build4Set" class="primary-button RUN" disabled="disabled" type="button" value="RUN"/> 
           </div>
           <div class="clear"></div>
     </div>
