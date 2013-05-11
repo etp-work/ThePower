@@ -35,7 +35,7 @@
 
 </div>
 
-<div class="help">help</div>
+<div class="help" title="Not implemented yet.">help</div>
 <div class="version">V <c:out value="${portalKitInfo.version}"/></div>
 
 <div class="mainWrapper">
