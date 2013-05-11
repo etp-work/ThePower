@@ -26,7 +26,7 @@ public class FileUtils {
             throw new NullPointerException("folderPrefix could not be empty or null.");
         File baseFile = new File(baseFolder);
         if (!baseFile.isDirectory())
-            throw new RuntimeException("baseFolder is invalid folder path.");
+            return new File[0];
         CustomizedFolderFilter folderFilter = new CustomizedFolderFilter();
         folderFilter.folderPrefix = folderPrefix;
         File[] finds = baseFile.listFiles(folderFilter);
@@ -49,7 +49,7 @@ public class FileUtils {
             throw new NullPointerException("filePrefix could not be empty or null.");
         File baseFile = new File(baseFolder);
         if (!baseFile.isDirectory())
-            throw new RuntimeException("baseFolder is invalid folder path.");
+            return new File[0];
         CustomizedFileFilder fileFilter = new CustomizedFileFilder();
         fileFilter.filePrefix = filePrefix;
         fileFilter.fileSuffix = fileSuffix;
