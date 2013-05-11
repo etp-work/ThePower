@@ -4,11 +4,14 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.codehaus.jackson.type.TypeReference;
+import org.etp.portalKit.common.service.PropertiesManager;
 import org.etp.portalKit.common.util.JSONUtils;
 import org.etp.portalKit.init.bean.PortalKitInfo;
 import org.etp.portalKit.init.bean.ViewInfo;
 import org.etp.portalKit.init.service.IndexViewSettings;
+import org.etp.portalKit.setting.bean.SettingsCommand;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.stereotype.Component;
 
@@ -23,6 +26,9 @@ public class InitLogic {
 
     @Resource(name = "pathMatchingResourcePatternResolver")
     private PathMatchingResourcePatternResolver pathResolver;
+    
+    @Resource(name = "propertiesManager")
+    private PropertiesManager prop;
 
     private String PORTALKIT_INFO_JSON = "PortalKitInfo.json";
 
@@ -30,7 +36,17 @@ public class InitLogic {
      * @return list of viewInfo.
      */
     public List<ViewInfo> retrieveViewInfo() {
-        return viewSettings.retrieveViewInfo();
+        List<ViewInfo> viewInfos = viewSettings.retrieveViewInfo();
+        if(StringUtils.isBlank(prop.get(SettingsCommand.TOMCAT_WEBAPPS_PATH))||StringUtils.isBlank(prop.get(SettingsCommand.PORTAL_TEAM_PATH))){
+            for (ViewInfo viewInfo : viewInfos) {
+                viewInfo.setDefaultView(false);
+                if(!"Set".equals(viewInfo.getViewName())){
+                    continue;
+                }
+                viewInfo.setDefaultView(true);
+            }
+        }
+        return viewInfos;
     }
 
     /**
