@@ -142,6 +142,7 @@ public class PowerBuildLogic {
         }
 
         if (cmd.isNeedDeploy()) {
+            br.setSuccess(true);
             String deployPath = checkDeployPath();
             if (checkCanBeDeployed(absolutePath)) {
                 br.setDeployed(deployService.deployFromFolder(absolutePath, deployPath));
@@ -200,9 +201,9 @@ public class PowerBuildLogic {
                 return result;
             }
         }
-        List<String> deploySet = getDeploySet(deployType);
-
         if (cmd.isNeedDeploy()) {
+            result.setSuccess(true);
+            List<String> deploySet = getDeploySet(deployType);
             for (String abs : deploySet) {
                 if (checkCanBeDeployed(abs)) {
                     result.setDeployed(deployService.deployFromFolder(abs, deployPath));
