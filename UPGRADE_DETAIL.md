@@ -24,3 +24,5 @@ Version 1.0.1 at 2013-05-09
   10. Add pre-check to "create a desktop icon".
 
   11. Add new feature to prevent a new installation if you already have one on your computer.
+
+  12. Add new feature that if you don't have your settings full filled, ThePower will go to setting page as default.
