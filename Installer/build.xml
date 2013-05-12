@@ -89,8 +89,8 @@
                 <fileset dir="${shell.bin.home}">
                     <include name="*" />
                     <include name="*/*" />
-                    <exclude name="GriffinsPortalKit.vshost.exe" />
-                    <exclude name="GriffinsPortalKit.pdb" />
+                    <exclude name="DevelopmentToolkit.vshost.exe" />
+                    <exclude name="DevelopmentToolkit.pdb" />
                     <exclude name="xulrunner" />
                     <exclude name="xulrunner/*" />
                 </fileset>
