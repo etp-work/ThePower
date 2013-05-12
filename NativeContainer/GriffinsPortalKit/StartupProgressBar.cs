@@ -27,8 +27,8 @@ namespace DevelopmentToolkit
         }
 
         public void start() {
-            worker.RunWorkerAsync();
             RUNNING = true;
+            worker.RunWorkerAsync();
         }
 
         public void stop() {
