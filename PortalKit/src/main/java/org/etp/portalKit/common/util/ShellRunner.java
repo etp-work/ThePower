@@ -12,12 +12,10 @@ import java.util.Map.Entry;
 import java.util.Properties;
 
 import org.apache.commons.io.Charsets;
-import org.springframework.stereotype.Component;
 
 /**
  * The purpose of this class is to provide a external command handler
  */
-@Component(value = "shellRunner")
 public class ShellRunner {
     private Process process;
 

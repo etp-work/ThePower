@@ -3,8 +3,6 @@ package org.etp.portalKit.powerbuild.service;
 import java.io.File;
 import java.text.MessageFormat;
 
-import javax.annotation.Resource;
-
 import org.apache.commons.lang.StringUtils;
 import org.etp.portalKit.common.util.CommandResult;
 import org.etp.portalKit.common.util.OutputHandler;
@@ -16,9 +14,7 @@ import org.springframework.stereotype.Component;
  */
 @Component(value = "mavenExecutor")
 public class MavenExecutor {
-    @Resource(name = "shellRunner")
-    private ShellRunner runner;
-
+    
     private String path_format = "{0}\\pom.xml";
 
     private String COMPILE_FORMAT = "mvn clean install -f \"{0}\" -Dmaven.test.skip=true";
@@ -39,6 +35,7 @@ public class MavenExecutor {
      * @return execution information
      */
     public CommandResult exec(String path, ExecuteType type) {
+        ShellRunner runner=new ShellRunner();
         String pom = convertPath(path);
         if (StringUtils.isBlank(pom)) {
             throw new RuntimeException("Given path is not a regular maven project path");
