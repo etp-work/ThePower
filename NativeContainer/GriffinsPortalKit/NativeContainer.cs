@@ -86,7 +86,7 @@ namespace DevelopmentToolkit
         void browser_DocumentCompleted(object sender, EventArgs e)
         {
             this.Show();
-            this.TopMost = true;
+            this.Activate();
             this.notifyIcon1.Visible = true;
             //if (this.frmSplash != null)
             //{
