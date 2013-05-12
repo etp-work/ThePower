@@ -1,4 +1,4 @@
-﻿namespace GriffinsPortalKit
+﻿namespace DevelopmentToolkit
 {
     partial class RemoteControl
     {

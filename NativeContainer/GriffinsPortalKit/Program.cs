@@ -13,7 +13,7 @@ using log4net;
 using Newtonsoft.Json.Linq;
 
 [assembly: log4net.Config.XmlConfigurator(Watch = true)]
-namespace GriffinsPortalKit
+namespace DevelopmentToolkit
 {
     static class Program
     {

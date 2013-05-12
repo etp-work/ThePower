@@ -5,7 +5,7 @@ using System.Text;
 using AForge.Imaging;
 using System.Drawing;
 
-namespace GriffinsPortalKit
+namespace DevelopmentToolkit
 {
     public class ImageCompare
     {

@@ -1,4 +1,4 @@
-﻿namespace GriffinsPortalKit
+﻿namespace DevelopmentToolkit
 {
     partial class NativeContainer
     {
@@ -41,14 +41,14 @@
             // 
             // NativeContainer
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 262);
+            this.ClientSize = new System.Drawing.Size(284, 242);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "NativeContainer";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "Griffins Portal Kit";
+            this.Text = "DevelopmentToolkit";
             this.Resize += new System.EventHandler(this.NativeContainer_Resize);
             this.ResumeLayout(false);
 

@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using OpenSURFcs;
 
-namespace GriffinsPortalKit
+namespace DevelopmentToolkit
 {
     public partial class SURFCompare : Form
     {

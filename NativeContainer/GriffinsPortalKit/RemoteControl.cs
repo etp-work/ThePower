@@ -11,7 +11,7 @@ using Gecko;
 using Gecko.DOM;
 using Newtonsoft.Json.Linq;
 
-namespace GriffinsPortalKit
+namespace DevelopmentToolkit
 {
     public partial class RemoteControl : Form
     {

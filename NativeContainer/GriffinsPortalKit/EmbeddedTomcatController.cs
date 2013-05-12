@@ -6,7 +6,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 
-namespace GriffinsPortalKit
+namespace DevelopmentToolkit
 {
     public class EmbeddedTomcatController
     {

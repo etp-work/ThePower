@@ -7,8 +7,8 @@
     <ProjectGuid>{5BB8B764-BDBF-4068-9A71-98A79CD6BAC6}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GriffinsPortalKit</RootNamespace>
-    <AssemblyName>GriffinsPortalKit</AssemblyName>
+    <RootNamespace>DevelopmentToolkit</RootNamespace>
+    <AssemblyName>DevelopmentToolkit</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

@@ -12,7 +12,7 @@ using Newtonsoft.Json.Linq;
 using System.Runtime.InteropServices;
 using System.Configuration;
 
-namespace GriffinsPortalKit
+namespace DevelopmentToolkit
 {
     public partial class Browser : Form
     {

@@ -12,7 +12,7 @@ using Gecko.DOM;
 using Newtonsoft.Json.Linq;
 using System.Runtime.InteropServices;
 
-namespace GriffinsPortalKit
+namespace DevelopmentToolkit
 {
     public partial class STBHTML : Form
     {

@@ -16,7 +16,7 @@ using log4net;
 using Newtonsoft.Json.Linq;
 using System.Threading;
 
-namespace GriffinsPortalKit
+namespace DevelopmentToolkit
 {
     public partial class NativeContainer : Form
     {
