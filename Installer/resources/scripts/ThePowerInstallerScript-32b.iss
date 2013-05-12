@@ -4,7 +4,7 @@
 #define MyAppName "The Power"
 #define MyAppVersion "1.0.1"
 #define MyAppPublisher "Ericsson three persons"
-#define MyAppExeName "GriffinsPortalKit.exe"
+#define MyAppExeName "DevelopmentToolkit.exe"
 #define AppId "ThePowerFromEricssonThreePerson"
 
 [Setup]
@@ -56,11 +56,13 @@ Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#MyAppName}"; Fil
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
 
 [UninstallDelete]
+Type: files; Name: "{app}\portalkit.log"
 Type: filesandordirs; Name: "{localappdata}\CustomizedTomcat"
+
 
 [Code]
 var CancelWithoutPrompt: boolean;
-
+var ApplicationWasUninstalled: Boolean;
 procedure ExistInstallationCheck();
 begin
   if RegKeyExists(HKEY_LOCAL_MACHINE, 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{#AppId}_is1') then
@@ -77,3 +79,28 @@ begin
     Confirm := not CancelWithoutPrompt;
 end;
 
+function InitializeUninstall(): Boolean;
+begin
+  if FindWindowByWindowName('DevelopmentToolkit') = 0 then
+    begin
+      Result := True;
+    end
+  else
+    begin
+      MsgBox('ThePower is still running, please shutdown it first.', mbInformation, MB_OK);
+      Result := False;
+    end;
+end;
+
+procedure InitializeUninstallProgressForm();
+begin
+  ApplicationWasUninstalled := true;
+end;
+
+procedure DeinitializeUninstall();
+begin
+  if ApplicationWasUninstalled Then Begin
+      if MsgBox('Do you want to keep your profile?', mbConfirmation, MB_YESNO) <> idYes then
+        DeleteFile('C:\Users\'+GetUserNameString()+'\.portalkit');
+  end;
+end;
