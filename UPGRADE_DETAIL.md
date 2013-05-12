@@ -26,3 +26,7 @@ Version 1.0.1 at 2013-05-09
   11. Add new feature to prevent a new installation if you already have one on your computer.
 
   12. Add new feature that if you don't have your settings full filled, ThePower will go to setting page as default.
+
+  13. Add new feature that you can't uninstall ThePower if it is running.
+
+  14. Add new feature that uninstaller will ask end-user for deleting user profile.
