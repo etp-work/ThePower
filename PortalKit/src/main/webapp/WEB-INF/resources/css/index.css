@@ -269,10 +269,10 @@ img{ border:none; margin:0; padding:0;}
     float:right;
     }
 
-.bulid-list{
+.build-list{
     float:left;
     width:332px;
-    height:290px;
+    height:285px;
     overflow:auto;
 /*  border: solid 1px #e1e1e1;*/
     }

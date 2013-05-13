@@ -96,7 +96,7 @@
             deployInformation = buildInfo.deployInfo;
             $('#build-content #common .parentB').off("click");//remove click binding to .parent first. Then will be re-bind again when data fetched later.
             $('#build-content #common .childB').off("click");//remove click binding to .child first. Then will be re-bind again when data fetched later.
-            var scope = angular.element($('.bulid-list')).scope();
+            var scope = angular.element($('.build-list')).scope();
             scope.$apply(function(){
                 scope.dirTrees = buildInfo.buildList;
             });
@@ -104,7 +104,7 @@
           
             Lifecycle.setState(Lifecycle.NORMAL);
         }, function(){
-            var scope = angular.element($('.bulid-list')).scope();
+            var scope = angular.element($('.build-list')).scope();
             scope.$apply(function(){
                 scope.dirTrees = [];
             });
@@ -198,7 +198,7 @@
     
     //do filter the specified text within a specified range of elements.
     function doFilter(text){
-        ViewManager.filter("#build-content #common .bulid-list ul li", "div input[type=\"checkbox\"]", text);
+        ViewManager.filter("#build-content #common .build-list ul li", "div input[type=\"checkbox\"]", text);
     }
     
     function checkBuild4SetValid(){
@@ -227,7 +227,7 @@
                     $('#build-content #environment #build4Set').attr("disabled", true);
                     break;
                 case Lifecycle.NO_CONFIGURATION:
-                    var scope = angular.element($('.bulid-list')).scope();
+                    var scope = angular.element($('.build-list')).scope();
                     scope.$apply(function(){
                         scope.dirTrees = [];
                     });
@@ -269,7 +269,7 @@
     
     $('#build-content #environment #build4Set').click(function(event){
         var choosedElement = undefined;
-        $('#build-content #environment .bulid-list input').each(function(){
+        $('#build-content #environment .build-list input').each(function(){
             if($(this).is(':checked')){
                 choosedElement = $(this);
             }
