@@ -36,6 +36,7 @@ namespace DevelopmentToolkit
         {
             try
             {
+                SingleInstanceChecker.checkThePowerRunning();
                 tomcatController = new EmbeddedTomcatController();
                 nativeID = Guid.NewGuid();
                 portalID = Guid.NewGuid();

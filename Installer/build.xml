@@ -12,6 +12,8 @@
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 		- - - Properties - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 		- - - - - - - - -->
+    <property name="version" value="1.0.1"/>
+    
     <property name="cefSharp.lib.path" value="libs/CefSharp-0.12.zip" />
     <property name="cefSharp.local.unzippath" value="resources/CefSharp-0.12" />
 
@@ -41,12 +43,12 @@
 
     <target name="compile32">
         <prepare />
-        <compile dir="${script.home}" args="/O'${output.dir.in.script}' /F'ThePowerSetup-32b' ThePowerInstallerScript-32b.iss" />
+        <compile dir="${script.home}" args="/O'${output.dir.in.script}' /F'ThePower-x86-${version}' ThePowerInstallerScript-32b.iss" />
     </target>
 
     <target name="compile64">
         <prepare />
-        <compile dir="${script.home}" args="/O'${output.dir.in.script}' /F'ThePowerSetup-64b' ThePowerInstallerScript-64b.iss" />
+        <compile dir="${script.home}" args="/O'${output.dir.in.script}' /F'ThePower-x64-${version}' ThePowerInstallerScript-64b.iss" />
     </target>
 
     <target name="checkXulRunner">

@@ -131,6 +131,7 @@
     <Compile Include="RemoteControl.Designer.cs">
       <DependentUpon>RemoteControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="SingleInstanceChecker.cs" />
     <Compile Include="StartupProgressBar.cs">
       <SubType>Form</SubType>
     </Compile>

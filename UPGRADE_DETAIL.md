@@ -30,3 +30,5 @@ Version 1.0.1 at 2013-05-09
   13. Add new feature that you can't uninstall ThePower if it is running.
 
   14. Add new feature that uninstaller will ask end-user for deleting user profile.
+
+  15. Add new feature that make sure you can only have one instance of thepower running at your computer at once.

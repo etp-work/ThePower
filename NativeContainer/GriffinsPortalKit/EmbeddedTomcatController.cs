@@ -33,8 +33,13 @@ namespace DevelopmentToolkit
         public void stopTomcat() {
             if (null != process)
             {
-                process.Kill();
-                process.Dispose();
+                try
+                {
+                    process.Kill();
+                    process.Dispose();
+                }catch(Exception){
+                   //
+                }
                 process = null;
             }
             if (File.Exists(TOMCAT_HOME + @"\" + PROCESS_ID_FILE))
