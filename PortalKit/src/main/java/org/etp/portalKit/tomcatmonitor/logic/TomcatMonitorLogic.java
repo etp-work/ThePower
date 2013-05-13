@@ -46,20 +46,22 @@ public class TomcatMonitorLogic {
 
         File catalineHome = new File(webappsF.getParentFile().getAbsolutePath());
         return catalineHome.getAbsolutePath();
-//        return "E:\\Study\\designenv\\apache-tomcat-7.0.33";
+        //        return "E:\\Study\\designenv\\apache-tomcat-7.0.33";
     }
 
     /**
      * @return true if tomcat started.
      */
     public boolean startTomcat() {
-        if (runner != null && runner.processIsRunning()) {
+        if ((runner != null) && runner.processIsRunning()) {
             throw new RuntimeException("Tomcat has been started up.");
         }
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
-                runner = new ShellRunner();
+                if (runner == null) {
+                    runner = new ShellRunner();
+                }
                 runner.setCmdline(getCatalinaHome() + "\\bin\\startup.bat");
                 Map<String, String> getenv = System.getenv();
                 Properties p = new Properties();
@@ -78,7 +80,7 @@ public class TomcatMonitorLogic {
      * @return true if tomcat stopped
      */
     public boolean stopTomcat() {
-        if (runner != null && runner.processIsRunning()) {
+        if ((runner != null) && runner.processIsRunning()) {
             runner.stopProcess();
         }
         return true;
