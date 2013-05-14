@@ -4,6 +4,8 @@ Version 1.0.2 at 2013-
 
   1. Update progress bar at launch time.
 
+  2. Fix bug that war file clean feature only works well when tomcat is online.
+
 
 
 Version 1.0.1 at 2013-05-13

@@ -44,11 +44,13 @@ public class CleanLogic {
         CleanItems items = new CleanItems();
         String userHome = System.getProperty("user.home");
         String webappsHome = prop.get(SettingsCommand.TOMCAT_WEBAPPS_PATH);
-        if (StringUtils.isBlank(userHome))
+        if (StringUtils.isBlank(userHome)) {
             throw new NullPointerException("user.home could not be null or empty.");
-        if (StringUtils.isBlank(webappsHome))
+        }
+        if (StringUtils.isBlank(webappsHome)) {
             return items;
-        
+        }
+
         File cacheBase = new File(userHome, WIDGET_CACHE_RELATIVE_PATH);
         File[] caches = FileUtils.FolderFinder(cacheBase.getAbsolutePath(), WIDGET_PREFIX);
         List<String> widgetCaches = new ArrayList<String>();
@@ -84,17 +86,21 @@ public class CleanLogic {
     public boolean cleanItem(CleanCommand cmd) {
         String userHome = System.getProperty("user.home");
         String webappsHome = prop.get(SettingsCommand.TOMCAT_WEBAPPS_PATH);
-        if (StringUtils.isBlank(userHome))
+        if (StringUtils.isBlank(userHome)) {
             throw new NullPointerException("user.home could not be null or empty.");
-        if (StringUtils.isBlank(webappsHome))
+        }
+        if (StringUtils.isBlank(webappsHome)) {
             throw new NullPointerException("You haven't set tomcat's webapps path yet.");
+        }
 
         String type = cmd.getCleanType();
         String item = cmd.getCleanItem();
-        if (StringUtils.isBlank(type))
+        if (StringUtils.isBlank(type)) {
             throw new NullPointerException("cleanType could not be null or empty.");
-        if (StringUtils.isBlank(item))
+        }
+        if (StringUtils.isBlank(item)) {
             throw new NullPointerException("item could not be null or empty.");
+        }
         boolean isDeleteSuc = true;
         if ("widget".equals(type)) {
             File cacheBase = new File(userHome, WIDGET_CACHE_RELATIVE_PATH);
@@ -123,6 +129,24 @@ public class CleanLogic {
             if (ArrayUtils.isNotEmpty(portalWars)) {
                 try {
                     org.apache.commons.io.FileUtils.forceDelete(portalWars[0]);
+                    String nameWithoutSuffix = item.substring(0, item.length() - 4);
+                    File warPackage = new File(webappsHome, nameWithoutSuffix);
+                    if (warPackage.exists()) {
+                        try {
+                            org.apache.commons.io.FileUtils.forceDelete(warPackage);
+                        } catch (Exception e) {
+                            //
+                        }
+                    }
+                    File localhost = new File(new File(webappsHome).getParent(), "work\\Catalina\\localhost");
+                    File workPackage = new File(localhost, nameWithoutSuffix);
+                    if (workPackage.exists()) {
+                        try {
+                            org.apache.commons.io.FileUtils.forceDelete(workPackage);
+                        } catch (Exception e) {
+                            //
+                        }
+                    }
                 } catch (IOException e) {
                     isDeleteSuc = false;
                     e.printStackTrace();
