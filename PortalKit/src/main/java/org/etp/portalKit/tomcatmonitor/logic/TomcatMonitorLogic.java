@@ -34,6 +34,27 @@ public class TomcatMonitorLogic {
         return monitor.isExist("Tomcat", new String[] { "java", "Tomcat" });
     }
 
+    /**
+     * @return true if the tomcat you have installed on your laptop is
+     *         controllable. Otherwise, false.
+     */
+    public boolean canBeControlled() {
+        String webapps = prop.get(SettingsCommand.TOMCAT_WEBAPPS_PATH);
+        if (StringUtils.isBlank(webapps)) {
+            throw new RuntimeException("You have set tomcat's webapps path first.");
+        }
+        File webappsF = new File(webapps);
+        if (!webappsF.isDirectory()) {
+            throw new RuntimeException("You have set a incorrect tomcat's webapps path.");
+        }
+        File bin = new File(webappsF.getParent(), "bin");
+        if (!bin.isDirectory()) {
+            throw new RuntimeException("You have set a incorrect tomcat's webapps path.");
+        }
+        File startUp = new File(bin, "startup.bat");
+        return startUp.exists();
+    }
+
     private String getCatalinaHome() {
         String webapps = prop.get(SettingsCommand.TOMCAT_WEBAPPS_PATH);
         if (StringUtils.isBlank(webapps)) {

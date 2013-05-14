@@ -26,6 +26,16 @@ public class TomcatMonitorController {
     }
 
     /**
+     * @return true if the tomcat you have installed on your laptop is
+     *         controllable. Otherwise, false.
+     */
+    @RequestMapping(value = "/tomcatMonitor/controllable.ajax", method = RequestMethod.GET)
+    public @ResponseBody
+    boolean canbeControlled() {
+        return logic.canBeControlled();
+    }
+
+    /**
      * @return true if tomcat is started. Otherwise false.
      */
     @RequestMapping(value = "/tomcatMonitor/startTomcat.ajax", method = RequestMethod.POST)

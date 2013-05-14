@@ -7,6 +7,7 @@
 
 //=========================================variable=====================================
     var isRunningUrl = "/tomcatMonitor/isRunning.ajax";
+    var controllableUrl = "/tomcatMonitor/controllable.ajax";
     var startUrl = "/tomcatMonitor/startTomcat.ajax";
     var stopUrl = "/tomcatMonitor/stopTomcat.ajax";
     
@@ -53,7 +54,7 @@
 
     
     ViewManager.addViewListener("onShow", "#tomcat-content", startPoll); //add listener to monitor what will happen when tomcat-content shown.
-    ViewManager.addViewListener("onHide", "#tomcat-content", stopPoll); //add listener to monitor what will happen when tomcat-content shown.
+//    ViewManager.addViewListener("onHide", "#tomcat-content", stopPoll); //add listener to monitor what will happen when tomcat-content shown.
     
     
     Lifecycle.addStateListener(function(status){
