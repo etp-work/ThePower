@@ -24,8 +24,7 @@ namespace DevelopmentToolkit
         private static ILog logger = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private Browser portal;
         private GeckoWebBrowser browser;
-        //private ThePower frmSplash;
-        private StartupProgressBar progressBar;
+        private SplashForm splash;
         private WebSocket websocketclient;
 
         [DllImport("USER32.DLL", CharSet = CharSet.Unicode)]
@@ -88,12 +87,8 @@ namespace DevelopmentToolkit
             this.Show();
             this.Activate();
             this.notifyIcon1.Visible = true;
-            //if (this.frmSplash != null)
-            //{
-            //    this.frmSplash.stopAndClose();
-            //}
-            if (this.progressBar != null) {
-                this.progressBar.stop();
+            if (this.splash != null) {
+                this.splash.stop();
             }
             GeckoWebBrowser br = sender as GeckoWebBrowser;
             br.WebBrowserFocus.Deactivate();
@@ -204,12 +199,8 @@ namespace DevelopmentToolkit
             }
         }
 
-        //public ThePower FrmSplash {
-        //    set { this.frmSplash = value; }
-        //}
-
-        public StartupProgressBar ProgressBar {
-            set { this.progressBar=value; }
+        public SplashForm Splash {
+            set { this.splash=value; }
         }
     }
 }

@@ -9,58 +9,65 @@ using System.Windows.Forms;
 
 namespace DevelopmentToolkit
 {
-    public partial class ThePower : Form
+    public partial class SplashForm : Form
     {
-        bool fadeIn = true;
-        bool fadeOut = false;
+        private BackgroundWorker worker;
 
-        public ThePower()
+        private bool RUNNING;
+
+        public SplashForm()
         {
             InitializeComponent();
-            this.Opacity = 0.5;
+            worker = new BackgroundWorker();
+            worker.WorkerReportsProgress = true;
+            worker.WorkerSupportsCancellation = true;
+            worker.DoWork += worker_DoWork;
+            worker.ProgressChanged += worker_ProgressChanged;
+            worker.RunWorkerCompleted += worker_RunWorkerCompleted;
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
+        public void start()
         {
-            // Fade in by increasing the opacity of the splash to 1.0
-            if (fadeIn)
-            {
-                if (this.Opacity < 1.0)
-                {
-                    this.Opacity += 0.01;
-                }
-                // After fadeIn complete, begin fadeOut
-                else
-                {
-                    fadeIn = false;
-                    fadeOut = true;
-                }
-            }
-            else if (fadeOut) // Fade out by increasing the opacity of the splash to 1.0
-            {
-                if (this.Opacity > 0)
-                {
-                    this.Opacity -= 0.01;
-                }
-                else
-                {
-                    fadeOut = false;
-                }
-            }
-
-            // After fadeIn and fadeOut complete, stop the timer and close this splash. 
-            if (!(fadeIn || fadeOut))
-            {
-                stopAndClose();
-            }
+            RUNNING = true;
+            worker.RunWorkerAsync();
         }
 
-        public void stopAndClose() {
+        public void stop()
+        {
+            RUNNING = false;
+        }
+
+        private void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
             if (this.Visible)
             {
-                timer1.Stop();
                 this.Hide();
             }
+        }
+
+        private void worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            this.progressBar.Value = e.ProgressPercentage * 4;
+        }
+
+        private void worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker worker = sender as BackgroundWorker;
+            int i = 0;
+            while (RUNNING)
+            {
+                if (i == 99)
+                {
+                    System.Threading.Thread.Sleep(150);
+                    i--;
+                    continue;
+                }
+                // Perform a time consuming operation and report progress.
+                System.Threading.Thread.Sleep(150);
+                worker.ReportProgress(i);
+                i++;
+            }
+            worker.ReportProgress(100);
         }
     }
 }

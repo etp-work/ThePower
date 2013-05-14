@@ -1,7 +1,12 @@
 Upgrade Information
 =====================
+Version 1.0.2 at 2013-
 
-Version 1.0.1 at 2013-05-09
+  1. Update progress bar at launch time.
+
+
+
+Version 1.0.1 at 2013-05-13
 
   1. Remove splash form with a progress bar instead.
   

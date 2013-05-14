@@ -1,6 +1,6 @@
 ﻿namespace DevelopmentToolkit
 {
-    partial class ThePower
+    partial class SplashForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,34 +28,40 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ThePower));
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SplashForm));
+            this.progressBar = new System.Windows.Forms.ProgressBar();
             this.SuspendLayout();
             // 
-            // timer1
+            // progressBar
             // 
-            this.timer1.Enabled = true;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.progressBar.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.progressBar.Location = new System.Drawing.Point(0, 235);
+            this.progressBar.Maximum = 400;
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(372, 5);
+            this.progressBar.Step = 1;
+            this.progressBar.TabIndex = 0;
             // 
-            // ThePower
+            // SplashForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(372, 240);
+            this.Controls.Add(this.progressBar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "ThePower";
+            this.Name = "SplashForm";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ThePower";
+            this.TopMost = true;
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        public System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.ProgressBar progressBar;
 
     }
 }

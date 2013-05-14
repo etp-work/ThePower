@@ -22,8 +22,7 @@ namespace DevelopmentToolkit
         /// </summary>
 
         static NativeContainer nativeContainer;
-        //static ThePower thePower;
-        static StartupProgressBar progressBar;
+        static SplashForm splash;
         static WebSocketServer websocketserver;
         static Dictionary<String, WebSocketSession> sessions = new Dictionary<String, WebSocketSession>();
         public static Guid nativeID;
@@ -78,11 +77,10 @@ namespace DevelopmentToolkit
             nativeContainer = new NativeContainer();
             nativeContainer.FormClosing += nativeContainer_FormClosing;
             nativeContainer.initPortalKitUrl();
-            //thePower = new ThePower();
-            progressBar = new StartupProgressBar();
-            nativeContainer.ProgressBar = progressBar;
-            progressBar.start();
-            Application.Run(progressBar);
+            splash = new SplashForm();
+            nativeContainer.Splash = splash;
+            splash.start();
+            Application.Run(splash);
         }
 
 
@@ -130,8 +128,7 @@ namespace DevelopmentToolkit
                 websocketserver.Dispose();
                 websocketserver = null;
             }
-            //thePower.Close();
-            progressBar.Close();
+            splash.Close();
         }
     }
 }
