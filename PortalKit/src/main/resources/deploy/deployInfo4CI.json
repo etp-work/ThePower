@@ -11,7 +11,7 @@
     }, {
         "packageName": "portal-root-cxp",
         "relativePath": "",
-        "warfiles": ["portal-root-war", "private", "public"]
+        "warfiles": ["portal-root-war", "private", "public", "static"]
     }, {
         "packageName": "stb-apps-bin-cxp",
         "relativePath": "deployables/refApps/",
@@ -30,7 +30,7 @@
     }, {
         "packageName": "portal-root-cxp",
         "relativePath": "",
-        "warfiles": ["portal-root-war", "private", "public"]
+        "warfiles": ["portal-root-war", "private", "public", "static"]
 
     }, {
         "packageName": "portable-apps-bin",

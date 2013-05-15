@@ -134,6 +134,9 @@
         "packageName": "public",
         "relativePath": "design\\FW\\public"
     }, {
+        "packageName": "static",
+        "relativePath": "design\\FW\\static"
+    }, {
         "packageName": "portal-root-war",
         "relativePath": "design\\FwRoot\\portal-root-war"
     }, {

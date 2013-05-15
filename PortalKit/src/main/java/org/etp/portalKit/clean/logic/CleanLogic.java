@@ -33,6 +33,7 @@ public class CleanLogic {
     private String WAR_FILE_PREFIX1 = "portal-";
     private String WAR_FILE_PREFIX2 = "public";
     private String WAR_FILE_PREFIX3 = "private";
+    private String WAR_FILE_PREFIX4 = "static";
 
     /**
      * Retrieve all the clean needed stuff. According to user.home and
@@ -61,6 +62,7 @@ public class CleanLogic {
         File[] portalWars = FileUtils.FileFinder(webappsHome, WAR_FILE_PREFIX1, ".war");
         File[] publicWars = FileUtils.FileFinder(webappsHome, WAR_FILE_PREFIX2, ".war");
         File[] privateWars = FileUtils.FileFinder(webappsHome, WAR_FILE_PREFIX3, ".war");
+        File[] staticWars = FileUtils.FileFinder(webappsHome, WAR_FILE_PREFIX4, ".war");
 
         List<String> warFiles = new ArrayList<String>();
         for (File portal : portalWars) {
@@ -71,6 +73,9 @@ public class CleanLogic {
         }
         for (File pri : privateWars) {
             warFiles.add(pri.getName());
+        }
+        for (File sta : staticWars) {
+            warFiles.add(sta.getName());
         }
         items.setWarFiles(warFiles);
         return items;
@@ -139,6 +144,9 @@ public class CleanLogic {
                         }
                     }
                     File localhost = new File(new File(webappsHome).getParent(), "work\\Catalina\\localhost");
+                    if (!localhost.isDirectory()) {
+                        return isDeleteSuc;
+                    }
                     File workPackage = new File(localhost, nameWithoutSuffix);
                     if (workPackage.exists()) {
                         try {

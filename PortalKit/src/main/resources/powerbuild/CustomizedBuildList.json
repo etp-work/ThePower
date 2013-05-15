@@ -196,6 +196,12 @@
         "checked": "",
         "subDirs": []
     }, {
+        "name": "static",
+        "absolutePath": "",
+        "relativePath": "design\\FW\\static",
+        "checked": "",
+        "subDirs": []
+    }, {
         "name": "portal-coreapps-war",
         "absolutePath": "",
         "relativePath": "design\\CoreApps\\Application\\portal-coreapps-war",
