@@ -1,5 +1,7 @@
 package org.etp.portalKit.tomcatmonitor.controller;
 
+import java.util.concurrent.Callable;
+
 import javax.annotation.Resource;
 
 import org.etp.portalKit.tomcatmonitor.logic.TomcatMonitorLogic;
@@ -23,6 +25,21 @@ public class TomcatMonitorController {
     public @ResponseBody
     boolean isStarted() {
         return logic.tomcatStarted();
+    }
+
+    /**
+     * @return <code>TomcatStatus.RUNNING</code>,
+     *         <code>TomcatStatus.STOPPED</code>
+     */
+    @RequestMapping(value = "/tomcatMonitor/retrieveStatus.ajax", method = RequestMethod.GET)
+    public Callable<Boolean> retrieveStatus() {
+        return new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return null;
+            }
+
+        };
     }
 
     /**
