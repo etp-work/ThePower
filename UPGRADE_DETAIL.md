@@ -6,6 +6,8 @@ Version 1.0.2 at 2013-
 
   2. Fix bug that war file clean feature only works well when tomcat is online.
 
+  3. Add support for static.war in both build and clean page.
+
 
 
 Version 1.0.1 at 2013-05-13
