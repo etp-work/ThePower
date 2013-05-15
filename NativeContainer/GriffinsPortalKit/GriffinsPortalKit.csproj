@@ -132,12 +132,6 @@
       <DependentUpon>RemoteControl.cs</DependentUpon>
     </Compile>
     <Compile Include="SingleInstanceChecker.cs" />
-    <Compile Include="StartupProgressBar.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="StartupProgressBar.Designer.cs">
-      <DependentUpon>StartupProgressBar.cs</DependentUpon>
-    </Compile>
     <Compile Include="STBHTML.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -169,9 +163,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="RemoteControl.resx">
       <DependentUpon>RemoteControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="StartupProgressBar.resx">
-      <DependentUpon>StartupProgressBar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="STBHTML.resx">
       <DependentUpon>STBHTML.cs</DependentUpon>
