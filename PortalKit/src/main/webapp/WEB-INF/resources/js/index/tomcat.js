@@ -6,12 +6,11 @@
     'use strict';
 
 //=========================================variable=====================================
-    var isRunningUrl = "/tomcatMonitor/isRunning.ajax";
+    var retrieveStatusUrl = "/tomcatMonitor/retrieveStatus.ajax";
     var controllableUrl = "/tomcatMonitor/controllable.ajax";
     var startUrl = "/tomcatMonitor/startTomcat.ajax";
     var stopUrl = "/tomcatMonitor/stopTomcat.ajax";
     
-    var timeout = 5000;//5s
     var running;
     
     //=========================================functions=====================================
@@ -24,15 +23,19 @@
     }
     
     
-    function poll(){
+    function poll(firstRequest){
         if(!running){
             return;
         }
-        DynamicLoad.loadJSON(isRunningUrl, undefined, function(){
+        DynamicLoad.loadJSON(retrieveStatusUrl, {
+            firstRequest: firstRequest
+        }, function(status){
                 adjustDisable(running);
-                setTimeout(poll,timeout);//re fetch status in 5s
-            }, function(){
-                setTimeout(poll,timeout);//re fetch status in 5s
+                ViewManager.simpleSuccess(status);
+                poll(false);
+            }, function(error){
+                ViewManager.simpleWarning(error.message);
+                poll(false);
         });
     }
     
@@ -40,7 +43,7 @@
         if(!running){
             running = true;
             setElementsDisable(true);
-            poll();
+            poll(true);
         }
     }
     
@@ -54,7 +57,6 @@
 
     
     ViewManager.addViewListener("onShow", "#tomcat-content", startPoll); //add listener to monitor what will happen when tomcat-content shown.
-//    ViewManager.addViewListener("onHide", "#tomcat-content", stopPoll); //add listener to monitor what will happen when tomcat-content shown.
     
     
     Lifecycle.addStateListener(function(status){

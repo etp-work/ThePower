@@ -1,6 +1,8 @@
 package org.etp.portalKit.tomcatmonitor.logic;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -11,13 +13,17 @@ import org.etp.portalKit.common.service.ProcessMonitor;
 import org.etp.portalKit.common.service.PropertiesManager;
 import org.etp.portalKit.common.util.ShellRunner;
 import org.etp.portalKit.setting.bean.SettingsCommand;
+import org.etp.portalKit.tomcatmonitor.service.TomcatStatus;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.async.DeferredResult;
 
 /**
- * Logic layer of TomcatMonitor
+ * Logic layer of Tomcat.
  */
-@Component(value = "tomcatMonitorLogic")
-public class TomcatMonitorLogic {
+@Component(value = "tomcatLogic")
+@Scope("singleton")
+public class TomcatLogic {
 
     @Resource(name = "processMonitor")
     private ProcessMonitor monitor;
@@ -26,6 +32,10 @@ public class TomcatMonitorLogic {
     private PropertiesManager prop;
 
     private ShellRunner runner;
+
+    private List<DeferredResult<TomcatStatus>> queue = new ArrayList<DeferredResult<TomcatStatus>>();
+
+    private TomcatStatus lastStatus;
 
     /**
      * @return true if tomcat is started. Otherwise false.
@@ -67,7 +77,6 @@ public class TomcatMonitorLogic {
 
         File catalineHome = new File(webappsF.getParentFile().getAbsolutePath());
         return catalineHome.getAbsolutePath();
-        //        return "E:\\Study\\designenv\\apache-tomcat-7.0.33";
     }
 
     /**
@@ -95,6 +104,46 @@ public class TomcatMonitorLogic {
         });
         t.start();
         return true;
+    }
+
+    /**
+     * Update <code>TomcatStatus</code> by another thread.
+     * 
+     * @param status
+     */
+    public void updateTomcatStatus(TomcatStatus status) {
+        if (queue.size() <= 0) {
+            return;
+        }
+        if (lastStatus == status) {
+            return;
+        }
+        queue.get(0).setResult(status);
+        lastStatus = status;
+    }
+
+    /**
+     * @param firstRequest true if it is first time to request this
+     *            status.
+     * @return <code>TomcatStatus.RUNNING</code>,
+     *         <code>TomcatStatus.STOPPED</code>
+     */
+    public DeferredResult<TomcatStatus> retrieveStatus(boolean firstRequest) {
+        final DeferredResult<TomcatStatus> deferredResult = new DeferredResult<TomcatStatus>();
+        deferredResult.onCompletion(new Runnable() {
+            @Override
+            public void run() {
+                queue.remove(deferredResult);
+            }
+        });
+        queue.add(deferredResult);
+
+        if (firstRequest) {
+            TomcatStatus status = tomcatStarted() ? TomcatStatus.RUNNING : TomcatStatus.STOPPED;
+            queue.get(0).setResult(status);
+            lastStatus = status;
+        }
+        return deferredResult;
     }
 
     /**

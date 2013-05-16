@@ -1,45 +1,37 @@
 package org.etp.portalKit.tomcatmonitor.controller;
 
-import java.util.concurrent.Callable;
-
 import javax.annotation.Resource;
 
-import org.etp.portalKit.tomcatmonitor.logic.TomcatMonitorLogic;
+import org.etp.portalKit.tomcatmonitor.logic.TomcatLogic;
+import org.etp.portalKit.tomcatmonitor.service.TomcatStatus;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.async.DeferredResult;
 
 /**
- * <code>TomcatMonitorController</code> handle all the request from
- * client that related with tomcat status.
+ * <code>TomcatController</code> handle all the request from client
+ * that related with tomcat.
  */
-public class TomcatMonitorController {
+@Controller
+public class TomcatController {
 
-    @Resource(name = "tomcatMonitorLogic")
-    private TomcatMonitorLogic logic;
-
-    /**
-     * @return true if tomcat is running. Otherwise false.
-     */
-    @RequestMapping(value = "/tomcatMonitor/isRunning.ajax", method = RequestMethod.GET)
-    public @ResponseBody
-    boolean isStarted() {
-        return logic.tomcatStarted();
-    }
+    @Resource(name = "tomcatLogic")
+    private TomcatLogic logic;
 
     /**
+     * @param firstRequest true if it is first time to request this
+     *            status.
      * @return <code>TomcatStatus.RUNNING</code>,
      *         <code>TomcatStatus.STOPPED</code>
      */
     @RequestMapping(value = "/tomcatMonitor/retrieveStatus.ajax", method = RequestMethod.GET)
-    public Callable<Boolean> retrieveStatus() {
-        return new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                return null;
-            }
+    public @ResponseBody
+    DeferredResult<TomcatStatus> retrieveStatus(@RequestParam("firstRequest") boolean firstRequest) {
+        return logic.retrieveStatus(firstRequest);
 
-        };
     }
 
     /**
