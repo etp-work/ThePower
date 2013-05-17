@@ -144,7 +144,7 @@ public class PowerBuildLogic {
         if (cmd.isNeedDeploy()) {
             br.setSuccess(true);
             String deployPath = checkDeployPath();
-            if (checkCanBeDeployed(absolutePath)) {
+            if (checkCanBeDeployed(absolutePath) || (absolutePath.indexOf("CustomizedTomcat") > -1)) {
                 br.setDeployed(deployService.deployFromFolder(absolutePath, deployPath));
             } else {
                 br.setDeployed(true);

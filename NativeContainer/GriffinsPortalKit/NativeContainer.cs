@@ -84,12 +84,13 @@ namespace DevelopmentToolkit
 
         void browser_DocumentCompleted(object sender, EventArgs e)
         {
+            if (this.splash != null)
+            {
+                this.splash.stop();
+            }
             this.Show();
             this.Activate();
             this.notifyIcon1.Visible = true;
-            if (this.splash != null) {
-                this.splash.stop();
-            }
             GeckoWebBrowser br = sender as GeckoWebBrowser;
             br.WebBrowserFocus.Deactivate();
             string wsuri = ConfigurationManager.AppSettings["WebSocketUri"];

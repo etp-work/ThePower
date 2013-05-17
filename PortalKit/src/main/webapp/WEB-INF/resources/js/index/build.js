@@ -132,7 +132,9 @@
         var pack = selection.shift();
         var element = pack.parent().siblings('.status');
         element.addClass("s-working");
-        DynamicLoad.postJSON(executeUrl, {absolutePath: pack.val(), needDeploy: needDeploy("#common"), needBuild: needBuild("#common"), needTest: needTest("#common")}, 
+        var needBuild = pack.attr("title") === "portal-widget-onekey-war" ? false: needBuild("#common");
+        var needTest = pack.attr("title") === "portal-widget-onekey-war" ? false: needTest("#common");
+        DynamicLoad.postJSON(executeUrl, {absolutePath: pack.val(), needDeploy: needDeploy("#common"), needBuild: needBuild, needTest: needTest}, 
                 function(BuildResult){
                     element.removeClass("s-working");
                     if(!BuildResult.success){
