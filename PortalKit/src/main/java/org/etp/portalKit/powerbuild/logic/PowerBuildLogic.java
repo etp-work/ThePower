@@ -144,7 +144,9 @@ public class PowerBuildLogic {
         if (cmd.isNeedDeploy()) {
             br.setSuccess(true);
             String deployPath = checkDeployPath();
-            if (checkCanBeDeployed(absolutePath) || (absolutePath.indexOf("CustomizedTomcat") > -1)) {
+            if (checkCanBeDeployed(absolutePath)) {
+                br.setDeployed(deployService.deployFromMavenFolder(absolutePath, deployPath));
+            } else if ((absolutePath.indexOf("CustomizedTomcat") > -1)) {
                 br.setDeployed(deployService.deployFromFolder(absolutePath, deployPath));
             } else {
                 br.setDeployed(true);
@@ -206,7 +208,7 @@ public class PowerBuildLogic {
             List<String> deploySet = getDeploySet(deployType);
             for (String abs : deploySet) {
                 if (checkCanBeDeployed(abs)) {
-                    result.setDeployed(deployService.deployFromFolder(abs, deployPath));
+                    result.setDeployed(deployService.deployFromMavenFolder(abs, deployPath));
                 } else {
                     result.setDeployed(true);
                 }

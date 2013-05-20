@@ -34,6 +34,26 @@ public class DeployService {
      * Deploy the .war file under specified src/target folder to
      * destination.
      * 
+     * @param src a maven folder path indicate which project will be
+     *            deployed.
+     * @param dest a folder path indicate what place the war file
+     *            should be moved into.
+     * @return deploy
+     */
+    public boolean deployFromMavenFolder(String src, String dest) {
+        if (StringUtils.isBlank(src)) {
+            throw new NullPointerException("Specified src path could not be empty or null.");
+        }
+        if (StringUtils.isBlank(dest)) {
+            throw new NullPointerException("Specified dest path could not be empty or null.");
+        }
+        File warFile = getWarFileFromMavenProject(src);
+        return deployFromFile(warFile.getAbsolutePath(), dest);
+    }
+
+    /**
+     * Deploy the .war file under specified src folder to destination.
+     * 
      * @param src a folder path indicate which project will be
      *            deployed.
      * @param dest a folder path indicate what place the war file
@@ -41,12 +61,26 @@ public class DeployService {
      * @return deploy
      */
     public boolean deployFromFolder(String src, String dest) {
-        if (StringUtils.isBlank(src))
+        if (StringUtils.isBlank(src)) {
             throw new NullPointerException("Specified src path could not be empty or null.");
-        if (StringUtils.isBlank(dest))
+        }
+        if (StringUtils.isBlank(dest)) {
             throw new NullPointerException("Specified dest path could not be empty or null.");
-        File warFile = getWarFile(src);
+        }
+        File warFile = getWarFileFromFolder(src);
         return deployFromFile(warFile.getAbsolutePath(), dest);
+    }
+
+    private File getWarFileFromFolder(String src) {
+        File parent = new File(src);
+        if (!parent.isDirectory()) {
+            throw new RuntimeException("The src is not a regular folder path.");
+        }
+        File[] warfiles = parent.listFiles(filter);
+        if (warfiles.length > 0) {
+            return warfiles[0];
+        }
+        throw new RuntimeException("There is no any .war file under specified src folder path.");
     }
 
     /**
@@ -58,13 +92,16 @@ public class DeployService {
      * @return deploy
      */
     public boolean deployFromFile(String warFile, String dest) {
-        if (StringUtils.isBlank(warFile))
+        if (StringUtils.isBlank(warFile)) {
             throw new NullPointerException("Specified warFile could not be empty or null.");
-        if (StringUtils.isBlank(dest))
+        }
+        if (StringUtils.isBlank(dest)) {
             throw new NullPointerException("Specified dest path could not be empty or null.");
+        }
         File war = new File(warFile);
-        if (!war.isFile())
+        if (!war.isFile()) {
             throw new RuntimeException("Specified warFile is invalid.");
+        }
         File destDir = new File(dest);
         try {
             FileUtils.copyFileToDirectory(war, destDir);
@@ -78,17 +115,18 @@ public class DeployService {
      * Deploy the .war files from specified set of folders to
      * destination.
      * 
-     * @param srcs a set of folder paths indicate which project will
-     *            be deployed.
+     * @param srcs a set of folder paths indicate which maven project
+     *            will be deployed.
      * @param dest a folder path indicate what place the war file
      *            should be moved into.
      * @return deploy
      */
-    public boolean deployListFromFolder(List<String> srcs, String dest) {
+    public boolean deployListFromMavenFolder(List<String> srcs, String dest) {
         boolean isAllTrue = true;
         for (String src : srcs) {
-            if (!deployFromFolder(src, dest))
+            if (!deployFromMavenFolder(src, dest)) {
                 isAllTrue = false;
+            }
         }
         return isAllTrue;
     }
@@ -105,8 +143,9 @@ public class DeployService {
     public boolean deployListFromFile(List<String> wars, String dest) {
         boolean isAllTrue = true;
         for (String war : wars) {
-            if (!deployFromFile(war, dest))
+            if (!deployFromFile(war, dest)) {
                 isAllTrue = false;
+            }
         }
         return isAllTrue;
     }
@@ -119,14 +158,16 @@ public class DeployService {
      *            target child folder.
      * @return the compiled .war file.
      */
-    private File getWarFile(String src) {
+    private File getWarFileFromMavenProject(String src) {
         File parent = new File(src);
-        if (!parent.isDirectory())
+        if (!parent.isDirectory()) {
             throw new RuntimeException("The src is not a regular folder path.");
+        }
         File target = new File(parent, "target\\");
         File[] warfiles = target.listFiles(filter);
-        if (warfiles.length > 0)
+        if (warfiles.length > 0) {
             return warfiles[0];
+        }
         throw new RuntimeException("There is no any .war file under specified src folder path.");
     }
 

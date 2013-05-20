@@ -55,7 +55,6 @@ public class CustomizedBuildListProvider implements BuildListProvider {
             throw new RuntimeException("Load CustomizedBuildList.json error.");
         }
         prop.addObserver(this);
-        resetDirInfo();
         String userHome = System.getProperty("user.home");
         if (StringUtils.isBlank(userHome)) {
             return;
@@ -69,6 +68,7 @@ public class CustomizedBuildListProvider implements BuildListProvider {
             return;
         }
         embeddedTomcatPath = embeddedTomcat.getAbsolutePath();
+        resetDirInfo();
     }
 
     /**
