@@ -57,14 +57,17 @@ public class CustomizedBuildListProvider implements BuildListProvider {
         prop.addObserver(this);
         String userHome = System.getProperty("user.home");
         if (StringUtils.isBlank(userHome)) {
+            resetDirInfo();
             return;
         }
         File embeddedTomcat = new File(userHome, EMBEDDED_TOMCAT);
         if (!embeddedTomcat.isDirectory()) {
+            resetDirInfo();
             return;
         }
         File onekey = new File(embeddedTomcat, ONE_KEY_WIDGET);
         if (!onekey.isFile()) {
+            resetDirInfo();
             return;
         }
         embeddedTomcatPath = embeddedTomcat.getAbsolutePath();
