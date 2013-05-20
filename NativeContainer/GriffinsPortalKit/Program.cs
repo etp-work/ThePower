@@ -76,10 +76,10 @@ namespace DevelopmentToolkit
 
             nativeContainer = new NativeContainer();
             nativeContainer.FormClosing += nativeContainer_FormClosing;
-            nativeContainer.initPortalKitUrl();
             splash = new SplashForm();
             nativeContainer.Splash = splash;
             splash.start();
+            nativeContainer.initPortalKitUrl();
             Application.Run(splash);
         }
 
