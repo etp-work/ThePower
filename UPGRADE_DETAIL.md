@@ -8,6 +8,18 @@ Version 1.0.2 at 2013-
 
   3. Add support for static.war in both build and clean page.
 
+  4. Add support for one-key widget tool in build page.
+
+  5. Fix bug that sometimes error "connection refused" occrus during launch time.
+
+  6. Fix bug that error when builing a war file.
+
+  7. Fix bug that error in console when clean items in clean page.
+
+  8. Fix bug that deploy incorrect war file in category tab under build page.
+
+  9. Fix bug that notification feature doesn't work after a lot of frequent notifications displayed at a glance.
+
 
 
 Version 1.0.1 at 2013-05-13

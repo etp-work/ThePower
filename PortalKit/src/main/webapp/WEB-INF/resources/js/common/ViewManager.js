@@ -325,6 +325,7 @@
             setTimeout(function(){
                 ViewManager.removeNotification(id);
             }, timeout);
+            notifications.push(id);
         };
         
         if(notifications.length >= 2){
@@ -334,8 +335,6 @@
         }else{
             addHtmlCallback();
         }
-        
-        notifications.push(id);
         return id;
     };
     
