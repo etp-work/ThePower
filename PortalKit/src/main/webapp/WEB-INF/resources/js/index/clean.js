@@ -129,7 +129,8 @@
                     ViewManager.simpleSuccess("remove "+select +" successfully.");
 //                    $("#clean-content .clean-list .Widget li input[value=\""+ select +"\"]").parent().parent().remove();
                     deleteFromWidgetCaches(select);
-                    angular.element($('#clean-content .clean-list')).scope().$apply(function(){
+                    var scope =  angular.element($('#clean-content .clean-list')).scope();
+                    scope.$apply(function(){
                         scope.widgetCaches = widgetCaches;
                     });
                     removeOne(selection, type, callback);    
@@ -149,7 +150,8 @@
                     ViewManager.simpleSuccess("remove "+select +" successfully.");
 //                    $("#clean-content .clean-list .Tomcat li input[value=\""+ select +"\"]").parent().parent().remove();
                     deleteFromWarFiles(select);
-                    angular.element($('#clean-content .clean-list')).scope().$apply(function(){
+                    var scope =  angular.element($('#clean-content .clean-list')).scope();
+                    scope.$apply(function(){
                         scope.warFiles = warFiles;
                     });
                     removeOne(selection, type, callback);
