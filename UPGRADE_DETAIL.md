@@ -20,6 +20,8 @@ Version 1.0.2 at 2013-
 
   9. Fix bug that notification feature doesn't work after a lot of frequent notifications displayed at a glance.
 
+  10. Optimize UX that clean/refresh button should be greyed out when operation is on-going.
+
 
 
 Version 1.0.1 at 2013-05-13

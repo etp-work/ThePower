@@ -12,6 +12,12 @@
     var warFiles = [];
 //=========================================functions========================================
     
+    
+    function setDisableElements(isDisable){
+        $('#clean-content #refreshButton').attr("disabled", isDisable);
+        $('#clean-content #cleanButton').attr("disabled", isDisable);
+    }
+    
     //rebind click event clean-list checkbox items
     function rebindSelection(){
 
@@ -120,11 +126,13 @@
             return;
         }
         var select = selection.shift();
+        setDisableElements(true);
         if(type === "widget"){
             DynamicLoad.postJSON(cleanItemUrl, {
                 cleanItem: select,
                 cleanType: type
             }, function(data){
+                setDisableElements(false);
                 if(data && data.result){
                     ViewManager.simpleSuccess("remove "+select +" successfully.");
 //                    $("#clean-content .clean-list .Widget li input[value=\""+ select +"\"]").parent().parent().remove();
@@ -133,12 +141,13 @@
                     scope.$apply(function(){
                         scope.widgetCaches = widgetCaches;
                     });
-                    removeOne(selection, type, callback);    
+                    removeOne(selection, type, callback);
                 }else{
                     ViewManager.simpleError("remove "+select +" error.");
                 }
                 
             }, function(error){
+                setDisableElements(false);
                 ViewManager.simpleError("remove "+select +" error : "+error.message);
             });
         }else if(type === "tomcat"){
@@ -146,6 +155,7 @@
                 cleanItem: select,
                 cleanType: type
             }, function(data){
+                setDisableElements(false);
                 if(data && data.result){
                     ViewManager.simpleSuccess("remove "+select +" successfully.");
 //                    $("#clean-content .clean-list .Tomcat li input[value=\""+ select +"\"]").parent().parent().remove();
@@ -159,6 +169,7 @@
                     ViewManager.simpleError("remove "+select +" error.");
                 }
             }, function(error){
+                setDisableElements(false);
                 ViewManager.simpleError("remove "+select +" error : "+error.message);
             });
         
