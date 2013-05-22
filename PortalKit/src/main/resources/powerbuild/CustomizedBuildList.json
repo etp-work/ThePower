@@ -52,6 +52,12 @@
         "checked": "",
         "subDirs": []
     }, {
+        "name": "portal-testsuites-offlinepvr-war",
+        "absolutePath": "",
+        "relativePath": "design\\AutoTest\\portal-testsuites-offlinepvr-war",
+        "checked": "",
+        "subDirs": []
+    }, {
         "name": "portal-testsuites-smoke-war",
         "absolutePath": "",
         "relativePath": "design\\AutoTest\\portal-testsuites-smoke-war",

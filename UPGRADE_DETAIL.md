@@ -1,6 +1,6 @@
 Upgrade Information
 =====================
-Version 1.0.2 at 2013-
+Version 1.0.2 at 2013-05-22
 
   1. Update progress bar at launch time.
 
@@ -21,6 +21,8 @@ Version 1.0.2 at 2013-
   9. Fix bug that notification feature doesn't work after a lot of frequent notifications displayed at a glance.
 
   10. Optimize UX that clean/refresh button should be greyed out when operation is on-going.
+
+  11. Add portal-testsuites-offlinepvr-war support in build page.
 
 
 
