@@ -1,5 +1,12 @@
 Upgrade Information
 =====================
+
+Version 1.0.2P at 2013-06-03
+
+  1. Fix bug that one-key widget doesn't work for snapshot MSDK.
+
+
+
 Version 1.0.2 at 2013-05-22
 
   1. Update progress bar at launch time.

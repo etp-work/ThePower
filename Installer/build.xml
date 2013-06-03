@@ -12,7 +12,7 @@
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 		- - - Properties - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 		- - - - - - - - -->
-    <property name="version" value="1.0.2"/>
+    <property name="version" value="1.0.2p"/>
     
     <property name="cefSharp.lib.path" value="libs/CefSharp-0.12.zip" />
     <property name="cefSharp.local.unzippath" value="resources/CefSharp-0.12" />
@@ -28,7 +28,7 @@
     <property name="tomcat.jar" value="${tomcat.compile.home}/target/EmbeddedTomcat.jar" />
     <property name="tomcat.local.home" value="resources/CustomizedTomcat/" />
     <property name="tomcat.local.webapps.home" value="resources/CustomizedTomcat/webapps" />
-    <property name="oneKeyWidget" value="libs/portal-widget-onekey-war-3.4.2.war" />
+    <property name="oneKeyWidget" value="libs/portal-widget-onekey-war-NO-VERSION.war" />
     <property name="oneKeyWidget.local.home" value="resources/CustomizedTomcat/" />
 
     <property name="portalKit.compile.home" value="../PortalKit" />

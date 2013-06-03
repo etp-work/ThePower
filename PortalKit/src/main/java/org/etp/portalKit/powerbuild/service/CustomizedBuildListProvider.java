@@ -40,7 +40,7 @@ public class CustomizedBuildListProvider implements BuildListProvider {
 
     private String COMMON_BUILD_LIST_BASE_JSON = "powerbuild/CustomizedBuildList.json";
 
-    private String ONE_KEY_WIDGET = "portal-widget-onekey-war-3.4.2.war";
+    private String ONE_KEY_WIDGET = "portal-widget-onekey-war-NO-VERSION.war";
     private String EMBEDDED_TOMCAT = "AppData\\Local\\CustomizedTomcat";
 
     private String embeddedTomcatPath;
