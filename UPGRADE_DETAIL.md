@@ -1,6 +1,11 @@
 Upgrade Information
 =====================
 
+Version 1.0.3 at 2013-xx-xx
+
+  1. Update long polling mechanism from previous capbility that only support tomcat status monitor to support server side push.
+
+
 Version 1.0.2P at 2013-06-03
 
   1. Fix bug that one-key widget doesn't work for snapshot MSDK.

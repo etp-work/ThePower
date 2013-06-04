@@ -25,6 +25,7 @@
     window.DynamicLoad = _DynamicLoad;
 
     var eventQueue = [];
+    var dataListeners = {};
     var queueTimer;
     var eventQueueIsExecuting = false;
 
@@ -173,11 +174,71 @@
         });
     };
     
+    _DynamicLoad.addDataListener = function(dataAlias, listener){
+        if(!dataAlias || !listener){
+            return;
+        }
+        
+        if(!dataListeners[dataAlias]){
+            dataListeners[dataAlias] = [];
+        }
+        
+        dataListeners[dataAlias].push(listener);
+    };
+    
+    _DynamicLoad.removeDataListener = function(dataAlias, listener){
+        if(!dataAlias || !listener){
+            return;
+        }
+        
+        if(!dataListeners[dataAlias] || dataListeners[dataAlias].length === 0){
+            return;
+        }
+        
+        for(var i = 0; i < dataListeners[dataAlias].length; i++){
+            if(dataListeners[dataAlias][i] === listener){
+                dataListeners[dataAlias].splice(i, 1);
+                break;
+            }
+        }
+    };
+    
+    function fireDataListener(dataAlias){
+        if(!dataAlias){
+            return;
+        }
+        
+        if(!dataListeners[dataAlias] || dataListeners[dataAlias].length === 0){
+            return;
+        }
+        
+        for(var i = 0; i < dataListeners[dataAlias].length; i++){
+            if(dataListeners[dataAlias][i]){
+                dataListeners[dataAlias][i]();
+            }
+        }
+    }
+    
     $(document).ready(function(){
         
         var initUrl = "/init/getViewsInfo.ajax";
+        var pollingUrl = "/ssp/poll.ajax";
         var shownViewId = undefined;
         var viewsInfo = undefined;
+        
+        //longPolling to server.
+        function poll(){
+            DynamicLoad.loadJSON(pollingUrl, undefined, function(dirtyDatas){
+                poll();
+                if(dirtyDatas && dirtyDatas.length > 0){
+                    for(var i = 0; i < dirtyDatas.length; i++){
+                        fireDataListener(dirtyDatas[i]);
+                    }
+                }
+            }, function(){
+                poll();
+            });
+        }
         
         //remove a view from viewsInfo with specified viewId.
         function removeViewInfo(viewId){
@@ -245,7 +306,7 @@
             loadViewJS(defaultView, function(){
 
                 ViewManager.show("#" + defaultView.viewId);
-            
+                poll();
             });
         }
       

@@ -11,7 +11,12 @@
     var startUrl = "/tomcatMonitor/startTomcat.ajax";
     var stopUrl = "/tomcatMonitor/stopTomcat.ajax";
     
-    var running;
+    var RUNNING = "RUNNING";
+    var STOPPED = "STOPPED";
+    
+    var TOMCAT_STATUS_ALIAS = "TOMCAT_STATUS_ALIAS";
+    
+    var settled = false;
     
     //=========================================functions=====================================
     function adjustDisable(isDisable){
@@ -22,41 +27,32 @@
         //TODO disable all the buttons
     }
     
-    
-    function poll(firstRequest){
-        if(!running){
-            return;
-        }
-        DynamicLoad.loadJSON(retrieveStatusUrl, {
-            firstRequest: firstRequest
-        }, function(status){
-                adjustDisable(running);
-                ViewManager.simpleSuccess(status);
-                poll(false);
-            }, function(error){
-                ViewManager.simpleWarning(error.message);
-                poll(false);
+    function retrieveStatus(){
+
+        DynamicLoad.loadJSON(retrieveStatusUrl, undefined, function(status){
+            adjustDisable(status === RUNNING ? true : false);
+            ViewManager.simpleSuccess(status);
         });
+    
     }
     
-    function startPoll(){
-        if(!running){
-            running = true;
-            setElementsDisable(true);
-            poll(true);
+    function tomcatViewOnShow(){
+        setElementsDisable(true);
+        
+        if(!settled){
+            DynamicLoad.addDataListener(TOMCAT_STATUS_ALIAS, function(){
+                retrieveStatus();
+            });
         }
+        
+        retrieveStatus();
     }
     
-    function stopPoll(){
-        if(running){
-            running = false;
-        }
-    }
     
 //========================================init listener=====================================
 
     
-    ViewManager.addViewListener("onShow", "#tomcat-content", startPoll); //add listener to monitor what will happen when tomcat-content shown.
+    ViewManager.addViewListener("onShow", "#tomcat-content", tomcatViewOnShow); //add listener to monitor what will happen when tomcat-content shown.
     
     
     Lifecycle.addStateListener(function(status){
