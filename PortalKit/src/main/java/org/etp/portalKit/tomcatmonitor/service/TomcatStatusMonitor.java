@@ -2,7 +2,6 @@ package org.etp.portalKit.tomcatmonitor.service;
 
 import javax.annotation.Resource;
 
-import org.etp.portalKit.common.service.ProcessMonitor;
 import org.etp.portalKit.ssp.logic.SspNotificationManager;
 import org.etp.portalKit.tomcatmonitor.logic.TomcatLogic;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -15,9 +14,6 @@ import org.springframework.stereotype.Component;
 @Component(value = "tomcatStatusMonitor")
 @EnableScheduling
 public class TomcatStatusMonitor {
-
-	@Resource(name = "processMonitor")
-	private ProcessMonitor monitor;
 
 	@Resource(name = "tomcatLogic")
 	private TomcatLogic logic;

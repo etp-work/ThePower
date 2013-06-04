@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import org.apache.commons.lang.StringUtils;
 import org.etp.portalKit.common.service.ProcessMonitor;
 import org.etp.portalKit.common.service.PropertiesManager;
+import org.etp.portalKit.common.util.FileUtils;
 import org.etp.portalKit.common.util.ShellRunner;
 import org.etp.portalKit.setting.bean.SettingsCommand;
 import org.etp.portalKit.tomcatmonitor.service.TomcatStatus;
@@ -31,6 +32,9 @@ public class TomcatLogic {
 	@Resource(name = "shellRunner")
 	private ShellRunner runner;
 
+	@Resource(name = "fileUtil")
+	private FileUtils fileUtils;
+
 	/**
 	 * @return TomcatStatus <code>TomcatStatus.RUNNING</code>,
 	 *         <code>TomcatStatus.STOPPED</code>
@@ -52,17 +56,17 @@ public class TomcatLogic {
 			throw new RuntimeException(
 					"You have set tomcat's webapps path first.");
 		}
-		File webappsF = new File(webapps);
-		if (!webappsF.isDirectory()) {
+		if (!fileUtils.isDirectory(webapps)) {
 			throw new RuntimeException(
 					"You have set a incorrect tomcat's webapps path.");
 		}
-		File bin = new File(webappsF.getParent(), "bin");
+		File bin = fileUtils.createFile(fileUtils.createFile(webapps)
+				.getParent(), "bin");
 		if (!bin.isDirectory()) {
-			throw new RuntimeException(
-					"You have set a incorrect tomcat's webapps path.");
+			throw new RuntimeException("You have set a incorrect tomcat path.");
 		}
-		File startUp = new File(bin, "startup.bat");
+
+		File startUp = fileUtils.createFile(bin, "startup.bat");
 		return startUp.exists();
 	}
 

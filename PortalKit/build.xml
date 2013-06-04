@@ -1,4 +1,4 @@
-<project default="build_nontest" basedir="." name="PortalKit builder">
+<project default="build_test" basedir="." name="PortalKit builder">
 
 	<property environment="env" />
 	<property file="./build.properties" />
@@ -20,18 +20,10 @@
 	<property name="mvn.skip.test" value="-Dmaven.test.skip=true" />
 	<property name="project.name" value="PortalKit" />
 
-	<target name="build_nontest">
-		<mvn dir="${portalkit.home}" />
-	</target>
-
 	<target name="build_test">
 		<mvn dir="${portalkit.home}" args="${mvn.build.cmd}" />
 	</target>
 
-	<target name="build_deploy_nontest">
-		<mvn dir="${portalkit.home}" />
-		<deploy dir="${portalkit.home}" />
-	</target>
 
 	<target name="build_deploy_test">
 		<mvn dir="${portalkit.home}" args="${mvn.build.cmd}" />
