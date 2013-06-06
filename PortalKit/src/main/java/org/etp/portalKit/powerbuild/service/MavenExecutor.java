@@ -19,6 +19,9 @@ public class MavenExecutor {
 
 	@Resource(name = "shellRunner")
 	private ShellRunner runner;
+	
+    @Resource(name = "mavenExecuteLogManager")
+    private MavenExecuteLogManager mavenExecuteLogManager;
 
 	private String path_format = "{0}\\pom.xml";
 
@@ -46,7 +49,7 @@ public class MavenExecutor {
 			throw new RuntimeException(
 					"Given path is not a regular maven project path");
 		}
-		final StringBuffer sb = new StringBuffer();
+		final StringBuffer htmlRecorder = new StringBuffer();
 		final CommandResult cr = new CommandResult();
 		String command = null;
 		switch (type) {
@@ -71,15 +74,15 @@ public class MavenExecutor {
 				} else if (StringUtils.contains(message, "BUILD FAILURE")) {
 					cr.setSuccess(false);
 				}
-				sb.append(message);
-				sb.append(System.lineSeparator());
+				htmlRecorder.append(message);
+				htmlRecorder.append("</br>");
 			}
 		});
 		cr.setStateCode(runner.run());
 		if (cr.isSuccess()) {
-			cr.setMessage("");
+			cr.setMessageId("");
 		} else {
-			cr.setMessage(sb.toString());
+			cr.setMessageId(mavenExecuteLogManager.push(htmlRecorder.toString()));
 		}
 		return cr;
 	}

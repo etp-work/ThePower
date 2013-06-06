@@ -23,7 +23,7 @@ public class InitController {
     private InitLogic logic;
 
     /**
-     * @param model
+     * @param model Mode of view
      * @return next page
      */
     @RequestMapping(value = "/", method = RequestMethod.GET)

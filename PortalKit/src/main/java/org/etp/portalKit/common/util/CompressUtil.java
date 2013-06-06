@@ -29,10 +29,10 @@ public class CompressUtil {
      * UnGzip a Gzip file, into a specified folder. Note: the original
      * gzip file won't be deleted.
      * 
-     * @param filePath
-     * @param destPath
+     * @param filePath a file to be unGzipped.
+     * @param destPath a directory to be unGzipped to
      * @return unGziped file
-     * @throws IOException
+     * @throws IOException exception when error occurs
      */
     public static File unGzip(String filePath, String destPath) throws IOException {
         if (StringUtils.isBlank(filePath))
@@ -66,7 +66,7 @@ public class CompressUtil {
      * 
      * @param filePath absolute path of gzip file.
      * @return unGziped file.
-     * @throws IOException
+     * @throws IOException IOException exception when error occurs
      */
     public static File unGzip(String filePath) throws IOException {
         if (StringUtils.isBlank(filePath))
@@ -81,9 +81,9 @@ public class CompressUtil {
      * Untar a tar file, into the same folder as original tar file.
      * Note: the original tar file won't be deleted.
      * 
-     * @param filePath
+     * @param filePath a file to be unTar.
      * @return unTared file.
-     * @throws IOException
+     * @throws IOException exception when error occurs
      */
     public static File unTar(String filePath) throws IOException {
         if (StringUtils.isBlank(filePath))
@@ -98,10 +98,10 @@ public class CompressUtil {
      * Untar a tar file, into the specified folder. Note: the original
      * tar file won't be deleted.
      * 
-     * @param filePath
-     * @param destDir
+     * @param filePath a file to be unTar.
+     * @param destDir a directory to be unTar to.
      * @return unTared file.
-     * @throws IOException
+     * @throws IOException exception when error occurs
      */
     public static File unTar(String filePath, String destDir) throws IOException {
         if (StringUtils.isBlank(filePath))
@@ -147,18 +147,5 @@ public class CompressUtil {
             IOUtils.closeQuietly(is);
         }
         return unTaredFile;
-    }
-
-    /**
-     * @param args
-     */
-    public static void main(String[] args) {
-        try {
-            File file = unTar("C:\\Users\\ehaozuo\\Downloads\\deployedpackages\\portal-root-cxp-NO-VERSION-bin.tar");
-            System.out.println(file.getAbsolutePath());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
     }
 }

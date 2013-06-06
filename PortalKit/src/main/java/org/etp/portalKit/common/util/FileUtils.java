@@ -43,8 +43,8 @@ public class FileUtils {
 	 * Given a baseFoler path, find all the child folder with specified
 	 * folderPrefix.
 	 * 
-	 * @param baseFolder
-	 * @param folderPrefix
+	 * @param baseFolder directory as base for searching.
+	 * @param folderPrefix prefix of the directory's name for filtering.
 	 * @return find folder
 	 */
 	public static File[] FolderFinder(String baseFolder, String folderPrefix) {
@@ -69,9 +69,9 @@ public class FileUtils {
 	/**
 	 * Given a baseFolder path, find the child file with specified file prefix.
 	 * 
-	 * @param baseFolder
-	 * @param filePrefix
-	 * @param fileSuffix
+	 * @param baseFolder directory as base for searching.
+	 * @param filePrefix prefix of the directory's name for filtering.
+	 * @param fileSuffix suffix of the directory's name for filtering.
 	 * @return find file
 	 */
 	public static File[] FileFinder(String baseFolder, String filePrefix,
@@ -120,10 +120,9 @@ public class FileUtils {
 
 			if (StringUtils.isBlank(fileSuffix)) {
 				return pathname.getName().indexOf(filePrefix) > -1;
-			} else {
-				return (pathname.getName().indexOf(filePrefix) > -1)
-						&& pathname.getName().endsWith(fileSuffix);
 			}
+			return (pathname.getName().indexOf(filePrefix) > -1)
+					&& pathname.getName().endsWith(fileSuffix);
 
 		}
 

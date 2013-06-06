@@ -5,6 +5,8 @@ Version 1.0.3 at 2013-xx-xx
 
   1. Update long polling mechanism from previous capbility that only support tomcat status monitor to support server side push.
 
+  2. Update the maven execution log mechansim to be more accurate and friendly.
+
 
 Version 1.0.2P at 2013-06-03
 

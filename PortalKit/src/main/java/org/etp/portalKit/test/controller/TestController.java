@@ -46,10 +46,10 @@ public class TestController {
     }
 
     /**
-     * @param cmd
+     * @param cmd DataCommand
      * @return auto testcases
-     * @throws HttpException
-     * @throws IOException
+     * @throws HttpException error when Http exception occurs.
+     * @throws IOException error when IOException occurs.
      */
     @RequestMapping(value = "/test/data.ajax", method = RequestMethod.POST)
     public @ResponseBody
@@ -64,10 +64,10 @@ public class TestController {
     }
 
     /**
-     * @param cmd
+     * @param cmd TestCommand
      * @return nothing
-     * @throws HttpException
-     * @throws IOException
+     * @throws HttpException error when Http exception occurs.
+     * @throws IOException error when IOException occurs.
      */
     @RequestMapping(value = "/test/start.ajax", method = RequestMethod.POST)
     public @ResponseBody

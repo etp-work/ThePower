@@ -25,6 +25,7 @@ import org.etp.portalKit.powerbuild.bean.ExecuteMultiCommand;
 import org.etp.portalKit.powerbuild.bean.ExecuteSingleCommand;
 import org.etp.portalKit.powerbuild.service.BuildListProvider;
 import org.etp.portalKit.powerbuild.service.ExecuteType;
+import org.etp.portalKit.powerbuild.service.MavenExecuteLogManager;
 import org.etp.portalKit.powerbuild.service.MavenExecutor;
 import org.etp.portalKit.setting.bean.SettingsCommand;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
@@ -50,6 +51,9 @@ public class PowerBuildLogic {
 
     @Resource(name = "deployService")
     private DeployService deployService;
+    
+    @Resource(name = "mavenExecuteLogManager")
+    private MavenExecuteLogManager mavenExecuteLogManager;
 
     private String ENVIRONMENT_DEPLOY_JSON = "powerbuild/deployInformation.json";
 
@@ -64,6 +68,16 @@ public class PowerBuildLogic {
                 new TypeReference<DeployInformation>() {
                     //            
                 });
+    }
+    
+    
+    /**
+     * get error message from failure message container.
+     * @param messageId id of an error message.
+     * @return error message
+     */
+    public String getErrorMsgById(String messageId){
+    	return mavenExecuteLogManager.get(messageId);
     }
 
     private String checkDeployPath() {

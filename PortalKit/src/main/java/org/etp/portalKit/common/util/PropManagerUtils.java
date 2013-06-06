@@ -11,22 +11,27 @@ import org.apache.commons.lang.StringUtils;
  */
 public class PropManagerUtils {
 
-    /**
-     * @param arrayString
-     * @return object
-     */
-    public static Object fromString(String arrayString) {
-        if (StringUtils.isBlank(arrayString))
-            return "";
-        if (arrayString.startsWith("[") && arrayString.endsWith("]")) {
-            List<String> list = new ArrayList<String>();
-            String arrayStringClone = null;
-            arrayStringClone = StringUtils.removeEnd(arrayString, "]");
-            arrayStringClone = StringUtils.removeStart(arrayStringClone, "[");
-            list = Arrays.asList(StringUtils.stripAll(StringUtils.split(arrayStringClone, ',')));
-            return list;
-        }
+	/**
+	 * A list will be returned if <code>arrayString</code> is written in array
+	 * style. Otherwise, return the <code>arrayString</code>.
+	 * 
+	 * @param arrayString
+	 *            string need to be converted.
+	 * @return object
+	 */
+	public static Object fromString(String arrayString) {
+		if (StringUtils.isBlank(arrayString))
+			return "";
+		if (arrayString.startsWith("[") && arrayString.endsWith("]")) {
+			List<String> list = new ArrayList<String>();
+			String arrayStringClone = null;
+			arrayStringClone = StringUtils.removeEnd(arrayString, "]");
+			arrayStringClone = StringUtils.removeStart(arrayStringClone, "[");
+			list = Arrays.asList(StringUtils.stripAll(StringUtils.split(
+					arrayStringClone, ',')));
+			return list;
+		}
 
-        return arrayString;
-    }
+		return arrayString;
+	}
 }

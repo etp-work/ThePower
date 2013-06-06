@@ -21,8 +21,8 @@ public class BuildInformation {
     /**
      * Creates a new instance of <code>BuildInformation</code>.
      * 
-     * @param list
-     * @param deploy
+     * @param list list of DirTree
+     * @param deploy type/names mapping of deployment information.
      */
     public BuildInformation(List<DirTree> list, Map<String, List<String>> deploy) {
         this.buildList = list;

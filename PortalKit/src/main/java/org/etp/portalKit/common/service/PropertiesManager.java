@@ -112,8 +112,8 @@ public class PropertiesManager extends Observable {
     /**
      * Set properties.
      * 
-     * @param key
-     * @param value
+     * @param key key for property
+     * @param value value of property
      */
     public void set(String key, String value) {
         if (!prop.containsKey(key))
@@ -134,7 +134,7 @@ public class PropertiesManager extends Observable {
      * annotation "@MarkinFile", which can be used to indicate what
      * the name is of this property stored in file.
      * 
-     * @param obj
+     * @param obj Instance in which the member attributes with a MarkinFile annotation will be stored in profile. 
      */
     public void fromBean(Object obj) {
         Field[] declaredFields = obj.getClass().getDeclaredFields();
@@ -156,7 +156,8 @@ public class PropertiesManager extends Observable {
     }
 
     /**
-     * @param t
+     * @param <T> the type of class
+     * @param t given a instance that filled from profile. 
      */
     public <T> void toBean(T t) {
         Field[] declaredFields = t.getClass().getDeclaredFields();

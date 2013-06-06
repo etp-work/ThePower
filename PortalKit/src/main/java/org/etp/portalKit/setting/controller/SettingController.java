@@ -22,7 +22,7 @@ public class SettingController {
     private PropertiesManager prop;
 
     /**
-     * @param settings
+     * @param settings SettingsCommand
      * @return do nothing
      */
     @RequestMapping(value = "/settings/set.ajax", method = RequestMethod.POST)

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -20,46 +21,60 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class PowerBuildController {
 
-    @Resource(name = "buildLogic")
-    private PowerBuildLogic logic;
+	@Resource(name = "buildLogic")
+	private PowerBuildLogic logic;
 
-    /**
-     * @return next page
-     */
-    @RequestMapping(value = "/powerbuild/getBuildInformation.ajax", method = RequestMethod.GET)
-    public @ResponseBody
-    BuildInformation getBuildTrees() {
-        return logic.getBuildInformation();
-    }
+	/**
+	 * @return next page
+	 */
+	@RequestMapping(value = "/powerbuild/getBuildInformation.ajax", method = RequestMethod.GET)
+	public @ResponseBody
+	BuildInformation getBuildTrees() {
+		return logic.getBuildInformation();
+	}
 
-    /**
-     * Build one package.
-     * 
-     * @param cmd
-     * @return build result
-     */
-    @RequestMapping(value = "/powerbuild/execute.ajax", method = RequestMethod.POST)
-    public @ResponseBody
-    BuildResult build(@RequestBody ExecuteSingleCommand cmd) {
-        if (StringUtils.isBlank(cmd.getAbsolutePath())) {
-            throw new RuntimeException("Error occurs when executing, please inform ZuoHao about this issue.");
-        }
-        return logic.executeCommand(cmd.getAbsolutePath(), cmd);
-    }
+	/**
+	 * Build one package.
+	 * 
+	 * @param cmd
+	 *            ExecuteSingleCommand
+	 * @return build result
+	 */
+	@RequestMapping(value = "/powerbuild/execute.ajax", method = RequestMethod.POST)
+	public @ResponseBody
+	BuildResult build(@RequestBody ExecuteSingleCommand cmd) {
+		if (StringUtils.isBlank(cmd.getAbsolutePath())) {
+			throw new RuntimeException(
+					"Error occurs when executing, please inform ZuoHao about this issue.");
+		}
+		return logic.executeCommand(cmd.getAbsolutePath(), cmd);
+	}
 
-    /**
-     * Build a set of packages. Such as reference portal, multiscreen.
-     * 
-     * @param cmd
-     * @return build result
-     */
-    @RequestMapping(value = "/powerbuild/executeWithType.ajax", method = RequestMethod.POST)
-    public @ResponseBody
-    BuildResult buildSet(@RequestBody ExecuteMultiCommand cmd) {
-        if (cmd.getType() == null) {
-            throw new RuntimeException(
-                    "Error occurs when executing a set of portal, please inform ZuoHao about this issue.");
-        }
-        return logic.executeWithType(cmd.getType(), cmd);
-    }
+	/**
+	 * Build a set of packages. Such as reference portal, multiscreen.
+	 * 
+	 * @param cmd
+	 *            ExecuteMultiCommand
+	 * @return build result
+	 */
+	@RequestMapping(value = "/powerbuild/executeWithType.ajax", method = RequestMethod.POST)
+	public @ResponseBody
+	BuildResult buildSet(@RequestBody ExecuteMultiCommand cmd) {
+		if (cmd.getType() == null) {
+			throw new RuntimeException(
+					"Error occurs when executing a set of portal, please inform ZuoHao about this issue.");
+		}
+		return logic.executeWithType(cmd.getType(), cmd);
+	}
+
+	/**
+	 * @param messageId
+	 *            id of error message
+	 * @return error message
+	 */
+	@RequestMapping(value = "/powerbuild/getLog.ajax", method = RequestMethod.GET)
+	public @ResponseBody
+	String getLog(@RequestParam("messageId") String messageId) {
+		return logic.getErrorMsgById(messageId);
+	}
 }

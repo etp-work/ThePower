@@ -6,8 +6,8 @@ package org.etp.portalKit.common.util;
  */
 public interface OutputHandler {
     /**
-     * @param message
-     * @param isErrorOut
+     * @param message output
+     * @param isErrorOut true if it is an error output. Otherwise false.
      */
     public void onOutRead(String message, boolean isErrorOut);
 }

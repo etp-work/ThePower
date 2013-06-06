@@ -24,7 +24,7 @@ public class ProcessMonitor {
 	/**
 	 * @param windowTitle
 	 *            title on the window of the program you want to observe.
-	 * @param checkPoints
+	 * @param checkPoints string which included in process.
 	 * @return true if the specified process is exist.
 	 */
 	public boolean isExist(String windowTitle, final String[] checkPoints) {

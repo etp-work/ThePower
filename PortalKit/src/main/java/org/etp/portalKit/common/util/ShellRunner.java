@@ -47,7 +47,7 @@ public class ShellRunner {
 	/**
 	 * Creates a new instance of <code>ShellRunner</code>.
 	 * 
-	 * @param cmdline
+	 * @param cmdline command
 	 */
 	public ShellRunner(String cmdline) {
 		this();
@@ -161,7 +161,7 @@ public class ShellRunner {
 	}
 
 	/**
-	 * @param runProperties
+	 * @param runProperties properties as the base env.
 	 */
 	public void setRuningEnv(Properties runProperties) {
 		this.runProperties = runProperties;
@@ -175,7 +175,7 @@ public class ShellRunner {
 	}
 
 	/**
-	 * @param dir
+	 * @param dir execution base directory
 	 */
 	public void setRunpath(File dir) {
 		this.dir = dir;
@@ -243,7 +243,7 @@ public class ShellRunner {
 	}
 
 	/**
-	 * @param cmdline
+	 * @param cmdline command
 	 */
 	public void setCmdline(String cmdline) {
 		String cmd = cmdline;
@@ -272,7 +272,7 @@ public class ShellRunner {
 	}
 
 	/**
-	 * @param args
+	 * @param args args
 	 */
 	public static void main(String[] args) {
 		ShellRunner runner = new ShellRunner();
@@ -283,14 +283,14 @@ public class ShellRunner {
 	}
 
 	/**
-	 * @param outputHandler
+	 * @param outputHandler a handler that used for handling process output.
 	 */
 	public void setOutputHandler(OutputHandler outputHandler) {
 		this.outputHandler = outputHandler;
 	}
 
 	/**
-	 * @param windowsComanderMode
+	 * @param windowsComanderMode command mode.
 	 */
 	public void setWindowsComanderMode(String windowsComanderMode) {
 		this.windowsComander = windowsComanderMode;

@@ -50,7 +50,7 @@ public class PackagesCheckService {
     /**
      * Scan the specified downloaded path for all the .gz packages.
      * 
-     * @param downloadedPath
+     * @param downloadedPath a path in which the .gz packages placed.
      * @return included .gz packages that can be scaned.
      */
     public File[] retrieveDeployedPkgs(String downloadedPath) {

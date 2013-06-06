@@ -109,7 +109,7 @@ public class DirTree implements Serializable {
     }
 
     /**
-     * @param checked
+     * @param checked true if this dir is selected.
      */
     public void setChecked(boolean checked) {
         this.checked = checked;

@@ -14,7 +14,7 @@ public class ObjectUtil {
     /**
      * Faster Deep Copies of Java Objects
      * 
-     * @param obj
+     * @param obj instance to be cloned.
      * @return a new instance of obj。
      */
     public static Object clone(Object obj) {

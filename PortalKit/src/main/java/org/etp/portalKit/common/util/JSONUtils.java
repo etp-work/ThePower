@@ -35,9 +35,9 @@ public class JSONUtils {
     /**
      * De-serialize from JSON to a specific type
      * 
-     * @param <T>
-     * @param input
-     * @param clazz
+     * @param <T> type to be converted to.
+     * @param input json string to be converted.
+     * @param clazz class
      * @return Object representation of the JSON input
      */
     public static <T> T fromJSON(String input, Class<T> clazz) {
@@ -55,9 +55,9 @@ public class JSONUtils {
     /**
      * De-serialize from JSON to a specific type
      * 
-     * @param <T>
-     * @param input
-     * @param typeRef
+     * @param <T> type to be converted to.
+     * @param input json string to be converted.
+     * @param typeRef TypeReference
      * @return Object representation of the JSON input
      */
     @SuppressWarnings("unchecked")
@@ -75,9 +75,10 @@ public class JSONUtils {
 
     /**
      * De-serialize from JSON to a specific type
+     * @param <T> type to be converted to.
      * 
-     * @param input
-     * @param typeRef
+     * @param input json resource to be converted.
+     * @param typeRef TypeReference
      * @return Object representation of the JSON input
      */
     public static <T> T fromJSONResource(Resource input, TypeReference<T> typeRef) {
@@ -100,9 +101,9 @@ public class JSONUtils {
     /**
      * De-serialize from JSON to a specific type
      * 
-     * @param <T>
-     * @param input
-     * @param clazz
+     * @param <T> type to be converted to.
+     * @param input json reader to be converted.
+     * @param clazz class
      * @return Object representation of the JSON input
      */
     public static <T> T fromJSON(Reader input, Class<T> clazz) {
@@ -120,9 +121,9 @@ public class JSONUtils {
     /**
      * De-serialize from JSON to a specific type
      * 
-     * @param <T>
-     * @param input
-     * @param typeRef
+     * @param <T> type to be converted to.
+     * @param input json reader to be converted.
+     * @param typeRef TypeReference
      * @return Object representation of the JSON input
      */
     @SuppressWarnings("unchecked")
@@ -141,7 +142,7 @@ public class JSONUtils {
     /**
      * Serialize to JSON
      * 
-     * @param obj
+     * @param obj instance to be serialize
      * @return JSON representation
      */
     public static String toJSON(Object obj) {

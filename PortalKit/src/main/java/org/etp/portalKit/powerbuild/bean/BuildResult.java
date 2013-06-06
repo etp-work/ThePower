@@ -23,16 +23,16 @@ public class BuildResult extends CommandResult {
      * @param cmd wrap from a CommandResult
      */
     public BuildResult(CommandResult cmd) {
-        super.setMessage(cmd.getMessage());
+        super.setMessageId(cmd.getMessageId());
         super.setStateCode(cmd.getStateCode());
         super.setSuccess(cmd.isSuccess());
     }
 
     /**
-     * @param cmd
+     * @param cmd CommandResult
      */
     public void setCommandResult(CommandResult cmd) {
-        super.setMessage(cmd.getMessage());
+        super.setMessageId(cmd.getMessageId());
         super.setStateCode(cmd.getStateCode());
         super.setSuccess(cmd.isSuccess());
     }

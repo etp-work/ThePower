@@ -7,7 +7,7 @@ package org.etp.portalKit.common.util;
 public class CommandResult {
     private int stateCode;
 
-    private String message;
+    private String messageId;
     private boolean success;
 
     /**
@@ -32,24 +32,24 @@ public class CommandResult {
     }
 
     /**
-     * @param stateCode
+     * @param stateCode code of this execution.
      */
     public void setStateCode(int stateCode) {
         this.stateCode = stateCode;
     }
 
     /**
-     * @return message from execution.
+     * @return messageId from execution.
      */
-    public String getMessage() {
-        return message;
+    public String getMessageId() {
+        return messageId;
     }
 
     /**
-     * @param message
+     * @param messageId id of this errorMessage
      */
-    public void setMessage(String message) {
-        this.message = message;
+    public void setMessageId(String messageId) {
+        this.messageId = messageId;
     }
 
 }
