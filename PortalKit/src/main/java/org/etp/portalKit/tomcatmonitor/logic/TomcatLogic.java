@@ -32,9 +32,6 @@ public class TomcatLogic {
 	@Resource(name = "shellRunner")
 	private ShellRunner runner;
 
-	@Resource(name = "fileUtil")
-	private FileUtils fileUtils;
-
 	/**
 	 * @return TomcatStatus <code>TomcatStatus.RUNNING</code>,
 	 *         <code>TomcatStatus.STOPPED</code>
@@ -56,17 +53,16 @@ public class TomcatLogic {
 			throw new RuntimeException(
 					"You have set tomcat's webapps path first.");
 		}
-		if (!fileUtils.isDirectory(webapps)) {
+		if (!FileUtils.isDirectory(webapps)) {
 			throw new RuntimeException(
 					"You have set a incorrect tomcat's webapps path.");
 		}
-		File bin = fileUtils.createFile(fileUtils.createFile(webapps)
-				.getParent(), "bin");
+		File bin = new File(new File(webapps).getParent(), "bin");
 		if (!bin.isDirectory()) {
 			throw new RuntimeException("You have set a incorrect tomcat path.");
 		}
 
-		File startUp = fileUtils.createFile(bin, "startup.bat");
+		File startUp = new File(bin, "startup.bat");
 		return startUp.exists();
 	}
 

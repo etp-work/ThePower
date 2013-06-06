@@ -38,9 +38,6 @@ public class DeployLogic {
 	@Resource(name = "deployService")
 	private DeployService deployService;
 
-	@Resource(name = "fileUtil")
-	private FileUtils fileUtil;
-
 	/**
 	 * Firstly, set the cmd.downloadPath to store file. And scan the
 	 * downloadedPath for specified typeToDeploy.If cmd.typeToDeploy is null,
@@ -182,11 +179,11 @@ public class DeployLogic {
 			if (!containsPackage(packageInfo4CI.getPackageName(), packages)) {
 				continue;
 			}
-			File folder = fileUtil.FolderFinder(downLoadPath,
+			File folder = FileUtils.FolderFinder(downLoadPath,
 					packageInfo4CI.getPackageName())[0];
 			for (String warFile : packageInfo4CI.getWarfiles()) {
 				File base = new File(folder, packageInfo4CI.getRelativePath());
-				File foundFile = fileUtil.FileFinder(base.getAbsolutePath(),
+				File foundFile = FileUtils.FileFinder(base.getAbsolutePath(),
 						warFile, ".war")[0];
 				isAllSuccess = deployService.deployFromFile(
 						foundFile.getAbsolutePath(), deployPath);
