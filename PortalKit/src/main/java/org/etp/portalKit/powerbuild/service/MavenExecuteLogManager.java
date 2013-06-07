@@ -68,8 +68,17 @@ public class MavenExecuteLogManager {
 		return fm.errorMsg;
 	}
 
+	/**
+	 * inner class for errorMsg and timerTask
+	 */
 	class FailureMessage {
+		/**
+		 *  <code>errorMsg</code> from a maven execution.
+		 */
 		String errorMsg;
+		/**
+		 * TimerTask for this errorMsg handling
+		 */
 		TimerTask task;
 	}
 }

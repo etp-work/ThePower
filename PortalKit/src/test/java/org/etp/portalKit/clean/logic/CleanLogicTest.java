@@ -24,8 +24,14 @@ import org.junit.Test;
  * A test case for <code>CleanLogic</code>
  */
 public class CleanLogicTest {
+	/**
+	 * Unit under test. <code>logic</code>
+	 */
 	@Tested
 	CleanLogic logic;
+	/**
+	 * dependency of CleanLogic <code>prop</code>
+	 */
 	@Injectable
 	PropertiesManager prop;
 
