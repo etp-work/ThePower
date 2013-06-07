@@ -21,7 +21,7 @@ import org.junit.Test;
 
 /**
  * 
- * A test case for CleanLogic
+ * A test case for <code>CleanLogic</code>
  */
 public class CleanLogicTest {
 	@Tested
@@ -32,11 +32,13 @@ public class CleanLogicTest {
 	/**
 	 * test retrieveCleanItems without tomcat webapps path configured.
 	 * 
-	 * @param cacheBase
+	 * @param system
+	 *            System class to be mocked for static methods
+	 * 
 	 */
 	@Test(expected = NullPointerException.class)
 	public void retrieveCleanItemsWithoutUserhome_test(
-			@Mocked final System system) {
+			@SuppressWarnings("unused") @Mocked final System system) {
 		new Expectations() {
 			{
 				System.getProperty("user.home");
@@ -70,8 +72,12 @@ public class CleanLogicTest {
 
 	/**
 	 * test retrieveCleanItems.
+	 * @param sys System class to be mocked for static methods
+	 * @param cacheBase intend to mock getAbsolutePath method.
+	 * @param util intend to mock static methods in FileUtils
 	 * 
 	 */
+	@SuppressWarnings("unused") 
 	@Test
 	public void retrieveCleanItems_test(@Mocked System sys,
 			@Mocked(methods = { "getAbsolutePath" }) final File cacheBase,
@@ -101,6 +107,9 @@ public class CleanLogicTest {
 		assertSame(4, retrieveCleanItems.getWarFiles().size());
 	}
 
+	/**
+	 * 
+	 */
 	@Test
 	@Ignore
 	public void test() {
