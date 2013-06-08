@@ -3,6 +3,7 @@
 <script type="text/javascript" src="resources/js/utilities/jsrender.js"></script>
 <script type="text/javascript" src="resources/js/utilities/json2.js"></script>
 <script type="text/javascript" src="resources/js/fw/angular.js"></script>
+<script type="text/javascript" src="resources/js/fw/templateCompiler.js"></script>
 <script type="text/javascript" src="resources/js/fw/DynamicLoad.js"></script>
 <script type="text/javascript" src="resources/js/utilities/ViewManager.js"></script>
 <script type="text/javascript" src="resources/js/fw/Lifecycle.js"></script>

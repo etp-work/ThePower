@@ -1,26 +1,9 @@
 /**
-\ * This module called DynamicLoad, it provide some APIs which have to do with network connectivity.
+ * This module called DynamicLoad, it provide some APIs which have to do with network connectivity.
  * Such as postJSON, loadJSON... 
  *
  */
-(function (window) {
-    'use strict';
-    
-    
-    
-    //this part provides the capbility that data render can be used within the dynamic loaded html templates.
-    angular.module('myModule', []).
-    factory('compiler', function($compile) {
-      return {
-        compile: function(html){
-            var scope = angular.element($('.content-wrapper')).scope();
-            return $compile(html)(scope);
-        }
-      };
-    });
-   
-    angular.injector(['myModule', 'ng']);
-  
+$(document).ready(function(){
     var _DynamicLoad = {};
     window.DynamicLoad = _DynamicLoad;
 
@@ -219,129 +202,127 @@
         }
     }
     
-    $(document).ready(function(){
-        
-        var initUrl = "/init/getViewsInfo.ajax";
-        var pollingUrl = "/ssp/poll.ajax";
-        var shownViewId = undefined;
-        var viewsInfo = undefined;
-        
-        //longPolling to server.
-        function poll(){
-            DynamicLoad.loadJSON(pollingUrl, undefined, function(dirtyDatas){
-                poll();
-                if(dirtyDatas && dirtyDatas.length > 0){
-                    for(var i = 0; i < dirtyDatas.length; i++){
-                        fireDataListener(dirtyDatas[i]);
-                    }
-                }
-            }, function(){
-                poll();
-            });
-        }
-        
-        //remove a view from viewsInfo with specified viewId.
-        function removeViewInfo(viewId){
-            for(var i in viewsInfo){
-                if(viewsInfo[i].viewId === viewId){
-                    viewsInfo.splice(i, 1);
-                    break;
-                }
-            }
-        }
 
-        //find the view from viewsInfo with specified viewId.
-        function findViewInfo(viewId){
-            if(viewsInfo.length === 0){
-                return undefined;
-            }
-            
-            for(var i in viewsInfo){
-                if(viewsInfo[i].viewId === viewId){
-                    return viewsInfo[i];
+        
+    var initUrl = "/init/getViewsInfo.ajax";
+    var pollingUrl = "/ssp/poll.ajax";
+    var shownViewId = undefined;
+    var viewsInfo = undefined;
+    
+    //longPolling to server.
+    function poll(){
+        DynamicLoad.loadJSON(pollingUrl, undefined, function(dirtyDatas){
+            poll();
+            if(dirtyDatas && dirtyDatas.length > 0){
+                for(var i = 0; i < dirtyDatas.length; i++){
+                    fireDataListener(dirtyDatas[i]);
                 }
             }
+        }, function(){
+            poll();
+        });
+    }
+        
+    //remove a view from viewsInfo with specified viewId.
+    function removeViewInfo(viewId){
+        for(var i in viewsInfo){
+            if(viewsInfo[i].viewId === viewId){
+                viewsInfo.splice(i, 1);
+                break;
+            }
+        }
+    }
+
+    //find the view from viewsInfo with specified viewId.
+    function findViewInfo(viewId){
+        if(viewsInfo.length === 0){
+            return undefined;
+        }
+            
+        for(var i in viewsInfo){
+            if(viewsInfo[i].viewId === viewId){
+                return viewsInfo[i];
+            }
+        }
             //implicitly falsy
-        }
+    }
         
-        //load a specified view for its html,js.
-        //callback will be executed after html and js are loaded successfully.
-        function loadViewJS(view, callback){
-            if(!view){
-                return;
-            }
-            
-            var loadJS = function(){
-                DynamicLoad.loadStaticJs(view.js, function(){
-                    if(callback){
-                        callback();
-                    }
-                    removeViewInfo(view.viewId);
-                }, function(error){ViewManager.simpleError("Load js "+view.js+ " error : " +error.message);});
-            };
-            
-            var loadView = function(html){
-                var injector = angular.injector(['myModule', 'ng']);
-                var compiler = injector.get('compiler');
-                $('.maincontent .content-wrapper').append(compiler.compile(html));
-                ViewManager.hide(".maincontent .content-wrapper .content-box");
-                loadJS();
-            };
-            
-            DynamicLoad.loadStaticHtml(view.templateUrl, loadView, function(error){ViewManager.simpleError("Load view "+view.viewId+ " error : " +error.message);});
+    //load a specified view for its html,js.
+    //callback will be executed after html and js are loaded successfully.
+    function loadViewJS(view, callback){
+        if(!view){
+            return;
         }
-        
-        function viewsInfoLoad(ViewsInfo){
-            viewsInfo = ViewsInfo;
             
-            //init default view
-            var defaultView = undefined;
-            for(var i =0; i < viewsInfo.length; i++){
-                if(viewsInfo[i].defaultView){
-                    defaultView = viewsInfo[i];
-                    break;
+        var loadJS = function(){
+            DynamicLoad.loadStaticJs(view.js, function(){
+                if(callback){
+                    callback();
                 }
-            }
+                removeViewInfo(view.viewId);
+            }, function(error){ViewManager.simpleError("Load js "+view.js+ " error : " +error.message);});
+        };
             
-            loadViewJS(defaultView, function(){
-
-                ViewManager.show("#" + defaultView.viewId);
-                poll();
-            });
+        var loadView = function(html){
+            var injector = angular.injector(['myModule', 'ng']);
+            var compiler = injector.get('compiler');
+            $('.maincontent .content-wrapper').append(compiler.compile(html));
+            ViewManager.hide(".maincontent .content-wrapper .content-box");
+            loadJS();
+        };
+            
+        DynamicLoad.loadStaticHtml(view.templateUrl, loadView, function(error){ViewManager.simpleError("Load view "+view.viewId+ " error : " +error.message);});
+    }
+        
+    function viewsInfoLoad(ViewsInfo){
+        viewsInfo = ViewsInfo;
+           
+        //init default view
+        var defaultView = undefined;
+        for(var i =0; i < viewsInfo.length; i++){
+            if(viewsInfo[i].defaultView){
+                defaultView = viewsInfo[i];
+                break;
+            }
         }
+            
+        loadViewJS(defaultView, function(){
+
+            ViewManager.show("#" + defaultView.viewId);
+            poll();
+        });
+    }
       
         //load viewSettings info, in order to append views dynamically.
-        DynamicLoad.loadJSON(initUrl, undefined, viewsInfoLoad, function(error){ViewManager.simpleError(error.message);});
+    DynamicLoad.loadJSON(initUrl, undefined, viewsInfoLoad, function(error){ViewManager.simpleError(error.message);});
         
 
         
         
-        $('.tab-header ul li a').click(
-                function(event) {
-                        var newId = $(this).attr("href").substring(2);
-                        if(newId === shownViewId){
-                            return false;
-                        }
-                        $(this).parent().siblings().find("a").removeClass('active'); // Remove active class from all the other tabs
-                        $(this).addClass('active');
-                        $('.maincontent .content-wrapper').removeClass("contentAnimation");
-                        ViewManager.hide(".maincontent .content-wrapper .content-box");
-                        shownViewId = newId;
-                        var callbackOnshow = function(){
-                            $('.maincontent .content-wrapper').addClass("contentAnimation");
-                            ViewManager.show("#" + shownViewId);
-                        };
-                        
-                        var view = findViewInfo(shownViewId);
-                        if(view){
-                            loadViewJS(view, callbackOnshow);
-                        }else{
-                            callbackOnshow();
-                        }
-                       
+    $('.tab-header ul li a').click(
+            function(event) {
+                    var newId = $(this).attr("href").substring(2);
+                    if(newId === shownViewId){
                         return false;
-        });
-        
+                    }
+                    $(this).parent().siblings().find("a").removeClass('active'); // Remove active class from all the other tabs
+                    $(this).addClass('active');
+                    $('.maincontent .content-wrapper').removeClass("contentAnimation");
+                    ViewManager.hide(".maincontent .content-wrapper .content-box");
+                    shownViewId = newId;
+                    var callbackOnshow = function(){
+                        $('.maincontent .content-wrapper').addClass("contentAnimation");
+                        ViewManager.show("#" + shownViewId);
+                    };
+                        
+                    var view = findViewInfo(shownViewId);
+                    if(view){
+                        loadViewJS(view, callbackOnshow);
+                    }else{
+                        callbackOnshow();
+                    }
+                       
+                    return false;
     });
-
-}(window));
+        
+});
