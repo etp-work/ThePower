@@ -1,9 +1,22 @@
-//describe("LifecycleTest Suite", function() {
-//	it("Listener test", function() {
-//		function testedListener(state){
-//			expect(state).toEqual(window.Lifecycle.LOADED);
-//		}
-//		window.Lifecycle.addStateListener(testedListener);
-//		window.Lifecycle.setState(window.Lifecycle.LOADED);
-//	});
-//});
+describe("LifecycleTest Suite", function() {
+	var listener;
+	beforeEach(function() {
+		listener = jasmine.createSpy('listener');
+		Lifecycle.addStateListener(listener);
+	});
+
+	afterEach(function() {
+		Lifecycle.removeStateListener(listener);
+	});
+
+	it("addStateListener test", function() {
+		Lifecycle.setState(Lifecycle.LOADED);
+		expect(listener).toHaveBeenCalledWith(Lifecycle.LOADED);
+	});
+
+	it("removeStateListener test", function() {
+		Lifecycle.removeStateListener(listener);
+		Lifecycle.setState(Lifecycle.LOADED);
+		expect(listener.calls.length).toEqual(1);
+	});
+});

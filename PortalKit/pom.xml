@@ -204,8 +204,11 @@
 						<source>${basedir}/src/main/js/dependencies/json2.js</source>
 						<source>${basedir}/src/main/js/dependencies/jsrender.js</source>
 					</preloadSources>
-					<jsSrcDir>${basedir}/src/main/js/fw</jsSrcDir>
-					<jsSrcDir>${basedir}/src/main/js/utilities</jsSrcDir>
+					<jsSrcDir>${basedir}/src/main/js</jsSrcDir>
+					<sourceExcludes>
+						<exclude>dependencies/*.js</exclude>
+						<exclude>features/*.js</exclude>
+					</sourceExcludes>
 					<jsTestSrcDir>${basedir}/src/test/js</jsTestSrcDir>
 				</configuration>
 			</plugin>
