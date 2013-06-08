@@ -1,5 +1,5 @@
 
-(function (window) {
+//(function (window) {
     
     var _lifecycle = {};
     window.Lifecycle = _lifecycle;
@@ -84,4 +84,4 @@
     
     
     
-}(window));
+//}(window));
