@@ -3,36 +3,36 @@
     	viewId: "build-content",
     	viewName: "Build",
     	js: "resources/js/features/build.js",
-    	css: "resources/css/index/build.css",
-    	templateUrl: "templates/index-views/build-content.html",
+    	css: "resources/css/features/build.css",
+    	templateUrl: "templates/features/build-content.html",
     	defaultView: true
     },{
     	viewId: "deploy-content",
     	viewName: "Deploy",
     	js: "resources/js/features/deploy.js",
-    	css: "resources/css/index/deploy.css",
-        templateUrl: "templates/index-views/deploy-content.html",
+    	css: "resources/css/features/deploy.css",
+        templateUrl: "templates/features/deploy-content.html",
         defaultView: false
     },{
     	viewId: "clean-content",
     	viewName: "Clean",
     	js: "resources/js/features/clean.js",
-    	css: "resources/css/index/clean.css",
-        templateUrl: "templates/index-views/clean-content.html",
+    	css: "resources/css/features/clean.css",
+        templateUrl: "templates/features/clean-content.html",
         defaultView: false
     },{
         viewId: "test-content",
         viewName: "Test",
         js: "resources/js/features/test.js",
-        css: "resources/css/index/test.css",
-        templateUrl: "templates/index-views/test-content.html",
+        css: "resources/css/features/test.css",
+        templateUrl: "templates/features/test-content.html",
         defaultView: false
     },{
     	viewId: "setting-content",
     	viewName: "Set",
     	js: "resources/js/features/setting.js",
-    	css: "resources/css/index/setting.css",
-        templateUrl: "templates/index-views/setting-content.html",
+    	css: "resources/css/features/setting.css",
+        templateUrl: "templates/features/setting-content.html",
         defaultView: false
     }
 ]
