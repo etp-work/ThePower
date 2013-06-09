@@ -16,6 +16,20 @@ Environment
 * Ant 1.8.4(or above) installed with correct [configuration] [2].
 * Maven 3.0.4(or above) installed with correct [configuration] [3]. 
 * Inno setup 5.5.3-unicode(or above) installed by default options.
+* Git 1.8.0(or above) with following configuration. Those commands should be executed under *workstation* folder, which doesn't impact the configuration for other projects.
+
+        git config --local user.name "<name>"
+        git config --local user.email "<email>"
+        git config --local core.excludesfile $HOME/.gitignore
+        git config --local core.autocrlf input
+        git config --local color.ui true
+        git config --local gui.encoding utf-8
+        git config --local push.default tracking
+        git config --local branch.autosetupmerge always
+        git config --local branch.autosetuprebase always
+        git config --local alias.co checkout
+        git config --local alias.st status
+        git config --local alias.br branch
 
 Development Tools
 ==============
@@ -25,36 +39,8 @@ Development Tools
 * Dreamweaver 8(or above)`optional`
 
 
-[Configuration]
-==============
 
---First time when you clone this repository, you need to run below commands under workstation folder one by one.
 
-[Commands]
-
-git config --local user.name "<name>"
-
-git config --local user.email "<email>"
-
-git config --local core.excludesfile $HOME/.gitignore
-
-git config --local core.autocrlf input
-
-git config --local color.ui true
-
-git config --local gui.encoding utf-8
-
-git config --local push.default tracking
-
-git config --local branch.autosetupmerge always
-
-git config --local branch.autosetuprebase always
-
-git config --local alias.co checkout
-
-git config --local alias.st status
-
-git config --local alias.br branch
 
 
 [1]: http://docs.oracle.com/javase/7/docs/webnotes/install/windows/jdk-installation-windows.html     "configuration"
