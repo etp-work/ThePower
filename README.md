@@ -9,6 +9,16 @@ Instruction
 * **NativeContainer**: A C# based native shell for rendering the HTML GUI which provided by **PortalKit**, It provide the websocket api as well for some special usage.
 * **Installer**: A Inno Setup script based project, which is the installation file creator. By running this project, it will collect all thre resources from above projects and generate a installation file.
 
+
+### Project Information
+
+* Multiple languages: C#, java, javascript, HTML, css, Ant, Inno Setup script, Pascal.
+* Multiple third-party libraries: Gecko FX, Spring, Junit, Jmockit, lucene, jasmine, angularJS, JQuery, SWT.
+
+We aim to build a very fresh project which consist of many of the newest, best tools and languages. By involved in this project, you would never feel torture from the situation that you don't have time to improve the things you planned to do, or even worse that you are not allowed to do that improvement.
+Feel free to pop up your proposal, it's really cool that we can talk to each other about the ideas.
+
+
 Environment
 ==============
 
