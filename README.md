@@ -60,6 +60,7 @@ Getting started with eclipse:
 
 1.  Open eclipse.
 2.  Import *PortalKit*, *Installer* from workstation.
+3.  Detail configuration of each project, please refer to their own README.md
 
 
 
