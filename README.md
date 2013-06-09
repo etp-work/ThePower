@@ -59,7 +59,7 @@ Getting Started
 Getting started with eclipse:
 
 1.  Open eclipse.
-2.  Import *PortalKit*, *Installer* from workstation.
+2.  Import [PortalKit](https://github.com/etp-work/workstation/blob/master/PortalKit/README.md), [Installer](https://github.com/etp-work/workstation/blob/master/Installer/README.md) from workstation.
 3.  Detail configuration of each project, please refer to their own README.md
 
 
