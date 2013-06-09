@@ -4,7 +4,7 @@ Instruction
 **The Power** is not only a toolkit for PortalTeam, but also a platform which can be customized for your own usage. It consist of the following components.
 
 * **PortalKit**: The core part of **The Power**, which provide the capability of service customization, look and feel. Right now, we have a few buildin services, such as "workspace provider service", "maven execution service", "deploy service", "compress service" and so on.
-* **PortalKitClient**(deprecated): A java based native shell for rendering the HTML GUI which provided by **PortalKit**.
+* **PortalKitClient**`deprecated`: A java based native shell for rendering the HTML GUI which provided by **PortalKit**.
 * **EmbeddedTomcat**: An embedded tomcat, which is the buildin container for running services provided by **PortalKit**.
 * **NativeContainer**: A C# based native shell for rendering the HTML GUI which provided by **PortalKit**, It provide the websocket api as well for some special usage.
 * **Installer**: A Inno Setup script based project, which is the installation file creator. By running this project, it will collect all thre resources from above projects and generate a installation file.
@@ -38,8 +38,28 @@ Development Tools
 * Visual Studio Express 2012 For Window Desktop(or above) [download] [5]
 * Dreamweaver 8(or above)`optional`
 
+**Git plugin for Eclipse:**
+
+1.  Open eclipse.
+2.  Click *Help* -> *Eclipse Marketplace...*.
+3.  Tpye "EGit" into *Search* -> *Find:* textbox.
+4.  Find "EGit - Git Team Provider", and *Install* it.
+
+**Maven plugin for Eclipse:**
+
+1.  Open eclipse.
+2.  Click *Help* -> *Eclipse Marketplace...*.
+3.  Tpye "Maven" into *Search* -> *Find:* textbox.
+4.  Find "Maven Integration for Eclipse", and *Install* it.
 
 
+Getting Started
+==============
+
+Getting started with eclipse:
+
+1.  Open eclipse.
+2.  Import *PortalKit*, *Installer* from workstation.
 
 
 
