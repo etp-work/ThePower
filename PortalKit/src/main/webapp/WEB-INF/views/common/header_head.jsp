@@ -5,5 +5,5 @@
 <script type="text/javascript" src="resources/js/dependencies/angular.js"></script>
 <script type="text/javascript" src="resources/js/fw/TemplateCompiler.js"></script>
 <script type="text/javascript" src="resources/js/fw/DynamicLoad.js"></script>
-<script type="text/javascript" src="resources/js/utilities/ViewManager.js"></script>
+<script type="text/javascript" src="resources/js/utility/ViewManager.js"></script>
 <script type="text/javascript" src="resources/js/fw/Lifecycle.js"></script>

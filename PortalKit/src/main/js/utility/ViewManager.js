@@ -483,7 +483,7 @@
      * @param log string value of log message.
      */
     _viewManager.showLog = function(messageId){
-        window.open("templates/console.html?messageId="+window.encodeURIComponent(messageId), "console", "height=100, width=400, top=100, left=500, toolbar=no, menubar=no, scrollbars=yes, resizable=no,location=n o, status=no");
+        window.open("templates/utility/console.html?messageId="+window.encodeURIComponent(messageId), "console", "height=100, width=400, top=100, left=500, toolbar=no, menubar=no, scrollbars=yes, resizable=no,location=n o, status=no");
     };
     
 
