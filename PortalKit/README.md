@@ -1,9 +1,59 @@
-Structure
+Instruction
 =======================
 
+This project is the core part of the ThePower platform, consist of view(HTML + CSS + javascript), Controller(javaEE), Service(java).
+We have several Third-Party libraries in this project for using. Such as JQuery, angularJS, jasmine, Spring, Tomcat, JMockit.
 
+* **JQuery** is responsible for DOM control.
+* **angularJS** is responsible for data rendering.
+* **jasmine** is responsible for js unit test.
+* **Spring** is responsible for framework lifecycle.
+* **Tomcat** is responsible for websocket management.
+* **JMockit** is responsible for java unit test.
 
-
+Structure
+=======================
+<pre>
+|-- pom.xml
+`-- src
+   |-- main
+   |   |-- java
+   |        |-- (services and framework of server part)
+   |   |-- js
+   |      |-- dependencies
+   |                   |-- (Third-party librayies)
+   |      |-- features
+   |               |-- (extensible features)
+   |      |-- fw
+   |         |-- (framework of client part)
+   |      |-- utility
+   |              |-- (utilities of client part)
+   |   |-- resources
+   |             |-- (json files that needed by services)
+   |-- test
+   |    |-- java
+   |         |-- (java unit test)
+   |    |-- js
+   |       |-- (js unit test)
+   |-- webapp
+         `-- WEB-INF
+                |-- default-servlet.xml
+                |-- web-related.xml
+                |-- web.xml
+                |-- resources
+                |         |-- css
+                |         |   |-- index.css
+                |         |   |-- features
+                |         |   |-- utility
+                |         |-- images
+                |-- views
+                      |-- index.jsp
+                      |-- common
+                      |-- templates
+                                |-- features
+                                |-- utility
+                
+</pre>
 
 build.xml
 
