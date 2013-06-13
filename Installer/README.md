@@ -1,5 +1,12 @@
-Description
-This is an installer project, used to generate executable setup program for windows system both 32bit/64bit.
+Introduction
+===========================
+This is an installer project, used to generate executable setup program for both 32bit/64bit windows system.
+
+Workflow
+===========================
+1. Unzip *Installer/libs/CefSharp-0.12.zip* to *Installer/resources/CefSharp-0.12*, unless if it is the first time you use it to build the .exe file on your laptop.
+2. 
+
 
 
 Preparation for eclipse
