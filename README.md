@@ -52,15 +52,22 @@ Development Tools
 
 1.  Open eclipse.
 2.  Click *Help* -> *Eclipse Marketplace...*.
-3.  Tpye "EGit" into *Search* -> *Find:* textbox.
+3.  Type "EGit" into *Search* -> *Find:* textbox.
 4.  Find "EGit - Git Team Provider", and *Install* it.
 
 **Maven plugin for Eclipse:**
 
 1.  Open eclipse.
 2.  Click *Help* -> *Eclipse Marketplace...*.
-3.  Tpye "Maven" into *Search* -> *Find:* textbox.
+3.  Type "Maven" into *Search* -> *Find:* textbox.
 4.  Find "Maven Integration for Eclipse", and *Install* it.
+
+**Properties editor plugin for Eclipse:**
+
+1.  Open eclipse.
+2.  Click *Help* -> *Eclipse Marketplace...*.
+3.  Type "Properties Editor" into *Search* -> *Find:* textbox.
+4.  Find "Properties Editor" developed by Chomakichi, GPL, and *Install* it.
 
 
 Getting Started
