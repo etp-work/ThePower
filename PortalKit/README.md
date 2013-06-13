@@ -16,87 +16,64 @@ Structure
 <pre>
 |-- pom.xml
 `-- src
-   |-- main
-   |   |-- java
-   |        |-- (services and framework of server part)
-   |   |-- js
-   |      |-- dependencies
-   |                   |-- (Third-party librayies)
-   |      |-- features
-   |               |-- (extensible features)
-   |      |-- fw
-   |         |-- (framework of client part)
-   |      |-- utility
-   |              |-- (utilities of client part)
-   |   |-- resources
-   |             |-- (json files that needed by services)
-   |-- test
-   |    |-- java
-   |         |-- (java unit test)
-   |    |-- js
-   |       |-- (js unit test)
-   |-- webapp
-         `-- WEB-INF
-                |-- default-servlet.xml
-                |-- web-related.xml
-                |-- web.xml
-                |-- resources
-                |         |-- css
-                |         |   |-- index.css
-                |         |   |-- features
-                |         |   |-- utility
-                |         |-- images
-                |-- views
-                      |-- index.jsp
-                      |-- common
-                      |-- templates
-                                |-- features
-                                |-- utility
+    |-- main
+    |   |-- java
+    |   |   `-- (services and framework of server part)
+    |   |-- js
+    |   |   |-- dependencies
+    |   |   |   `-- (Third-party librayies)
+    |   |   |-- features
+    |   |   |   `-- (extensible features)
+    |   |   |-- fw
+    |   |   |   `-- (framework of client part)
+    |   |   |-- utility
+    |   |       `-- (utilities of client part)
+    |   |-- resources
+    |       `-- (json files that needed by services)
+    |-- test
+    |   |-- java
+    |   |   `-- (java unit test)
+    |   |-- js
+    |       `-- (js unit test)
+    |-- webapp
+        `-- WEB-INF
+            |-- default-servlet.xml
+            |-- web-related.xml
+            |-- web.xml
+            |-- resources
+            |         |-- css
+            |         |   |-- index.css
+            |         |   |-- features
+            |         |   |-- utility
+            |         |-- images
+            |-- views
+                |-- index.jsp
+                |-- common
+                |-- templates
+                    |-- features
+                    |-- utility
                 
 </pre>
 
-build.xml
+Compile source code by using Ant script
+=======================
 
--description
+## Use eclipse as IDE
 
-This is a ant script which can be executed within eclipse or command line, in order to compile the PortalKit project, and deploy it into tomcat.
+1. Download the correct version of eclipse and install it. Refer to [Development Tools](https://github.com/etp-work/ThePower/blob/master/README.md#development-tools).
+2. Make sure you have `JAVA_HOME`, `M2_HOME` configured in system variables on your laptop.
+3. Open *Window* -> *Preferences* -> *Ant* -> *Runtime* -> *Properties*, click *Add Property*, set `deploy.local.dir` to *name* and the value of this property is the absolute path of tomcat's wabapps folder.
+4. Open *Window* -> *Show View*, choose *Ant* to add a ant view to the perspective.
+5. Drag *PortalKit/build.xml* into ant view, a *PortalKit builder* will be created for you.
+6. Two execute options included:
+    * Build       : compile the source code and execute both java and js unit test cases.
+    * Build_Deploy: compile the source code and execute both java and js unit test cases, deploy the generated war file into a place which you specified in ant configuration by `deploy.local.dir`.
+7. Double click the item you want to perform. And the war file will be generated at *PortalKit/target*
 
-Preparation in eclipse
+## Use windown command line
 
-1. Open Window -> Preferences -> Ant -> Runtime -> Properties, click "Add Property", set "deploy.local.dir" to name and set absolute path of tomcat's wabapps to value.
+1. Make sure you have `JAVA_HOME`, `M2_HOME` configured in system variables on your laptop.
+2. Modify *PortalKit/build.properties* to set value of `deploy.local.dir` which is the absolute path of tomcat's wabapps folder.
+3. Go into *PortalKit* folder, execute command `ant -f build.xml Build`, the source code will be compiled and both java and js unit test cases will be executed.
+4. If you intend to deploy this generated war file into your tomcat as extra job compare with step3, you can execute command `ant -f build.xml Build_Deploy`.
 
-2. Make sure you have JAVA_HOME, M2_HOME set in system variables on your laptop.
- 
-3. Open Window -> Show View, choose "Ant" to add a ant view to the perspective.
-
-4. Drag build.xml into ant view.
-
-5. You will see two options under "PortalKit builder" as below:
-
-   build_deploy_nontest    : compile the project without running test case, and deploy it into tomcat.
-   
-   build_deploy_test       : compile the project with test case running, and deploy it into tomcat.
-   
-   build_nontest[default]  : compile the project without running test case.
-   
-   build_test              : compile the project with test case running.
-
-  
-
-Preparation in Command line
-
-1. Modify build.properties to set value of deploy.local.dir which is the absolute path of tomcat's wabapps.
-
-2. Make sure you have JAVA_HOME, M2_HOME set in system variables on your laptop.
- 
-3. Execute command "ant -f build.xml [target name]"
-
-   target name list below:
-   
-   --build_deploy_nontest    : compile the project without running test case, and deploy it into tomcat.
-   
-   --build_deploy_test       : compile the project with test case running, and deploy it into tomcat.
-   
-   --build_nontest[default]  : compile the project without running test case.
-   
-   --build_test              : compile the project with test case running.
