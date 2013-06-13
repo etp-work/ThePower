@@ -25,7 +25,7 @@ Environment
 * JDK 7(or above) installed with correct [configuration] [1].
 * Ant 1.8.4(or above) installed with correct [configuration] [2].
 * Maven 3.0.4(or above) installed with correct [configuration] [3]. 
-* Inno setup 5.5.3-unicode(or above) installed by default options.
+* Inno setup 5.5.3-unicode(or above) installed by default options. [Downloaded] [4]
 * Git 1.8.0(or above) with following configuration. Those commands should be executed under *workstation* folder, which doesn't impact the configuration for other projects.
 
         git config --local user.name "<name>"
@@ -44,8 +44,8 @@ Environment
 Development Tools
 ==============
 
-* Eclipse IDE for Java EE Developers [download] [4].
-* Visual Studio Express 2012 For Window Desktop(or above) [download] [5]
+* Eclipse IDE for Java EE Developers [download] [5].
+* Visual Studio Express 2012 For Window Desktop(or above) [download] [6]
 * Dreamweaver 8(or above)`optional`
 
 **Git plugin for Eclipse:**
@@ -84,5 +84,6 @@ Getting started with eclipse:
 [1]: http://docs.oracle.com/javase/7/docs/webnotes/install/windows/jdk-installation-windows.html     "configuration"
 [2]: http://ant.apache.org/manual/install.html#sysrequirements                                       "configuration"
 [3]: http://maven.apache.org/download.cgi#Installation_Instructions                                  "configuration"
-[4]: http://www.eclipse.org/downloads/                                                               "download"
-[5]: http://www.microsoft.com/visualstudio/chs/downloads                                             "download"
+[4]: http://www.jrsoftware.org/isdl.php#stable                                                       "Downloaded"
+[5]: http://www.eclipse.org/downloads/                                                               "download"
+[6]: http://www.microsoft.com/visualstudio/chs/downloads                                             "download"
