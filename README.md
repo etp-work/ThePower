@@ -44,7 +44,7 @@ Environment
 Development Tools
 ==============
 
-* Eclipse 4(or above), [download] [4].
+* Eclipse IDE for Java EE Developers [download] [4].
 * Visual Studio Express 2012 For Window Desktop(or above) [download] [5]
 * Dreamweaver 8(or above)`optional`
 
