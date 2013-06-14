@@ -30,30 +30,17 @@ How to run
     * Compile64: generate the 64-bit supported .exe installation file.
 9. Double click the item you want to perform. And the .exe file will be generated at `Installer/resources/output` folder.
 
+**By using window command line**
 
-Preparation for command line
-
-1.  Make sure you have JAVA_HOME, M2_HOME set in system variables on your laptop.
-
-2.  Download apache-ant-1.8.4 from http://archive.apache.org/dist/ant/binaries/apache-ant-1.8.4-bin.zip.
-
-3.  Upzip apache-ant-1.8.4-bin.zip into %CUSTOMIZED%.(You decide yourself what folder is %CUSTOMIZED%)
-
-4.  Config ant by following http://ant.apache.org/manual/index.html.
-
-5.  Download 'Inno Setup' from http://www.jrsoftware.org/download.php/is-unicode.exe.
-
-6.  Install the downloaded is-unicode.exe, by all default choices.
-
-7.  Modify system variable path by appending value of the installation directory of 'inno setup'.
-
-8.  Open build.properties, set absolute path of installation directory of 'inno setup' to "inno.home".
-
-9.  Copy libs/commons-net-1.4.1.jar, libs/jakarta-oro-2.0.8.jar to %CUSTOMIZED%\apache-ant-1.8.4\lib.
-
-10.  Execute command "ant -f build.xml compile64/compile32" to generate a 64-bit/32-bit executable file.
-
-11. The generated setup file located at resources/output/
+1. Make sure you have `JAVA_HOME`, `M2_HOME` configured in system variables on your laptop.
+2. Install apache-ant-1.8.4, please refer to [Environment](https://github.com/etp-work/ThePower/blob/master/README.md#environment).
+3. Install **Inno Setup**, please refer to [Environment](https://github.com/etp-work/ThePower/blob/master/README.md#environment).
+4. Modify system variable `path` by appending value of the installation directory of *inno setup*.
+5. Open `Installer/build.properties`, set absolute path of installation directory of *inno setup* to `inno.home`.
+6. Copy `libs/commons-net-1.4.1.jar`, `libs/jakarta-oro-2.0.8.jar` to `apache-ant-1.8.4\lib` folder.
+7. Execute command `ant -f build.xml Compile64` to generate a 64-bit supported .exe installation file.
+8. If you intend to generate a 32-bit supported .exe installation file, you can type in command `ant -f build.xml Compile32`.
+9. The .exe installation file will be generated at `Installer/resources/output/`.
 
 
 Usage
