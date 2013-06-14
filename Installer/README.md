@@ -24,10 +24,11 @@ How to run
 4. Open *Window* -> *Preferences* -> *Ant* -> *Runtime* -> *Properties*, click *Add Property*, set `inno.home` to name and set absolute path of installation directory of **inno setup**.
 5. Open *Window* -> *Preferences* -> *Ant* -> *Runtime* -> *Classpath*, choose *Ant Home Entries*, click *Add JARs...*, choose `libs/commons-net-1.4.1.jar`, `libs/jakarta-oro-2.0.8.jar` to add.
 6. Open *Window* -> *Show View*, choose *Ant* to add a ant view to the perspective.
-7. Drag PortalKit/build.xml into ant view, a PortalKit builder will be created for you.
-6. Run build.xml. Note: there are two options 'compile32/compile64' can be used. You should execute one of them for you operate system.
-
-8. The generated setup file located at resources/output/
+7. Drag `Installer/build.xml` into ant view, an `Installer builder` will be created for you.
+8. Two execute options included:
+    * Compile32: generate the 32-bit supported .exe installation file.
+    * Compile64: generate the 64-bit supported .exe installation file.
+9. Double click the item you want to perform. And the .exe file will be generated at `Installer/resources/output` folder.
 
 
 Preparation for command line
