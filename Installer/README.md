@@ -14,7 +14,7 @@ Workflow
 8. Execute the script under `Installer/resources/scripts` for specific CPU support of windows.
 9. The .exe file will be generated in `Installer/resources/output`.
 
-Preparation
+How to run
 ==========================
 **By using eclipse as IDE**
 
@@ -23,8 +23,9 @@ Preparation
 3. Modify system variable `path` by appending value of the installation directory of *inno setup*.
 4. Open *Window* -> *Preferences* -> *Ant* -> *Runtime* -> *Properties*, click *Add Property*, set `inno.home` to name and set absolute path of installation directory of **inno setup**.
 5. Open *Window* -> *Preferences* -> *Ant* -> *Runtime* -> *Classpath*, choose *Ant Home Entries*, click *Add JARs...*, choose `libs/commons-net-1.4.1.jar`, `libs/jakarta-oro-2.0.8.jar` to add.
-
-7. Run build.xml. Note: there are two options 'compile32/compile64' can be used. You should execute one of them for you operate system.
+6. Open *Window* -> *Show View*, choose *Ant* to add a ant view to the perspective.
+7. Drag PortalKit/build.xml into ant view, a PortalKit builder will be created for you.
+6. Run build.xml. Note: there are two options 'compile32/compile64' can be used. You should execute one of them for you operate system.
 
 8. The generated setup file located at resources/output/
 
