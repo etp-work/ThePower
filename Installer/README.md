@@ -4,26 +4,25 @@ This is an installer project, used to generate executable setup program for both
 
 Workflow
 ===========================
-1. Unzip *Installer/libs/CefSharp-0.12.zip* to *Installer/resources/CefSharp-0.12*, if it is the first time you use this installer to build the .exe file on your laptop.
-2. Download *xulrunner-18.0.2.en-US.win32.zip* to *Installer/resources/download*, and unzip it to *Installer/resources/xulrunner*, if it is the first time you use this installer to build the .exe file on your laptop.
-3. Compile the source code of *EmbeddedTomcat*, and copy the generated jar file into *Installer/resources/CustomizedTomcat*.
-4. Copy *Installer/libs/portal-widget-onekey-war-NO-VERSION.war* into *Installer/resources/CustomizedTomcat*.
-5. Compile the source code of *PortalKit*, and copy the generated war file into *Installer/resources/CustomizedTomcat/webapps*.
-6. Copy all stuff under *NativeContainer/GriffinsPortalKit/release* into *Installer/resources/shell*.
-7. Copy all stuff under *Installer/resources/CefSharp-0.12* into *Installer/resources/shell*.
-8. Execute the script under *Installer/resources/scripts* for specific CPU support of windows.
-9. The .exe file will be generated in *Installer/resources/output*.
+1. Unzip `Installer/libs/CefSharp-0.12.zip` to `Installer/resources/CefSharp-0.12`, if it is the first time you use this installer to build the .exe file on your laptop.
+2. Download `xulrunner-18.0.2.en-US.win32.zip` to `Installer/resources/download`, and unzip it to `Installer/resources/xulrunner`, if it is the first time you use this installer to build the .exe file on your laptop.
+3. Compile the source code of **EmbeddedTomcat**, and copy the generated jar file into `Installer/resources/CustomizedTomcat`.
+4. Copy `Installer/libs/portal-widget-onekey-war-NO-VERSION.war` into `Installer/resources/CustomizedTomcat`.
+5. Compile the source code of **PortalKit**, and copy the generated war file into `Installer/resources/CustomizedTomcat/webapps`.
+6. Copy all stuff under `NativeContainer/GriffinsPortalKit/release` into `Installer/resources/shell`.
+7. Copy all stuff under `Installer/resources/CefSharp-0.12` into `Installer/resources/shell`.
+8. Execute the script under `Installer/resources/scripts` for specific CPU support of windows.
+9. The .exe file will be generated in `Installer/resources/output`.
 
 Preparation
 ==========================
 **By using eclipse as IDE**
 
-1. Make sure you have JAVA_HOME, M2_HOME configured in system variables on your laptop.
-2. Install *Inno Setup*, please refer to [Environment](https://github.com/etp-work/ThePower/blob/master/README.md#environment).
+1. Make sure you have `JAVA_HOME`, `M2_HOME` configured in system variables on your laptop.
+2. Install **Inno Setup**, please refer to [Environment](https://github.com/etp-work/ThePower/blob/master/README.md#environment).
 3. Modify system variable `path` by appending value of the installation directory of *inno setup*.
-4. Open Window -> Preferences -> Ant -> Runtime -> Properties, click "Add Property", set "inno.home" to name and set absolute path of installation directory of 'inno setup'.
-
-6. Open Window -> Preferences -> Ant -> Runtime -> Classpath, choose 'Ant Home Entries', click 'Add JARs...', choose libs/commons-net-1.4.1.jar, libs/jakarta-oro-2.0.8.jar to add.
+4. Open *Window* -> *Preferences* -> *Ant* -> *Runtime* -> *Properties*, click *Add Property*, set `inno.home` to name and set absolute path of installation directory of **inno setup**.
+5. Open *Window* -> *Preferences* -> *Ant* -> *Runtime* -> *Classpath*, choose *Ant Home Entries*, click *Add JARs...*, choose `libs/commons-net-1.4.1.jar`, `libs/jakarta-oro-2.0.8.jar` to add.
 
 7. Run build.xml. Note: there are two options 'compile32/compile64' can be used. You should execute one of them for you operate system.
 
