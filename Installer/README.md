@@ -16,6 +16,12 @@ Workflow
 
 How to run
 ==========================
+**Common part**
+
+1. Open *Visual Studio Express 2012 for Desktop*, click *open project...*, choose *NativeContainer -> GriffinsPortalKit.sln*. Click *Open*.
+2. In *Solution Panel*, right click *GriffinsPortalKit*, click *Rebuild*.
+3. Go into folder `NativeContainer\GriffinsPortalKit\bin\Release`, copy all the stuff except **xulrunner** to `NativeContainer\GriffinsPortalKit\release`.
+
 **By using eclipse as IDE**
 
 1. Make sure you have `JAVA_HOME`, `M2_HOME` configured in system variables on your laptop.
@@ -43,10 +49,3 @@ How to run
 9. The .exe installation file will be generated at `Installer/resources/output/`.
 
 
-Usage
-
-1. To use this build.xml, you need rebuild source code of NativeContainer within Visual Stuido Express 2012.
-
-2. Copy all the files in NativeContainer\GriffinsPortalKit\bin\Release into NativeContainer\GriffinsPortalKit\release.(Do not do anything else, like copy xulRunner, CefSharp into this release folder. Those such things will be done by this script automatically)
-
-3. Execute this build.xml in ANT environment.
