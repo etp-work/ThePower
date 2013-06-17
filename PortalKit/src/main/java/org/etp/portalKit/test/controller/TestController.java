@@ -34,7 +34,7 @@ public class TestController {
     }
 
     private String getDefaultContextPath() {
-        return "portal-testserver-war-3.4.2";
+        return "portal-testserver-war-14.1-SNAPSHOT";
     }
 
     private String getDataRequestURL() {
