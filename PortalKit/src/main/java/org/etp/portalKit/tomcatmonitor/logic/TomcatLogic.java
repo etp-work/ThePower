@@ -89,20 +89,14 @@ public class TomcatLogic {
 		if (runner.processIsRunning()) {
 			throw new RuntimeException("Tomcat has been started up.");
 		}
-		Thread t = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				runner.setCmdline(getCatalinaHome() + "\\bin\\startup.bat");
-				Map<String, String> getenv = System.getenv();
-				Properties p = new Properties();
-				p.putAll(System.getProperties());
-				p.putAll(getenv);
-				p.setProperty("CATALINA_HOME", getCatalinaHome());
-				runner.setRuningEnv(p);
-				runner.run();
-			}
-		});
-		t.start();
+		runner.setCmdline(getCatalinaHome() + "\\bin\\startup.bat");
+		Map<String, String> getenv = System.getenv();
+		Properties p = new Properties();
+		p.putAll(System.getProperties());
+		p.putAll(getenv);
+		p.setProperty("CATALINA_HOME", getCatalinaHome());
+		runner.setRuningEnv(p);
+		runner.runAsync();
 		return true;
 	}
 

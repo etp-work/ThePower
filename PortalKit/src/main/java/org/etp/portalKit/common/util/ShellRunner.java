@@ -101,6 +101,28 @@ public class ShellRunner {
 		}
 		return rcode;
 	}
+	
+	/**
+	 * @return return value
+	 */
+	public int runAsync() {
+		if (processIsRunning()) {
+			throw new IllegalStateException(
+					"Can not start command  when processor is running");
+		}
+
+		String runCommands = getRunCommand();
+		try {
+			process = Runtime.getRuntime().exec(runCommands, getEnvString(),
+					getRunpath());
+		} catch (IOException e1) {
+			throw new RuntimeException("call System Process Error :"
+					+ e1.getMessage(), e1);
+		}
+		int rcode = 0;
+		return rcode;
+	}
+
 
 	/**
 	 * @return Arrays of env
