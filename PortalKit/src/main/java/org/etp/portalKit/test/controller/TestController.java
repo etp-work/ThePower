@@ -1,6 +1,5 @@
 package org.etp.portalKit.test.controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URLEncoder;
 
@@ -12,10 +11,7 @@ import org.apache.commons.httpclient.HttpMethodBase;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.lang.StringUtils;
-import org.etp.portalKit.common.service.PropertiesManager;
-import org.etp.portalKit.common.util.FileUtils;
-import org.etp.portalKit.setting.bean.SettingsCommand;
+import org.etp.portalKit.common.util.PortalUtils;
 import org.etp.portalKit.test.bean.DataCommand;
 import org.etp.portalKit.test.bean.TestCommand;
 import org.springframework.stereotype.Controller;
@@ -29,9 +25,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 public class TestController {
-
-	@Resource(name = "propertiesManager")
-	private PropertiesManager prop;
+	
+	@Resource(name="portalUtils")
+	private PortalUtils portal;
 
 	private static final HttpClient httpclient = new HttpClient();
 
@@ -44,12 +40,9 @@ public class TestController {
 	}
 
 	private String getDefaultContextPath() {
-		String webapps = prop.get(SettingsCommand.TOMCAT_WEBAPPS_PATH);
-		if (StringUtils.isBlank(webapps))
-			return "portal-testserver-war-14.1-SNAPSHOT";
-		File[] testservers = FileUtils.FolderFinder(webapps,
-				"portal-testserver-war");
-		return testservers[0].getName();
+		String defaultName = "portal-testserver-war-14.1-SNAPSHOT";
+		return portal.fetchDeployedWarName("portal-testserver-war",
+				defaultName);
 	}
 
 	private String getDataRequestURL() {

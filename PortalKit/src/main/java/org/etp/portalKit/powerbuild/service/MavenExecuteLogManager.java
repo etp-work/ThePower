@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.annotation.PreDestroy;
+
 import org.springframework.stereotype.Component;
 
 /**
@@ -69,11 +71,19 @@ public class MavenExecuteLogManager {
 	}
 
 	/**
+	 * cancel timer when destroying this component.
+	 */
+	@PreDestroy
+	public void onDestroy() {
+		timer.cancel();
+	}
+
+	/**
 	 * inner class for errorMsg and timerTask
 	 */
 	class FailureMessage {
 		/**
-		 *  <code>errorMsg</code> from a maven execution.
+		 * <code>errorMsg</code> from a maven execution.
 		 */
 		String errorMsg;
 		/**
