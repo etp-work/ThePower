@@ -46,6 +46,12 @@
         "checked": "",
         "subDirs": []
     }, {
+        "name": "portal-testsuites-recordingset-war",
+        "absolutePath": "",
+        "relativePath": "design\\AutoTest\\portal-testsuites-recordingset-war",
+        "checked": "",
+        "subDirs": []
+    }, {
         "name": "portal-testsuites-refapp-war",
         "absolutePath": "",
         "relativePath": "design\\AutoTest\\portal-testsuites-refapp-war",
@@ -58,6 +64,12 @@
         "checked": "",
         "subDirs": []
     }, {
+        "name": "portal-testsuites-vod-war",
+        "absolutePath": "",
+        "relativePath": "design\\AutoTest\\portal-testsuites-vod-war",
+        "checked": "",
+        "subDirs": []
+    }, {
         "name": "portal-testsuites-smoke-war",
         "absolutePath": "",
         "relativePath": "design\\AutoTest\\portal-testsuites-smoke-war",
@@ -67,12 +79,6 @@
         "name": "portal-testsuites-multiscreen-war",
         "absolutePath": "",
         "relativePath": "design\\AutoTest\\portal-testsuites-multiscreen-war",
-        "checked": "",
-        "subDirs": []
-    }, {
-        "name": "portal-testsuites-recordingset-war",
-        "absolutePath": "",
-        "relativePath": "design\\AutoTest\\portal-testsuites-recordingset-war",
         "checked": "",
         "subDirs": []
     }, {
