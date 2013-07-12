@@ -149,7 +149,7 @@ public class CleanLogic {
                     String nameWithoutSuffix = item.substring(0,
                             item.length() - 4);
                     File warPackage = new File(webappsHome, nameWithoutSuffix);
-                    if (warPackage.exists()) {
+                    while (warPackage.exists()) {
                         try {
                             org.apache.commons.io.FileUtils
                                     .forceDelete(warPackage);
@@ -164,7 +164,7 @@ public class CleanLogic {
                         return isDeleteSuc;
                     }
                     File workPackage = new File(localhost, nameWithoutSuffix);
-                    if (workPackage.exists()) {
+                    while (workPackage.exists()) {
                         try {
                             org.apache.commons.io.FileUtils
                                     .forceDelete(workPackage);
