@@ -15,6 +15,12 @@
         "relativePath": "design\\parent",
         "checked": "",
         "subDirs": []
+    }, {
+        "name": "form-based-login-war",
+        "absolutePath": "",
+        "relativePath": "design\\External\\form-based-login-war",
+        "checked": "",
+        "subDirs": []
     }]
 }, {
     "name": "AutoTest",
