@@ -1,6 +1,14 @@
 Upgrade Information
 =====================
 
+Version 1.0.4 at 2013-08-12
+
+  1. Add chosen list to Category view, because end-user may want to know what war files are included in the selected Category.
+  2. Rename "common" to "Individual".
+  3. Rename "category" to "Category".
+  4. Adjust the height of Category view, since it is not aligned with Individual view.
+
+
 Version 1.0.3 at 2013-xx-xx
 
   1. Update long polling mechanism from previous capbility that only support tomcat status monitor to support server side push.

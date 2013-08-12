@@ -4,15 +4,12 @@ import javax.annotation.Resource;
 
 import org.etp.portalKit.ssp.logic.SspNotificationManager;
 import org.etp.portalKit.tomcatmonitor.logic.TomcatLogic;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 
 /**
  * TomcatStatusMonitor is a monitor to tomcat.
  */
-@Component(value = "tomcatStatusMonitor")
-@EnableScheduling
+//@Component(value = "tomcatStatusMonitor")
+//@EnableScheduling
 public class TomcatStatusMonitor {
 
 	@Resource(name = "tomcatLogic")
@@ -28,7 +25,7 @@ public class TomcatStatusMonitor {
 	/**
 	 * check if tomcat is alive.
 	 */
-	@Scheduled(fixedDelay = 10000)
+//	@Scheduled(fixedDelay = 10000)
 	public void monitor() {
 		TomcatStatus status = logic.retrieveStatus();
 		if (last != status) {

@@ -2,8 +2,8 @@
 <div class="content-box" id="build-content">
 
 	<div class="bulid-feature-header">
-            <li><a href="#/common">common</a></li>
-            <li><a href="#/environment">category</a></li>
+            <li><a href="#/common">Individual</a></li>
+            <li><a href="#/environment">Category</a></li>
             <div class="clear"></div>
     </div>
 
@@ -53,11 +53,14 @@
     
     
     <div class="bulid-feature-content" id="environment">
-          <div class="build-list">
+          <div class="category-list">
               <ul class="group"><label class="category">Environment Package</label>
                 <li><div class="lightpoint"><input id="multiscreenPortal" value="MULTISCREEN_PORTAL" type="checkbox"><label></label></div>Multiscreen Portal<div class="status"><img src="resources/images/loading.gif"/></div></li>
                 <li><div class="lightpoint"><input id="referencePortal" value="REFERENCE_PORTAL" type="checkbox"><label></label></div>Reference Portal<div class="status"><img src="resources/images/loading.gif"/></div></li>
               </ul>
+              <div class="deployListForSourceCode">
+                   <li ng-repeat="war in chooseList"><span ng-bind="war" title="{{war}}"></span></li>
+              </div>
           </div>
          <!--   <div class="bulid-message">
               Selected option will be deployed                           

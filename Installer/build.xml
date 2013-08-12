@@ -12,7 +12,7 @@
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 		- - - Properties - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 		- - - - - - - - -->
-    <property name="version" value="1.0.3"/>
+    <property name="version" value="1.0.4"/>
     
     <property name="cefSharp.lib.path" value="libs/CefSharp-0.12.zip" />
     <property name="cefSharp.local.unzippath" value="resources/CefSharp-0.12" />

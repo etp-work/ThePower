@@ -10,6 +10,8 @@ import java.io.Reader;
 import java.util.Map.Entry;
 import java.util.Properties;
 
+import javax.annotation.PreDestroy;
+
 import org.apache.commons.io.Charsets;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -152,6 +154,7 @@ public class ShellRunner {
 	/**
 	 * stop
 	 */
+	@PreDestroy
 	public void stopProcess() {
 		Process r = process;
 		if (r != null) {

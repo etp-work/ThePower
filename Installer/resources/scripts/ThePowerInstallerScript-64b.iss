@@ -2,7 +2,8 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "The Power"
-#define MyAppVersion "1.0.3"
+
+#define MyAppVersion "1.0.4"
 #define MyAppPublisher "Ericsson three persons"
 #define MyAppExeName "DevelopmentToolkit.exe"
 #define AppId "ThePowerFromEricssonThreePerson"

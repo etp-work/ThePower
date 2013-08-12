@@ -229,6 +229,7 @@
                     $('#build-content #environment #build4Set').attr("disabled", true);
                     break;
                 case Lifecycle.NO_CONFIGURATION:
+                	deployInformation = undefined;
                     var scope = angular.element($('.build-list')).scope();
                     scope.$apply(function(){
                         scope.dirTrees = [];
@@ -271,7 +272,7 @@
     
     $('#build-content #environment #build4Set').click(function(event){
         var choosedElement = undefined;
-        $('#build-content #environment .build-list input').each(function(){
+        $('#build-content #environment .category-list input').each(function(){
             if($(this).is(':checked')){
                 choosedElement = $(this);
             }
@@ -287,12 +288,26 @@
         environmentBuild(choosedElement);
     });
     
-    $('#build-content #environment input[type="checkbox"]').click(function(event){
+    $('#build-content #environment .category-list input[type="checkbox"]').click(function(event){
+    	var scope = angular.element($('.category-list')).scope();
+    	
         if($(this).is(':checked')){
             $(this).parent().parent().siblings('li').find('input').attr("checked", false);
             if(deployInformation){
-                //TODO list deploy list.
+            	var chooseList = [];
+            	if($(this).val() === "MULTISCREEN_PORTAL"){
+            		chooseList = deployInformation.multiscreenPortal;
+            	}else if($(this).val() === "REFERENCE_PORTAL"){
+            		chooseList = deployInformation.referencePortal;
+            	}
+                scope.$apply(function(){
+                    scope.chooseList = chooseList;
+                });
             }
+        }else{
+        	scope.$apply(function(){
+                scope.chooseList = [];
+            });
         }
         checkBuild4SetValid();
     });
