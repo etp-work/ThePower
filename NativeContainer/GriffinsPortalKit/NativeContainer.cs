@@ -6,15 +6,15 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using Gecko;
-using Gecko.DOM;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using WebSocket4Net;
 using System.Reflection;
+using System.Threading;
+using Gecko;
+using Gecko.DOM;
+using WebSocket4Net;
 using log4net;
 using Newtonsoft.Json.Linq;
-using System.Threading;
 
 namespace DevelopmentToolkit
 {
@@ -71,7 +71,7 @@ namespace DevelopmentToolkit
 
         void browser_DomClick(object sender, DomEventArgs e)
         {
-            GeckoElement clicked = e.Target;
+            GeckoElement clicked = e.Target.CastToGeckoElement();
             if (clicked.TagName == "INPUT" || clicked.TagName == "SELECT")
             {
                 browser.WebBrowserFocus.Activate();
@@ -141,11 +141,6 @@ namespace DevelopmentToolkit
                                 Thread portalThread = new Thread(new ParameterizedThreadStart(startPortal));
                                 portalThread.Start(json);
                                 break;
-                            /*case "IPAD":
-                                IPAD portalIPAD = new IPAD(ConfigurationManager.AppSettings["PORTAL_IPAD"]);
-                                portalIPAD.Visible = true;
-                                portals.Add(portalIPAD);
-                                break;*/
                         }
                         break;
                     default:

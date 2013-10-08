@@ -1,6 +1,6 @@
-﻿namespace DevelopmentToolkit
+﻿namespace GriffinsPortalKit
 {
-    partial class RemoteControl
+    partial class GekoBrowser
     {
         /// <summary>
         /// Required designer variable.
@@ -28,35 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.geckoWebBrowser1 = new Gecko.GeckoWebBrowser();
             this.SuspendLayout();
             // 
-            // geckoWebBrowser1
-            // 
-            this.geckoWebBrowser1.DisableWmImeSetContext = false;
-            this.geckoWebBrowser1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.geckoWebBrowser1.Location = new System.Drawing.Point(0, 0);
-            this.geckoWebBrowser1.Name = "geckoWebBrowser1";
-            this.geckoWebBrowser1.Size = new System.Drawing.Size(284, 262);
-            this.geckoWebBrowser1.TabIndex = 0;
-            this.geckoWebBrowser1.UseHttpActivityObserver = false;
-            // 
-            // RemoteControl
+            // GekoBrowser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 262);
-            this.Controls.Add(this.geckoWebBrowser1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Name = "RemoteControl";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "RemoteControl";
+            this.ClientSize = new System.Drawing.Size(719, 554);
+            this.Name = "GekoBrowser";
+            this.Text = "Ericsson TV";
+            this.Load += new System.EventHandler(this.GekoBrowser_Load);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private Gecko.GeckoWebBrowser geckoWebBrowser1;
     }
 }

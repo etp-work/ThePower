@@ -6,18 +6,16 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using CefSharp;
-using CefSharp.WinForms;
-using Newtonsoft.Json.Linq;
 using System.Runtime.InteropServices;
 using System.Configuration;
+using Gecko;
+using Gecko.DOM;
+using Newtonsoft.Json.Linq;
 
 namespace DevelopmentToolkit
 {
     public partial class Browser : Form
     {
-        private WebView m_WebView;
-        private RemoteControl m_RemoteControl;
         private string m_Url;
         private JObject m_Param;
 
@@ -25,43 +23,38 @@ namespace DevelopmentToolkit
         {
             this.m_Url = p_Url;
             this.m_Param = p_Param;
-            m_RemoteControl = new RemoteControl();
             InitializeComponent();
             this.Left = 0;
             this.Top = 0;
+            this.geckoWebBrowser1.Navigate(ConfigurationManager.AppSettings["RemoteControlUrl"]);
+            this.geckoWebBrowser1.DocumentCompleted += geckoWebBrowser1_DocumentCompleted;
+            this.geckoWebBrowser2.Navigate(p_Url);
+            this.geckoWebBrowser2.DocumentCompleted += geckoWebBrowser2_DocumentCompleted;
         }
 
-        private void Browser_Load(object sender, EventArgs e)
+        void geckoWebBrowser2_DocumentCompleted(object sender, EventArgs e)
         {
-            BrowserSettings settings = new BrowserSettings();
-            m_WebView = new WebView(this.m_Url, settings);
-            m_WebView.Dock = DockStyle.Fill;
-            this.Controls.Add(m_WebView);
-            m_WebView.PropertyChanged += web_view_PropertyChanged;
+            GeckoWebBrowser br = sender as GeckoWebBrowser;
+            string wsuri = ConfigurationManager.AppSettings["WebSocketUri"];
+            GeckoScriptElement script = (GeckoScriptElement)br.Document.CreateElement("script");
+            script.Type = "text/javascript";
+            script.Text = "window.wsuri = '" + wsuri + "';";
+            script.Text += "window.nativeID = '" + Program.nativeID.ToString() + "';";
+            script.Text += "window.portalID = '" + Program.portalID.ToString() + "';";
+            br.Document.Body.AppendChild(script);
         }
 
-        void web_view_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        void geckoWebBrowser1_DocumentCompleted(object sender, EventArgs e)
         {
-            switch (e.PropertyName)
-            {
-                case "IsBrowserInitialized":
-                    string wsuri = ConfigurationManager.AppSettings["WebSocketUri"];
-                    m_WebView.ExecuteScript("window.wsuri = '" + wsuri + "';");
-                    m_WebView.ExecuteScript("window.nativeID = '" + Program.nativeID.ToString() + "';");
-                    m_WebView.ExecuteScript("window.portalID = '" + Program.portalID.ToString() + "';");
-                    m_WebView.ExecuteScript("window.autoLogin = 'user1';");
-                    if ((bool)this.m_Param["enableDevTool"])
-                    {
-                        m_WebView.ShowDevTools();
-
-                    }
-
-                    if ((bool)this.m_Param["enableRemoteControl"])
-                    {
-                        m_RemoteControl.Visible = true;
-                    }
-                    break;
-            }
+            GeckoWebBrowser br = sender as GeckoWebBrowser;
+            string wsuri = ConfigurationManager.AppSettings["WebSocketUri"];
+            GeckoScriptElement script = (GeckoScriptElement)br.Document.CreateElement("script");
+            script.Type = "text/javascript";
+            script.Text = "window.wsuri = '" + wsuri + "';";
+            script.Text += "window.nativeID = '" + Program.nativeID.ToString() + "';";
+            script.Text += "window.portalID = '" + Program.portalID.ToString() + "';";
+            script.Text += "initRemoteControl();";
+            br.Document.Body.AppendChild(script);
         }
 
         public void onMessage(JObject json)
@@ -69,26 +62,6 @@ namespace DevelopmentToolkit
             string type = (string)json["type"];
             switch (type)
             {
-                case "ENABLEDEVTOOL":
-                    if ((bool)json["enableDevTool"])
-                    {
-                        m_WebView.ShowDevTools();
-                    }
-                    else
-                    {
-                        m_WebView.CloseDevTools();
-                    }
-                    break;
-                case "ENABLEREMOTECONTROL":
-                    if ((bool)json["enableRemoteControl"])
-                    {
-                        m_RemoteControl.Visible = true;
-                    }
-                    else
-                    {
-                        m_RemoteControl.Visible = false;
-                    }
-                    break;
                 case "REMOTECONTROL":
                     string key = (string)json["key"];
                     switch (key)
@@ -98,7 +71,7 @@ namespace DevelopmentToolkit
                             {
                                 key = "{" + key + "}";
                             }
-                            this.Focus();
+                            this.geckoWebBrowser2.Focus();
                             SendKeys.SendWait(key);
                             break;
                     }
