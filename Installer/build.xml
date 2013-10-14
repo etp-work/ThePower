@@ -12,16 +12,13 @@
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 		- - - Properties - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 		- - - - - - - - -->
-    <property name="version" value="1.0.4"/>
+    <property name="version" value="1.0.5"/>
     
-    <property name="cefSharp.lib.path" value="libs/CefSharp-0.12.zip" />
-    <property name="cefSharp.local.unzippath" value="resources/CefSharp-0.12" />
-
     <property name="resource.path" value="resources" />
 
     <property name="xulRunner.ftp.server" value="ftp.mozilla.org" />
-    <property name="xulRunner.ftp.path" value="/pub/xulrunner/releases/18.0.2/runtimes/" />
-    <property name="xulRunner.ftp.filename" value="xulrunner-18.0.2.en-US.win32.zip" />
+    <property name="xulRunner.ftp.path" value="/pub/xulrunner/releases/22.0/runtimes/" />
+    <property name="xulRunner.ftp.filename" value="xulrunner-22.0.en-US.win32.zip" />
     <property name="xulRunner.local.downloadpath" value="resources/download" />
 
     <property name="tomcat.compile.home" value="../EmbeddedTomcat" />
@@ -57,10 +54,6 @@
         <available file="resources/xulrunner" property="runnerExists" />
     </target>
 
-    <target name="checCefSharp">
-        <available file="${cefSharp.local.unzippath}" property="cefSharpExists" />
-    </target>
-
 
     <target name="loadXulRunner" depends="checkXulRunner" unless="runnerExists">
         <mkdir dir="${xulRunner.local.downloadpath}" />
@@ -72,13 +65,8 @@
         <unzip src="${xulRunner.local.downloadpath}/${xulRunner.ftp.filename}" dest="${resource.path}" />
     </target>
 
-    <target name="unZipCefSharp" depends="checCefSharp" unless="cefSharpExists">
-        <unzip src="${cefSharp.lib.path}" dest="${resource.path}" />
-    </target>
-
     <macrodef name="prepare">
         <sequential>
-            <antcall target="unZipCefSharp" />
             <antcall target="loadXulRunner" />
             <ant antfile="build.xml" dir="${tomcat.compile.home}" inheritall="false" inheritrefs="false" />
             <delete dir="${tomcat.local.home}" />
@@ -98,17 +86,6 @@
                     <exclude name="DevelopmentToolkit.pdb" />
                     <exclude name="xulrunner" />
                     <exclude name="xulrunner/*" />
-                </fileset>
-                <fileset dir="${cefSharp.local.unzippath}">
-                    <include name="*" />
-                    <include name="*/*" />
-                    <exclude name="CefSharp.dll" />
-                    <exclude name="CefSharp.Example.dll" />
-                    <exclude name="CefSharp.WinForms.dll" />
-                    <exclude name="CefSharp.WinForms.Example.exe" />
-                    <exclude name="CefSharp.Wpf.dll" />
-                    <exclude name="CefSharp.Wpf.Example.exe" />
-                    <exclude name="debug.log" />
                 </fileset>
             </copy>
         </sequential>

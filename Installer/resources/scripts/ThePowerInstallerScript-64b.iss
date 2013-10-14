@@ -3,7 +3,7 @@
 
 #define MyAppName "The Power"
 
-#define MyAppVersion "1.0.4"
+#define MyAppVersion "1.0.5"
 #define MyAppPublisher "Ericsson three persons"
 #define MyAppExeName "DevelopmentToolkit.exe"
 #define AppId "ThePowerFromEricssonThreePerson"
@@ -33,6 +33,8 @@ ArchitecturesAllowed=x64
 ; done in "64-bit mode" on x64, meaning it should use the native
 ; 64-bit Program Files directory and the 64-bit view of the registry.
 ArchitecturesInstallIn64BitMode=x64
+SetupIconFile=..\icons\The_power_icon_128.ico
+UninstallDisplayIcon={app}\The_power_icon_128.ico
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -44,14 +46,13 @@ Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescrip
 [Files]
 Source: "..\shell\*"; DestDir: "{app}"; Flags: ignoreversion; BeforeInstall: ExistInstallationCheck()
 Source: "..\shell\images\*"; DestDir: "{app}\images"; Flags: ignoreversion
-Source: "..\shell\locales\*"; DestDir: "{app}\locales"; Flags: ignoreversion
 Source: "..\icons\The_power_icon_128.ico"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\xulrunner\*"; DestDir: "{app}\xulrunner"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "..\CustomizedTomcat\*"; DestDir: "{localappdata}\CustomizedTomcat"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
+Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; IconFilename:"{app}\The_power_icon_128.ico"
 Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"
 Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; IconFilename:"{app}\The_power_icon_128.ico" ; Tasks: desktopicon
 Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: quicklaunchicon

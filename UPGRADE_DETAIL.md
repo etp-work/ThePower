@@ -1,6 +1,13 @@
 Upgrade Information
 =====================
 
+Version 1.0.5 at 2013-10-12
+
+  1. Upgrade view provider GeckoFX to 22.0 and the corresponding XULRunner.
+  2. Add icon to use for Setup file.
+  3. Add icon to display for the Uninstall entry in the Add/Remove Programs Control Panel applet.
+
+
 Version 1.0.4 at 2013-08-12
 
   1. Add chosen list to Category view, because end-user may want to know what war files are included in the selected Category.
