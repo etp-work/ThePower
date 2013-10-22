@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class DirTree implements Serializable {
     /**
-     * <code>serialVersionUID</code>
+     * <code>serialVersionUID</code>, For cloning purpose.
      */
     private static final long serialVersionUID = -5814542843030755068L;
     private String name;

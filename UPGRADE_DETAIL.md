@@ -6,6 +6,10 @@ Version 1.0.5 at 2013-10-12
   1. Upgrade view provider GeckoFX to 22.0 and the corresponding XULRunner.
   2. Add icon to use for Setup file.
   3. Add icon to display for the Uninstall entry in the Add/Remove Programs Control Panel applet.
+  4. Reduce the time when compiling the source code on category level.
+  5. Add indicator to category compile feature. End-user knows how many war files remain to be compiled.
+  6. Remove dotted outline from DOM element.
+  7. Remove one-key widgettool from ThePower, since we recommend to use standard widgettool.
 
 
 Version 1.0.4 at 2013-08-12

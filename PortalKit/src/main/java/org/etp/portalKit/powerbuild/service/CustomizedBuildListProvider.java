@@ -40,11 +40,6 @@ public class CustomizedBuildListProvider implements BuildListProvider {
 
     private String COMMON_BUILD_LIST_BASE_JSON = "powerbuild/CustomizedBuildList.json";
 
-    private String ONE_KEY_WIDGET = "portal-widget-onekey-war-NO-VERSION.war";
-    private String EMBEDDED_TOMCAT = "AppData\\Local\\CustomizedTomcat";
-
-    private String embeddedTomcatPath;
-
     @PostConstruct
     private void init() {
         basedListTree = JSONUtils.fromJSONResource(pathResolver.getResource(COMMON_BUILD_LIST_BASE_JSON),
@@ -55,22 +50,6 @@ public class CustomizedBuildListProvider implements BuildListProvider {
             throw new RuntimeException("Load CustomizedBuildList.json error.");
         }
         prop.addObserver(this);
-        String userHome = System.getProperty("user.home");
-        if (StringUtils.isBlank(userHome)) {
-            resetDirInfo();
-            return;
-        }
-        File embeddedTomcat = new File(userHome, EMBEDDED_TOMCAT);
-        if (!embeddedTomcat.isDirectory()) {
-            resetDirInfo();
-            return;
-        }
-        File onekey = new File(embeddedTomcat, ONE_KEY_WIDGET);
-        if (!onekey.isFile()) {
-            resetDirInfo();
-            return;
-        }
-        embeddedTomcatPath = embeddedTomcat.getAbsolutePath();
         resetDirInfo();
     }
 
@@ -159,14 +138,6 @@ public class CustomizedBuildListProvider implements BuildListProvider {
             }
         } else {
             String relativePath = tree.getRelativePath();
-            if (ONE_KEY_WIDGET.equals(relativePath)) {
-                if (!StringUtils.isBlank(embeddedTomcatPath)) {
-                    tree.setAbsolutePath(embeddedTomcatPath);
-                } else {
-                    tree.setRelativePath("");
-                }
-                return;
-            }
             File relative = new File(basePath, relativePath);
             if (MavenUtils.isMavenProject(relative)) {
                 tree.setAbsolutePath(relative.getAbsolutePath());

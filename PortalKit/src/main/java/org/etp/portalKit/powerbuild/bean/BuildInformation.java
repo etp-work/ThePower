@@ -1,7 +1,6 @@
 package org.etp.portalKit.powerbuild.bean;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * BuildInformation will be shown on build page.
@@ -9,7 +8,7 @@ import java.util.Map;
 public class BuildInformation {
 
     private List<DirTree> buildList;
-    private Map<String, List<String>> deployInfo;
+    private DeployInformation deployInfo;
 
     /**
      * Creates a new instance of <code>BuildInformation</code>. T
@@ -24,7 +23,7 @@ public class BuildInformation {
      * @param list list of DirTree
      * @param deploy type/names mapping of deployment information.
      */
-    public BuildInformation(List<DirTree> list, Map<String, List<String>> deploy) {
+    public BuildInformation(List<DirTree> list, DeployInformation deploy) {
         this.buildList = list;
         this.deployInfo = deploy;
     }
@@ -46,14 +45,14 @@ public class BuildInformation {
     /**
      * @return Returns the deployInfo.
      */
-    public Map<String, List<String>> getDeployInfo() {
+    public DeployInformation getDeployInfo() {
         return deployInfo;
     }
 
     /**
      * @param deployInfo The deployInfo to set.
      */
-    public void setDeployInfo(Map<String, List<String>> deployInfo) {
+    public void setDeployInfo(DeployInformation deployInfo) {
         this.deployInfo = deployInfo;
     }
 }

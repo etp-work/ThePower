@@ -12,8 +12,6 @@ a:hover{ text-decoration:none;}
 img{ border:none; margin:0; padding:0;}
 
 
-
-
 /*================================== WRAPPER ==================================*/
 
 .left-nav{
@@ -856,4 +854,13 @@ select:focus {
 /*    background:-moz-linear-gradient(top,rgba(255, 255, 255, 0.8),rgba(235, 235, 235, 0.8));*/
     text-shadow:1px 1px 1px rgba(14, 104, 254, 0.5);
 /*    box-shadow:0px 1px 10px rgba(151, 224, 252, 1);*/
-    }
+}
+
+a:focus{
+           outline: 0;
+}
+
+input[type="button"]::-moz-focus-inner {
+  border: 0;
+  outline : 0;
+}

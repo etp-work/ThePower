@@ -8,10 +8,10 @@
 //=========================================variable=====================================
     var viewId = "build-content";
     var getBuildInfoUrl = "/powerbuild/getBuildInformation.ajax";
-    var executeUrl = "/powerbuild/execute.ajax";
-    var executeWithTypeUrl = "/powerbuild/executeWithType.ajax";
+    var buildUrl = "/powerbuild/build.ajax";
     
     var deployInformation;
+    var chooseTypeList = [];
     
     
 //=========================================functions=====================================
@@ -53,15 +53,15 @@
     
     //rebind click event build-list checkbox items
     function rebindSelection(){
-        $('#build-content #common .parentB').on("click", function(event){
+        $('#build-content #common .parentB').on("change", function(event){
                     var isChecked = $(this).is(':checked');
-                    $(this).parent().parent().siblings().find('.childB').attr("checked", isChecked);
+                    $(this).parent().parent().siblings().find('.childB').prop("checked", isChecked);
         });
-        $('#build-content #common .childB').on("click", function(event){
+        $('#build-content #common .childB').on("change", function(event){
                     var isChecked = $(this).is(':checked');
                     var parent = $(this).parent().parent().parent().find('.parentB');
                     if(isChecked){
-                        parent.attr("checked", true);
+                        parent.prop("checked", true);
                     }else{
                         var isAllFalse = true;
                         $(this).parent().parent().siblings().find('.childB').each(function(){
@@ -70,7 +70,7 @@
                             }
                         });
                         if(isAllFalse){
-                            parent.attr("checked", false);
+                            parent.prop("checked", false);
                         }
                     }
                 }
@@ -94,13 +94,11 @@
                 return;
             }
             deployInformation = buildInfo.deployInfo;
-            $('#build-content #common .parentB').off("click");//remove click binding to .parent first. Then will be re-bind again when data fetched later.
-            $('#build-content #common .childB').off("click");//remove click binding to .child first. Then will be re-bind again when data fetched later.
             var scope = angular.element($('.build-list')).scope();
             scope.$apply(function(){
                 scope.dirTrees = buildInfo.buildList;
             });
-            rebindSelection();//re-bind click event to .parent .child element. 
+            rebindSelection(); 
           
             Lifecycle.setState(Lifecycle.NORMAL);
         }, function(){
@@ -132,9 +130,7 @@
         var pack = selection.shift();
         var element = pack.parent().siblings('.status');
         element.addClass("s-working");
-        var needBuildValue = pack.attr("title") === "portal-widget-onekey-war" ? false: needBuild("#common");
-        var needTestValue = pack.attr("title") === "portal-widget-onekey-war" ? false: needTest("#common");
-        DynamicLoad.postJSON(executeUrl, {absolutePath: pack.val(), needDeploy: needDeploy("#common"), needBuild: needBuildValue, needTest: needTestValue}, 
+        DynamicLoad.postJSON(buildUrl, {warFile: {packageName: pack.attr("title"), relativePath: pack.val()}, param: {deploy: needDeploy("#common"), build: needBuild("#common"), test: needTest("#common")}}, 
                 function(BuildResult){
                     element.removeClass("s-working");
                     if(!BuildResult.success){
@@ -164,38 +160,46 @@
         Lifecycle.setState(Lifecycle.IN_PROCESS);
         build(subSelection);
     }
-    //build all the desing packages, and deploy the specified set of them.
-    function environmentBuild(choosedElement){
-        var chooseId = choosedElement.val();
+    
+    function buildEach(list, node){
+        if(list.length === 0){
+            Lifecycle.setState(Lifecycle.NORMAL);
+            return;
+        }
+        var war = list.shift();
+        var element = node.find("span[title=\""+war.packageName+"\"]").siblings('.status');
+        element.addClass("s-working");
+        DynamicLoad.postJSON(buildUrl, {warFile: war, param: {deploy: needDeploy("#environment"), build: needBuild("#environment"), test: needTest("#environment")}}, 
+                function(BuildResult){
+                    element.removeClass("s-working");
+                    if(!BuildResult.success){
+                        ViewManager.simpleError("Executed failure, click to check log.",function(){ViewManager.showLog(BuildResult.messageId)});
+                        element.addClass("s-error");
+                        Lifecycle.setState(Lifecycle.NORMAL);
+                    }else if(!BuildResult.deployed && needDeploy("#environment")){
+                        ViewManager.simpleError(war.packageName + " deployed failed!");
+                        element.addClass("s-error");
+                        Lifecycle.setState(Lifecycle.NORMAL);
+                     }else{
+                        var sucMessage = war.packageName + " build successfully.";
+                        ViewManager.simpleSuccess(sucMessage);
+                        element.addClass("s-success");
+                        buildEach(list, node);
+                     }
+                 }, function(error){
+                       element.removeClass("s-working");
+                       ViewManager.simpleError("Internal error:"+error.message);
+                       Lifecycle.setState(Lifecycle.NORMAL);
+                 }
+        );
+    
+    }
+    
+    //Build 
+    function environmentBuild(list){
         $('#build-content #environment .status').attr("class", "status");
         Lifecycle.setState(Lifecycle.IN_PROCESS);
-        var element = choosedElement.parent().next('.status');
-        element.addClass("s-working");
-        DynamicLoad.postJSON(executeWithTypeUrl, {
-                                 type: chooseId,
-                                 needDeploy: needDeploy("#environment"),
-                                 needBuild: needBuild("#environment"), 
-                                 needTest: needTest("#environment")
-                            }, function(BuildResult){
-                                   element.removeClass("s-working");
-                                   if(!BuildResult.success){
-                                        ViewManager.simpleError("Executed failure", function(){ViewManager.showLog(BuildResult.messageId)});
-                                        element.addClass("s-error");
-                                   }else if(!BuildResult.deployed && needDeploy("#environment")){
-                                        ViewManager.simpleError("There might be some of packages failed to deploy.");
-                                        element.addClass("s-error");
-                                   }else{
-                                        var sucMessage = "Executed successfully.";
-                                        ViewManager.simpleSuccess(sucMessage);
-                                        element.addClass("s-success");
-                                   }
-                                   Lifecycle.setState(Lifecycle.NORMAL);
-                            }, function(error){
-                                   element.removeClass("s-working");
-                                   ViewManager.simpleError("Internal error:"+error.message);
-                                   Lifecycle.setState(Lifecycle.NORMAL);
-                            }
-        );
+        buildEach(list, $('#build-content #environment .category-list .deployListForSourceCode li'));
     }
     
     //do filter the specified text within a specified range of elements.
@@ -285,7 +289,7 @@
             ViewManager.simpleWarning("You should choose at least one option.");
             return false;
         }
-        environmentBuild(choosedElement);
+        environmentBuild(chooseTypeList);
     });
     
     $('#build-content #environment .category-list input[type="checkbox"]').click(function(event){
@@ -294,17 +298,20 @@
         if($(this).is(':checked')){
             $(this).parent().parent().siblings('li').find('input').attr("checked", false);
             if(deployInformation){
-            	var chooseList = [];
+                var chooseList = [];
             	if($(this).val() === "MULTISCREEN_PORTAL"){
-            		chooseList = deployInformation.multiscreenPortal;
+            	    chooseTypeList = $.extend(true, [], deployInformation.multiscreenPortal);
+            	    chooseList = $.extend(true, [], deployInformation.multiscreenPortal);
             	}else if($(this).val() === "REFERENCE_PORTAL"){
-            		chooseList = deployInformation.referencePortal;
+            	    chooseTypeList = $.extend(true, [], deployInformation.referencePortal);
+            	    chooseList = $.extend(true, [], deployInformation.referencePortal);
             	}
                 scope.$apply(function(){
                     scope.chooseList = chooseList;
                 });
             }
         }else{
+            chooseTypeList = [];
         	scope.$apply(function(){
                 scope.chooseList = [];
             });

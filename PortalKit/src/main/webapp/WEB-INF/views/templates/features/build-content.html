@@ -25,7 +25,7 @@
                 </label>
                 <li ng-repeat="subTree in dirTree.subDirs">
                     <div class="lightpoint">
-                        <input type="checkbox" class="childB" ng-checked="subTree.checked" title="{{subTree.name}}" value="{{subTree.absolutePath}}" ><label></label>
+                        <input type="checkbox" class="childB" ng-checked="subTree.checked" title="{{subTree.name}}" value="{{subTree.relativePath}}" ><label></label>
                     </div>
                     <span title="{{subTree.name}}">{{subTree.name}}</span>
                     <div class="status">
@@ -35,8 +35,6 @@
             </ul>
 		</div>
 		<div class="options-area">
-			<!-- <li><input id="setDefault4Build" class="small-button config" disabled="disabled" type="button" value="Set Default" /></li>
-			<li><input id="resetDefault4Build" class="small-button reset" disabled="disabled" type="button" value="Reset" /></li> -->
 			<div class="check-deploy"><div class="lightpoint"><input id="needBuild" disabled="disabled" type="checkbox"><label></label></div>Build</div>
             <div class="check-deploy"><div class="lightpoint"><input id="needDeploy" disabled="disabled" type="checkbox"><label></label></div>Deploy</div>
 			<div class="check-deploy"><div class="lightpoint"><input id="needTest" disabled="disabled" type="checkbox"><label></label></div>Test</div>
@@ -55,19 +53,18 @@
     <div class="bulid-feature-content" id="environment">
           <div class="category-list">
               <ul class="group"><label class="category">Environment Package</label>
-                <li><div class="lightpoint"><input id="multiscreenPortal" value="MULTISCREEN_PORTAL" type="checkbox"><label></label></div>Multiscreen Portal<div class="status"><img src="resources/images/loading.gif"/></div></li>
-                <li><div class="lightpoint"><input id="referencePortal" value="REFERENCE_PORTAL" type="checkbox"><label></label></div>Reference Portal<div class="status"><img src="resources/images/loading.gif"/></div></li>
+                <li><div class="lightpoint"><input id="multiscreenPortal" value="MULTISCREEN_PORTAL" type="checkbox"><label></label></div>Multiscreen Portal</li>
+                <li><div class="lightpoint"><input id="referencePortal" value="REFERENCE_PORTAL" type="checkbox"><label></label></div>Reference Portal</li>
               </ul>
               <div class="deployListForSourceCode">
-                   <li ng-repeat="war in chooseList"><span ng-bind="war" title="{{war}}"></span></li>
+                   <li ng-repeat="war in chooseList"><span ng-bind="war.packageName" title="{{war.packageName}}"></span>
+                       <div class="status">
+                           <img src="resources/images/loading.gif" />
+                       </div>
+                   </li>
               </div>
           </div>
-         <!--   <div class="bulid-message">
-              Selected option will be deployed                           
-          </div> -->
           <div class="options-area">
-            <!-- <li><input id="setDefault4Build" class="small-button config" disabled="disabled" type="button" value="Set Default" /></li>
-            <li><input id="resetDefault4Build" class="small-button reset" disabled="disabled" type="button" value="Reset" /></li> -->
             <div class="check-deploy"><div class="lightpoint"><input id="needBuild" disabled="disabled" type="checkbox"><label></label></div>Build</div>
             <div class="check-deploy"><div class="lightpoint"><input id="needDeploy" disabled="disabled" type="checkbox"><label></label></div>Deploy</div>
             <div class="check-deploy"><div class="lightpoint"><input id="needTest" disabled="disabled" type="checkbox"><label></label></div>Test</div>

@@ -196,12 +196,6 @@
         "checked": "",
         "subDirs": []
     }, {
-        "name": "portal-widget-onekey-war",
-        "absolutePath": "",
-        "relativePath": "portal-widget-onekey-war-NO-VERSION.war",
-        "checked": "",
-        "subDirs": []
-    }, {
         "name": "portal-proxy-jar",
         "absolutePath": "",
         "relativePath": "design\\FW\\portal-proxy-jar",

@@ -25,8 +25,6 @@
     <property name="tomcat.jar" value="${tomcat.compile.home}/target/EmbeddedTomcat.jar" />
     <property name="tomcat.local.home" value="resources/CustomizedTomcat/" />
     <property name="tomcat.local.webapps.home" value="resources/CustomizedTomcat/webapps" />
-    <property name="oneKeyWidget" value="libs/portal-widget-onekey-war-NO-VERSION.war" />
-    <property name="oneKeyWidget.local.home" value="resources/CustomizedTomcat/" />
 
     <property name="portalKit.compile.home" value="../PortalKit" />
     <property name="portalKit.jar" value="${portalKit.compile.home}/target/PortalKit.war" />
@@ -71,7 +69,6 @@
             <ant antfile="build.xml" dir="${tomcat.compile.home}" inheritall="false" inheritrefs="false" />
             <delete dir="${tomcat.local.home}" />
             <mkdir dir="${tomcat.local.home}" />
-            <copy todir="${oneKeyWidget.local.home}" file="${oneKeyWidget}" />
             <copy todir="${tomcat.local.home}" file="${tomcat.jar}" />
             <mkdir dir="${tomcat.local.webapps.home}" />
             <ant antfile="build.xml" dir="${portalKit.compile.home}" inheritall="false" inheritrefs="false" />

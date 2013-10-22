@@ -3,13 +3,12 @@ package org.etp.portalKit.powerbuild.logic;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.codehaus.jackson.type.TypeReference;
 import org.etp.portalKit.common.service.DeployService;
@@ -19,10 +18,8 @@ import org.etp.portalKit.common.util.JSONUtils;
 import org.etp.portalKit.powerbuild.bean.BuildInformation;
 import org.etp.portalKit.powerbuild.bean.BuildResult;
 import org.etp.portalKit.powerbuild.bean.DeployInformation;
-import org.etp.portalKit.powerbuild.bean.DeployType;
-import org.etp.portalKit.powerbuild.bean.ExecuteCommand;
-import org.etp.portalKit.powerbuild.bean.ExecuteMultiCommand;
-import org.etp.portalKit.powerbuild.bean.ExecuteSingleCommand;
+import org.etp.portalKit.powerbuild.bean.ExecuteParam;
+import org.etp.portalKit.powerbuild.bean.WarFile;
 import org.etp.portalKit.powerbuild.service.BuildListProvider;
 import org.etp.portalKit.powerbuild.service.ExecuteType;
 import org.etp.portalKit.powerbuild.service.MavenExecuteLogManager;
@@ -36,6 +33,8 @@ import org.springframework.stereotype.Component;
  */
 @Component(value = "buildLogic")
 public class PowerBuildLogic {
+
+    private String ENVIRONMENT_DEPLOY_JSON = "powerbuild/DeployInformation.json";
 
     @Resource(name = "pathMatchingResourcePatternResolver")
     private PathMatchingResourcePatternResolver pathResolver;
@@ -51,49 +50,34 @@ public class PowerBuildLogic {
 
     @Resource(name = "deployService")
     private DeployService deployService;
-    
+
     @Resource(name = "mavenExecuteLogManager")
     private MavenExecuteLogManager mavenExecuteLogManager;
-
-    private String ENVIRONMENT_DEPLOY_JSON = "powerbuild/deployInformation.json";
-
-    private DeployInformation deployInformation;
 
     /**
      * initialize the basedListtree
      */
     @PostConstruct
     public void initCommbuildList() {
-        deployInformation = JSONUtils.fromJSONResource(pathResolver.getResource(ENVIRONMENT_DEPLOY_JSON),
-                new TypeReference<DeployInformation>() {
-                    //            
-                });
+        //        
     }
-    
-    
+
     /**
      * get error message from failure message container.
+     * 
      * @param messageId id of an error message.
      * @return error message
      */
-    public String getErrorMsgById(String messageId){
-    	return mavenExecuteLogManager.get(messageId);
+    public String getErrorMsgById(String messageId) {
+        return mavenExecuteLogManager.get(messageId);
     }
 
-    private String checkDeployPath() {
-        String deployPath = prop.get(SettingsCommand.TOMCAT_WEBAPPS_PATH);
-        if (StringUtils.isBlank(deployPath)) {
-            throw new RuntimeException("You haven't deploy path setted.");
-        }
-        return deployPath;
+    private String getDeployPath() {
+        return prop.get(SettingsCommand.TOMCAT_WEBAPPS_PATH);
     }
 
-    private String checkDesignPath() {
-        String path = prop.get(SettingsCommand.PORTAL_TEAM_PATH);
-        if (StringUtils.isBlank(path)) {
-            throw new RuntimeException("You haven't design path setted.");
-        }
-        return path;
+    private String getDesignPath() {
+        return prop.get(SettingsCommand.PORTAL_TEAM_PATH);
     }
 
     private boolean checkCanBeDeployed(String absolutePath) {
@@ -120,115 +104,89 @@ public class PowerBuildLogic {
         return true;
     }
 
-    private ExecuteType getExecuteType(ExecuteCommand cmd) {
+    private ExecuteType getExecuteType(ExecuteParam cmd) {
         ExecuteType type = null;
-        if (cmd.isNeedBuild() && cmd.isNeedTest()) {
+        if (cmd.isBuild() && cmd.isTest()) {
             type = ExecuteType.COMPILE_TEST;
-        } else if (cmd.isNeedBuild()) {
+        } else if (cmd.isBuild()) {
             type = ExecuteType.COMPILE;
-        } else if (cmd.isNeedTest()) {
+        } else if (cmd.isTest()) {
             type = ExecuteType.TEST;
         }
         return type;
     }
 
-    /**
-     * Execute specified command to the project which given
-     * <code>absolutePath</code> indicates. There are four kinds of
-     * command, compile, test, compile_test, deploy.
-     * 
-     * @param absolutePath absolute path of project.
-     * @param cmd ExecuteCommand
-     * @return BuildResult
-     */
-    public BuildResult executeCommand(String absolutePath, ExecuteSingleCommand cmd) {
-        BuildResult br = new BuildResult();
-        ExecuteType type = getExecuteType(cmd);
-        if ((type == null) && !cmd.isNeedDeploy()) {
-            throw new RuntimeException("You have to choose at least one option.");
+    private List<String> getDependenciesRealPath(String portalRoot, String[] dependencies) {
+        List<String> real = new ArrayList<String>();
+        if (ArrayUtils.isEmpty(dependencies)) {
+            return real;
         }
-        if (type != null) {
-            CommandResult cr = executor.exec(absolutePath, type);
-            br.setCommandResult(cr);
-            if (!br.isSuccess()) {
-                return br;
+        for (String depen : dependencies) {
+            File file = new File(portalRoot, depen);
+            if (file.isDirectory()) {
+                real.add(file.getAbsolutePath());
             }
         }
-
-        if (cmd.isNeedDeploy()) {
-            br.setSuccess(true);
-            String deployPath = checkDeployPath();
-            if (checkCanBeDeployed(absolutePath)) {
-                br.setDeployed(deployService.deployFromMavenFolder(absolutePath, deployPath));
-            } else if ((absolutePath.indexOf("CustomizedTomcat") > -1)) {
-                br.setDeployed(deployService.deployFromFolder(absolutePath, deployPath));
-            } else {
-                br.setDeployed(true);
-            }
-        }
-        return br;
+        return real;
     }
 
-    private List<String> getDeploySet(DeployType deployType) {
-        String basePath = checkDesignPath();
-        List<String> deploySet = new ArrayList<String>();
-        switch (deployType) {
-        case REFERENCE_PORTAL:
-            for (Map<String, String> fw : deployInformation.getFramework()) {
-                deploySet.add(new File(basePath, fw.get("relativePath")).getAbsolutePath());
-            }
-            for (Map<String, String> fw : deployInformation.getReferencePortal()) {
-                deploySet.add(new File(basePath, fw.get("relativePath")).getAbsolutePath());
-            }
-            break;
-        case MULTISCREEN_PORTAL:
-            for (Map<String, String> fw : deployInformation.getFramework()) {
-                deploySet.add(new File(basePath, fw.get("relativePath")).getAbsolutePath());
-            }
-            for (Map<String, String> fw : deployInformation.getMultiscreenPortal()) {
-                deploySet.add(new File(basePath, fw.get("relativePath")).getAbsolutePath());
-            }
-            break;
+    private String getWarRealPath(String portalRoot, String relativePath) {
+        File file = new File(portalRoot, relativePath);
+        if (file.isDirectory()) {
+            return file.getAbsolutePath();
         }
-        return deploySet;
+        return null;
     }
 
     /**
-     * Execute compile, test, deploy command to a specified type such
-     * as <code>REFERENCE_PORTAL</code>,
-     * <code>MULTISCREEN_PORTAL</code>
+     * Build an war file with its corresponding dependencies.
      * 
-     * @param deployType <code>REFERENCE_PORTAL</code>,
-     *            <code>MULTISCREEN_PORTAL</code>
-     * @param cmd ExecuteMultiCommand
+     * @param war the war file choose to be build.
+     * @param param build parameters
      * @return BuildResult
      */
-    public BuildResult executeWithType(DeployType deployType, ExecuteMultiCommand cmd) {
-        String deployPath = checkDeployPath();
-        String basePath = checkDesignPath();
-        ExecuteType executeType = getExecuteType(cmd);
-        if ((executeType == null) && !cmd.isNeedDeploy()) {
-            throw new RuntimeException("You have to choose at least one option.");
-        }
+    public BuildResult build(WarFile war, ExecuteParam param) {
         BuildResult result = new BuildResult();
-        if (executeType != null) {
-            result.setCommandResult(executor.exec(new File(basePath, "design").getAbsolutePath(), executeType));
+        String portalRoot = getDesignPath();
+        String deployPath = getDeployPath();
+        ExecuteType type = getExecuteType(param);
+        List<String> buildArray = new ArrayList<String>();
+        String[] dependencies = war.getDependencies();
+
+        buildArray.addAll(getDependenciesRealPath(portalRoot, dependencies));
+        String warPath = getWarRealPath(portalRoot, war.getRelativePath());
+        if (StringUtils.isNotBlank(warPath)) {
+            buildArray.add(warPath);
+        }
+
+        for (String path : buildArray) {
+            CommandResult cr = executor.exec(path, type);
+            result.setCommandResult(cr);
             if (!result.isSuccess()) {
                 return result;
             }
         }
-        if (cmd.isNeedDeploy()) {
+        if (param.isDeploy()) {
             result.setSuccess(true);
-            List<String> deploySet = getDeploySet(deployType);
-            for (String abs : deploySet) {
-                if (checkCanBeDeployed(abs)) {
-                    result.setDeployed(deployService.deployFromMavenFolder(abs, deployPath));
-                } else {
-                    result.setDeployed(true);
+            if (checkCanBeDeployed(warPath)) {
+                boolean deployed = false;
+                try {
+                    deployed = deployService.deployFromMavenFolder(warPath, deployPath);
+                } catch (Exception e) {
+                    deployed = deployService.deployFromFolder(warPath, deployPath);
                 }
+                result.setDeployed(deployed);
             }
         }
         return result;
+
+    }
+
+    private DeployInformation getDeployInformation() {
+        return JSONUtils.fromJSONResource(pathResolver.getResource(ENVIRONMENT_DEPLOY_JSON),
+                new TypeReference<DeployInformation>() {
+                    //            
+                });
     }
 
     /**
@@ -237,23 +195,6 @@ public class PowerBuildLogic {
      * @return BuildInformation
      */
     public BuildInformation getBuildInformation() {
-        Map<String, List<String>> deployInfo = new HashMap<String, List<String>>();
-        List<String> refApps = new ArrayList<String>();
-        for (Map<String, String> fw : deployInformation.getFramework()) {
-            refApps.add(fw.get("packageName"));
-        }
-        for (Map<String, String> rp : deployInformation.getReferencePortal()) {
-            refApps.add(rp.get("packageName"));
-        }
-        deployInfo.put("referencePortal", refApps);
-        List<String> multi = new ArrayList<String>();
-        for (Map<String, String> fw : deployInformation.getFramework()) {
-            multi.add(fw.get("packageName"));
-        }
-        for (Map<String, String> mp : deployInformation.getMultiscreenPortal()) {
-            multi.add(mp.get("packageName"));
-        }
-        deployInfo.put("multiscreenPortal", multi);
-        return new BuildInformation(buildListProvider.retrieveDirTrees(), deployInfo);
+        return new BuildInformation(buildListProvider.retrieveDirTrees(), getDeployInformation());
     }
 }
