@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html;charset=utf-8"%>
-<%@ include file="/WEB-INF/views/common/header_top.jsp"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html ng-app="myModule">
 <head>
-<%@ include file="/WEB-INF/views/common/header_head.jsp"%>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="resources/css/index.css" rel="stylesheet" type="text/css">
 <c:forEach var="view" items="${viewInfo}" varStatus="status">
     <c:if test="${view.css != ''}">
@@ -11,7 +11,7 @@
 </c:forEach>
 <title>The Power</title>
 </head>
-<body>
+<body oncontextmenu="return false">
 
 <div class="left-nav">
 
@@ -60,3 +60,11 @@
 </div>
 </body>
 </html>
+<script type="text/javascript" src="resources/js/dependencies/jquery.js"></script>
+<script type="text/javascript" src="resources/js/dependencies/jsrender.js"></script>
+<script type="text/javascript" src="resources/js/dependencies/json2.js"></script>
+<script type="text/javascript" src="resources/js/dependencies/angular.js"></script>
+<script type="text/javascript" src="resources/js/fw/TemplateCompiler.js"></script>
+<script type="text/javascript" src="resources/js/fw/DynamicLoad.js"></script>
+<script type="text/javascript" src="resources/js/utility/ViewManager.js"></script>
+<script type="text/javascript" src="resources/js/fw/Lifecycle.js"></script>
