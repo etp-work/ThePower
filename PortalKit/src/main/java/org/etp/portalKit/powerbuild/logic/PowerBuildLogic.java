@@ -168,6 +168,7 @@ public class PowerBuildLogic {
         }
         if (param.isDeploy()) {
             result.setSuccess(true);
+            result.setDeployed(true);
             if (checkCanBeDeployed(warPath)) {
                 boolean deployed = false;
                 try {
