@@ -289,7 +289,7 @@
             ViewManager.simpleWarning("You should choose at least one option.");
             return false;
         }
-        environmentBuild(chooseTypeList);
+        environmentBuild($.extend(true, [], chooseTypeList));
     });
     
     $('#build-content #environment .category-list input[type="checkbox"]').click(function(event){
@@ -298,16 +298,15 @@
         if($(this).is(':checked')){
             $(this).parent().parent().siblings('li').find('input').attr("checked", false);
             if(deployInformation){
-                var chooseList = [];
+                var list;
             	if($(this).val() === "MULTISCREEN_PORTAL"){
-            	    chooseTypeList = $.extend(true, [], deployInformation.multiscreenPortal);
-            	    chooseList = $.extend(true, [], deployInformation.multiscreenPortal);
+            	    chooseTypeList = deployInformation.multiscreenPortal;
             	}else if($(this).val() === "REFERENCE_PORTAL"){
-            	    chooseTypeList = $.extend(true, [], deployInformation.referencePortal);
-            	    chooseList = $.extend(true, [], deployInformation.referencePortal);
+            	    chooseTypeList = deployInformation.referencePortal;
             	}
+            	list = $.extend(true, [], chooseTypeList)
                 scope.$apply(function(){
-                    scope.chooseList = chooseList;
+                    scope.chooseList = list;
                 });
             }
         }else{
