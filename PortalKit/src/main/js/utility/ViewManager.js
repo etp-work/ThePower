@@ -314,6 +314,7 @@
             $("#"+id).find('.close').on("click", closeCallback);
             if(callback){
                 $("#"+id).find('.message').on("click", function(event){
+                    $(this).off('click');
                     callback();
                     ViewManager.removeNotification(id);
                     event.preventDefault();
