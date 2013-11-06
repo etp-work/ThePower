@@ -150,20 +150,22 @@ public class PowerBuildLogic {
         String portalRoot = getDesignPath();
         String deployPath = getDeployPath();
         ExecuteType type = getExecuteType(param);
-        List<String> buildArray = new ArrayList<String>();
-        String[] dependencies = war.getDependencies();
-
-        buildArray.addAll(getDependenciesRealPath(portalRoot, dependencies));
         String warPath = getWarRealPath(portalRoot, war.getRelativePath());
-        if (StringUtils.isNotBlank(warPath)) {
-            buildArray.add(warPath);
-        }
+        if (type != null) {
+            List<String> buildArray = new ArrayList<String>();
+            String[] dependencies = war.getDependencies();
 
-        for (String path : buildArray) {
-            CommandResult cr = executor.exec(path, type);
-            result.setCommandResult(cr);
-            if (!result.isSuccess()) {
-                return result;
+            buildArray.addAll(getDependenciesRealPath(portalRoot, dependencies));
+            if (StringUtils.isNotBlank(warPath)) {
+                buildArray.add(warPath);
+            }
+
+            for (String path : buildArray) {
+                CommandResult cr = executor.exec(path, type);
+                result.setCommandResult(cr);
+                if (!result.isSuccess()) {
+                    return result;
+                }
             }
         }
         if (param.isDeploy()) {
