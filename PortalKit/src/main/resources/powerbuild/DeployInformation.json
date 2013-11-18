@@ -2,7 +2,7 @@
     "referencePortal": [{
         "packageName": "portal-fw-war",
         "relativePath": "design\\FW\\portal-fw-war",
-        "dependencies": ["design\\FW\\portal-fw-client-jar", "design\\FW\\portal-fw-jar", "design\\FW\\portal-fw-services-jar", "design\\FW\\"]
+        "dependencies": ["design\\Common\\portal-artifacts-jar", "design\\FW\\portal-fw-client-jar", "design\\Common\\portal-backend-jar", "design\\FW\\portal-fw-jar", "design\\FW\\portal-fw-services-jar", "design\\Common\\portal-test-jar"]
     }, {
         "packageName": "private",
         "relativePath": "design\\FW\\private",
@@ -19,7 +19,7 @@
     }, {
         "packageName": "portal-imageprocessor-war",
         "relativePath": "design\\Common\\portal-imageprocessor-war",
-        "dependencies": ["design\\Common\\portal-imageprocessor-jar", "design\\Common\\portal-test-jar"]
+        "dependencies": ["design\\Common\\portal-imageprocessor-jar"]
     }, {
         "packageName": "portal-coreapps-war",
         "relativePath": "design\\CoreApps\\Application\\portal-coreapps-war"
@@ -32,7 +32,7 @@
     }, {
         "packageName": "portal-scanapp-war",
         "relativePath": "design\\CoreApps\\Application\\portal-scanapp-war",
-        "dependencies": ["design\\Common\\portal-backend-jar", "design\\Common\\portal-artifacts-jar", "design\\Common\\portal-config-jar", "design\\Common\\portal-backend-mock-jar"]
+        "dependencies": ["design\\Common\\portal-config-jar", "design\\Common\\portal-backend-mock-jar"]
     }, {
         "packageName": "portal-coreapps-sessiontransfer-war",
         "relativePath": "design\\CoreApps\\Application\\portal-coreapps-sessiontransfer-war"
@@ -80,7 +80,7 @@
     "multiscreenPortal": [{
         "packageName": "portal-fw-war",
         "relativePath": "design\\FW\\portal-fw-war",
-        "dependencies": ["design\\FW\\portal-fw-client-jar", "design\\FW\\portal-fw-jar", "design\\FW\\portal-fw-services-jar", "design\\FW\\"]
+        "dependencies": ["design\\Common\\portal-artifacts-jar", "design\\FW\\portal-fw-client-jar", "design\\Common\\portal-backend-jar", "design\\FW\\portal-fw-jar", "design\\FW\\portal-fw-services-jar", "design\\Common\\portal-test-jar"]
     }, {
         "packageName": "private",
         "relativePath": "design\\FW\\private",
@@ -97,7 +97,7 @@
     }, {
         "packageName": "portal-imageprocessor-war",
         "relativePath": "design\\Common\\portal-imageprocessor-war",
-        "dependencies": ["design\\Common\\portal-imageprocessor-jar", "design\\Common\\portal-test-jar"]
+        "dependencies": ["design\\Common\\portal-imageprocessor-jar"]
     }, {
         "packageName": "portal-coreapps-war",
         "relativePath": "design\\CoreApps\\Application\\portal-coreapps-war"
