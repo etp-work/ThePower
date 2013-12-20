@@ -1,7 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Express 2012 for Windows Desktop
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GriffinsPortalKit", "GriffinsPortalKit\GriffinsPortalKit.csproj", "{5BB8B764-BDBF-4068-9A71-98A79CD6BAC6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThePowerPortalKit", "PortalKit\ThePowerPortalKit.csproj", "{5BB8B764-BDBF-4068-9A71-98A79CD6BAC6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThePowerBootstrap", "ThePowerBootstrap\ThePowerBootstrap.csproj", "{E739C79D-EAB3-4EDC-BAD9-D871AAC09F5A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,6 +15,10 @@ Global
 		{5BB8B764-BDBF-4068-9A71-98A79CD6BAC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5BB8B764-BDBF-4068-9A71-98A79CD6BAC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5BB8B764-BDBF-4068-9A71-98A79CD6BAC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E739C79D-EAB3-4EDC-BAD9-D871AAC09F5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E739C79D-EAB3-4EDC-BAD9-D871AAC09F5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E739C79D-EAB3-4EDC-BAD9-D871AAC09F5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E739C79D-EAB3-4EDC-BAD9-D871AAC09F5A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
