@@ -10,7 +10,7 @@ Instruction
 * **Installer**: A Inno Setup script based project, which is the installation file creator. By running this project, it will collect all thre resources from above projects and generate a installation file.
 
 
-![](https://github.com/etp-work/ThePower/blob/master/thepower.jpeg)
+![](https://raw.github.com/etp-work/ThePower/blob/master/thepower.jpeg)
 
 
 ### Project Information
