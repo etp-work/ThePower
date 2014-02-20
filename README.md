@@ -10,6 +10,9 @@ Instruction
 * **Installer**: A Inno Setup script based project, which is the installation file creator. By running this project, it will collect all thre resources from above projects and generate a installation file.
 
 
+![](https://github.com/etp-work/ThePower/thepoweer.jpg)
+
+
 ### Project Information
 
 * Multiple languages: C#, java, javascript, HTML, css, Ant, Inno Setup script, Pascal.
